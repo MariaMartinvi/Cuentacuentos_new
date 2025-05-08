@@ -1,0 +1,202 @@
+.como-funciona-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  opacity: 0.1;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white !important;
+  text-transform: capitalize;
+  position: relative;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: white !important;
+  position: relative;
+}
+
+.como-funciona-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.como-funciona-content {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  margin-bottom: 3rem;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.step {
+  text-align: center;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(37, 117, 252, 0.1);
+}
+
+.step:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(37, 117, 252, 0.1);
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.2);
+}
+
+.step h2 {
+  color: #2575fc !important;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.step p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.step-section {
+  margin-bottom: 4rem;
+  padding: 2.5rem;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(37, 117, 252, 0.1);
+}
+
+.step-section h2 {
+  color: #2575fc !important;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.step-section p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.step-icon {
+  font-size: 2.5rem;
+  color: #2575fc;
+  margin-bottom: 1rem;
+}
+
+.step-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.1);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  color: #2575fc;
+}
+
+.feature-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .como-funciona-container {
+    padding: 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .como-funciona-content {
+    padding: 1.5rem;
+  }
+  
+  .steps-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .step-section {
+    padding: 1.5rem;
+  }
+
+  .step-features {
+    grid-template-columns: 1fr;
+  }
+} 

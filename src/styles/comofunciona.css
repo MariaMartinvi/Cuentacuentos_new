@@ -1,0 +1,39 @@
+.como-funciona-page {
+    font-family: 'Arial', sans-serif;
+    color: var(--text-dark);
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .page-description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+  
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .step h2 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+  }
+  
+  .step p {
+    font-size: 1rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+  }

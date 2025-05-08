@@ -1,0 +1,15 @@
+/* filepath: c:\Users\Tiendeo\nombre-del-proyecto\src\styles\inicio.css */
+.page {
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .page h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+  }
+  
+  .page p {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+  }

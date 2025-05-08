@@ -1,0 +1,222 @@
+.subscribe-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+}
+
+.subscribe-card {
+  background: white;
+  border-radius: 1.2rem;
+  padding: 2.5rem;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  max-width: 650px;
+  width: 100%;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.subscribe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.subscribe-title {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+.subscribe-subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.subscription-plan {
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+  position: relative;
+  overflow: hidden;
+}
+
+.subscription-plan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #4361ee, #3a0ca3);
+}
+
+.plan-title {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+.plan-price {
+  font-size: 2.5rem;
+  color: #4361ee;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.plan-description {
+  color: #505a68;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  color: #505a68;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.2rem;
+  background-color: #f8f9fa;
+  border-radius: 0.8rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.feature-item:hover {
+  transform: translateX(5px);
+  background-color: #f0f4ff;
+}
+
+.check-icon {
+  color: #4361ee;
+  margin-right: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.subscribe-button {
+  width: 100%;
+  padding: 1.2rem;
+  background: linear-gradient(to right, #4361ee, #3a0ca3);
+  color: white;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(74, 58, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.subscribe-button::before {
+  content: "⭐";
+  margin-right: 8px;
+}
+
+.subscribe-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(74, 58, 255, 0.4);
+  background: linear-gradient(to right, #3a56e3, #2d0b89);
+}
+
+.subscribe-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(74, 58, 255, 0.3);
+}
+
+.subscribe-button:disabled {
+  background: linear-gradient(to right, #a0a0a0, #7a7a7a);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-info,
+.payment-info {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  margin-top: 1.2rem;
+  line-height: 1.5;
+}
+
+.error-message {
+  background: #fff5f5;
+  color: #e53e3e;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-left: 4px solid #e53e3e;
+  font-weight: 500;
+}
+
+.success-message {
+  background: #f0fff4;
+  color: #38a169;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-left: 4px solid #38a169;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .subscribe-container {
+    padding: 1rem;
+  }
+
+  .subscribe-card {
+    padding: 1.5rem;
+  }
+
+  .subscription-plan {
+    padding: 1.5rem;
+  }
+
+  .subscribe-title {
+    font-size: 1.8rem;
+  }
+
+  .plan-title {
+    font-size: 1.8rem;
+  }
+
+  .plan-price {
+    font-size: 2rem;
+  }
+
+  .feature-item {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .subscribe-button {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+} 
