@@ -13,29 +13,36 @@ yarn-error.log
 dist/
 build/
 
-# Temporary files
-temp/
-*.tmp
-*.temp
-
-# Audio files
-*.mp3
-*.wav
-*.ogg
-
 # IDE and editor files
 .idea/
 .vscode/
 *.swp
 *.swo
-
-# OS files
 .DS_Store
-Thumbs.db
 
 # Logs
 logs/
 *.log
+firebase-debug.log*
+ui-debug.log*
+firebase-debug.*.log*
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Test coverage
+coverage/
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Audio files
+*.mp3
+*.wav
+*.ogg
 
 # Test files
 test-*.mp3
