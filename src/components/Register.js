@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import './Register.css';
 import SEO from './SEO';
+import { GoogleLogin } from '@react-oauth/google';
 
 // Determinar la URL correcta basada en el entorno
 const isProduction = window.location.hostname !== 'localhost';
@@ -15,7 +16,7 @@ const API_URL = isProduction
 const Register = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login: setAuthContext } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,19 +25,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState('');
-  const [loadingTime, setLoadingTime] = useState(0);
-
-  // Handle case when returning from Google auth
-  useEffect(() => {
-    const googleAuthInProgress = sessionStorage.getItem('googleAuthInProgress');
-    
-    if (googleAuthInProgress) {
-      // We've returned from somewhere, clear the flag
-      sessionStorage.removeItem('googleAuthInProgress');
-    }
-  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -58,122 +46,65 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+      const response = await axios.post(`${API_URL}/api/auth/register`, {
         email: formData.email,
         password: formData.password
       });
 
-      if (response.data.token) {
+      if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token);
-        await login(response.data.token);
+        if(response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        await setAuthContext(response.data.token, response.data.user);
         setSuccess(t('register.success'));
         navigate('/');
+      } else {
+        throw new Error ('Invalid response from registration server');
       }
     } catch (err) {
       console.error('Registration error:', err);
-      setError(err.response?.data?.message || t('register.error'));
+      setError(err.response?.data?.details || err.response?.data?.message || t('register.error'));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setGoogleLoading(true);
-      setError('');
-      setLoadingMessage(t('register.connectingServer'));
-      setLoadingTime(0);
-      
-      // Set a flag in sessionStorage to know we started Google auth
-      sessionStorage.setItem('googleAuthInProgress', 'true');
-      
-      // Start a timer to update loading message
-      const timer = setInterval(() => {
-        setLoadingTime(prev => {
-          const newTime = prev + 1;
-          if (newTime === 3) {
-            setLoadingMessage(t('register.wakingUpServer'));
-          } else if (newTime === 7) {
-            setLoadingMessage(t('register.preparingRedirect'));
-          } else if (newTime >= 10) {
-            setLoadingMessage(t('register.redirectingToGoogle'));
-          }
-          return newTime;
-        });
-      }, 1000);
-      
-      // Hacer múltiples pings para despertar el servidor más rápido
-      const pingServer = async () => {
-        for (let i = 0; i < 3; i++) {
-          try {
-            console.log(`Ping intento ${i+1}...`);
-            await fetch(`${API_URL}/test`, { 
-              method: 'GET',
-              mode: 'no-cors',
-              cache: 'no-store',
-              // Deshabilitar el timeout para evitar que la solicitud se aborte
-              signal: AbortSignal.timeout(10000) // 10 segundos de timeout
-            });
-            console.log(`Ping ${i+1} exitoso`);
-            // Si el ping es exitoso, podemos continuar
-            break;
-          } catch (e) {
-            console.log(`Ping ${i+1} falló, pero continuando...`);
-            // Esperar un poco antes del siguiente intento
-            await new Promise(resolve => setTimeout(resolve, 500));
-          }
-        }
-      };
+  const handleGoogleRegisterSuccess = async (credentialResponse) => {
+    setError('');
+    setSuccess('');
+    setLoading(true); 
+    console.log("Google Credential Response (Register):", credentialResponse);
+    const idToken = credentialResponse.credential;
 
-      // Iniciar el ping de manera asíncrona, sin esperar a que termine
-      pingServer().catch(e => console.log('Error en pingServer:', e));
-      
-      const frontendUrl = window.location.origin;
-      // Usar un timeout para asegurar que la superposición se muestre antes de redirigir
-      // Aumentar el timeout si la pantalla de carga ocurre muy rápido
-      setTimeout(() => {
-        clearInterval(timer);
-        window.location.href = `${API_URL}/api/auth/google?redirect_uri=${encodeURIComponent(frontendUrl)}`;
-      }, 800);
-      
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      setGoogleLoading(false);
-      setError(t('register.error'));
+    try {
+      const backendResponse = await axios.post(`${API_URL}/api/auth/google`, {
+        idToken: idToken 
+      });
+
+      if (backendResponse.data && backendResponse.data.token) {
+        localStorage.setItem('token', backendResponse.data.token);
+        if (backendResponse.data.user) {
+          localStorage.setItem('user', JSON.stringify(backendResponse.data.user));
+        }
+        await setAuthContext(backendResponse.data.token, backendResponse.data.user); 
+        setSuccess(t('register.successGoogle')); 
+        navigate('/');
+      } else {
+        throw new Error('Invalid response from backend Google sign-in');
+      }
+    } catch (err) {
+      console.error('Backend Google sign-in error (Register):', err.response?.data?.details || err.message);
+      setError(err.response?.data?.details || err.message || t('register.googleError'));
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (googleLoading) {
-    return (
-      <div className="fullscreen-overlay">
-        <SEO 
-          title={i18n.language === 'es' ? 
-            'Registro con Google - Mi Cuentacuentos' : 
-            'Register with Google - My Storyteller'}
-          description={i18n.language === 'es' ? 
-            'Registrándote con Google en Mi Cuentacuentos.' : 
-            'Registering with Google to My Storyteller.'}
-          keywords={['registro', 'register', 'google', 'autenticación']}
-          lang={i18n.language}
-        />
-        <div className="google-loading-container">
-          <div className="google-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-          </div>
-          <div className="spinner"></div>
-          <p>{loadingMessage}</p>
-          {loadingTime >= 5 && (
-            <p className="loading-time">{t('register.timeElapsed', { seconds: loadingTime })}</p>
-          )}
-        </div>
-      </div>
-    );
-  }
+  const handleGoogleRegisterError = () => {
+    console.error('Google Sign-In Failed (Register)');
+    setError(t('register.googleError'));
+  };
 
   return (
     <div className="register-container">
@@ -200,40 +131,21 @@ const Register = () => {
           </div>
         </div>
 
-        <button 
-          className="google-button"
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <div className="spinner small-spinner"></div>
-              {t('register.loading')}
-            </>
-          ) : (
-            <>
-              <img src="/google-icon.svg" alt="Google" />
-              {t('register.signInWithGoogle')}
-            </>
-          )}
-        </button>
+        {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
+        
+        <div className="google-register-section" style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+          <GoogleLogin
+            onSuccess={handleGoogleRegisterSuccess}
+            onError={handleGoogleRegisterError}
+            useOneTap
+          />
+        </div>
 
         <div className="divider">
           <span>{t('register.or')}</span>
         </div>
         
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
-
-        {success && (
-          <div className="success-message">
-            {success}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
             <label htmlFor="email">{t('register.emailLabel')}</label>
@@ -245,6 +157,7 @@ const Register = () => {
               onChange={handleChange}
               placeholder={t('register.emailPlaceholder')}
               required
+              className="form-input"
             />
           </div>
 
@@ -258,6 +171,7 @@ const Register = () => {
               onChange={handleChange}
               placeholder={t('register.passwordPlaceholder')}
               required
+              className="form-input"
             />
           </div>
 
@@ -271,6 +185,7 @@ const Register = () => {
               onChange={handleChange}
               placeholder={t('register.confirmPasswordPlaceholder')}
               required
+              className="form-input"
             />
           </div>
 
@@ -279,12 +194,19 @@ const Register = () => {
             className="register-button"
             disabled={loading}
           >
-            {loading ? t('register.loading') : t('register.registerButton')}
+            {loading ? (
+              <>
+                <div className="spinner small-spinner"></div>
+                {t('register.loading')}
+              </>
+            ) : (
+              t('register.createAccount')
+            )}
           </button>
         </form>
 
         <p className="login-link">
-          {t('register.loginLink')}
+          {t('register.alreadyAccount')} <a href="/login">{t('register.login')}</a>
         </p>
       </div>
     </div>

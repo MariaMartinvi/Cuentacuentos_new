@@ -2,6 +2,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/netlify/functions/node_modules
+netlify/functions/node_modules/
 
 # Archivos de compilación
 /build

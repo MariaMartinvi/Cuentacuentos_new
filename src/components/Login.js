@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { login, loginWithGoogle } from '../services/authService';
+import { login } from '../services/authService';
 import { useAuth } from '../contexts/AuthContext';
 import './Login.css';
 import SEO from './SEO';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 // Determinar la URL correcta basada en el entorno
 const isProduction = window.location.hostname !== 'localhost';
@@ -22,31 +25,8 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState('');
-  const [loadingTime, setLoadingTime] = useState(0);
+  const [initialLoading, setInitialLoading] = useState(false);
   
-  // Simulate checking connection to backend
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setInitialLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Handle case when returning from Google auth
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const googleAuthInProgress = sessionStorage.getItem('googleAuthInProgress');
-    
-    if (googleAuthInProgress) {
-      // We've returned from somewhere, clear the flag
-      sessionStorage.removeItem('googleAuthInProgress');
-    }
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -57,101 +37,55 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted with data:', formData);
     setError('');
     setLoading(true);
-
     try {
-      console.log('Calling login function...');
       const response = await login(formData.email, formData.password);
-      console.log('Login response received:', response);
-
       if (response && response.token) {
-        console.log('Token received, checking localStorage...');
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-        console.log('Token in localStorage:', token ? 'Exists' : 'Not found');
-        console.log('User in localStorage:', user ? 'Exists' : 'Not found');
-
-        console.log('Refreshing user context...');
         await refreshUser();
-        console.log('Navigation to home...');
         navigate('/');
       } else {
         throw new Error('Invalid response from server');
       }
     } catch (err) {
-      console.error('Login error:', err);
       setError(err.message || t('login.error'));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      setGoogleLoading(true);
-      setError('');
-      setLoadingMessage(t('login.connectingServer'));
-      setLoadingTime(0);
-      
-      // Set a flag in sessionStorage to know we started Google auth
-      sessionStorage.setItem('googleAuthInProgress', 'true');
-      
-      // Start a timer to update loading message
-      const timer = setInterval(() => {
-        setLoadingTime(prev => {
-          const newTime = prev + 1;
-          if (newTime === 3) {
-            setLoadingMessage(t('login.wakingUpServer'));
-          } else if (newTime === 7) {
-            setLoadingMessage(t('login.preparingRedirect'));
-          } else if (newTime >= 10) {
-            setLoadingMessage(t('login.redirectingToGoogle'));
-          }
-          return newTime;
-        });
-      }, 1000);
-      
-      // Hacer múltiples pings para despertar el servidor más rápido
-      const pingServer = async () => {
-        for (let i = 0; i < 3; i++) {
-          try {
-            console.log(`Ping intento ${i+1}...`);
-            await fetch(`${API_URL}/test`, { 
-              method: 'GET',
-              mode: 'no-cors',
-              cache: 'no-store',
-              // Deshabilitar el timeout para evitar que la solicitud se aborte
-              signal: AbortSignal.timeout(10000) // 10 segundos de timeout
-            });
-            console.log(`Ping ${i+1} exitoso`);
-            // Si el ping es exitoso, podemos continuar
-            break;
-          } catch (e) {
-            console.log(`Ping ${i+1} falló, pero continuando...`);
-            // Esperar un poco antes del siguiente intento
-            await new Promise(resolve => setTimeout(resolve, 500));
-          }
-        }
-      };
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    setError('');
+    setLoading(true);
+    console.log("Google Credential Response:", credentialResponse);
+    const idToken = credentialResponse.credential;
 
-      // Iniciar el ping de manera asíncrona, sin esperar a que termine
-      pingServer().catch(e => console.log('Error en pingServer:', e));
-      
-      const frontendUrl = window.location.origin;
-      // Usar un timeout para asegurar que la superposición se muestre antes de redirigir
-      // Aumentar el timeout si la pantalla de carga ocurre muy rápido
-      setTimeout(() => {
-        clearInterval(timer);
-        window.location.href = `${API_URL}/api/auth/google?redirect_uri=${encodeURIComponent(frontendUrl)}`;
-      }, 800);
-      
-    } catch (error) {
-      console.error('Google login error:', error);
-      setGoogleLoading(false);
-      setError(t('login.error'));
+    try {
+      const backendResponse = await axios.post(`${API_URL}/api/auth/google`, {
+        idToken: idToken
+      });
+
+      if (backendResponse.data && backendResponse.data.token) {
+        localStorage.setItem('token', backendResponse.data.token);
+        if (backendResponse.data.user) {
+          localStorage.setItem('user', JSON.stringify(backendResponse.data.user));
+        }
+        await refreshUser();
+        navigate('/');
+      } else {
+        throw new Error('Invalid response from backend Google login');
+      }
+    } catch (err) {
+      console.error('Backend Google login error:', err.response?.data?.details || err.message);
+      setError(err.response?.data?.details || err.message || t('login.googleError'));
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleGoogleLoginError = () => {
+    console.error('Google Login Failed');
+    setError(t('login.googleError'));
   };
 
   if (initialLoading) {
@@ -170,40 +104,8 @@ const Login = () => {
         <div className="login-card">
           <div className="loading-container">
             <div className="spinner"></div>
-            <p>{t('login.connecting')}</p>
+            <p>{i18n.language === 'es' ? 'Conectando...' : 'Connecting...'}</p>
           </div>
-        </div>
-      </div>
-    );
-  }
-  
-  if (googleLoading) {
-    return (
-      <div className="fullscreen-overlay">
-        <SEO 
-          title={i18n.language === 'es' ? 
-            'Iniciar Sesión con Google - Mi Cuentacuentos' : 
-            'Login with Google - My Storyteller'}
-          description={i18n.language === 'es' ? 
-            'Iniciando sesión con Google en Mi Cuentacuentos.' : 
-            'Logging in with Google to My Storyteller.'}
-          keywords={['iniciar sesión', 'login', 'google', 'autenticación']}
-          lang={i18n.language}
-        />
-        <div className="google-loading-container">
-          <div className="google-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-          </div>
-          <div className="spinner"></div>
-          <p>{loadingMessage}</p>
-          {loadingTime >= 5 && (
-            <p className="loading-time">{t('login.timeElapsed', { seconds: loadingTime })}</p>
-          )}
         </div>
       </div>
     );
@@ -230,24 +132,14 @@ const Login = () => {
             {error}
           </div>
         )}
-
-        <button 
-          onClick={handleGoogleLogin}
-          className="google-button"
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <div className="spinner small-spinner"></div>
-              {t('login.loading')}
-            </>
-          ) : (
-            <>
-              <img src="/google-icon.svg" alt="Google" />
-              {t('login.signInWithGoogle')}
-            </>
-          )}
-        </button>
+        
+        <div className="google-login-section" style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={handleGoogleLoginError}
+            useOneTap
+          />
+        </div>
 
         <div className="divider">
           <span>{t('login.or')}</span>
@@ -287,7 +179,14 @@ const Login = () => {
             className="login-button"
             disabled={loading}
           >
-            {loading ? t('login.loading') : t('login.loginButton')}
+            {loading ? (
+              <>
+                <div className="spinner small-spinner"></div>
+                {t('login.loading')}
+              </>
+            ) : (
+              t('login.loginButton')
+            )}
           </button>
         </form>
 

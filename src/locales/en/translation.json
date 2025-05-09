@@ -326,20 +326,21 @@
     "subscribeLater": "To generate more stories, you'll need to subscribe to our premium plan."
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Sign in to your account",
+    "title": "Login",
+    "subtitle": "Access your account",
     "emailLabel": "Email",
     "emailPlaceholder": "Enter your email",
     "passwordLabel": "Password",
     "passwordPlaceholder": "Enter your password",
     "loginButton": "Login",
-    "registerLink": "Don't have an account? Register",
-    "error": "Invalid email or password",
-    "loading": "Logging in...",
+    "loading": "Loading...",
+    "connecting": "Connecting...",
+    "error": "Invalid credentials",
+    "rateLimitError": "Too many login attempts. Please try again later.",
     "noAccount": "Don't have an account?",
-    "register": "Register",
+    "register": "Register here",
     "or": "or",
-    "signInWithGoogle": "Sign in with Google"
+    "googleError": "Error logging in with Google"
   },
   "profile": {
     "title": "My Profile",
