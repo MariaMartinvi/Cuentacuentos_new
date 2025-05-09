@@ -127,8 +127,8 @@ input:focus, select:focus {
 }
 
 input::placeholder {
-  color: #a0aec0;
-  opacity: 0.8;
+  color: #4a5568;
+  opacity: 1;
 }
 
 /* Button styling */
@@ -353,7 +353,8 @@ input::placeholder {
   }
   
   input::placeholder {
-    color: #a0aec0;
+    color: #cbd5e0;
+    opacity: 1;
   }
   
   .reset-btn {
