@@ -323,7 +323,10 @@
     "error": "An error occurred during registration. Please try again.",
     "passwordsDontMatch": "Passwords do not match",
     "freeStories": "Get 3 free audio stories when you register!",
-    "subscribeLater": "To generate more stories, you'll need to subscribe to our premium plan."
+    "subscribeLater": "To generate more stories, you'll need to subscribe to our premium plan.",
+    "createAccount": "Create account",
+    "alreadyAccount": "Already have an account?",
+    "login": "Sign in"
   },
   "login": {
     "title": "Login",
