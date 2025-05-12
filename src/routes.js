@@ -21,36 +21,26 @@ import { useAuth } from './contexts/AuthContext';
 const PrivateRouteWrapper = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   
-  // Si está cargando pero hay un token, mostrar el contenido de todos modos y actualizar en segundo plano
-  if (isLoading && localStorage.getItem('token')) {
-    return children;
+  // Mostrar cargando mientras se verifica el estado
+  if (isLoading) {
+    return <div className="loading-container">Cargando...</div>;
   }
   
-  // Si no está cargando y no está autenticado, redireccionar
-  if (!isLoading && !isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
-  
-  // Si está autenticado o está en proceso de verificación, mostrar contenido
-  return children;
+  // Redireccionar a login si no está autenticado
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 // Componente wrapper para rutas públicas usando el hook useAuth
 const PublicRouteWrapper = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   
-  // Si está cargando pero no hay token, mostrar el contenido de todos modos y actualizar en segundo plano
-  if (isLoading && !localStorage.getItem('token')) {
-    return children;
+  // Mostrar cargando mientras se verifica el estado
+  if (isLoading) {
+    return <div className="loading-container">Cargando...</div>;
   }
   
-  // Si no está cargando y está autenticado, redireccionar
-  if (!isLoading && isAuthenticated) {
-    return <Navigate to="/" />;
-  }
-  
-  // Si no está autenticado o está en proceso de verificación, mostrar contenido
-  return children;
+  // Redireccionar a home si ya está autenticado
+  return !isAuthenticated ? children : <Navigate to="/" />;
 };
 
 // Componentes de ruta que usan los wrappers

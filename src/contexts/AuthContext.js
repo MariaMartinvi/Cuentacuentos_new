@@ -5,10 +5,8 @@ import axios from 'axios';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  // Verificar token inicialmente para establecer un valor predeterminado más preciso para isAuthenticated
-  const hasToken = !!localStorage.getItem('token');
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(hasToken); // Solo mostrar carga si hay token
+  const [loading, setLoading] = useState(true);
 
   const login = async (token) => {
     try {
@@ -51,36 +49,11 @@ export const AuthProvider = ({ children }) => {
         // Configurar el token en axios para futuras peticiones
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
-        // Verificar si hay datos en sessionStorage para cargar instantáneamente
-        const cachedUser = sessionStorage.getItem('cachedUser');
-        if (cachedUser) {
-          try {
-            const parsedUser = JSON.parse(cachedUser);
-            setUser(parsedUser);
-            // Realizar actualización en segundo plano
-            getCurrentUser().then(currentUser => {
-              if (currentUser) {
-                currentUser.isPremium = currentUser.subscriptionStatus === 'active';
-                setUser(currentUser);
-                // Actualizar caché
-                sessionStorage.setItem('cachedUser', JSON.stringify(currentUser));
-              }
-            }).catch(console.error);
-            setLoading(false);
-            return;
-          } catch (e) {
-            console.error('Error parsing cached user data', e);
-            sessionStorage.removeItem('cachedUser');
-          }
-        }
-        
         const currentUser = await getCurrentUser();
         if (currentUser) {
           // Ensure isPremium is set based on subscription status
           currentUser.isPremium = currentUser.subscriptionStatus === 'active';
           setUser(currentUser);
-          // Cachear para futuras cargas
-          sessionStorage.setItem('cachedUser', JSON.stringify(currentUser));
         }
       }
     } catch (error) {
@@ -91,11 +64,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Si no hay token, no iniciar loading
-    if (!localStorage.getItem('token')) {
-      setLoading(false);
-      return;
-    }
     initializeAuth();
   }, []);
 

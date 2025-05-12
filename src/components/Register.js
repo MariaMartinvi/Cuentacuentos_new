@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import './Register.css';
 import SEO from './SEO';
+import { GoogleLogin } from '@react-oauth/google';
 
 // Determinar la URL correcta basada en el entorno
 const isProduction = window.location.hostname !== 'localhost';
@@ -12,27 +13,10 @@ const API_URL = isProduction
   ? 'https://generadorcuentos.onrender.com'
   : 'http://localhost:5001';
 
-// Hacemos el ping al servidor de forma anticipada para despertarlo antes de que el usuario interactúe
-const wakeUpServer = async () => {
-  try {
-    fetch(`${API_URL}/test`, { 
-      method: 'GET',
-      mode: 'no-cors',
-      cache: 'no-store',
-      signal: AbortSignal.timeout(5000) // Reducido a 5 segundos para no bloquear
-    });
-  } catch (e) {
-    // Silenciamos errores para evitar registros en consola
-  }
-};
-
-// Iniciamos el ping inmediatamente al cargar el componente
-wakeUpServer();
-
 const Register = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login: setAuthContext } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -41,17 +25,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState('');
-
-  // Handle case when returning from Google auth
-  useEffect(() => {
-    const googleAuthInProgress = sessionStorage.getItem('googleAuthInProgress');
-    
-    if (googleAuthInProgress) {
-      sessionStorage.removeItem('googleAuthInProgress');
-    }
-  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -78,75 +51,60 @@ const Register = () => {
         password: formData.password
       });
 
-      if (response.data.token) {
+      if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token);
-        await login(response.data.token);
+        if(response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        await setAuthContext(response.data.token, response.data.user);
         setSuccess(t('register.success'));
         navigate('/');
+      } else {
+        throw new Error ('Invalid response from registration server');
       }
     } catch (err) {
-      setError(err.response?.data?.message || t('register.error'));
+      console.error('Registration error:', err);
+      setError(err.response?.data?.details || err.response?.data?.message || t('register.error'));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleRegisterSuccess = async (credentialResponse) => {
+    setError('');
+    setSuccess('');
+    setLoading(true); 
+    console.log("Google Credential Response (Register):", credentialResponse);
+    const idToken = credentialResponse.credential;
+
     try {
-      setGoogleLoading(true);
-      setError('');
-      setLoadingMessage(t('register.redirectingToGoogle'));
-      
-      // Set a flag in sessionStorage to know we started Google auth
-      sessionStorage.setItem('googleAuthInProgress', 'true');
-      
-      // Iniciar el ping inmediatamente y redirigir sin delays
-      fetch(`${API_URL}/test`, { 
-        method: 'GET',
-        mode: 'no-cors',
-        cache: 'no-store'
-      }).catch(() => {/* ignorar errores */});
-      
-      const frontendUrl = window.location.origin;
-      // Prácticamente instant redirect (200ms para que se muestre visual feedback)
-      setTimeout(() => {
-        window.location.href = `${API_URL}/api/auth/google?redirect_uri=${encodeURIComponent(frontendUrl)}`;
-      }, 200);
-      
-    } catch (error) {
-      setGoogleLoading(false);
-      setError(t('register.error'));
+      const backendResponse = await axios.post(`${API_URL}/api/auth/google`, {
+        idToken: idToken 
+      });
+
+      if (backendResponse.data && backendResponse.data.token) {
+        localStorage.setItem('token', backendResponse.data.token);
+        if (backendResponse.data.user) {
+          localStorage.setItem('user', JSON.stringify(backendResponse.data.user));
+        }
+        await setAuthContext(backendResponse.data.token, backendResponse.data.user); 
+        setSuccess(t('register.successGoogle')); 
+        navigate('/');
+      } else {
+        throw new Error('Invalid response from backend Google sign-in');
+      }
+    } catch (err) {
+      console.error('Backend Google sign-in error (Register):', err.response?.data?.details || err.message);
+      setError(err.response?.data?.details || err.message || t('register.googleError'));
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (googleLoading) {
-    return (
-      <div className="fullscreen-overlay">
-        <SEO 
-          title={i18n.language === 'es' ? 
-            'Registro con Google - Mi Cuentacuentos' : 
-            'Register with Google - My Storyteller'}
-          description={i18n.language === 'es' ? 
-            'Registrándote con Google en Mi Cuentacuentos.' : 
-            'Registering with Google to My Storyteller.'}
-          keywords={['registro', 'register', 'google', 'autenticación']}
-          lang={i18n.language}
-        />
-        <div className="google-loading-container">
-          <div className="google-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-          </div>
-          <div className="spinner"></div>
-          <p>{loadingMessage}</p>
-        </div>
-      </div>
-    );
-  }
+  const handleGoogleRegisterError = () => {
+    console.error('Google Sign-In Failed (Register)');
+    setError(t('register.googleError'));
+  };
 
   return (
     <div className="register-container">
@@ -173,40 +131,21 @@ const Register = () => {
           </div>
         </div>
 
-        <button 
-          className="google-button"
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <div className="spinner small-spinner"></div>
-              {t('register.loading')}
-            </>
-          ) : (
-            <>
-              <img src="/google-icon.svg" alt="Google" />
-              {t('register.signInWithGoogle')}
-            </>
-          )}
-        </button>
+        {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
+        
+        <div className="google-register-section" style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+          <GoogleLogin
+            onSuccess={handleGoogleRegisterSuccess}
+            onError={handleGoogleRegisterError}
+            useOneTap
+          />
+        </div>
 
         <div className="divider">
           <span>{t('register.or')}</span>
         </div>
         
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
-
-        {success && (
-          <div className="success-message">
-            {success}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
             <label htmlFor="email">{t('register.emailLabel')}</label>
@@ -267,7 +206,7 @@ const Register = () => {
         </form>
 
         <p className="login-link">
-          {t('register.loginLink')}
+          {t('register.alreadyAccount')} <a href="/login">{t('register.login')}</a>
         </p>
       </div>
     </div>

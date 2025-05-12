@@ -11,7 +11,7 @@ const API_URL = isProduction
 let userCache = {
   data: null,
   timestamp: null,
-  CACHE_DURATION: 300000 // 5 minutos (antes eran 5 segundos)
+  CACHE_DURATION: 5000 // 5 segundos
 };
 
 // Configure axios defaults

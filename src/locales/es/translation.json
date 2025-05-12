@@ -279,7 +279,7 @@
   },
   "homepage": {
     "heroTitle": "Audiocuentos para aprender español mientras se duermen.",
-    "heroDescription": "Genera cuentos personalizados que enganchen a tus hijos en segundos. Elige el tema, los nombres de los protagonistas, el género y la longitud. ¡Y su nivel de inglés!",
+    "heroDescription": "Genera cuentos personalizados que enganchen a tus hijos en segundos. Elige el tema, los nombres de los protagonistas, el género y la longitud. ¡Y su nivel de español!",
     "featuresTitle": "Características Principales",
     "uniqueStoriesTitle": "Historias Únicas",
     "uniqueStoriesDescription": "Cada historia es generada de forma única, adaptándose a tus preferencias y estilo.",
@@ -315,23 +315,27 @@
     "or": "o",
     "loginLink": "¿Ya tienes una cuenta? Inicia sesión",
     "freeStories": "¡Obtén 3 historias de audio gratis al registrarte!",
-    "subscribeLater": "Puedes suscribirte más tarde"
+    "subscribeLater": "Puedes suscribirte más tarde",
+    "createAccount": "Crear cuenta",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar sesión"
   },
   "login": {
     "title": "Iniciar Sesión",
-    "subtitle": "Bienvenido de nuevo",
-    "emailLabel": "Correo electrónico",
-    "emailPlaceholder": "tu@email.com",
+    "subtitle": "Accede a tu cuenta",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
     "passwordLabel": "Contraseña",
-    "passwordPlaceholder": "•••••••••••••••",
-    "loginButton": "Iniciar sesión",
-    "registerLink": "¿No tienes cuenta? Regístrate",
-    "loading": "Iniciando sesión...",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "loginButton": "Iniciar Sesión",
+    "loading": "Cargando...",
+    "connecting": "Conectando...",
+    "error": "Credenciales incorrectas",
+    "rateLimitError": "Demasiados intentos de inicio de sesión. Por favor, inténtalo más tarde.",
     "noAccount": "¿No tienes una cuenta?",
-    "register": "Regístrate",
-    "error": "Error al iniciar sesión. Por favor, verifica tus credenciales.",
+    "register": "Regístrate aquí",
     "or": "o",
-    "signInWithGoogle": "Iniciar sesión con Google"
+    "googleError": "Error al iniciar sesión con Google"
   },
  
   "profile": {

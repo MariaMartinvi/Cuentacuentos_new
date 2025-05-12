@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <!-- Optimizaciones de rendimiento -->
-    <link rel="preconnect" href="https://generadorcuentos.onrender.com" crossorigin>
-    <link rel="dns-prefetch" href="https://generadorcuentos.onrender.com">
-    <link rel="preload" href="/google-icon.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="%PUBLIC_URL%/logo192.png" as="image" type="image/png">
-    
     <!-- Primary Meta Tags -->
     <title>Mi Cuentacuentos - Audiocuentos personalizados para niños</title>
     <meta name="title" content="Mi Cuentacuentos - Audiocuentos personalizados para niños">
@@ -79,49 +73,12 @@
       }
     </script>
     
-    <!-- Google AdSense (cargado de forma asíncrona) -->
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8916688102365664"
     crossorigin="anonymous"></script>
 
-    <!-- Stripe Payment (cargado bajo demanda) -->
-    <script defer src="https://js.stripe.com/v3/"></script>
-    
-    <!-- Inicialización temprana para despertar al servidor -->
-    <script>
-      // Ping preventivo para despertar al servidor - ejecutado inmediatamente
-      (function() {
-        const isProduction = window.location.hostname !== 'localhost';
-        const API_URL = isProduction 
-          ? 'https://generadorcuentos.onrender.com'
-          : 'http://localhost:5001';
-          
-        try {
-          // Usar navigator.sendBeacon para una solicitud más eficiente y no bloqueante
-          if (navigator.sendBeacon) {
-            navigator.sendBeacon(`${API_URL}/test`);
-          } else {
-            // Fallback para navegadores más antiguos
-            fetch(`${API_URL}/test`, { 
-              method: 'GET',
-              mode: 'no-cors',
-              cache: 'no-store',
-              priority: 'high'
-            });
-          }
-          
-          // Realizamos un segundo ping después de 1s por si el servidor necesita más tiempo para despertar
-          setTimeout(function() {
-            if (navigator.sendBeacon) {
-              navigator.sendBeacon(`${API_URL}/test`);
-            } else {
-              fetch(`${API_URL}/test`, { mode: 'no-cors', cache: 'no-store' });
-            }
-          }, 1000);
-        } catch (e) {
-          // Silenciamos errores
-        }
-      })();
-    </script>
+    <!-- Stripe Payment -->
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
     <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
