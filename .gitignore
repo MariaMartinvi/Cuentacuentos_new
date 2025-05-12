@@ -36,3 +36,8 @@ Thumbs.db
 
 # Additional changes from the code block
 firebase-debug.log*
+
+# Firebase service account keys
+**/serviceAccountKey.json
+**/serviceAccountKey.json.json
+scripts/serviceAccountKey*.json
