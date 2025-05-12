@@ -1,0 +1,40 @@
+.page-title {
+  font-size: 1.8rem; /* Reducido desde tu comentario "Smaller title" */
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.4rem; /* Reducido desde 1.6rem */
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.2rem; /* Reducido desde 1.4rem */
+  }
+}
+.section-title {
+  font-size: 1.4rem; /* Reducido desde tu comentario "Smaller section titles" */
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--light-gray);
+  padding-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.1rem; /* Reducido desde 1.3rem */
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1rem; /* Reducido desde 1.2rem */
+  }
+}

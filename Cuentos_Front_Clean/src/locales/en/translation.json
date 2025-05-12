@@ -1,0 +1,388 @@
+{
+  "subscription": {
+    "freeTitle": "Free Plan",
+    "freeDescription": "You have {{remaining}} free stories left",
+    "activeTitle": "Premium Plan",
+    "activeDescription": "You have {{remaining}} stories this month",
+    "cancelledTitle": "Subscription Ended",
+    "cancelledDescription": "Your subscription has ended. Subscribe again to generate more stories!",
+    "storyLimit": "You have reached your story limit. Please subscribe to generate more stories.",
+    "subscribe": {
+      "title": "Upgrade to Premium",
+      "features": {
+        "title": "Premium Features",
+        "unlimited": "Unlimited story generation",
+        "priority": "Priority support",
+        "support": "24/7 customer support"
+      },
+      "price": {
+        "title": "Subscription Price",
+        "amount": "€5/month"
+      },
+      "button": "Premium Plan",
+      "error": {
+        "noEmail": "User email is required",
+        "noSession": "Invalid session response from server",
+        "stripeLoad": "Error loading Stripe. Please try again later.",
+        "general": "An error occurred during subscription. Please try again."
+      },
+      "closeError": "Close error message"
+    },
+    "resubscribe": "Reactivate Subscription",
+    "processing": "Processing...",
+    "error": "An error occurred. Please try again.",
+    "title": "",
+    "subtitle": "",
+    "description": "",
+    "featuresTitle": "Premium Features",
+    "feature1": "Unlimited story generation",
+    "feature2": "Priority support",
+    "feature3": "Access to all story types",
+    "subscribeButton": "Premium Plan",
+    "success": "Subscription successful!",
+    "cancel": "Cancel Subscription",
+    "cancelSuccess": "Subscription cancelled successfully",
+    "resubscribeSuccess": "Subscription reactivated successfully",
+    "features": "Features",
+    "unlimitedStories": "Unlimited stories",
+    "prioritySupport": "Priority support",
+    "earlyAccess": "Early access to new features",
+    "price": "Price",
+    "priceDescription": "€5/month",
+    "successTitle": "Subscription Successful!",
+    "successMessage": "Thank you for subscribing. Your account has been updated with premium access.",
+    "redirectMessage": "You will be redirected to the home page in 5 seconds...",
+    "paymentSuccess": "Payment Successful!",
+    "thankYou": "Thank you for your subscription. You will be redirected to the home page shortly.",
+    "noSessionId": "No session ID found. Please contact support if you believe this is an error.",
+    "planTitle": "Premium Plan",
+    "planDescription": "For just €5 per month, generate 30 audio stories in any language",
+    "features": {
+      "0": "30 audio stories per month",
+      "1": "Stories in English and Spanish",
+      "2": "Different voices and accents",
+      "3": "Priority support",
+      "4": "Access to all premium features"
+    },
+    "cancelInfo": "You can cancel your subscription at any time. Premium access will continue until the end of the paid period.",
+    "paymentInfo": "Secure payment processed by Stripe. We do not store your card information."
+  },
+  "common": {
+    "learnMore": "Try it"
+  },
+  "storyForm": {
+    "title": "Story Generator",
+    "topicLabel": "Story Topic",
+    "topicPlaceholder": "Ex: A dragon learning to share",
+    "childNamesLabel": "Children's Names (optional)",
+    "childNamesPlaceholder": "Ex: Mary and John",
+    "englishLevelLabel": "English Level",
+    "englishLevelBeginner": "Beginner",
+    "englishLevelIntermediate": "Intermediate",
+    "englishLevelAdvanced": "Advanced",
+    "lengthLabel": "Length",
+    "lengthShort": "Short",
+    "lengthMedium": "Medium",
+    "lengthLong": "Long",
+    "typeLabel": "Story Type",
+    "typeOriginal": "Original",
+    "typeClassic": "Classic",
+    "typeHumor": "Humor",
+    "typeSciFi": "Sci-Fi",
+    "typeHorror": "Horror",
+    "typeAdventure": "Adventure",
+    "typeFantasy": "Fantasy",
+    "ageGroupLabel": "Age Group",
+    "ageGroupDefault": "Default",
+    "ageGroup3to5": "3-5 years",
+    "ageGroup6to8": "6-8 years",
+    "ageGroup9to12": "9-12 years",
+    "creativityLevelLabel": "Creativity Level",
+    "creativityStandard": "Standard",
+    "creativityInnovative": "Innovative",
+    "creativityCreative": "Very Creative",
+    "generateButton": "Generate Story",
+    "generating": "Generating...",
+    "resetButton": "Reset",
+    "storyLimitReached": "You have reached your free story limit. Please subscribe to generate more stories.",
+    "generalError": "An error occurred while generating the story. Please try again.",
+    "alertTopicRequired": "Write here the topic of your story",
+    "alertError": "An error occurred while generating the story",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "alertEmailRequired": "Please enter your email",
+    "loginRequired": "Please log in to generate stories",
+    "clickToLogin": "Click here to log in"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Submit"
+  },
+  "comoFunciona": {
+    "title": "How It Works",
+    "description": "Discover how to create magical stories that help your children learn languages while falling asleep",
+    "step1": {
+      "title": "Step 1: Choose and Customize",
+      "description": "Select the story topic and customize the details: genre, length, and language level. Add the main characters' names to make the story more personal and engaging for children.",
+      "features": {
+        "creative": "Creative and original topics",
+        "flexible": "Complete freedom of choice",
+        "language": "Language levels adapted to each age"
+      }
+    },
+    "step2": {
+      "title": "Step 2: Generate Your Story",
+      "description": "With just one click, our artificial intelligence will create a unique story in the selected language. Perfect for children to naturally familiarize themselves with new languages while enjoying a captivating tale.",
+      "features": {
+        "instant": "Instant generation",
+        "unique": "Unique stories every time",
+        "quality": "High narrative and linguistic quality"
+      }
+    },
+    "step3": {
+      "title": "Step 3: Listen and Learn",
+      "description": "Convert your story into an audiobook with native voices and different accents. Children will learn correct pronunciation while enjoying their favorite stories in another language. Perfect for learning while falling asleep!",
+      "features": {
+        "voices": "Authentic native voices",
+        "accents": "Multiple accents",
+        "download": "Download for offline listening"
+      }
+    }
+  },
+  "terminos": {
+    "title": "Terms and Conditions",
+    "introduccion": "Introduction",
+    "introduccionTexto": "Welcome to MiCuentaCuentos. By accessing and using our service, you accept these terms and conditions. These terms govern your use of our personalized story generation platform.",
+    "uso": "Service Usage",
+    "usoTexto": "Our service is intended for generating personalized stories. You must use the service responsibly and respecting copyright. The following is not permitted: 1) Generating illegal, offensive, or inappropriate content. 2) Attempting to access restricted areas of the system. 3) Sharing your account with third parties. 4) Using the service for commercial purposes without authorization.",
+    "suscripcion": "Subscription and Payments",
+    "suscripcionTexto": "We offer free and paid plans. Subscriptions are automatically renewed and can be cancelled at any time. Payments are processed securely through Stripe. We do not store credit card information. Free plan users have limited access to certain features. The premium plan offers unlimited access to all features.",
+    "propiedad": "Intellectual Property",
+    "propiedadTexto": "The generated stories are the property of the user who creates them. MiCuentaCuentos reserves the right to use the stories anonymously to improve the service. The platform and its technology are the exclusive property of MiCuentaCuentos. Copying, modifying, or distributing the code or interface without authorization is not permitted.",
+    "limitacion": "Liability Limitation",
+    "limitacionTexto": "We are not responsible for the content generated by users or any damage resulting from the use of the service. The service is provided 'as is' without warranties of any kind. We do not guarantee continuous service availability or the accuracy of generated stories.",
+    "contacto": "Contact and Support",
+    "contactoTexto": "For any questions about these terms, contact us through our contact form. We offer email support Monday through Friday from 9:00 to 18:00. For urgent technical issues, premium users have access to priority support."
+  },
+  "politica": {
+    "title": "Privacy Policy",
+    "introduccion": "Introduction",
+    "introduccionTexto": "At MiCuentaCuentos, we take our users' privacy very seriously. This policy explains how we handle your personal data and how we protect your privacy while using our story generation service.",
+    "datos": "Data We Collect",
+    "datosTexto": "We collect the following information: 1) Registration data: name, email, and password (encrypted). 2) Usage data: story preferences, generation history, and settings. 3) Payment data: securely processed by Stripe, without storing card information. 4) Cookies: to improve experience and analyze site usage.",
+    "usoDatos": "Data Usage",
+    "usoDatosTexto": "We use your data to: 1) Provide and improve the service. 2) Personalize your experience. 3) Process payments securely. 4) Send important updates. 5) Respond to support inquiries. We do not share your data with third parties except for payment processing or when required by law.",
+    "seguridad": "Security and Protection",
+    "seguridadTexto": "We implement robust security measures: 1) Encryption of sensitive data. 2) Secure authentication. 3) Protection against unauthorized access. 4) Regular backups. 5) Continuous security monitoring. Payment data is processed exclusively through Stripe, meeting the highest security standards.",
+    "cookies": "Cookies and Similar Technologies",
+    "cookiesTexto": "We use cookies to: 1) Keep your session active. 2) Remember your preferences. 3) Analyze site usage. 4) Improve performance. You can manage your cookie preferences at any time. Some features may not be available if you disable essential cookies.",
+    "derechos": "Your Rights",
+    "derechosTexto": "You have the right to: 1) Access your personal data. 2) Correct inaccurate information. 3) Request deletion of your data. 4) Export your data in a standard format. 5) Withdraw your consent at any time. To exercise these rights, please contact us through our contact form."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "AGENCIA COMARTINVI",
+    "mission": {
+      "title": "Our Mission",
+      "text": "At MiCuentaCuentos, we are dedicated to making story creation accessible and fun for everyone. We use the latest artificial intelligence technology to help you bring your ideas to life."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "text": "We want to be the leading platform in personalized story generation, offering a unique and creative experience for our users."
+    },
+    "team": {
+      "title": "Our Team",
+      "description": "We are a passionate team of developers, writers, and creatives working together to create the best story generation experience. Visit",
+      "members": {
+        "developer": {
+          "name": "Developers",
+          "role": "Technology and programming experts"
+        },
+        "writer": {
+          "name": "Writers",
+          "role": "Children's literature professionals"
+        },
+        "creative": {
+          "name": "Creatives",
+          "role": "Design and user experience specialists"
+        }
+      }
+    },
+    "values": {
+      "title": "Our Values",
+      "creatividad": "Creativity",
+      "creatividadText": "We foster creative expression and innovation in every story.",
+      "accesibilidad": "Accessibility",
+      "accesibilidadText": "We make story creation accessible to everyone.",
+      "calidad": "Quality",
+      "calidadText": "We are committed to offering the best quality in every generated story."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Do you have any questions or suggestions? We are here to help you.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "How can we help you?",
+      "message": "Message",
+      "messagePlaceholder": "Write your message here...",
+      "submit": "Send Message",
+      "success": "Message sent successfully!",
+      "error": "There was an error sending the message. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "emailText": "info@micuentacuentos.com",
+      "location": "Location",
+      "locationText": "Barcelona, Spain",
+      "hours": "Business Hours",
+      "hoursText": "Monday to Friday: 9:00 - 18:00"
+    }
+  },
+  "storyDisplay": {
+    "title": "Your Story",
+    "textOptions": "Text Options:",
+    "copyText": "Copy text",
+    "downloadText": "Download text",
+    "audioOptions": "Convert to audio:",
+    "voiceType": "Voice type:",
+    "voiceFemale": "Female (Spain)",
+    "voiceMale": "Male (Spain)",
+    "voiceFemaleLatam": "Female (Latin America)",
+    "voiceMaleLatam": "Male (Latin America)",
+    "voiceFemaleEnglish": "Female English (USA)",
+    "voiceMaleEnglish": "Male English (USA)",
+    "generateAudio": "Generate Audio",
+    "generatingAudio": "Generating audio...",
+    "copySuccess": "Story copied to clipboard",
+    "audioError": "There was an error generating the audio. Please try again.",
+    "speechRate": "Speech rate:",
+    "speedVerySlow": "Very Slow",
+    "speedSlow": "Slow",
+    "speedNormal": "Normal",
+    "speedFast": "Fast",
+    "speedVeryFast": "Very Fast",
+    "audioLimitReached": "You have reached the limit of 4 audio versions for this story. Generate a new story to create more audio versions.",
+    "backgroundMusic": "Background music:",
+    "noMusic": "No background music",
+    "randomMusic": "Random music",
+    "relaxingMusic": "Relaxing ambient",
+    "magicalMusic": "Magic forest",
+    "adventureMusic": "Adventure",
+    "bedtimeMusic": "Bedtime lullaby",
+    "pianoMusic": "Piano lullaby",
+    "forestMusic": "Forest sounds",
+    "musicBoxMusic": "Music box",
+    "journeyMusic": "Magical journey"
+  },
+  "homepage": {
+    "heroTitle": "Audio stories to learn English while falling asleep.",
+    "heroDescription": "Generate personalized stories that engage your children in seconds. Choose the topic, main characters' names, genre, and length. And their English level!",
+    "featuresTitle": "Main Features",
+    "uniqueStoriesTitle": "Unique Stories",
+    "uniqueStoriesDescription": "Each story is uniquely generated, adapting to your preferences and style.",
+    "multipleGenresTitle": "Multiple Genres",
+    "multipleGenresDescription": "Choose from adventure, fantasy, science fiction, humor, and more.",
+    "audioConversionTitle": "Audio in Different Voices",
+    "audioConversionDescription": "Convert your stories to audio with different voices and accents."
+  },
+  "navbar": {
+    "appName": "MyStoryTeller",
+    "home": "Home",
+    "stories": "Stories",
+    "create": "Create",
+    "profile": "Profile",
+    "subscribe": "Subscribe",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "contact": "Contact",
+    "english": "Learn English",
+    "spanish": "Aprende Español"
+  },
+  "register": {
+    "title": "Create Your Account",
+    "subtitle": "Join us to start creating amazing stories",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "button": "Create Account",
+    "loading": "Creating Account...",
+    "haveAccount": "Already have an account?",
+    "login": "Sign in",
+    "error": "An error occurred during registration. Please try again.",
+    "passwordsDontMatch": "Passwords do not match",
+    "freeStories": "Get 3 free audio stories when you register!",
+    "subscribeLater": "To generate more stories, you'll need to subscribe to our premium plan.",
+    "createAccount": "Create account",
+    "alreadyAccount": "Already have an account?",
+    "login": "Sign in"
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Access your account",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "loginButton": "Login",
+    "loading": "Loading...",
+    "connecting": "Connecting...",
+    "error": "Invalid credentials",
+    "rateLimitError": "Too many login attempts. Please try again later.",
+    "noAccount": "Don't have an account?",
+    "register": "Register here",
+    "or": "or",
+    "googleError": "Error logging in with Google"
+  },
+  "profile": {
+    "title": "My Profile",
+    "name": "Name",
+    "email": "Email",
+    "subscriptionStatus": "Subscription Status",
+    "subscriptionFree": "Free Plan",
+    "subscriptionActive": "Premium Plan Active",
+    "subscriptionCancelled": "Subscription Cancelled",
+    "cancelSubscription": "Cancel Subscription",
+    "cancelling": "Cancelling...",
+    "subscriptionCancelled": "Subscription cancelled successfully",
+    "cancelError": "Error cancelling subscription",
+    "noActiveSubscription": "You don't have an active subscription",
+    "storiesRemaining": "Available Stories",
+    "storiesRemainingOf": "of",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "cancelInfo": "Your subscription will remain active until the end of the current billing period",
+    "premiumInfo": "Subscribe to the Premium plan to generate up to 30 stories per month",
+    "learnMore": "Learn more"
+  },
+  "footer": {
+    "title": "AI Story Generator",
+    "description": "Create engaging stories in English with artificial intelligence. Customize, generate, and listen to your stories with our free tool.",
+    "quickLinks": "Quick Links",
+    "howItWorks": "How It Works",
+    "aboutUs": "About Us",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "copyright": "AI Story Generator. All rights reserved.",
+    "madeWith": "Made with",
+    "inBarcelona": "in Barcelona"
+  },
+  "cookies": {
+    "title": "We use cookies",
+    "description": "This site uses cookies to enhance your experience, analyze traffic, and personalize content. By accepting, you consent to the use of cookies as described in our privacy policy.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "moreInfo": "More information"
+  }
+} 
