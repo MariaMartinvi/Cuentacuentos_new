@@ -1,0 +1,110 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 60px;
+}
+
+.navbar-brand {
+  flex: 1;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+  flex: 2;
+  justify-content: center;
+}
+
+.navbar-menu a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.navbar-menu a:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.navbar-menu a.active {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-button,
+.register-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.login-button {
+  color: #333;
+  background-color: transparent;
+  border: 1px solid #333;
+}
+
+.register-button {
+  color: white;
+  background-color: #333;
+  border: 1px solid #333;
+}
+
+.login-button:hover {
+  background-color: #f0f0f0;
+}
+
+.register-button:hover {
+  background-color: #444;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .navbar-brand {
+    margin-bottom: 10px;
+  }
+
+  .navbar-menu {
+    margin: 10px 0;
+  }
+
+  .navbar-actions {
+    margin-top: 10px;
+  }
+} 

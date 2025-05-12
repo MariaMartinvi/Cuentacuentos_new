@@ -1,0 +1,397 @@
+{
+  "subscription": {
+    "freeTitle": "Plan Gratuito",
+    "freeDescription": "Te quedan {{remaining}} historias gratuitas",
+    "activeTitle": "Plan Premium",
+    "activeDescription": "Tienes {{remaining}} historias este mes",
+    "cancelledTitle": "Suscripción Finalizada",
+    "cancelledDescription": "Tu suscripción ha finalizado. ¡Suscríbete de nuevo para generar más historias!",
+    "storyLimit": "Has alcanzado tu límite de historias. Por favor, suscríbete para generar más historias.",
+    "subscribe": {
+      "title": "Actualizar a Premium",
+      "features": {
+        "title": "Características Premium",
+        "unlimited": "Generación ilimitada de cuentos",
+        "priority": "Soporte prioritario",
+        "support": "Soporte al cliente 24/7"
+      },
+      "price": {
+        "title": "Precio de Suscripción",
+        "amount": "5€/mes"
+      },
+      "button": "Plan Premium",
+      "error": {
+        "noEmail": "Se requiere el correo electrónico del usuario",
+        "noSession": "Respuesta de sesión inválida del servidor",
+        "stripeLoad": "Error al cargar Stripe. Por favor, inténtelo de nuevo más tarde.",
+        "general": "Ocurrió un error durante la suscripción. Por favor, inténtelo de nuevo."
+      },
+      "closeError": "Cerrar mensaje de error"
+    },
+    "resubscribe": "Reactivar Suscripción",
+    "processing": "Procesando...",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "title": "",
+    "subtitle": "",
+    "description": "",
+    "featuresTitle": "Características Premium",
+    "feature1": "Generación ilimitada de cuentos",
+    "feature2": "Soporte prioritario",
+    "feature3": "Acceso a todos los tipos de cuentos",
+    "subscribeButton": "Plan Premium",
+    "success": "¡Suscripción exitosa!",
+    "cancel": "Cancelar Suscripción",
+    "cancelSuccess": "Suscripción cancelada exitosamente",
+    "resubscribeSuccess": "Suscripción reactivada exitosamente",
+    "features": "Características",
+    "unlimitedStories": "Cuentos ilimitados",
+    "prioritySupport": "Soporte prioritario",
+    "earlyAccess": "Acceso anticipado a nuevas funciones",
+    "price": "Precio",
+    "priceDescription": "5€/mes",
+    "successTitle": "¡Suscripción Exitosa!",
+    "successMessage": "Gracias por suscribirte. Tu cuenta ha sido actualizada con acceso premium.",
+    "redirectMessage": "Serás redirigido a la página principal en 5 segundos...",
+    "planTitle": "Plan Premium",
+    "planDescription": "Por solo 5€ al mes, genera 30 audiocuentos en cualquier idioma",
+    "features": {
+      "0": "30 audiocuentos mensuales",
+      "1": "Cuentos en español e inglés",
+      "2": "Diferentes voces y acentos",
+      "3": "Soporte prioritario",
+      "4": "Acceso a todas las funciones premium"
+    },
+    "cancelInfo": "Puedes cancelar tu suscripción en cualquier momento. El acceso premium continuará hasta el final del período pagado.",
+    "paymentInfo": "Pago seguro procesado por Stripe. No almacenamos información de tu tarjeta."
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "submit": "Enviar"
+  },
+  "comoFunciona": {
+    "title": "Cómo Funciona",
+    "description": "Descubre cómo crear historias mágicas que ayudan a tus hijos a aprender idiomas mientras se duermen",
+    "step1": {
+      "title": "Paso 1: Elige y Personaliza",
+      "description": "Selecciona el tema de la historia y personaliza los detalles: género, longitud y nivel de idioma. Añade los nombres de los protagonistas para hacer la historia más personal y atractiva para los niños.",
+      "features": {
+        "creative": "Temas creativos y originales",
+        "flexible": "Total libertad de elección",
+        "language": "Niveles de idioma adaptados a cada edad"
+      }
+    },
+    "step2": {
+      "title": "Paso 2: Genera tu Historia",
+      "description": "Con un solo clic, nuestra inteligencia artificial creará una historia única en el idioma seleccionado. Perfecta para que los niños se familiaricen con nuevos idiomas de forma natural mientras disfrutan de una historia cautivadora.",
+      "features": {
+        "instant": "Generación instantánea",
+        "unique": "Historias únicas cada vez",
+        "quality": "Alta calidad narrativa y lingüística"
+      }
+    },
+    "step3": {
+      "title": "Paso 3: Escucha y Aprende",
+      "description": "Convierte tu historia en un audiocuento con voces nativas y diferentes acentos. Los niños aprenderán la pronunciación correcta mientras disfrutan de sus cuentos favoritos en otro idioma. ¡Ideal para aprender mientras se duermen!",
+      "features": {
+        "voices": "Voces nativas auténticas",
+        "accents": "Múltiples acentos",
+        "download": "Descarga para escuchar offline"
+      }
+    }
+  },
+  "terminos": {
+    "title": "Términos y Condiciones",
+    "introduccion": "Introducción",
+    "introduccionTexto": "Bienvenido a MiCuentaCuentos. Al acceder y utilizar nuestro servicio, aceptas estos términos y condiciones. Estos términos rigen tu uso de nuestra plataforma de generación de cuentos personalizados.",
+    "uso": "Uso del Servicio",
+    "usoTexto": "Nuestro servicio está destinado a la generación de cuentos personalizados. Debes utilizar el servicio de manera responsable y respetando los derechos de autor. No está permitido: 1) Generar contenido ilegal, ofensivo o inapropiado. 2) Intentar acceder a áreas restringidas del sistema. 3) Compartir tu cuenta con terceros. 4) Utilizar el servicio para fines comerciales sin autorización.",
+    "suscripcion": "Suscripción y Pagos",
+    "suscripcionTexto": "Ofrecemos planes gratuitos y de pago. Las suscripciones se renuevan automáticamente y pueden cancelarse en cualquier momento. Los pagos se procesan de forma segura a través de Stripe. No almacenamos información de tarjetas de crédito. Los usuarios del plan gratuito tienen acceso limitado a ciertas funciones. El plan premium ofrece acceso ilimitado a todas las características.",
+    "propiedad": "Propiedad Intelectual",
+    "propiedadTexto": "Los cuentos generados son propiedad del usuario que los crea. MiCuentaCuentos se reserva el derecho de utilizar los cuentos de forma anónima para mejorar el servicio. La plataforma y su tecnología son propiedad exclusiva de MiCuentaCuentos. No está permitido copiar, modificar o distribuir el código o la interfaz sin autorización.",
+    "limitacion": "Limitación de Responsabilidad",
+    "limitacionTexto": "No nos hacemos responsables por el contenido generado por los usuarios ni por cualquier daño derivado del uso del servicio. El servicio se proporciona 'tal cual' sin garantías de ningún tipo. No garantizamos la disponibilidad continua del servicio ni la exactitud de los cuentos generados.",
+    "contacto": "Contacto y Soporte",
+    "contactoTexto": "Para cualquier consulta sobre estos términos, contacta con nosotros a través de nuestro formulario de contacto. Ofrecemos soporte por email de lunes a viernes de 9:00 a 18:00. Para problemas técnicos urgentes, los usuarios premium tienen acceso a soporte prioritario."
+  },
+  "politica": {
+    "title": "Política de Privacidad",
+    "introduccion": "Introducción",
+    "introduccionTexto": "En MiCuentaCuentos, nos tomamos muy en serio la privacidad de nuestros usuarios. Esta política explica cómo manejamos tus datos personales y cómo protegemos tu privacidad mientras utilizas nuestro servicio de generación de cuentos.",
+    "datos": "Datos que Recopilamos",
+    "datosTexto": "Recopilamos la siguiente información: 1) Datos de registro: nombre, correo electrónico y contraseña (cifrada). 2) Datos de uso: preferencias de historias, historial de generación y configuraciones. 3) Datos de pago: procesados de forma segura por Stripe, sin almacenar información de tarjetas. 4) Cookies: para mejorar la experiencia y analizar el uso del sitio.",
+    "usoDatos": "Uso de los Datos",
+    "usoDatosTexto": "Utilizamos tus datos para: 1) Proporcionar y mejorar el servicio. 2) Personalizar tu experiencia. 3) Procesar pagos de forma segura. 4) Enviar actualizaciones importantes. 5) Responder a consultas de soporte. No compartimos tus datos con terceros excepto para el procesamiento de pagos o cuando lo exija la ley.",
+    "seguridad": "Seguridad y Protección",
+    "seguridadTexto": "Implementamos medidas de seguridad robustas: 1) Encriptación de datos sensibles. 2) Autenticación segura. 3) Protección contra accesos no autorizados. 4) Copias de seguridad regulares. 5) Monitoreo continuo de seguridad. Los datos de pago se procesan exclusivamente a través de Stripe, cumpliendo con los más altos estándares de seguridad.",
+    "cookies": "Cookies y Tecnologías Similares",
+    "cookiesTexto": "Utilizamos cookies para: 1) Mantener tu sesión activa. 2) Recordar tus preferencias. 3) Analizar el uso del sitio. 4) Mejorar el rendimiento. Puedes gestionar tus preferencias de cookies en cualquier momento. Algunas funciones pueden no estar disponibles si desactivas las cookies esenciales.",
+    "derechos": "Tus Derechos",
+    "derechosTexto": "Tienes derecho a: 1) Acceder a tus datos personales. 2) Corregir información incorrecta. 3) Solicitar la eliminación de tus datos. 4) Exportar tus datos en formato estándar. 5) Retirar tu consentimiento en cualquier momento. Para ejercer estos derechos, contacta con nosotros a través del formulario de contacto."
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "subtitle": "AGENCIA COMARTINVI",
+    "mission": {
+      "title": "Nuestra Misión",
+      "text": "En MiCuentaCuentos, nos dedicamos a hacer que la creación de historias sea accesible y divertida para todos. Utilizamos la última tecnología de inteligencia artificial para ayudarte a dar vida a tus ideas."
+    },
+    "vision": {
+      "title": "Nuestra Visión",
+      "text": "Queremos ser la plataforma líder en generación de cuentos personalizados, ofreciendo una experiencia única y creativa para nuestros usuarios."
+    },
+    "team": {
+      "title": "Nuestro Equipo",
+      "description": "Somos un equipo apasionado de desarrolladores, escritores y creativos trabajando juntos para crear la mejor experiencia de generación de cuentos. Visita",
+      "members": {
+        "developer": {
+          "name": "Desarrolladores",
+          "role": "Expertos en tecnología y programación"
+        },
+        "writer": {
+          "name": "Escritores",
+          "role": "Profesionales de la literatura infantil"
+        },
+        "creative": {
+          "name": "Creativos",
+          "role": "Especialistas en diseño y experiencia de usuario"
+        }
+      }
+    },
+    "values": {
+      "title": "Nuestros Valores",
+      "creatividad": "Creatividad",
+      "creatividadText": "Fomentamos la expresión creativa y la innovación en cada historia.",
+      "accesibilidad": "Accesibilidad",
+      "accesibilidadText": "Hacemos que la creación de cuentos sea accesible para todos.",
+      "calidad": "Calidad",
+      "calidadText": "Nos comprometemos a ofrecer la mejor calidad en cada historia generada."
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "description": "¿Tienes alguna pregunta o sugerencia? Estamos aquí para ayudarte.",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "tu@email.com",
+      "subject": "Asunto",
+      "subjectPlaceholder": "¿Cómo podemos ayudarte?",
+      "message": "Mensaje",
+      "messagePlaceholder": "Escribe tu mensaje aquí...",
+      "submit": "Enviar Mensaje",
+      "loading": "Enviando...",
+      "success": "¡Mensaje enviado con éxito!",
+      "error": "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Email",
+      "emailText": "info@micuentacuentos.com",
+      "location": "Ubicación",
+      "locationText": "Barcelona, España",
+      "hours": "Horario de Atención",
+      "hoursText": "Lunes a Viernes: 9:00 - 18:00"
+    }
+  },
+  "storyDisplay": {
+    "title": "Tu Cuento",
+    "textOptions": "Opciones de texto:",
+    "copyText": "Copiar texto",
+    "downloadText": "Descargar texto",
+    "audioOptions": "Convertir a audio:",
+    "voiceType": "Tipo de voz:",
+    "voiceFemale": "Mujer (España)",
+    "voiceMale": "Hombre (España)",
+    "voiceFemaleLatam": "Mujer (Latinoamérica)",
+    "voiceMaleLatam": "Hombre (Latinoamérica)",
+    "voiceFemaleEnglish": "Mujer Inglés (EEUU)",
+    "voiceMaleEnglish": "Hombre Inglés (EEUU)",
+    "generateAudio": "Generar Audio",
+    "generatingAudio": "Generando audio...",
+    "copySuccess": "Cuento copiado al portapapeles",
+    "audioError": "Hubo un error al generar el audio. Por favor, inténtalo de nuevo.",
+    "speechRate": "Velocidad de habla:",
+    "speedVerySlow": "Muy Lenta",
+    "speedSlow": "Lenta",
+    "speedNormal": "Normal",
+    "speedFast": "Rápida",
+    "speedVeryFast": "Muy Rápida",
+    "audioLimitReached": "Has alcanzado el límite de 4 versiones de audio para este cuento. Genera un nuevo cuento para crear más versiones de audio.",
+    "backgroundMusic": "Música de fondo:",
+    "noMusic": "Sin música de fondo",
+    "randomMusic": "Música aleatoria",
+    "relaxingMusic": "Ambiente relajante",
+    "magicalMusic": "Bosque mágico",
+    "adventureMusic": "Aventura",
+    "bedtimeMusic": "Nana para dormir",
+    "pianoMusic": "Nana de piano",
+    "forestMusic": "Sonidos del bosque",
+    "musicBoxMusic": "Caja de música",
+    "journeyMusic": "Viaje mágico"
+  },
+  "storyForm": {
+    "title": "Generador de Cuentos",
+    "topicLabel": "Tema del cuento",
+    "topicPlaceholder": "Ej: Un dragón que aprende a compartir",
+    "childNamesLabel": "Nombres de los niños (opcional)",
+    "childNamesPlaceholder": "Ej: María y Juan",
+    "englishLevelLabel": "Nivel de español",
+    "englishLevelBeginner": "Principiante",
+    "englishLevelIntermediate": "Intermedio",
+    "englishLevelAdvanced": "Avanzado",
+    "lengthLabel": "Longitud",
+    "lengthShort": "Corta",
+    "lengthMedium": "Media",
+    "lengthLong": "Larga",
+    "typeLabel": "Tipo de cuento",
+    "typeOriginal": "Original",
+    "typeClassic": "Clásico",
+    "typeHumor": "Humor",
+    "typeSciFi": "Ciencia ficción",
+    "typeHorror": "Terror",
+    "typeAdventure": "Aventura",
+    "typeFantasy": "Fantasía",
+    "ageGroupLabel": "Grupo de edad",
+    "ageGroupDefault": "Por defecto",
+    "ageGroup3to5": "3-5 años",
+    "ageGroup6to8": "6-8 años",
+    "ageGroup9to12": "9-12 años",
+    "creativityLevelLabel": "Nivel de creatividad",
+    "creativityStandard": "Estándar",
+    "creativityInnovative": "Innovador",
+    "creativityCreative": "Muy creativo",
+    "generateButton": "Generar Cuento",
+    "generating": "Generando...",
+    "resetButton": "Reiniciar",
+    "storyLimitReached": "Has alcanzado tu límite de historias gratuitas. Por favor, suscríbete para generar más historias.",
+    "generalError": "Ha ocurrido un error al generar el cuento. Por favor, inténtalo de nuevo.",
+    "loginRequired": "Por favor, inicia sesión para generar cuentos",
+    "clickToLogin": "Haz clic aquí para iniciar sesión",
+    "alertTopicRequired": "Escribe aquí el tema de tu cuento"
+  },
+  "homepage": {
+    "heroTitle": "Audiocuentos para aprender español mientras se duermen.",
+    "heroDescription": "Genera cuentos personalizados que enganchen a tus hijos en segundos. Elige el tema, los nombres de los protagonistas, el género y la longitud. ¡Y su nivel de español!",
+    "featuresTitle": "Características Principales",
+    "uniqueStoriesTitle": "Historias Únicas",
+    "uniqueStoriesDescription": "Cada historia es generada de forma única, adaptándose a tus preferencias y estilo.",
+    "multipleGenresTitle": "Múltiples Géneros",
+    "multipleGenresDescription": "Elige entre aventura, fantasía, ciencia ficción, humor y más.",
+    "audioConversionTitle": "Audio en Diferentes Voces",
+    "audioConversionDescription": "Convierte tus historias en audio con diferentes voces y acentos."
+  },
+
+  "audioPlayer": {
+    "title": "Reproductor de Audio",
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "progress": "Progreso del audio",
+    "download": "Descargar audio",
+    "downloadFileName": "historia"
+  },
+  "register": {
+    "title": "Crear una cuenta",
+    "subtitle": "Únete a MiCuentaCuentos y comienza a crear historias mágicas",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Repite tu contraseña",
+    "registerButton": "Registrarse",
+    "loading": "Registrando...",
+    "success": "¡Registro exitoso!",
+    "error": "Ocurrió un error durante el registro. Por favor, inténtalo de nuevo.",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "signInWithGoogle": "Registrarse con Google",
+    "or": "o",
+    "loginLink": "¿Ya tienes una cuenta? Inicia sesión",
+    "freeStories": "¡Obtén 3 historias de audio gratis al registrarte!",
+    "subscribeLater": "Puedes suscribirte más tarde",
+    "createAccount": "Crear cuenta",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar sesión"
+  },
+  "login": {
+    "title": "Iniciar Sesión",
+    "subtitle": "Accede a tu cuenta",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "loginButton": "Iniciar Sesión",
+    "loading": "Cargando...",
+    "connecting": "Conectando...",
+    "error": "Credenciales incorrectas",
+    "rateLimitError": "Demasiados intentos de inicio de sesión. Por favor, inténtalo más tarde.",
+    "noAccount": "¿No tienes una cuenta?",
+    "register": "Regístrate aquí",
+    "or": "o",
+    "googleError": "Error al iniciar sesión con Google"
+  },
+ 
+  "profile": {
+    "title": "Mi Perfil",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "subscriptionStatus": "Estado de suscripción",
+    "subscriptionActive": "Activa",
+    "subscriptionInactive": "Inactiva",
+    "subscriptionCancelled": "Cancelada",
+    "subscriptionNone": "Sin suscripción",
+    "subscriptionFree": "Gratuito",
+    "subscriptionTrialing": "Período de prueba",
+    "cancelSubscription": "Cancelar suscripción",
+    "cancelling": "Cancelando...",
+    "cancelInfo": "Puedes cancelar cuando quieras. Seguirás teniendo acceso premium hasta el final del período pagado.",
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error al cargar los datos del perfil",
+    "subscriptionCancelled": "Tu suscripción ha sido cancelada correctamente",
+    "premiumInfo": "Por solo 5€ al mes, genera 30 audiocuentos en cualquier idioma.",
+    "learnMore": "Saber más"
+  },
+  "navbar": {
+    "appName": "MiCuentaCuentos",
+    "home": "Inicio",
+    "stories": "Cuentos",
+    "create": "Crear",
+    "profile": "Perfil",
+    "contact": "Contacto",
+    "subscribe": "Suscribirse",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "english": "Learn English",
+    "spanish": "Aprende Español"
+  },
+  "footer": {
+    "title": "Generador de Cuentos IA",
+    "description": "Crea historias cautivadoras en español con inteligencia artificial. Personaliza, genera y escucha tus cuentos con nuestra herramienta gratuita.",
+    "quickLinks": "Enlaces Rápidos",
+    "howItWorks": "Cómo Funciona",
+    "aboutUs": "Sobre Nosotros",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad",
+    "copyright": "Generador de Cuentos IA. Todos los derechos reservados.",
+    "madeWith": "Hecho con",
+    "inBarcelona": "en Barcelona"
+  },
+  "common": {
+    "learnMore": "Pruébalo"
+  },
+  "cookies": {
+    "title": "Usamos cookies",
+    "description": "Este sitio utiliza cookies para mejorar tu experiencia, analizar el tráfico y personalizar el contenido. Al aceptar, consientes el uso de cookies según nuestra política de privacidad.",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "moreInfo": "Más información"
+  }
+} 
