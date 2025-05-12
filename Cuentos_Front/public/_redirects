@@ -1,0 +1,8 @@
+# Redirect all HTTP to HTTPS
+http://* https://:splat 301!
+
+# Redirect non-www to www
+https://micuentacuentos.com/* https://www.micuentacuentos.com/:splat 301!
+
+# Handle client-side routing
+/* /index.html 200
