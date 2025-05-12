@@ -1,0 +1,37 @@
+{
+  "subscription": {
+    "title": "Suscripción Premium",
+    "planTitle": "Plan Premium",
+    "features": {
+      "stories": "30 historias al mes",
+      "unlimited": "Historias ilimitadas",
+      "cancel": "Cancelación en cualquier momento"
+    },
+    "subscribe": "Suscribirse por 5€/mes",
+    "processing": "Procesando...",
+    "alreadySubscribed": "¡Ya estás suscrito!",
+    "redirecting": "Redirigiendo...",
+    "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior."
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "name": "Nombre",
+    "email": "Email",
+    "subscriptionStatus": "Estado de la Suscripción",
+    "subscriptionFree": "Plan Gratuito",
+    "subscriptionActive": "Plan Premium Activo",
+    "subscriptionCancelled": "Suscripción Cancelada",
+    "cancelSubscription": "Cancelar Suscripción",
+    "cancelling": "Cancelando...",
+    "subscriptionCancelled": "Suscripción cancelada exitosamente",
+    "cancelError": "Error al cancelar la suscripción",
+    "noActiveSubscription": "No tienes una suscripción activa",
+    "storiesRemaining": "Cuentos Disponibles",
+    "storiesRemainingOf": "de",
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
+    "premiumInfo": "Suscríbete al plan Premium para generar hasta 30 cuentos al mes",
+    "learnMore": "Más información"
+  }
+} 
