@@ -376,7 +376,8 @@
     "privacy": "Privacy Policy",
     "copyright": "AI Story Generator. All rights reserved.",
     "madeWith": "Made with",
-    "inBarcelona": "in Barcelona"
+    "inBarcelona": "in Barcelona",
+    "storyExamples": "Story Examples"
   },
   "cookies": {
     "title": "We use cookies",
@@ -384,5 +385,40 @@
     "accept": "Accept",
     "reject": "Reject",
     "moreInfo": "More information"
+  },
+  "storyExamples": {
+    "title": "Story Examples",
+    "description": "Explore our collection of example stories for all ages and language levels.",
+    "filters": {
+      "title": "Filter by:",
+      "age": "Age",
+      "language": "Language",
+      "level": "Level"
+    },
+    "ageGroups": {
+      "all": "All ages",
+      "3to5": "3-5 years",
+      "6to8": "6-8 years",
+      "9to12": "9-12 years"
+    },
+    "languages": {
+      "all": "All languages",
+      "spanish": "Spanish",
+      "english": "English"
+    },
+    "levels": {
+      "all": "All levels",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "storyCard": {
+      "recommendedAge": "Recommended age:",
+      "language": "Language:",
+      "level": "Level:",
+      "readStory": "Read story",
+      "listenAudio": "Listen to audio"
+    },
+    "noResults": "No stories found with the selected filters."
   }
 } 

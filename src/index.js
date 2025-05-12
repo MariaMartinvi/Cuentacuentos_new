@@ -5,6 +5,7 @@ import './styles/global.css';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 

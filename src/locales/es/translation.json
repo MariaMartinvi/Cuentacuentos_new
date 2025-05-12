@@ -382,7 +382,8 @@
     "privacy": "Política de Privacidad",
     "copyright": "Generador de Cuentos IA. Todos los derechos reservados.",
     "madeWith": "Hecho con",
-    "inBarcelona": "en Barcelona"
+    "inBarcelona": "en Barcelona",
+    "storyExamples": "Ejemplos de cuentos"
   },
   "common": {
     "learnMore": "Pruébalo"
@@ -393,5 +394,40 @@
     "accept": "Aceptar",
     "reject": "Rechazar",
     "moreInfo": "Más información"
+  },
+  "storyExamples": {
+    "title": "Ejemplos de Cuentos",
+    "description": "Explora nuestra colección de cuentos de ejemplo para todas las edades y niveles de idioma.",
+    "filters": {
+      "title": "Filtrar por:",
+      "age": "Edad",
+      "language": "Idioma",
+      "level": "Nivel"
+    },
+    "ageGroups": {
+      "all": "Todas las edades",
+      "3to5": "3-5 años",
+      "6to8": "6-8 años",
+      "9to12": "9-12 años"
+    },
+    "languages": {
+      "all": "Todos los idiomas",
+      "spanish": "Español",
+      "english": "Inglés"
+    },
+    "levels": {
+      "all": "Todos los niveles",
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "storyCard": {
+      "recommendedAge": "Edad recomendada:",
+      "language": "Idioma:",
+      "level": "Nivel:",
+      "readStory": "Leer cuento",
+      "listenAudio": "Escuchar audio"
+    },
+    "noResults": "No se encontraron cuentos con los filtros seleccionados."
   }
 } 

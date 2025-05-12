@@ -14,6 +14,7 @@ import ContactPage from './components/pages/ContactPage';
 import TerminosPage from './components/pages/TerminosPage';
 import PoliticaPage from './components/pages/PoliticaPage';
 import ComoFuncionaPage from './components/pages/ComoFuncionaPage';
+import StoryExamplesPage from './components/pages/StoryExamplesPage';
 import GoogleCallback from './components/GoogleCallback';
 import { useAuth } from './contexts/AuthContext';
 
@@ -61,6 +62,7 @@ const AppRoutes = () => {
           <Route path="/terminos" element={<TerminosPage />} />
           <Route path="/politica" element={<PoliticaPage />} />
           <Route path="/como-funciona" element={<ComoFuncionaPage />} />
+          <Route path="/story-examples" element={<StoryExamplesPage />} />
           <Route path="/auth/google/callback" element={<GoogleCallback />} />
           <Route path="/login" element={
             <PublicRoute>

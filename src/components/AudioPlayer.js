@@ -1,44 +1,53 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function AudioPlayer({ audioUrl }) {
+const AudioPlayer = ({ audioUrl, title }) => {
   const { t } = useTranslation();
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (audioRef.current) {
-      const audio = audioRef.current;
+    const audio = audioRef.current;
+    
+    if (!audio) return;
 
-      const setAudioData = () => {
-        setDuration(audio.duration);
-      };
+    // Event listeners
+    const setAudioData = () => {
+      setDuration(audio.duration);
+      setLoading(false);
+    };
 
-      const setAudioTime = () => {
-        setCurrentTime(audio.currentTime);
-        setProgress((audio.currentTime / audio.duration) * 100);
-      };
+    const setAudioTime = () => setCurrentTime(audio.currentTime);
+    
+    const handleEnded = () => setIsPlaying(false);
 
-      // Set audio to loop to ensure continuous background music
-      audio.loop = true;
+    // Add event listeners
+    audio.addEventListener('loadeddata', setAudioData);
+    audio.addEventListener('timeupdate', setAudioTime);
+    audio.addEventListener('ended', handleEnded);
 
-      // Event listeners
-      audio.addEventListener('loadeddata', setAudioData);
-      audio.addEventListener('timeupdate', setAudioTime);
-      audio.addEventListener('ended', () => setIsPlaying(false));
+    // Clean up
+    return () => {
+      audio.removeEventListener('loadeddata', setAudioData);
+      audio.removeEventListener('timeupdate', setAudioTime);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, [audioRef]);
 
-      return () => {
-        audio.removeEventListener('loadeddata', setAudioData);
-        audio.removeEventListener('timeupdate', setAudioTime);
-        audio.removeEventListener('ended', () => setIsPlaying(false));
-      };
-    }
-  }, []);
+  // Reset player when audio URL changes
+  useEffect(() => {
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setDuration(0);
+    setLoading(true);
+  }, [audioUrl]);
 
   const togglePlay = () => {
+    if (!audioRef.current) return;
+    
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -47,83 +56,71 @@ function AudioPlayer({ audioUrl }) {
     setIsPlaying(!isPlaying);
   };
 
-  const handleProgressChange = (e) => {
-    const newTime = (e.target.value / 100) * duration;
-    audioRef.current.currentTime = newTime;
-    setProgress(e.target.value);
-    setCurrentTime(newTime);
+  const handleProgress = (e) => {
+    const progressBar = e.currentTarget;
+    const position = e.nativeEvent.offsetX / progressBar.offsetWidth;
+    const newTime = position * duration;
+    
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
   };
 
   const formatTime = (time) => {
     if (isNaN(time)) return '0:00';
+    
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   };
 
-  const handleDownloadAudio = () => {
-    const link = document.createElement('a');
-    link.href = audioUrl;
-    link.download = `${t('audioPlayer.downloadFileName')}-${Date.now()}.mp3`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
-    <div className="audio-player">
-      <audio ref={audioRef} src={audioUrl} loop />
-
-      <div className="player-header">
-        <div className="player-title">
-          <span className="audio-icon">🔊</span> {t('audioPlayer.title')}
-        </div>
-      </div>
-
-      <div className="player-controls">
-        <button
+    <div className="audio-player-container">
+      <h3>{title || t('audioPlayer.title')}</h3>
+      
+      <audio ref={audioRef} src={audioUrl} preload="metadata" />
+      
+      <div className="audio-player-controls">
+        <button 
+          className="audio-player-button" 
           onClick={togglePlay}
-          className="play-pause-btn"
+          disabled={loading}
           aria-label={isPlaying ? t('audioPlayer.pause') : t('audioPlayer.play')}
         >
-          {isPlaying ? (
-            <>⏸️ {t('audioPlayer.pause')}</>
-          ) : (
-            <>▶️ {t('audioPlayer.play')}</>
-          )}
+          {isPlaying ? '❚❚' : '▶'}
         </button>
-
-        <div className="progress-container">
-          <div className="time-display current-time">
-            {formatTime(currentTime)}
-          </div>
-
-          <input
-            type="range"
-            className="progress-bar"
-            value={progress}
-            onChange={handleProgressChange}
-            min="0"
-            max="100"
-            step="0.1"
-            aria-label={t('audioPlayer.progress')}
-          />
-
-          <div className="time-display duration">
-            {formatTime(duration)}
-          </div>
+        
+        <div className="audio-player-time">
+          {formatTime(currentTime)}
         </div>
-
-        <button
-          onClick={handleDownloadAudio}
-          className="download-audio-btn"
+        
+        <div 
+          className="audio-player-progress" 
+          onClick={handleProgress}
+          aria-label={t('audioPlayer.progress')}
+        >
+          <div 
+            className="audio-player-progress-bar" 
+            style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
+          />
+        </div>
+        
+        <div className="audio-player-time">
+          {formatTime(duration)}
+        </div>
+        
+        <a 
+          href={audioUrl} 
+          download={`${t('audioPlayer.downloadFileName')}.mp3`}
+          className="audio-download-button"
           aria-label={t('audioPlayer.download')}
         >
-          ⬇️ {t('audioPlayer.download')}
-        </button>
+          {t('audioPlayer.download')}
+        </a>
       </div>
     </div>
   );
-}
+};
 
 export default AudioPlayer;

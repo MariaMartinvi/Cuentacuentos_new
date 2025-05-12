@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -69,18 +68,112 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# Generador de Cuentos Frontend
 
-Este es el frontend para la aplicaciÛn Generador de Cuentos, una plataforma que permite generar historias personalizadas para niÒos.
+# MiCuentaCuentos - Story Examples Setup
 
-## Compatibilidad de versiones
+## Fixing Firebase Permission Errors
 
-Este proyecto utiliza las siguientes versiones de dependencias principales:
-- React: 18.2.0
-- React DOM: 18.2.0
-- React Router DOM: 6.22.3
-- React Helmet Async: 2.0.5
+If you're seeing errors like:
+```
+Error fetching story examples: FirebaseError: Missing or insufficient permissions.
+Error loading stories: FirebaseError: Missing or insufficient permissions.
+```
 
-Estas versiones son compatibles entre sÌ y han sido probadas para funcionar correctamente en Render.
->>>>>>> origin/master
+This is because the Firebase security rules need to be updated to allow public read access to the story examples.
+
+### Step 1: Update Firebase Security Rules
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/)
+2. Select your project: "cuentacuentos-b2e64"
+3. For Firestore Rules:
+   - Go to Firestore Database
+   - Click on the "Rules" tab
+   - Replace the existing rules with:
+   ```
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       // Allow public read access to story examples
+       match /storyExamples/{document=**} {
+         allow read: if true;
+         allow write: if request.auth != null; // Only authenticated users can write
+       }
+       
+       // For other collections, require authentication
+       match /{document=**} {
+         allow read, write: if request.auth != null;
+       }
+     }
+   }
+   ```
+   - Click "Publish"
+   
+4. For Storage Rules:
+   - Go to Storage
+   - Click on the "Rules" tab
+   - Replace the existing rules with:
+   ```
+   rules_version = '2';
+   service firebase.storage {
+     match /b/{bucket}/o {
+       // Allow public read access to stories and audio files
+       match /stories/{fileName} {
+         allow read: if true;
+         allow write: if request.auth != null; // Only authenticated users can write
+       }
+       
+       match /audio/{fileName} {
+         allow read: if true;
+         allow write: if request.auth != null; // Only authenticated users can write
+       }
+       
+       // For other files, require authentication
+       match /{allPaths=**} {
+         allow read, write: if request.auth != null;
+       }
+     }
+   }
+   ```
+   - Click "Publish"
+
+### Step 2: Create Example Story Data
+
+To add example stories to your Firebase project, follow these steps:
+
+1. Go to the Firebase Console
+2. Navigate to Firestore Database
+3. Create a collection called `storyExamples`
+4. Add a document with the following fields:
+   - id: "dragon-no-volar"
+   - title: "El drag√≥n que no pod√≠a volar"
+   - age: "3to5"
+   - language: "spanish"
+   - level: "beginner"
+   - textPath: "stories/dragon-no-volar.txt"
+   - audioPath: "audio/dragon-no-volar.mp3"
+
+5. Navigate to Storage
+6. Create a folder called `stories`
+7. Upload a text file named `dragon-no-volar.txt` with a sample story
+8. Create a folder called `audio`
+9. Upload an MP3 file named `dragon-no-volar.mp3` (you can use any small MP3 file for testing)
+
+After completing these steps, reload your application and the story examples should load correctly.
+
+## Running the Application
+
+To run the application in development mode:
+
+```
+npm start
+```
+
+To build the application for production:
+
+```
+npm run build
+```
+
+## Additional Information
+
+For more detailed setup instructions, see the `STORY_EXAMPLES_SETUP.md` file in the project root.
