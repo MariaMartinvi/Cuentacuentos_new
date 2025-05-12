@@ -1,8 +1,7 @@
 # Dependencies
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+/node_modules
+/.pnp
+.pnp.js
 
 # Environment variables
 .env
@@ -10,8 +9,7 @@ yarn-error.log
 .env.*.local
 
 # Build output
-dist/
-build/
+/build
 
 # IDE and editor files
 .idea/
@@ -33,7 +31,7 @@ tmp/
 *.tmp
 
 # Test coverage
-coverage/
+/coverage
 
 # Misc
 .DS_Store
@@ -49,5 +47,9 @@ test-*.mp3
 test-*.wav
 
 # Local Netlify folder
-.netlify
+.netlify/
 !assets/background-music/*.mp3
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

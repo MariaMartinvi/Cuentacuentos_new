@@ -1,0 +1,43 @@
+# Generador de Cuentos Backend
+
+Este es el backend para el generador de cuentos, una API que permite generar historias personalizadas y convertirlas en audio utilizando servicios como OpenAI y Google Text-to-Speech (TTS).
+
+## Características
+
+- **Generación de historias**: Utiliza OpenAI GPT-3.5 para generar historias personalizadas basadas en parámetros como tema, longitud, tipo de historia, nivel de creatividad y grupo de edad.
+- **Conversión de texto a audio**: Convierte las historias generadas en archivos de audio utilizando Google TTS.
+- **Seguridad**: Incluye middleware de seguridad como Helmet y limitación de tasa para proteger la API.
+- **Configuración de CORS**: Permite configurar orígenes permitidos para solicitudes.
+
+## Requisitos previos
+
+- Node.js (versión 18 o superior, especificada en el archivo `.nvmrc`)
+- Una cuenta de OpenAI con una clave de API válida.
+- Una cuenta de Google Cloud con acceso a la API de Text-to-Speech y una clave de API válida.
+
+## Instalación
+
+1. Clona este repositorio:
+
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd generador-cuentos-backend
+```
+
+# Notas importantes para el despliegue
+
+## Compatibilidad de versiones
+
+Este proyecto utiliza las siguientes versiones de dependencias principales:
+- React: 18.2.0
+- React DOM: 18.2.0
+- React Router DOM: 6.22.3
+- React Helmet Async: 2.0.5
+
+Estas versiones son compatibles entre sí y han sido probadas para funcionar correctamente en Render.
+
+Si durante el despliegue aparecen errores de dependencias (ERESOLVE), por favor asegúrate que las versiones en package.json coincidan con las mencionadas arriba.
+
+## Solución de problemas comunes
+
+Si tienes problemas con `react-helmet-async`, recuerda que esta librería solo es compatible con React hasta la versión 18.x. Utilizar React 19.x causará conflictos de dependencias.
