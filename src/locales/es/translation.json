@@ -386,7 +386,11 @@
     "storyExamples": "Ejemplos de cuentos"
   },
   "common": {
-    "learnMore": "Pruébalo"
+    "learnMore": "Pruébalo",
+    "viewAllStories": "Ver todos los cuentos",
+    "seeAllStories": "Ver todos los cuentos",
+    "errorLoading": "Error al cargar los cuentos",
+    "retryLoading": "Reintentar"
   },
   "cookies": {
     "title": "Usamos cookies",
