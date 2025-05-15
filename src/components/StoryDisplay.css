@@ -221,4 +221,62 @@
   color: white;
   font-size: 1rem;
   font-weight: 500;
+}
+
+.audio-player-error {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.audio-error-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.try-direct-btn,
+.try-alt-url-btn,
+.try-proxy-btn,
+.toggle-proxy-btn {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.try-direct-btn:hover,
+.try-alt-url-btn:hover,
+.try-proxy-btn:hover,
+.toggle-proxy-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.url-attempt-indicator {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.audio-debug {
+  margin-top: 15px;
+  border-top: 1px dashed #ddd;
+  padding-top: 10px;
+}
+
+.audio-debug details {
+  font-family: monospace;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  padding: 8px;
+  border-radius: 4px;
 } 

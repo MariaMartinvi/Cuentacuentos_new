@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Storage Proxy</title>
+  <script>
+    // Send ready signal when the page loads
+    window.addEventListener('load', function() {
+      console.log('[Proxy] Service loaded, sending ready signal');
+      window.parent.postMessage({ type: 'proxyReady' }, '*');
+    });
+
+    // Firebase config for direct access
+    const firebaseConfig = {
+      storageBucket: "cuentacuentos-b2e64.firebasestorage.app",
+      projectId: "cuentacuentos-b2e64"
+    };
+
+    // Listen for messages from the parent window
+    window.addEventListener('message', async function(event) {
+      // Handle fetchFile requests from proxyService.js
+      if (event.data.type === 'fetchFile') {
+        const { url, contentType, requestId } = event.data;
+        console.log(`[Proxy] Received fetchFile request #${requestId} for: ${url}`);
+        
+        try {
+          // Clean and decode the URL if needed
+          let cleanUrl = url;
+          if (cleanUrl.includes('%2F')) {
+            cleanUrl = decodeURIComponent(cleanUrl);
+            console.log(`[Proxy] Decoded URL: ${cleanUrl}`);
+          }
+          
+          // Extract filename and path parts
+          const pathParts = cleanUrl.split('/');
+          const filename = pathParts[pathParts.length - 1].split('?')[0];
+          const fileExtension = filename.split('.').pop().toLowerCase();
+          const isAudio = fileExtension === 'mp3' || fileExtension === 'wav' || fileExtension === 'ogg';
+          const isText = fileExtension === 'txt' || fileExtension === 'json';
+          
+          console.log(`[Proxy] Filename: ${filename}, Extension: ${fileExtension}, isAudio: ${isAudio}, isText: ${isText}`);
+          
+          // Create different URL variations to try
+          const urlVariations = [
+            // Original URL
+            cleanUrl,
+            
+            // Make sure we have alt=media parameter
+            cleanUrl.includes('?alt=media') ? cleanUrl : 
+              cleanUrl.includes('?') ? `${cleanUrl}&alt=media` : `${cleanUrl}?alt=media`,
+            
+            // Try direct Firebase Storage URLs with different bucket formats
+            `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.projectId}.appspot.com/o/${encodeURIComponent(filename)}?alt=media`,
+            `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${encodeURIComponent(filename)}?alt=media`,
+            
+            // Try with full path encoding
+            `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.projectId}.appspot.com/o/${encodeURIComponent(cleanUrl.replace(/^\/+/, ''))}?alt=media`,
+            `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${encodeURIComponent(cleanUrl.replace(/^\/+/, ''))}?alt=media`,
+            
+            // Try with different prefixes
+            isText ? `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/stories%2F${encodeURIComponent(filename)}?alt=media` : null,
+            isAudio ? `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/audio%2F${encodeURIComponent(filename)}?alt=media` : null,
+            
+            // Try Google Cloud Storage URLs
+            `https://storage.googleapis.com/${firebaseConfig.projectId}.appspot.com/${cleanUrl.replace(/^\/+/, '')}`,
+            
+            // Try with different path formats
+            cleanUrl.includes('stories/') ? cleanUrl.replace('stories/', '') : null,
+            cleanUrl.includes('audio/') ? cleanUrl.replace('audio/', '') : null,
+            
+            // Try direct download URLs for Firebase Storage
+            isAudio ? `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/audio%2F${encodeURIComponent(filename.replace('.mp3', ''))}?alt=media` : null
+          ].filter(Boolean); // Remove null entries
+          
+          console.log(`[Proxy] Will try these URL variations:`, urlVariations);
+          
+          let content = null;
+          let lastError = null;
+          let successfulUrl = null;
+          
+          // Try each URL variation until one works
+          for (const variation of urlVariations) {
+            try {
+              console.log(`[Proxy] Trying URL: ${variation}`);
+              
+              // Set up headers to avoid CORS issues
+              const headers = {
+                'Accept': '*/*',
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Origin': window.location.origin
+              };
+              
+              // Add specific headers for audio files
+              if (isAudio) {
+                headers['Accept'] = 'audio/*, */*';
+                if (contentType === 'blob') {
+                  headers['Range'] = 'bytes=0-';
+                }
+              }
+              
+              // Fetch the file
+              console.log(`[Proxy] Sending fetch request to: ${variation}`);
+              const response = await fetch(variation, {
+                method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                credentials: 'omit'
+              });
+              
+              console.log(`[Proxy] Response status: ${response.status}, headers:`, Object.fromEntries(response.headers.entries()));
+              
+              if (!response.ok) {
+                console.warn(`[Proxy] HTTP error for ${variation}: ${response.status}`);
+                lastError = new Error(`HTTP error! status: ${response.status}`);
+                continue; // Try next variation
+              }
+              
+              // Process the content based on the requested type
+              if (contentType === 'blob') {
+                content = await response.blob();
+                
+                // For audio files, ensure the correct MIME type
+                if (isAudio && !content.type.includes('audio')) {
+                  content = new Blob([content], { type: 'audio/mpeg' });
+                }
+                
+                console.log(`[Proxy] Successfully fetched blob from ${variation}, size: ${content.size} bytes, type: ${content.type}`);
+              } else {
+                content = await response.text();
+                console.log(`[Proxy] Successfully fetched text from ${variation}, length: ${content.length} characters`);
+                console.log(`[Proxy] Content preview: ${content.substring(0, 100)}...`);
+              }
+              
+              // If we got content, break the loop
+              if (content) {
+                successfulUrl = variation;
+                break;
+              }
+            } catch (variationError) {
+              console.warn(`[Proxy] Error fetching ${variation}:`, variationError);
+              lastError = variationError;
+              // Continue to next variation
+            }
+          }
+          
+          // If we got content from any variation, send it back
+          if (content) {
+            console.log(`[Proxy] Successfully retrieved content from: ${successfulUrl}`);
+            window.parent.postMessage({
+              type: 'fileContent',
+              requestId,
+              content,
+              url: successfulUrl,
+              success: true
+            }, '*');
+          } else {
+            // All variations failed
+            throw lastError || new Error('Failed to fetch content from any URL variation');
+          }
+          
+        } catch (error) {
+          console.error(`[Proxy] Error fetching ${url}:`, error);
+          
+          // Send error back to the parent window
+          window.parent.postMessage({
+            type: 'fileContent',
+            requestId,
+            error: error.message,
+            success: false
+          }, '*');
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Firebase Storage Proxy</h1>
+  <p>This page serves as a proxy for Firebase Storage files to avoid CORS issues.</p>
+  <p><strong>Status:</strong> <span id="status">Initializing...</span></p>
+  
+  <script>
+    // Update status when ready
+    window.addEventListener('load', function() {
+      document.getElementById('status').textContent = 'Ready';
+      document.getElementById('status').style.color = 'green';
+    });
+  </script>
+</body>
+</html> 

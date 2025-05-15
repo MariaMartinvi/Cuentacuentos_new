@@ -33,5 +33,10 @@
     "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
     "premiumInfo": "Suscríbete al plan Premium para generar hasta 30 cuentos al mes",
     "learnMore": "Más información"
+  },
+  "storyExamples": {
+    "storyCard": {
+      "usingMockContent": "Usando contenido de ejemplo"
+    }
   }
 } 

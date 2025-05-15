@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CookieConsentProvider } from './contexts/CookieConsentContext';
 import AppRoutes from './routes';
 import CookieConsent from './components/CookieConsent';
+import { initProxy, cleanupProxy } from './services/proxyService';
 
 // Determinar la URL correcta basada en el entorno
 const isProduction = window.location.hostname !== 'localhost';
@@ -40,20 +41,46 @@ function App() {
     
     return () => clearInterval(keepWarmInterval);
   }, []);
+  
+  // Inicializar el proxy para Firebase Storage
+  useEffect(() => {
+    console.log('Inicializando proxy para Firebase Storage...');
+    initProxy().then(() => {
+      console.log('Proxy para Firebase Storage inicializado correctamente');
+    }).catch(error => {
+      console.error('Error inicializando proxy para Firebase Storage:', error);
+    });
+    
+    return () => {
+      console.log('Limpiando proxy para Firebase Storage...');
+      cleanupProxy();
+    };
+  }, []);
 
   return (
-    <HelmetProvider>
-      <I18nextProvider i18n={i18n}>
-        <AuthProvider>
-          <CookieConsentProvider>
-            <Router>
-              <AppRoutes />
-              <CookieConsent />
-            </Router>
-          </CookieConsentProvider>
-        </AuthProvider>
-      </I18nextProvider>
-    </HelmetProvider>
+    <div className="App">
+      {/* Add the proxy iframe with proper attributes */}
+      <iframe
+        id="proxy-frame"
+        src="/proxy.html"
+        style={{ display: 'none' }}
+        title="Proxy Service"
+        sandbox="allow-same-origin allow-scripts"
+        referrerPolicy="no-referrer"
+      />
+      <HelmetProvider>
+        <I18nextProvider i18n={i18n}>
+          <AuthProvider>
+            <CookieConsentProvider>
+              <Router>
+                <AppRoutes />
+                <CookieConsent />
+              </Router>
+            </CookieConsentProvider>
+          </AuthProvider>
+        </I18nextProvider>
+      </HelmetProvider>
+    </div>
   );
 }
 

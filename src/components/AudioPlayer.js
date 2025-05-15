@@ -1,72 +1,309 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fetchThroughProxy } from '../services/proxyService';
 
 const AudioPlayer = ({ audioUrl, title }) => {
   const { t } = useTranslation();
   const audioRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const sourceNodeRef = useRef(null);
+  const gainNodeRef = useRef(null);
+  const audioBufferRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [debugInfo, setDebugInfo] = useState('');
+  const [usingWebAudio, setUsingWebAudio] = useState(true); // Use Web Audio API by default
+  const [startTime, setStartTime] = useState(0);
+  const [audioBuffer, setAudioBuffer] = useState(null);
+  const animationRef = useRef(null);
+  const [retryCount, setRetryCount] = useState(0);
 
+  // Initialize Web Audio API
   useEffect(() => {
-    const audio = audioRef.current;
-    
-    if (!audio) return;
-
-    // Event listeners
-    const setAudioData = () => {
-      setDuration(audio.duration);
-      setLoading(false);
-    };
-
-    const setAudioTime = () => setCurrentTime(audio.currentTime);
-    
-    const handleEnded = () => setIsPlaying(false);
-
-    // Add event listeners
-    audio.addEventListener('loadeddata', setAudioData);
-    audio.addEventListener('timeupdate', setAudioTime);
-    audio.addEventListener('ended', handleEnded);
-
-    // Clean up
-    return () => {
-      audio.removeEventListener('loadeddata', setAudioData);
-      audio.removeEventListener('timeupdate', setAudioTime);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [audioRef]);
-
-  // Reset player when audio URL changes
-  useEffect(() => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-    setDuration(0);
-    setLoading(true);
-  }, [audioUrl]);
-
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
+    // Create AudioContext
+    if (!audioContextRef.current) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContextRef.current = new AudioContext();
+        gainNodeRef.current = audioContextRef.current.createGain();
+        gainNodeRef.current.connect(audioContextRef.current.destination);
+        setDebugInfo('Web Audio API initialized');
+      } catch (err) {
+        console.error('Failed to initialize Web Audio API:', err);
+        setDebugInfo(`Failed to initialize Web Audio API: ${err.message}`);
+        setUsingWebAudio(false);
+      }
     }
-    setIsPlaying(!isPlaying);
+
+    return () => {
+      // Clean up animation frame
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      
+      // Stop any playing audio
+      if (sourceNodeRef.current) {
+        try {
+          sourceNodeRef.current.stop();
+        } catch (e) {
+          // Ignore errors if already stopped
+        }
+      }
+    };
+  }, []);
+
+  // Load and decode audio
+  useEffect(() => {
+    const fetchAudio = async () => {
+      setLoading(true);
+      setError(null);
+      
+      if (!audioUrl) {
+        setError('No audio URL provided');
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        setDebugInfo(`Fetching audio from: ${typeof audioUrl === 'string' ? audioUrl : JSON.stringify(audioUrl)}`);
+        
+        let sourceUrl = '';
+        if (typeof audioUrl === 'object' && audioUrl.url) {
+          sourceUrl = audioUrl.url;
+        } else if (typeof audioUrl === 'string') {
+          sourceUrl = audioUrl;
+        } else {
+          throw new Error('Invalid audio URL format');
+        }
+        
+        // Ensure the URL has the alt=media parameter
+        if (!sourceUrl.includes('alt=media')) {
+          sourceUrl = sourceUrl.includes('?') ? `${sourceUrl}&alt=media` : `${sourceUrl}?alt=media`;
+          setDebugInfo(prev => `${prev}\nAdded alt=media parameter to URL: ${sourceUrl}`);
+        }
+        
+        // Try direct fetch first since it's more reliable
+        try {
+          setDebugInfo(prev => `${prev}\nTrying direct fetch first with proper URL format`);
+          
+          // Fallback to direct fetch with improved headers
+          const response = await fetch(sourceUrl, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'omit',
+            headers: {
+              'Accept': 'audio/*',
+              'Origin': window.location.origin
+            },
+            cache: 'no-cache'
+          });
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const arrayBuffer = await response.arrayBuffer();
+          setDebugInfo(prev => `${prev}\nAudio fetched directly: ${arrayBuffer.byteLength} bytes`);
+          
+          // Decode audio data
+          const audioContext = audioContextRef.current;
+          if (!audioContext) {
+            throw new Error('Audio context not available');
+          }
+          
+          const decodedData = await audioContext.decodeAudioData(arrayBuffer);
+          setDebugInfo(prev => `${prev}\nAudio decoded directly: ${decodedData.duration.toFixed(2)} seconds`);
+          
+          // Store the decoded audio buffer
+          audioBufferRef.current = decodedData;
+          setAudioBuffer(decodedData);
+          setDuration(decodedData.duration);
+          setLoading(false);
+          return;
+        } catch (directFetchErr) {
+          setDebugInfo(prev => `${prev}\nDirect fetch failed, trying proxy as fallback: ${directFetchErr.message}`);
+          // Continue to proxy fetch as fallback
+        }
+        
+        // Try using proxy as fallback
+        try {
+          setDebugInfo(prev => `${prev}\nTrying to fetch via proxy`);
+          const audioBlob = await fetchThroughProxy(sourceUrl, 'blob');
+          const arrayBuffer = await audioBlob.arrayBuffer();
+          
+          // Decode audio data
+          const audioContext = audioContextRef.current;
+          if (!audioContext) {
+            throw new Error('Audio context not available');
+          }
+          
+          const decodedData = await audioContext.decodeAudioData(arrayBuffer);
+          setDebugInfo(prev => `${prev}\nAudio decoded via proxy: ${decodedData.duration.toFixed(2)} seconds`);
+          
+          // Store the decoded audio buffer
+          audioBufferRef.current = decodedData;
+          setAudioBuffer(decodedData);
+          setDuration(decodedData.duration);
+          setLoading(false);
+          return;
+        } catch (proxyErr) {
+          setDebugInfo(prev => `${prev}\nProxy fetch failed: ${proxyErr.message}`);
+          throw proxyErr; // Rethrow to be caught by outer catch
+        }
+      } catch (err) {
+        console.error('Error loading audio:', err);
+        setDebugInfo(prev => `${prev}\nError: ${err.message}`);
+        
+        // Fallback to HTML5 Audio if Web Audio API fails
+        if (usingWebAudio && retryCount < 1) {
+          setDebugInfo(prev => `${prev}\nFalling back to HTML5 Audio`);
+          setUsingWebAudio(false);
+          setRetryCount(retryCount + 1);
+        } else {
+          setError(`Failed to load audio: ${err.message}`);
+          setLoading(false);
+        }
+      }
+    };
+    
+    fetchAudio();
+  }, [audioUrl, usingWebAudio, retryCount]);
+
+  // Update current time during playback
+  const updatePlaybackTime = () => {
+    if (isPlaying && audioContextRef.current && startTime > 0) {
+      const elapsed = audioContextRef.current.currentTime - startTime;
+      setCurrentTime(elapsed);
+      animationRef.current = requestAnimationFrame(updatePlaybackTime);
+    }
   };
 
+  // Play/pause audio using Web Audio API
+  const togglePlay = () => {
+    if (!usingWebAudio) {
+      // HTML5 Audio fallback
+      if (audioRef.current) {
+        if (isPlaying) {
+          audioRef.current.pause();
+        } else {
+          audioRef.current.play().catch(err => {
+            console.error('Error playing audio:', err);
+            setError(`Error playing audio: ${err.message}`);
+          });
+        }
+        setIsPlaying(!isPlaying);
+      }
+      return;
+    }
+    
+    if (!audioContextRef.current || !audioBufferRef.current) {
+      setDebugInfo(prev => `${prev}\nAudio context or buffer not available`);
+      return;
+    }
+    
+    try {
+      // Resume audio context if it's suspended (browser autoplay policy)
+      if (audioContextRef.current.state === 'suspended') {
+        audioContextRef.current.resume();
+      }
+      
+      if (isPlaying) {
+        // Stop playback
+        if (sourceNodeRef.current) {
+          sourceNodeRef.current.stop();
+          sourceNodeRef.current = null;
+        }
+        cancelAnimationFrame(animationRef.current);
+        setDebugInfo(prev => `${prev}\nPlayback stopped`);
+      } else {
+        // Create new source node
+        const source = audioContextRef.current.createBufferSource();
+        source.buffer = audioBufferRef.current;
+        source.connect(gainNodeRef.current);
+        
+        // Calculate start position
+        const offset = currentTime;
+        source.start(0, offset);
+        setStartTime(audioContextRef.current.currentTime - offset);
+        
+        // Set up ended event
+        source.onended = () => {
+          setIsPlaying(false);
+          setCurrentTime(0);
+          setStartTime(0);
+          sourceNodeRef.current = null;
+          cancelAnimationFrame(animationRef.current);
+          setDebugInfo(prev => `${prev}\nPlayback ended`);
+        };
+        
+        // Store source node reference
+        sourceNodeRef.current = source;
+        
+        // Start animation frame for time updates
+        animationRef.current = requestAnimationFrame(updatePlaybackTime);
+        setDebugInfo(prev => `${prev}\nPlayback started at ${offset.toFixed(2)}s`);
+      }
+      
+      setIsPlaying(!isPlaying);
+    } catch (playError) {
+      console.error('Error controlling playback:', playError);
+      setError(`Error controlling playback: ${playError.message}`);
+      setDebugInfo(prev => `${prev}\nPlayback error: ${playError.message}`);
+    }
+  };
+
+  // Handle progress bar click
   const handleProgress = (e) => {
+    if (!usingWebAudio) {
+      // HTML5 Audio fallback
+      if (audioRef.current) {
+        const progressBar = e.currentTarget;
+        const position = e.nativeEvent.offsetX / progressBar.offsetWidth;
+        audioRef.current.currentTime = position * audioRef.current.duration;
+      }
+      return;
+    }
+    
+    if (!audioBufferRef.current) return;
+    
     const progressBar = e.currentTarget;
     const position = e.nativeEvent.offsetX / progressBar.offsetWidth;
     const newTime = position * duration;
     
-    if (audioRef.current) {
-      audioRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+    // Stop current playback
+    if (sourceNodeRef.current && isPlaying) {
+      sourceNodeRef.current.stop();
+      sourceNodeRef.current = null;
+    }
+    
+    setCurrentTime(newTime);
+    
+    // If currently playing, restart from new position
+    if (isPlaying) {
+      const source = audioContextRef.current.createBufferSource();
+      source.buffer = audioBufferRef.current;
+      source.connect(gainNodeRef.current);
+      source.start(0, newTime);
+      setStartTime(audioContextRef.current.currentTime - newTime);
+      
+      // Set up ended event
+      source.onended = () => {
+        setIsPlaying(false);
+        setCurrentTime(0);
+        setStartTime(0);
+        sourceNodeRef.current = null;
+        cancelAnimationFrame(animationRef.current);
+      };
+      
+      // Store source node reference
+      sourceNodeRef.current = source;
     }
   };
 
+  // Format time display
   const formatTime = (time) => {
     if (isNaN(time)) return '0:00';
     
@@ -75,17 +312,81 @@ const AudioPlayer = ({ audioUrl, title }) => {
     return `${minutes}:${seconds}`;
   };
 
+  // Get the download URL (direct URL for download button)
+  const getDownloadUrl = () => {
+    if (typeof audioUrl === 'object' && audioUrl.url) {
+      return audioUrl.url;
+    }
+    return audioUrl;
+  };
+
+  // Toggle between Web Audio API and HTML5 Audio
+  const toggleAudioEngine = () => {
+    setUsingWebAudio(!usingWebAudio);
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setError(null);
+    setDebugInfo(prev => `${prev}\nSwitched to ${!usingWebAudio ? 'Web Audio API' : 'HTML5 Audio'}`);
+  };
+
+  // HTML5 Audio fallback
+  useEffect(() => {
+    if (!usingWebAudio && audioUrl) {
+      let sourceUrl = '';
+      if (typeof audioUrl === 'object' && audioUrl.url) {
+        sourceUrl = audioUrl.url;
+      } else if (typeof audioUrl === 'string') {
+        sourceUrl = audioUrl;
+      }
+      
+      if (audioRef.current) {
+        audioRef.current.src = sourceUrl;
+        audioRef.current.load();
+        
+        audioRef.current.onloadedmetadata = () => {
+          setDuration(audioRef.current.duration);
+          setLoading(false);
+          setDebugInfo(prev => `${prev}\nHTML5 Audio loaded: ${audioRef.current.duration.toFixed(2)} seconds`);
+        };
+        
+        audioRef.current.ontimeupdate = () => {
+          setCurrentTime(audioRef.current.currentTime);
+        };
+        
+        audioRef.current.onended = () => {
+          setIsPlaying(false);
+          setCurrentTime(0);
+        };
+        
+        audioRef.current.onerror = (e) => {
+          console.error('HTML5 Audio error:', e);
+          setError(`HTML5 Audio error: ${e.target.error ? e.target.error.message : 'Unknown error'}`);
+          setLoading(false);
+        };
+      }
+    }
+  }, [audioUrl, usingWebAudio]);
+
   return (
     <div className="audio-player-container">
       <h3>{title || t('audioPlayer.title')}</h3>
       
-      <audio ref={audioRef} src={audioUrl} preload="metadata" />
+      {error && (
+        <div className="audio-player-error">
+          {error}
+          <div className="audio-error-actions">
+            <button onClick={toggleAudioEngine} className="toggle-audio-engine-btn">
+              {usingWebAudio ? 'Try HTML5 Audio' : 'Try Web Audio API'}
+            </button>
+          </div>
+        </div>
+      )}
       
       <div className="audio-player-controls">
         <button 
           className="audio-player-button" 
           onClick={togglePlay}
-          disabled={loading}
+          disabled={loading || (!audioBuffer && usingWebAudio)}
           aria-label={isPlaying ? t('audioPlayer.pause') : t('audioPlayer.play')}
         >
           {isPlaying ? '❚❚' : '▶'}
@@ -111,14 +412,38 @@ const AudioPlayer = ({ audioUrl, title }) => {
         </div>
         
         <a 
-          href={audioUrl} 
+          href={getDownloadUrl()} 
           download={`${t('audioPlayer.downloadFileName')}.mp3`}
           className="audio-download-button"
           aria-label={t('audioPlayer.download')}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {t('audioPlayer.download')}
         </a>
       </div>
+      
+      {loading && (
+        <div className="audio-loading">
+          Loading audio...
+        </div>
+      )}
+      
+      {/* HTML5 Audio element (hidden) */}
+      {!usingWebAudio && (
+        <audio ref={audioRef} style={{ display: 'none' }} />
+      )}
+      
+      {/* Debug information - remove in production */}
+      {debugInfo && (
+        <div className="audio-debug" style={{ fontSize: '10px', color: '#666', whiteSpace: 'pre-line', marginTop: '10px' }}>
+          <details>
+            <summary>Debug Info</summary>
+            <div>Using: {usingWebAudio ? 'Web Audio API' : 'HTML5 Audio'}</div>
+            {debugInfo}
+          </details>
+        </div>
+      )}
     </div>
   );
 };

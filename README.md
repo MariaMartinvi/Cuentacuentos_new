@@ -71,6 +71,28 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # MiCuentaCuentos - Story Examples Setup
 
+## Environment Variables
+
+This project uses environment variables for Firebase configuration. To set up your environment:
+
+1. Create a `.env` file in the root directory of the project with the following variables:
+```
+REACT_APP_FIREBASE_API_KEY=your_api_key_here
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain_here
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id_here
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket_here
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id_here
+REACT_APP_FIREBASE_APP_ID=your_app_id_here
+REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id_here
+```
+
+2. Replace the placeholders with your actual Firebase configuration values.
+
+3. For Node.js scripts (`cors-fix.js`, `cors-test.js`, `verify-files.js`), make sure you have installed the `dotenv` package:
+```
+npm install dotenv --save
+```
+
 ## Fixing Firebase Permission Errors
 
 If you're seeing errors like:
