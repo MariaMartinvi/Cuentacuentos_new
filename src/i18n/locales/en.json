@@ -1,7 +1,123 @@
 {
+  "subscription": {
+    "title": "Premium Subscription",
+    "planTitle": "Premium Plan",
+    "features": {
+      "stories": "30 stories per month",
+      "unlimited": "Unlimited stories",
+      "cancel": "Cancel anytime"
+    },
+    "subscribe": "Subscribe for $5/month",
+    "processing": "Processing...",
+    "alreadySubscribed": "You are already subscribed!",
+    "redirecting": "Redirecting...",
+    "cancelNote": "You can cancel your subscription anytime from your profile, accessible through the top menu."
+  },
+  "profile": {
+    "title": "My Profile",
+    "name": "Name",
+    "email": "Email",
+    "subscriptionStatus": "Subscription Status",
+    "subscriptionFree": "Free Plan",
+    "subscriptionActive": "Premium Plan Active",
+    "subscriptionCancelled": "Subscription Cancelled",
+    "cancelSubscription": "Cancel Subscription",
+    "cancelling": "Cancelling...",
+    "subscriptionCancelled": "Subscription successfully cancelled",
+    "cancelError": "Error cancelling subscription",
+    "noActiveSubscription": "You don't have an active subscription",
+    "storiesRemaining": "Available Stories",
+    "storiesRemainingOf": "of",
+    "loading": "Loading...",
+    "error": "An error has occurred",
+    "cancelInfo": "Your subscription will remain active until the end of the current billing period",
+    "premiumInfo": "Subscribe to the Premium plan to generate up to 30 stories per month",
+    "learnMore": "Learn more"
+  },
   "storyExamples": {
+    "title": "Story Examples",
+    "description": "Explore our collection of example stories for all ages and language levels.",
+    "viewStory": "View Story",
+    "noResults": "No stories found with the selected filters.",
+    "filters": {
+      "title": "Filter by:",
+      "age": "Age",
+      "language": "Language",
+      "level": "Level"
+    },
+    "ageGroups": {
+      "all": "All ages",
+      "3to5": "3-5 years",
+      "6to8": "6-8 years",
+      "9to12": "9-12 years"
+    },
+    "languages": {
+      "all": "All languages",
+      "spanish": "Spanish",
+      "english": "English"
+    },
+    "levels": {
+      "all": "All levels",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
     "storyCard": {
+      "recommendedAge": "Recommended age:",
+      "language": "Language:",
+      "level": "Level:",
+      "readStory": "Read story",
+      "listenAudio": "Listen to audio",
       "usingMockContent": "Using example content"
+    },
+    "mockContent": {
+      "badge": "Example",
+      "explanation": "This is example content. Real content will be loaded from Firebase when available."
+    },
+    "audioNotAvailable": "Audio is not available for this story."
+  },
+  "homepage": {
+    "heroTitle": "Personalized stories for children",
+    "heroDescription": "Generate personalized children's stories with artificial intelligence and convert them to audio to learn languages",
+    "featuresTitle": "Main Features",
+    "uniqueStoriesTitle": "Unique Stories",
+    "uniqueStoriesDescription": "Each story is unique and personalized according to your preferences",
+    "multipleGenresTitle": "Multiple Genres",
+    "multipleGenresDescription": "Choose from adventure, fantasy, science fiction and more",
+    "audioConversionTitle": "Audio Conversion",
+    "audioConversionDescription": "Convert your stories to audio with different voices and accents",
+    "storyExamples": {
+      "title": "Explore Our Stories",
+      "description": "Discover our collection of example stories for all ages"
     }
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "viewAllStories": "View all stories",
+    "seeAllStories": "See all stories",
+    "errorLoading": "Error loading stories",
+    "retryLoading": "Retry"
+  },
+  "footer": {
+    "title": "AI Story Generator",
+    "description": "Create engaging stories in English with artificial intelligence. Customize, generate, and listen to your stories with our free tool.",
+    "quickLinks": "Quick Links",
+    "howItWorks": "How It Works",
+    "aboutUs": "About Us",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "copyright": "AI Story Generator. All rights reserved.",
+    "madeWith": "Made with",
+    "inBarcelona": "in Barcelona",
+    "storyExamples": "Story Examples"
+  },
+  "audioPlayer": {
+    "title": "Story Audio",
+    "play": "Play",
+    "pause": "Pause",
+    "progress": "Audio progress",
+    "download": "Download",
+    "downloadFileName": "story-audio",
+    "loading": "Loading audio..."
   }
 } 

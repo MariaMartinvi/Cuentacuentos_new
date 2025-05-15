@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import StoryForm from '../StoryForm.js';
 import { useTranslation } from 'react-i18next';
 import StoryDisplay from '../StoryDisplay.js';
+import StoryExamplesSection from '../StoryExamplesSection.js';
 import '../../styles/global.css';
 import '../FeaturesSection.css';
 import SEO from '../SEO';
@@ -98,6 +99,9 @@ function HomePage() {
           </div>
         )}
       </main>
+      
+      {/* Story Examples Section */}
+      {!generatedStory && <StoryExamplesSection />}
     </div>
   );
 }

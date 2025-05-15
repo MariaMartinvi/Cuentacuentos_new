@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './AudioPlayer.css';
 import { useTranslation } from 'react-i18next';
 import { fetchThroughProxy } from '../services/proxyService';
 
@@ -30,10 +31,8 @@ const AudioPlayer = ({ audioUrl, title }) => {
         audioContextRef.current = new AudioContext();
         gainNodeRef.current = audioContextRef.current.createGain();
         gainNodeRef.current.connect(audioContextRef.current.destination);
-        setDebugInfo('Web Audio API initialized');
       } catch (err) {
         console.error('Failed to initialize Web Audio API:', err);
-        setDebugInfo(`Failed to initialize Web Audio API: ${err.message}`);
         setUsingWebAudio(false);
       }
     }
@@ -68,8 +67,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
       }
       
       try {
-        setDebugInfo(`Fetching audio from: ${typeof audioUrl === 'string' ? audioUrl : JSON.stringify(audioUrl)}`);
-        
         let sourceUrl = '';
         if (typeof audioUrl === 'object' && audioUrl.url) {
           sourceUrl = audioUrl.url;
@@ -82,13 +79,10 @@ const AudioPlayer = ({ audioUrl, title }) => {
         // Ensure the URL has the alt=media parameter
         if (!sourceUrl.includes('alt=media')) {
           sourceUrl = sourceUrl.includes('?') ? `${sourceUrl}&alt=media` : `${sourceUrl}?alt=media`;
-          setDebugInfo(prev => `${prev}\nAdded alt=media parameter to URL: ${sourceUrl}`);
         }
         
         // Try direct fetch first since it's more reliable
         try {
-          setDebugInfo(prev => `${prev}\nTrying direct fetch first with proper URL format`);
-          
           // Fallback to direct fetch with improved headers
           const response = await fetch(sourceUrl, {
             method: 'GET',
@@ -106,7 +100,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           }
           
           const arrayBuffer = await response.arrayBuffer();
-          setDebugInfo(prev => `${prev}\nAudio fetched directly: ${arrayBuffer.byteLength} bytes`);
           
           // Decode audio data
           const audioContext = audioContextRef.current;
@@ -115,7 +108,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           }
           
           const decodedData = await audioContext.decodeAudioData(arrayBuffer);
-          setDebugInfo(prev => `${prev}\nAudio decoded directly: ${decodedData.duration.toFixed(2)} seconds`);
           
           // Store the decoded audio buffer
           audioBufferRef.current = decodedData;
@@ -124,13 +116,11 @@ const AudioPlayer = ({ audioUrl, title }) => {
           setLoading(false);
           return;
         } catch (directFetchErr) {
-          setDebugInfo(prev => `${prev}\nDirect fetch failed, trying proxy as fallback: ${directFetchErr.message}`);
           // Continue to proxy fetch as fallback
         }
         
         // Try using proxy as fallback
         try {
-          setDebugInfo(prev => `${prev}\nTrying to fetch via proxy`);
           const audioBlob = await fetchThroughProxy(sourceUrl, 'blob');
           const arrayBuffer = await audioBlob.arrayBuffer();
           
@@ -141,7 +131,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           }
           
           const decodedData = await audioContext.decodeAudioData(arrayBuffer);
-          setDebugInfo(prev => `${prev}\nAudio decoded via proxy: ${decodedData.duration.toFixed(2)} seconds`);
           
           // Store the decoded audio buffer
           audioBufferRef.current = decodedData;
@@ -150,16 +139,13 @@ const AudioPlayer = ({ audioUrl, title }) => {
           setLoading(false);
           return;
         } catch (proxyErr) {
-          setDebugInfo(prev => `${prev}\nProxy fetch failed: ${proxyErr.message}`);
           throw proxyErr; // Rethrow to be caught by outer catch
         }
       } catch (err) {
         console.error('Error loading audio:', err);
-        setDebugInfo(prev => `${prev}\nError: ${err.message}`);
         
         // Fallback to HTML5 Audio if Web Audio API fails
         if (usingWebAudio && retryCount < 1) {
-          setDebugInfo(prev => `${prev}\nFalling back to HTML5 Audio`);
           setUsingWebAudio(false);
           setRetryCount(retryCount + 1);
         } else {
@@ -200,7 +186,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
     }
     
     if (!audioContextRef.current || !audioBufferRef.current) {
-      setDebugInfo(prev => `${prev}\nAudio context or buffer not available`);
       return;
     }
     
@@ -217,7 +202,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           sourceNodeRef.current = null;
         }
         cancelAnimationFrame(animationRef.current);
-        setDebugInfo(prev => `${prev}\nPlayback stopped`);
       } else {
         // Create new source node
         const source = audioContextRef.current.createBufferSource();
@@ -236,7 +220,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           setStartTime(0);
           sourceNodeRef.current = null;
           cancelAnimationFrame(animationRef.current);
-          setDebugInfo(prev => `${prev}\nPlayback ended`);
         };
         
         // Store source node reference
@@ -244,14 +227,12 @@ const AudioPlayer = ({ audioUrl, title }) => {
         
         // Start animation frame for time updates
         animationRef.current = requestAnimationFrame(updatePlaybackTime);
-        setDebugInfo(prev => `${prev}\nPlayback started at ${offset.toFixed(2)}s`);
       }
       
       setIsPlaying(!isPlaying);
     } catch (playError) {
       console.error('Error controlling playback:', playError);
       setError(`Error controlling playback: ${playError.message}`);
-      setDebugInfo(prev => `${prev}\nPlayback error: ${playError.message}`);
     }
   };
 
@@ -326,7 +307,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
     setIsPlaying(false);
     setCurrentTime(0);
     setError(null);
-    setDebugInfo(prev => `${prev}\nSwitched to ${!usingWebAudio ? 'Web Audio API' : 'HTML5 Audio'}`);
   };
 
   // HTML5 Audio fallback
@@ -346,7 +326,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
         audioRef.current.onloadedmetadata = () => {
           setDuration(audioRef.current.duration);
           setLoading(false);
-          setDebugInfo(prev => `${prev}\nHTML5 Audio loaded: ${audioRef.current.duration.toFixed(2)} seconds`);
         };
         
         audioRef.current.ontimeupdate = () => {
@@ -432,17 +411,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
       {/* HTML5 Audio element (hidden) */}
       {!usingWebAudio && (
         <audio ref={audioRef} style={{ display: 'none' }} />
-      )}
-      
-      {/* Debug information - remove in production */}
-      {debugInfo && (
-        <div className="audio-debug" style={{ fontSize: '10px', color: '#666', whiteSpace: 'pre-line', marginTop: '10px' }}>
-          <details>
-            <summary>Debug Info</summary>
-            <div>Using: {usingWebAudio ? 'Web Audio API' : 'HTML5 Audio'}</div>
-            {debugInfo}
-          </details>
-        </div>
       )}
     </div>
   );

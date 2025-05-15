@@ -9,9 +9,7 @@ import {
   getStoryTextContent,
   checkStoragePermissions,
   inspectStorageFile,
-  getStoryImageUrl,
-  checkFirebaseStorage,
-  createStoryImages
+  getStoryImageUrl
 } from '../../services/storyExamplesService';
 import { Spinner } from 'react-bootstrap';
 import AudioPlayer from '../AudioPlayer';
@@ -725,94 +723,8 @@ const StoryExamplesPage = () => {
     language: 'all',
     level: 'all'
   });
-  const [testImageUrl, setTestImageUrl] = useState('');
-  
-  // Test function to verify Firebase Storage image loading
-  const testImageLoading = async () => {
-    try {
-      console.log("=== TESTING IMAGE LOADING ===");
-      
-      // First, check Firebase Storage configuration
-      console.log("Checking Firebase Storage configuration...");
-      const storageCheck = await checkFirebaseStorage();
-      if (storageCheck.success) {
-        console.log("✓ Firebase Storage is properly configured");
-        alert("Firebase Storage is properly configured. Bucket: " + storageCheck.details.bucket);
-      } else {
-        console.error("✗ Firebase Storage configuration issue:", storageCheck.error);
-        alert("Firebase Storage configuration issue: " + storageCheck.error);
-        return;
-      }
-      
-      // Try to load a test image from Firebase Storage
-      const testImagePath = 'images/test-image.jpg';
-      console.log(`Testing image loading from path: ${testImagePath}`);
-      
-      try {
-        const url = await getStoryImageUrl(testImagePath);
-        console.log(`✓ Successfully loaded test image URL: ${url}`);
-        setTestImageUrl(url);
-        alert(`Image URL loaded successfully: ${url}`);
-      } catch (error) {
-        console.error(`✗ Failed to load test image:`, error);
-        alert(`Failed to load test image: ${error.message}`);
-      }
-      
-      // Try to load the default image
-      try {
-        const defaultImagePath = 'images/default-story.jpg';
-        console.log(`Testing default image loading from path: ${defaultImagePath}`);
-        const defaultUrl = await getStoryImageUrl(defaultImagePath);
-        console.log(`✓ Successfully loaded default image URL: ${defaultUrl}`);
-        alert(`Default image URL loaded successfully: ${defaultUrl}`);
-      } catch (defaultError) {
-        console.error(`✗ Failed to load default image:`, defaultError);
-        alert(`Failed to load default image: ${defaultError.message}`);
-      }
-      
-      console.log("=== IMAGE LOADING TEST COMPLETED ===");
-    } catch (error) {
-      console.error("Error in test function:", error);
-      alert(`Test function error: ${error.message}`);
-    }
-  };
-  
-  // Function to create story images in Firebase Storage
-  const createImagesInStorage = async () => {
-    try {
-      if (!window.confirm("This will attempt to create story images in Firebase Storage. Continue?")) {
-        return;
-      }
-      
-      console.log("=== CREATING STORY IMAGES ===");
-      const result = await createStoryImages();
-      
-      if (result.success) {
-        console.log(`✓ Story images created successfully!`);
-        console.log('Results:', result.results);
-        
-        // Find a successful image to display
-        const successfulImage = result.results.find(r => r.success);
-        if (successfulImage) {
-          setTestImageUrl(successfulImage.url);
-        }
-        
-        // Show summary in alert
-        const successCount = result.results.filter(r => r.success).length;
-        const failCount = result.results.filter(r => !r.success).length;
-        
-        alert(`Created ${successCount} images successfully!\n${failCount} images failed.`);
-      } else {
-        console.error(`✗ Failed to create any images:`, result.error);
-        alert(`Failed to create images: ${result.error}`);
-      }
-    } catch (error) {
-      console.error("Error creating images:", error);
-      alert(`Error creating images: ${error.message}`);
-    }
-  };
-  
-  // Ejecutar verificación de permisos al inicio
+
+  // Run diagnostics on startup
   useEffect(() => {
     const runDiagnostics = async () => {
       try {
@@ -930,42 +842,6 @@ const StoryExamplesPage = () => {
       <div className="page-header">
         <h1>{t('storyExamples.title')}</h1>
         <p>{t('storyExamples.description')}</p>
-        
-        {/* Test button for debugging */}
-        <div className="test-controls mt-3">
-          <div className="d-flex gap-2">
-            <button 
-              className="btn btn-sm btn-outline-secondary" 
-              onClick={testImageLoading}
-              title="Test Firebase Storage Image Loading"
-            >
-              Test Image Loading
-            </button>
-            
-            <button 
-              className="btn btn-sm btn-outline-primary" 
-              onClick={createImagesInStorage}
-              title="Create Story Images in Firebase Storage"
-            >
-              Create Story Images
-            </button>
-          </div>
-          
-          {testImageUrl && (
-            <div className="mt-2">
-              <p>Test image loaded:</p>
-              <img 
-                src={testImageUrl} 
-                alt="Test" 
-                style={{ maxWidth: '200px', border: '1px solid #ddd' }} 
-                onError={(e) => {
-                  console.error('Error loading test image in UI');
-                  alert('Error displaying test image in UI');
-                }}
-              />
-            </div>
-          )}
-        </div>
       </div>
 
       <div className="filters-container">
