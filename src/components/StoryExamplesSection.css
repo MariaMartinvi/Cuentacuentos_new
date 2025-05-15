@@ -1,50 +1,87 @@
 .story-examples-section {
-  padding: 3rem 0;
-  background-color: #f8f9fa;
+  padding: 4rem 0;
+  background: linear-gradient(to bottom, #f8f9fa, #edf0f7);
   margin-top: 3rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-examples-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #4361ee, #7e90ff);
+  box-shadow: 0 1px 5px rgba(67, 97, 238, 0.3);
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
 }
 
 .section-header h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.2rem;
   color: #4361ee;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: #4361ee;
+  border-radius: 3px;
 }
 
 .section-header p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
   max-width: 800px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* Filters styling */
 .story-examples-section .filters-container {
   background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.8rem;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .story-examples-section .filters-container h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
   color: #333;
   text-align: center;
+  font-weight: 600;
 }
 
 .story-examples-section .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 2rem;
   justify-content: center;
 }
 
@@ -56,27 +93,33 @@
 
 .story-examples-section .filter-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #555;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  color: #444;
+  font-size: 1.05rem;
 }
 
 .story-examples-section .filter-group select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.85rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: white;
   font-size: 1rem;
   color: #333;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .story-examples-section .filter-group select:focus {
   border-color: #4361ee;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.story-examples-section .filter-group select:hover {
+  border-color: #b0b8e3;
 }
 
 /* Stories grid styling */
@@ -86,7 +129,7 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 .story-examples-section .story-card {
@@ -190,20 +233,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 250px;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .story-examples-section .error-container {
   text-align: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
+  background-color: #fff5f5;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .story-examples-section .no-results {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
   color: #6c757d;
   font-size: 1.2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px dashed #dee2e6;
 }
 
 /* Story card loading and error states */
@@ -231,21 +284,49 @@
 /* View all button */
 .story-examples-section .view-all-container {
   text-align: center;
-  margin-top: 2.5rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
 }
 
 .story-examples-section .view-all-btn {
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+  font-size: 1.15rem;
   background-color: #4361ee;
   border: none;
+  border-radius: 30px;
   transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-examples-section .view-all-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
 .story-examples-section .view-all-btn:hover {
   background-color: #3a56d4;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+  box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+}
+
+.story-examples-section .view-all-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.story-examples-section .view-all-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
 }
 
 /* Story Modal styles */
