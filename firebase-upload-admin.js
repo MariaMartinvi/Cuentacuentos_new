@@ -1,5 +1,6 @@
 /**
  * Script para subir archivos de historias, imágenes y audios a Firebase Storage usando Admin SDK
+ * y crear entradas en la base de datos Firestore
  * 
  * Uso:
  * 1. Asegúrate de tener el archivo firebase-credentials.json en la raíz del proyecto
@@ -50,8 +51,9 @@ try {
   process.exit(1);
 }
 
-// Obtener referencia al bucket
+// Obtener referencia al bucket y a la base de datos
 const bucket = admin.storage().bucket();
+const db = admin.firestore();
 
 // Extensiones de archivo permitidas por categoría
 const allowedExtensions = {
@@ -142,6 +144,39 @@ function getContentType(filePath) {
   return contentTypes[ext] || 'application/octet-stream';
 }
 
+// Función para extraer el título del archivo
+function extractTitleFromFilename(filename) {
+  // Quitar la extensión
+  const nameWithoutExt = filename.substring(0, filename.lastIndexOf('.'));
+  
+  // Convertir guiones y guiones bajos a espacios
+  const nameWithSpaces = nameWithoutExt.replace(/[-_]/g, ' ');
+  
+  // Capitalizar cada palabra
+  return nameWithSpaces.split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+// Función para extraer el contenido de un archivo de texto
+function extractTextContent(filePath) {
+  try {
+    const content = fs.readFileSync(filePath, 'utf8');
+    // Extraer el primer párrafo como descripción (hasta 200 caracteres)
+    const firstParagraph = content.split('\n\n')[0].trim();
+    return {
+      content: content,
+      description: firstParagraph.substring(0, 200) + (firstParagraph.length > 200 ? '...' : '')
+    };
+  } catch (error) {
+    console.error(`❌ Error al leer el contenido del archivo ${filePath}:`, error.message);
+    return {
+      content: '',
+      description: ''
+    };
+  }
+}
+
 // Función para subir un archivo a Firebase Storage usando Admin SDK
 async function uploadFile(filePath, destinationPath) {
   try {
@@ -184,6 +219,28 @@ async function uploadFile(filePath, destinationPath) {
   }
 }
 
+// Función para crear una entrada en la base de datos para una historia
+async function createStoryEntry(storyData) {
+  try {
+    const storyId = storyData.id || uuidv4();
+    const storyRef = db.collection('stories').doc(storyId);
+    
+    await storyRef.set(storyData);
+    
+    console.log(`  ✅ Entrada creada en la base de datos con ID: ${storyId}`);
+    return {
+      success: true,
+      id: storyId
+    };
+  } catch (error) {
+    console.error(`❌ Error al crear entrada en la base de datos:`, error.message);
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+}
+
 // Función principal para subir todos los archivos
 async function uploadAllFiles() {
   console.log('=== SUBIENDO ARCHIVOS A FIREBASE STORAGE ===\n');
@@ -194,6 +251,9 @@ async function uploadAllFiles() {
     audio: []
   };
   
+  // Mapeo de nombres de archivo a IDs de historia
+  const storyIds = {};
+  
   // Procesar historias
   console.log('📚 Procesando historias...');
   const storyFiles = listFiles(directories.stories, allowedExtensions.stories);
@@ -203,21 +263,58 @@ async function uploadAllFiles() {
     
     for (const file of storyFiles) {
       console.log(`- Subiendo historia: ${file.filename} (${(file.size / 1024).toFixed(2)} KB)`);
+      
+      // Generar un ID único para esta historia
+      const storyId = uuidv4();
+      storyIds[file.filename.toLowerCase().replace(/\.[^/.]+$/, "")] = storyId;
+      
+      // Subir archivo de texto
       const result = await uploadFile(
         file.path, 
         `stories/${file.filename}`
       );
       
-      results.stories.push({
-        filename: file.filename,
-        ...result
-      });
+      // Extraer contenido y descripción del archivo
+      const { content, description } = extractTextContent(file.path);
       
+      // Crear entrada en la base de datos
       if (result.success) {
         console.log(`  ✅ Subido correctamente a ${result.path}`);
         console.log(`  📎 URL: ${result.url}`);
+        
+        // Crear entrada en Firestore
+        const title = extractTitleFromFilename(file.filename);
+        
+        const storyData = {
+          id: storyId,
+          title: title,
+          description: description,
+          content: content,
+          textUrl: result.url,
+          imageUrl: '', // Se actualizará cuando se suba la imagen
+          audioUrl: '', // Se actualizará cuando se suba el audio
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          ageRange: "3to5", // Valor por defecto
+          level: "beginner" // Valor por defecto
+        };
+        
+        const dbResult = await createStoryEntry(storyData);
+        
+        results.stories.push({
+          filename: file.filename,
+          id: storyId,
+          ...result,
+          dbEntry: dbResult
+        });
       } else {
         console.log(`  ❌ Error: ${result.error}`);
+        
+        results.stories.push({
+          filename: file.filename,
+          id: storyId,
+          ...result
+        });
       }
     }
   } else {
@@ -238,17 +335,35 @@ async function uploadAllFiles() {
         `images/${file.filename}`
       );
       
-      results.images.push({
-        filename: file.filename,
-        ...result
-      });
+      // Intentar asociar la imagen con una historia
+      const storyKey = file.filename.toLowerCase().replace(/\.[^/.]+$/, "");
+      const storyId = storyIds[storyKey];
       
       if (result.success) {
         console.log(`  ✅ Subido correctamente a ${result.path}`);
         console.log(`  📎 URL: ${result.url}`);
+        
+        // Actualizar la entrada de la historia con la URL de la imagen
+        if (storyId) {
+          try {
+            await db.collection('stories').doc(storyId).update({
+              imageUrl: result.url,
+              updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            console.log(`  ✅ URL de imagen actualizada en la historia con ID: ${storyId}`);
+          } catch (error) {
+            console.error(`  ❌ Error al actualizar la URL de imagen en la historia:`, error.message);
+          }
+        }
       } else {
         console.log(`  ❌ Error: ${result.error}`);
       }
+      
+      results.images.push({
+        filename: file.filename,
+        storyId: storyId,
+        ...result
+      });
     }
   } else {
     console.log('No se encontraron archivos de imágenes para subir');
@@ -268,17 +383,35 @@ async function uploadAllFiles() {
         `audio/${file.filename}`
       );
       
-      results.audio.push({
-        filename: file.filename,
-        ...result
-      });
+      // Intentar asociar el audio con una historia
+      const storyKey = file.filename.toLowerCase().replace(/\.[^/.]+$/, "");
+      const storyId = storyIds[storyKey];
       
       if (result.success) {
         console.log(`  ✅ Subido correctamente a ${result.path}`);
         console.log(`  📎 URL: ${result.url}`);
+        
+        // Actualizar la entrada de la historia con la URL del audio
+        if (storyId) {
+          try {
+            await db.collection('stories').doc(storyId).update({
+              audioUrl: result.url,
+              updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            console.log(`  ✅ URL de audio actualizada en la historia con ID: ${storyId}`);
+          } catch (error) {
+            console.error(`  ❌ Error al actualizar la URL de audio en la historia:`, error.message);
+          }
+        }
       } else {
         console.log(`  ❌ Error: ${result.error}`);
       }
+      
+      results.audio.push({
+        filename: file.filename,
+        storyId: storyId,
+        ...result
+      });
     }
   } else {
     console.log('No se encontraron archivos de audio para subir');
