@@ -21,6 +21,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
   const [audioBuffer, setAudioBuffer] = useState(null);
   const animationRef = useRef(null);
   const [retryCount, setRetryCount] = useState(0);
+  const [showError, setShowError] = useState(false); // New state to control error visibility
 
   // Initialize Web Audio API
   useEffect(() => {
@@ -59,9 +60,11 @@ const AudioPlayer = ({ audioUrl, title }) => {
     const fetchAudio = async () => {
       setLoading(true);
       setError(null);
+      setShowError(false); // Reset error visibility
       
       if (!audioUrl) {
         setError('No audio URL provided');
+        setShowError(true); // Show this error
         setLoading(false);
         return;
       }
@@ -117,6 +120,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
           return;
         } catch (directFetchErr) {
           // Continue to proxy fetch as fallback
+          console.warn("Direct fetch failed, trying proxy:", directFetchErr);
         }
         
         // Try using proxy as fallback
@@ -148,8 +152,22 @@ const AudioPlayer = ({ audioUrl, title }) => {
         if (usingWebAudio && retryCount < 1) {
           setUsingWebAudio(false);
           setRetryCount(retryCount + 1);
+          console.log("Switching to HTML5 Audio fallback");
         } else {
           setError(`Failed to load audio: ${err.message}`);
+          // Don't show the error immediately if we're going to try HTML5 Audio
+          if (!usingWebAudio || retryCount >= 1) {
+            // Only show error after a delay if audio still isn't working
+            setTimeout(() => {
+              // Check if audio is actually working despite the error
+              if (audioRef.current && audioRef.current.readyState > 0) {
+                console.log("Audio is actually working, hiding error");
+                setShowError(false);
+              } else {
+                setShowError(true);
+              }
+            }, 2000);
+          }
           setLoading(false);
         }
       }
@@ -157,6 +175,55 @@ const AudioPlayer = ({ audioUrl, title }) => {
     
     fetchAudio();
   }, [audioUrl, usingWebAudio, retryCount]);
+
+  // HTML5 Audio fallback
+  useEffect(() => {
+    if (!usingWebAudio && audioUrl) {
+      let sourceUrl = '';
+      if (typeof audioUrl === 'object' && audioUrl.url) {
+        sourceUrl = audioUrl.url;
+      } else if (typeof audioUrl === 'string') {
+        sourceUrl = audioUrl;
+      }
+      
+      if (audioRef.current) {
+        audioRef.current.src = sourceUrl;
+        audioRef.current.load();
+        
+        audioRef.current.onloadedmetadata = () => {
+          setDuration(audioRef.current.duration);
+          setLoading(false);
+          // If we get here, audio is working, so hide any error
+          setShowError(false);
+        };
+        
+        audioRef.current.ontimeupdate = () => {
+          setCurrentTime(audioRef.current.currentTime);
+          // If we're getting timeupdate events, audio is working
+          if (error) {
+            setShowError(false);
+          }
+        };
+        
+        audioRef.current.onended = () => {
+          setIsPlaying(false);
+          setCurrentTime(0);
+        };
+        
+        audioRef.current.oncanplay = () => {
+          // Audio can play, hide any error
+          setShowError(false);
+        };
+        
+        audioRef.current.onerror = (e) => {
+          console.error('HTML5 Audio error:', e);
+          setError(`HTML5 Audio error: ${e.target.error ? e.target.error.message : 'Unknown error'}`);
+          setShowError(true); // Show this error
+          setLoading(false);
+        };
+      }
+    }
+  }, [audioUrl, usingWebAudio, error]);
 
   // Update current time during playback
   const updatePlaybackTime = () => {
@@ -178,6 +245,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
           audioRef.current.play().catch(err => {
             console.error('Error playing audio:', err);
             setError(`Error playing audio: ${err.message}`);
+            setShowError(true);
           });
         }
         setIsPlaying(!isPlaying);
@@ -307,50 +375,14 @@ const AudioPlayer = ({ audioUrl, title }) => {
     setIsPlaying(false);
     setCurrentTime(0);
     setError(null);
+    setShowError(false);
   };
-
-  // HTML5 Audio fallback
-  useEffect(() => {
-    if (!usingWebAudio && audioUrl) {
-      let sourceUrl = '';
-      if (typeof audioUrl === 'object' && audioUrl.url) {
-        sourceUrl = audioUrl.url;
-      } else if (typeof audioUrl === 'string') {
-        sourceUrl = audioUrl;
-      }
-      
-      if (audioRef.current) {
-        audioRef.current.src = sourceUrl;
-        audioRef.current.load();
-        
-        audioRef.current.onloadedmetadata = () => {
-          setDuration(audioRef.current.duration);
-          setLoading(false);
-        };
-        
-        audioRef.current.ontimeupdate = () => {
-          setCurrentTime(audioRef.current.currentTime);
-        };
-        
-        audioRef.current.onended = () => {
-          setIsPlaying(false);
-          setCurrentTime(0);
-        };
-        
-        audioRef.current.onerror = (e) => {
-          console.error('HTML5 Audio error:', e);
-          setError(`HTML5 Audio error: ${e.target.error ? e.target.error.message : 'Unknown error'}`);
-          setLoading(false);
-        };
-      }
-    }
-  }, [audioUrl, usingWebAudio]);
 
   return (
     <div className="audio-player-container">
       <h3>{title || t('audioPlayer.title')}</h3>
       
-      {error && (
+      {error && showError && (
         <div className="audio-player-error">
           {error}
           <div className="audio-error-actions">
@@ -365,7 +397,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
         <button 
           className="audio-player-button" 
           onClick={togglePlay}
-          disabled={loading || (!audioBuffer && usingWebAudio)}
+          disabled={loading || (!audioBuffer && usingWebAudio && !audioRef.current?.readyState)}
           aria-label={isPlaying ? t('audioPlayer.pause') : t('audioPlayer.play')}
         >
           {isPlaying ? '❚❚' : '▶'}
@@ -404,7 +436,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
       
       {loading && (
         <div className="audio-loading">
-          Loading audio...
+          {t('audioPlayer.loading')}
         </div>
       )}
       
