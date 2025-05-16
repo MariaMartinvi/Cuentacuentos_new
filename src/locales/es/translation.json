@@ -391,7 +391,8 @@
     "viewAllStories": "Ver todos los cuentos",
     "seeAllStories": "Ver todos los cuentos",
     "errorLoading": "Error al cargar los cuentos",
-    "retryLoading": "Reintentar"
+    "retryLoading": "Reintentar",
+    "loading": "Cargando..."
   },
   "cookies": {
     "title": "Usamos cookies",

@@ -72,7 +72,8 @@
     "viewAllStories": "View all stories",
     "seeAllStories": "See all stories",
     "errorLoading": "Error loading stories",
-    "retryLoading": "Retry"
+    "retryLoading": "Retry",
+    "loading": "Loading..."
   },
   "storyForm": {
     "title": "Story Generator",
