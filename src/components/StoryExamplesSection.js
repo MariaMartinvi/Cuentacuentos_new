@@ -129,7 +129,7 @@ const StoryModal = ({ isOpen, onClose, title, content, audioUrl, showAudio, usin
       setProcessedAudioUrl(audioUrl);
     }
   }, [audioUrl]);
-  
+
   if (!isOpen) return null;
 
   return (

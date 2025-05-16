@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import LazyImage from './LazyImage';
 import { getStoryTextContent, getStoryAudioUrl, getStoryImageUrl } from '../services/storyExamplesService';
-import AudioPlayer from './AudioPlayer';
 import './StoryCard.css';
 
 const StoryCard = ({ story, onStoryClick }) => {
@@ -10,7 +9,6 @@ const StoryCard = ({ story, onStoryClick }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAudio, setShowAudio] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const [storyContent, setStoryContent] = useState(null);
   const [isLoadingContent, setIsLoadingContent] = useState(false);
@@ -83,7 +81,6 @@ const StoryCard = ({ story, onStoryClick }) => {
           }
           
           setAudioUrl(audio);
-          setShowAudio(true);
           
           if (onStoryClick) {
             onStoryClick(story, storyContent, audio);
@@ -169,9 +166,6 @@ const StoryCard = ({ story, onStoryClick }) => {
             </button>
           )}
         </div>
-        {showAudio && audioUrl && (
-          <AudioPlayer audioUrl={audioUrl} />
-        )}
       </div>
     </div>
   );
