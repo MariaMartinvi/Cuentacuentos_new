@@ -424,5 +424,14 @@
       "listenAudio": "Listen to audio"
     },
     "noResults": "No stories found with the selected filters."
+  },
+  "audioPlayer": {
+    "title": "Audio Player",
+    "play": "Play",
+    "pause": "Pause",
+    "progress": "Audio progress",
+    "download": "Download audio",
+    "downloadFileName": "story",
+    "loading": "Loading audio..."
   }
 } 

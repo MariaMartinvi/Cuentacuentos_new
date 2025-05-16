@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import './StoryExamplesPage.css';
 import SEO from '../SEO';
 import { 
-  fetchStoryExamples, 
   getStoryTextUrl, 
   getStoryAudioUrl, 
   getStoryTextContent,
@@ -11,6 +10,7 @@ import {
   inspectStorageFile,
   getStoryImageUrl
 } from '../../services/storyExamplesService';
+import { getStoriesWithCache, refreshStoriesCache } from '../../services/cacheService';
 import { Spinner } from 'react-bootstrap';
 import AudioPlayer from '../AudioPlayer';
 import RetryButton from '../RetryButton';
@@ -717,7 +717,7 @@ const StoryExamplesPage = () => {
   const [filteredStories, setFilteredStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [useMockData, setUseMockData] = useState(false); // Siempre intentamos Firebase primero
+  const [useMockData, setUseMockData] = useState(false);
   const [filters, setFilters] = useState({
     age: 'all',
     language: 'all',
@@ -738,68 +738,35 @@ const StoryExamplesPage = () => {
     runDiagnostics();
   }, []);
 
-  // Fetch stories from Firebase
+  // Fetch stories using cache
   useEffect(() => {
     const loadStories = async () => {
       try {
         setLoading(true);
         console.log("=== INICIANDO CARGA DE HISTORIAS ===");
-        console.log("Intentando cargar historias desde Firebase...");
         
-        try {
-          const storyData = await fetchStoryExamples();
-          
-          if (storyData && storyData.length > 0) {
-            console.log(`✓ Éxito! Cargadas ${storyData.length} historias de Firebase:`);
-            console.log("DATOS COMPLETOS DE HISTORIAS:", JSON.stringify(storyData, null, 2));
-            storyData.forEach(story => {
-              console.log(`  - ${story.id}: ${story.title}`);
-              console.log(`    Texto: ${story.textPath || 'No definido'}`);
-              console.log(`    Audio: ${story.audioPath || 'No definido'}`);
-              console.log(`    Imagen: ${story.imagePath || 'No definido'}`);
-            });
-            
-            // Siempre mostramos las historias de Firebase, incluso si no tienen archivos
-            setStories(storyData);
-            setFilteredStories(storyData);
-            setUseMockData(false);
-            console.log("✓ Estado actualizado con datos de Firebase");
-          } else {
-            console.warn("⚠ No se encontraron historias en Firebase");
-            setError(new Error("No se encontraron historias en Firebase"));
-            setLoading(false);
-            console.log("✓ Estado actualizado sin historias");
-          }
-        } catch (firebaseError) {
-          console.error("✗ Error al cargar historias desde Firebase:", firebaseError);
-          
-          // Registrar información detallada del error
-          console.error("Detalles del error:", {
-            message: firebaseError.message,
-            code: firebaseError.code,
-            stack: firebaseError.stack
+        const storyData = await getStoriesWithCache();
+        
+        if (storyData && storyData.length > 0) {
+          console.log(`✓ Éxito! Cargadas ${storyData.length} historias:`);
+          storyData.forEach(story => {
+            console.log(`  - ${story.id}: ${story.title}`);
           });
           
-          // Intentar diagnosticar el problema de conexión
-          try {
-            console.log("Ejecutando diagnóstico de conexión...");
-            await checkStoragePermissions();
-          } catch (diagError) {
-            console.error("Error durante diagnóstico:", diagError);
-          }
-          
-          setError(firebaseError);
-          setLoading(false);
-          console.log("✓ Estado actualizado con error");
+          setStories(storyData);
+          setFilteredStories(storyData);
+          setUseMockData(false);
+          console.log("✓ Estado actualizado con datos");
+        } else {
+          console.warn("⚠ No se encontraron historias");
+          setError(new Error("No se encontraron historias"));
         }
-        
+      } catch (error) {
+        console.error("✗ Error al cargar historias:", error);
+        setError(error);
+      } finally {
         setLoading(false);
         console.log("=== CARGA DE HISTORIAS COMPLETADA ===");
-      } catch (criticalError) {
-        console.error("✗ ERROR CRÍTICO:", criticalError);
-        setError(criticalError);
-        setLoading(false);
-        console.log("✓ Estado actualizado con error crítico");
       }
     };
     

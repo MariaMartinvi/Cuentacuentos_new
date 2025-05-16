@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl } from '../services/storyExamplesService';
+import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata } from '../services/storyExamplesService';
+import { getStoriesWithCache } from '../services/cacheService';
+import StoryCard from './StoryCard';
 import './StoryExamplesSection.css';
 
 // AudioPlayer component for the modal
@@ -130,322 +132,46 @@ const StoryModal = ({ isOpen, onClose, title, content, audioUrl, showAudio, usin
   
   if (!isOpen) return null;
 
-  // Format the story text to display properly
-  const formatStoryContent = (text) => {
-    if (!text) {
-      return (
-        <div className="story-content">
-          <h1>{title}</h1>
-          <p>No story content available.</p>
-        </div>
-      );
-    }
-    
-    // Split by new lines and convert to paragraphs
-    const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    
-    // If we have at least one paragraph
-    if (paragraphs.length > 0) {
-      return (
-        <div className="story-content">
-          <h1>{title}</h1>
-          {imageUrl && (
-            <div className="story-modal-image-container">
-              <img 
-                src={imageUrl} 
-                alt={title} 
-                className="story-modal-image" 
-                onError={(e) => {
-                  console.error(`Error loading image in modal`);
-                  // Try to load default image
-                  e.target.src = '/images/default-story.jpg';
-                  e.target.onerror = null; // Prevent infinite loop if default also fails
-                }} 
-              />
-            </div>
-          )}
-          {paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
-      );
-    } else {
-      // If we couldn't parse paragraphs, just display the text as is
-      return (
-        <div className="story-content">
-          <h1>{title}</h1>
-          {imageUrl && (
-            <div className="story-modal-image-container">
-              <img 
-                src={imageUrl} 
-                alt={title} 
-                className="story-modal-image" 
-                onError={(e) => {
-                  console.error(`Error loading image in modal`);
-                  // Try to load default image
-                  e.target.src = '/images/default-story.jpg';
-                  e.target.onerror = null; // Prevent infinite loop if default also fails
-                }} 
-              />
-            </div>
-          )}
-          <p>{text}</p>
-        </div>
-      );
-    }
-  };
-
-  // Prevent clicks inside the modal from closing it
-  const handleModalClick = (e) => {
-    e.stopPropagation();
-  };
-
-  // Close button handler
-  const handleCloseClick = () => {
-    onClose();
-  };
-
   return (
     <div className="story-modal-overlay" onClick={onClose}>
-      <div className="story-modal" onClick={handleModalClick}>
-        <button className="story-modal-close" onClick={handleCloseClick}>&times;</button>
-        
-        {/* Show indicator for mock content if applicable */}
-        {usingMockContent && (
-          <div className="mock-content-banner">
-            <span className="mock-badge">{t('storyExamples.storyCard.usingMockContent')}</span>
-          </div>
-        )}
-        
-        {/* Show story content only when not in audio mode */}
-        {!showAudio && formatStoryContent(content)}
-        
-        {/* Show audio player when in audio mode */}
-        {showAudio && (
-          <div className="audio-mode-container">
-            <h1>{title}</h1>
-            {imageUrl && (
-              <div className="story-modal-image-container">
-                <img 
-                  src={imageUrl} 
-                  alt={title} 
-                  className="story-modal-image" 
-                  onError={(e) => {
-                    console.error(`Error loading image in modal`);
-                    // Try to load default image
-                    e.target.src = '/images/default-story.jpg';
-                    e.target.onerror = null; // Prevent infinite loop if default also fails
-                  }} 
-                />
-              </div>
-            )}
-            {processedAudioUrl && (
+      <div className="story-modal" onClick={e => e.stopPropagation()}>
+        <button className="story-modal-close" onClick={onClose}>×</button>
+        <div className="story-modal-content">
+          <h1>{title}</h1>
+          {imageUrl && (
+            <div className="story-modal-image-container">
+              <img 
+                src={imageUrl} 
+                alt={title} 
+                className="story-modal-image" 
+                onError={(e) => {
+                  console.error("[MODAL] Error loading image");
+                  e.target.src = '/images/default-story.jpg';
+                  e.target.onerror = null;
+                }} 
+              />
+            </div>
+          )}
+          {!showAudio && content && (
+            <div className="story-content">
+              {content.split('\n').map((paragraph, index) => (
+                <p key={index} className="story-paragraph">{paragraph}</p>
+              ))}
+              {usingMockContent && (
+                <div className="mock-content-notice">
+                  <p>{t('story.mockContentNotice')}</p>
+                </div>
+              )}
+            </div>
+          )}
+          {showAudio && processedAudioUrl && (
+            <div className="story-modal-audio">
               <AudioPlayer audioUrl={processedAudioUrl} title={title} />
-            )}
-            {!processedAudioUrl && (
-              <div className="audio-not-available">
-                <p>{t('storyExamples.audioNotAvailable')}</p>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// StoryCard component for the examples section
-const StoryCard = ({ story, t }) => {
-  const [textUrl, setTextUrl] = useState('');
-  const [audioUrl, setAudioUrl] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [storyContent, setStoryContent] = useState('');
-  const [showAudio, setShowAudio] = useState(false);
-  const [usingMockContent, setUsingMockContent] = useState(false);
-
-  // Get mock story content based on story ID
-  const getMockStoryContent = () => {
-    return `${story.title}
-
-Esta es una historia de ejemplo para ${story.title}.
-
-El contenido real se cargará desde Firebase cuando esté disponible.
-
-Fin`;
-  };
-
-  useEffect(() => {
-    const loadResources = async () => {
-      try {
-        setLoading(true);
-        
-        // Set image URL using getStoryImageUrl
-        if (story.imagePath) {
-          try {
-            const url = await getStoryImageUrl(story.imagePath);
-            if (url) {
-              setImageUrl(url);
-            } else {
-              // Use a local fallback image
-              setImageUrl('/images/default-story.jpg');
-            }
-          } catch (imageError) {
-            console.error("Error loading image URL:", imageError);
-            // Use a local fallback image
-            setImageUrl('/images/default-story.jpg');
-          }
-        } else {
-          // Use a local fallback image
-          setImageUrl('/images/default-story.jpg');
-        }
-        
-        // Load text URL
-        if (story.textPath) {
-          try {
-            const url = await getStoryTextUrl(story.textPath);
-            setTextUrl(url);
-            
-            // Pre-load story content for modal
-            try {
-              const content = await getStoryTextContent(story.textPath);
-              if (content) {
-                setStoryContent(content);
-                // Check if it's mock content
-                if (content.includes("Esta es una historia de ejemplo")) {
-                  setUsingMockContent(true);
-                }
-              } else {
-                // Use mock content as fallback
-                setStoryContent(getMockStoryContent());
-                setUsingMockContent(true);
-              }
-            } catch (contentError) {
-              console.error("Error loading story content:", contentError);
-              setStoryContent(getMockStoryContent());
-              setUsingMockContent(true);
-            }
-          } catch (textError) {
-            console.error("Error loading text URL:", textError);
-          }
-        }
-        
-        // Load audio URL
-        if (story.audioPath) {
-          try {
-            const url = await getStoryAudioUrl(story.audioPath);
-            setAudioUrl(url);
-          } catch (audioError) {
-            console.error("Error loading audio URL:", audioError);
-          }
-        }
-        
-        setLoading(false);
-      } catch (error) {
-        console.error("Error loading story resources:", error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-    
-    loadResources();
-  }, [story]);
-
-  const openTextModal = (e) => {
-    e.preventDefault();
-    setShowAudio(false);
-    setIsModalOpen(true);
-  };
-
-  const openAudioModal = (e) => {
-    e.preventDefault();
-    setShowAudio(true);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  if (loading) {
-    return (
-      <div className="story-card loading">
-        <div className="spinner-container">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="story-card error">
-        <h3>{story.title}</h3>
-        <p className="text-danger">Error loading story resources</p>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <div className="story-card">
-        <h3>{story.title}</h3>
-        <div className="story-image-container">
-          {imageUrl ? (
-            <img 
-              src={imageUrl}
-              alt={story.title} 
-              className="story-image" 
-              onError={(e) => {
-                console.error(`Error loading image for ${story.id}`);
-                // Try to load default image
-                e.target.src = '/images/default-story.jpg';
-                e.target.onerror = null; // Prevent infinite loop if default also fails
-              }} 
-            />
-          ) : (
-            <div className="story-image-placeholder">
-              <span>{story.title.charAt(0)}</span>
             </div>
           )}
         </div>
-        <div className="story-details">
-          <p><strong>{t('storyExamples.storyCard.recommendedAge')}</strong> {t(`storyExamples.ageGroups.${story.age}`)}</p>
-          <p><strong>{t('storyExamples.storyCard.language')}</strong> {t(`storyExamples.languages.${story.language}`)}</p>
-          <p><strong>{t('storyExamples.storyCard.level')}</strong> {t(`storyExamples.levels.${story.level}`)}</p>
-          {usingMockContent && (
-            <p className="mock-content-indicator">
-              <span className="mock-badge">{t('storyExamples.storyCard.usingMockContent')}</span>
-            </p>
-          )}
-        </div>
-        <div className="story-actions">
-          <a href="#" onClick={openTextModal} className="story-link">
-            {t('storyExamples.storyCard.readStory')}
-          </a>
-          {audioUrl && (
-            <a href="#" onClick={openAudioModal} className="story-link audio-link">
-              {t('storyExamples.storyCard.listenAudio')}
-            </a>
-          )}
-        </div>
       </div>
-      
-      <StoryModal 
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title={story.title}
-        content={storyContent}
-        audioUrl={audioUrl}
-        showAudio={showAudio}
-        usingMockContent={usingMockContent}
-        imageUrl={imageUrl}
-      />
-    </>
+    </div>
   );
 };
 
@@ -460,44 +186,53 @@ const StoryExamplesSection = () => {
     language: 'all',
     level: 'all'
   });
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  // Add modal state
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    title: '',
+    content: '',
+    audioUrl: null,
+    showAudio: false,
+    usingMockContent: false,
+    imageUrl: null
+  });
 
-  // Fetch stories from Firebase
+  // Cargar solo los metadatos inicialmente
   useEffect(() => {
     const loadStories = async () => {
       try {
         setLoading(true);
+        console.log("Cargando metadatos de historias...");
         
-        // Run diagnostics
-        try {
-          await checkStoragePermissions();
-        } catch (diagError) {
-          console.error("Error during diagnostics:", diagError);
-        }
-        
-        // Load stories
-        const storyData = await fetchStoryExamples();
+        const storyData = await fetchStoryMetadata();
         
         if (storyData && storyData.length > 0) {
-          // Show only a subset of stories on the homepage (max 6)
+          console.log(`✓ Éxito! Cargados ${storyData.length} metadatos de historias`);
+          // Mostrar solo un subconjunto de historias en la página principal (máximo 6)
           const limitedStories = storyData.slice(0, 6);
           setStories(limitedStories);
           setFilteredStories(limitedStories);
-          setLoading(false);
+          setHasMore(storyData.length > 6);
         } else {
-          setError(new Error("No stories found"));
-          setLoading(false);
+          console.warn("⚠ No se encontraron historias");
+          setError(new Error("No se encontraron historias"));
         }
       } catch (error) {
-        console.error("Error loading stories:", error);
+        console.error("✗ Error al cargar metadatos de historias:", error);
         setError(error);
+      } finally {
         setLoading(false);
+        console.log("=== CARGA DE METADATOS COMPLETADA ===");
       }
     };
     
     loadStories();
   }, []);
 
-  // Apply filters locally
+  // Aplicar filtros localmente
   useEffect(() => {
     if (stories.length > 0) {
       const filtered = stories.filter(story => {
@@ -516,6 +251,91 @@ const StoryExamplesSection = () => {
       [filterType]: value
     }));
   };
+
+  const handleStoryClick = async (story, content, audioUrl) => {
+    console.log("[SECTION] Story clicked:", story.title);
+    console.log("[SECTION] Content received:", content ? "Yes" : "No");
+    console.log("[SECTION] Audio URL received:", audioUrl ? "Yes" : "No");
+
+    try {
+      // Get image URL
+      let imageUrl = null;
+      if (story.imagePath) {
+        try {
+          imageUrl = await getStoryImageUrl(story.imagePath);
+          console.log("[SECTION] Image URL loaded:", imageUrl);
+        } catch (error) {
+          console.error("[SECTION] Error loading image:", error);
+        }
+      }
+
+      // Open modal with content
+      setModalState({
+        isOpen: true,
+        title: story.title,
+        content: content,
+        audioUrl: audioUrl,
+        showAudio: !!audioUrl,
+        usingMockContent: false,
+        imageUrl: imageUrl
+      });
+    } catch (error) {
+      console.error("[SECTION] Error handling story click:", error);
+      setError(error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalState(prev => ({ ...prev, isOpen: false }));
+  };
+
+  const handleLoadMore = async () => {
+    if (loadingMore || !hasMore) return;
+
+    try {
+      setLoadingMore(true);
+      console.log("Cargando más historias...");
+      
+      const storyData = await fetchStoryMetadata();
+      const nextPage = page + 1;
+      const startIndex = 0;
+      const endIndex = nextPage * 6;
+      const newStories = storyData.slice(startIndex, endIndex);
+      
+      if (newStories.length > stories.length) {
+        setStories(newStories);
+        setPage(nextPage);
+        setHasMore(storyData.length > newStories.length);
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error al cargar más historias:", error);
+      setError(error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="story-examples-section loading">
+        <div className="loading-spinner"></div>
+        <p>{t('common.loading')}</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="story-examples-section error">
+        <p>{t('common.error')}</p>
+        <button onClick={() => window.location.reload()}>
+          {t('common.retry')}
+        </button>
+      </div>
+    );
+  }
 
   return (
     <section className="story-examples-section">
@@ -570,38 +390,46 @@ const StoryExamplesSection = () => {
         </div>
       </div>
 
-      {loading ? (
-        <div className="loading-container">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : error ? (
-        <div className="error-container">
-          <p>{t('common.errorLoading')}</p>
-          <Link to="/story-examples" className="btn btn-primary">
-            {t('common.seeAllStories')}
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="stories-grid">
-            {filteredStories.length > 0 ? (
-              filteredStories.map(story => (
-                <StoryCard key={story.id} story={story} t={t} />
-              ))
+      <div className="stories-grid">
+        {filteredStories.map(story => (
+          <StoryCard
+            key={story.id}
+            story={story}
+            onStoryClick={handleStoryClick}
+          />
+        ))}
+      </div>
+      
+      <div className="view-all-container">
+        {hasMore && (
+          <button 
+            onClick={handleLoadMore} 
+            className="btn btn-primary view-all-btn"
+            disabled={loadingMore}
+          >
+            {loadingMore ? (
+              <>
+                <span className="loading-spinner"></span>
+                {t('common.loading')}
+              </>
             ) : (
-              <p className="no-results">{t('storyExamples.noResults')}</p>
+              t('common.seeAllStories')
             )}
-          </div>
-          
-          <div className="view-all-container">
-            <Link to="/story-examples" className="btn btn-primary view-all-btn">
-              {t('common.viewAllStories')}
-            </Link>
-          </div>
-        </>
-      )}
+          </button>
+        )}
+      </div>
+
+      {/* Add StoryModal component */}
+      <StoryModal
+        isOpen={modalState.isOpen}
+        onClose={handleCloseModal}
+        title={modalState.title}
+        content={modalState.content}
+        audioUrl={modalState.audioUrl}
+        showAudio={modalState.showAudio}
+        usingMockContent={modalState.usingMockContent}
+        imageUrl={modalState.imageUrl}
+      />
     </section>
   );
 };

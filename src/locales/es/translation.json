@@ -295,7 +295,8 @@
     "pause": "Pausar",
     "progress": "Progreso del audio",
     "download": "Descargar audio",
-    "downloadFileName": "historia"
+    "downloadFileName": "historia",
+    "loading": "Cargando audio..."
   },
   "register": {
     "title": "Crear una cuenta",

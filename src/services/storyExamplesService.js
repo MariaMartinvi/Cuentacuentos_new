@@ -2,6 +2,7 @@ import { collection, getDocs, query, where, limit } from "firebase/firestore";
 import { ref, getDownloadURL, getBlob, getBytes, getMetadata, uploadString } from "firebase/storage";
 import { db, storage, withRetry, withTimeout, getPublicUrl } from "../firebase/config";
 import { fetchThroughProxy } from "./proxyService";
+import { getStoryTextWithCache, getStoryAudioWithCache, getStoryImageWithCache } from "./resourceCacheService";
 
 /**
  * Mock stories for fallback content when Firebase files can't be accessed
@@ -152,268 +153,19 @@ export const getStoryTextUrl = async (path) => {
       throw new Error("No path provided for story text");
     }
     
-    // Normalizar la ruta
+    // Normalize the path
     const normalizedPath = normalizeStoragePath(path);
     console.log(`Fetching text URL for path: ${path} (normalized: ${normalizedPath})`);
     
-    // Extraer el nombre del archivo del path
-    const filename = normalizedPath.split('/').pop();
-    
-    // Verificar si tenemos contenido mock para este archivo
-    if (MOCK_STORIES[filename]) {
-      console.log(`Using mock content for: ${filename}`);
-      return `mock://${filename}`;
-    }
-    
-    // Usar withRetry para manejar reintentos
-    return await withRetry(async () => {
-      try {
-        // Use proxy service to avoid CORS issues
-        const url = await getPublicUrl(normalizedPath);
-        console.log(`Successfully retrieved URL for ${normalizedPath}: ${url}`);
-        
-        // Ensure the URL has the alt=media parameter for direct content access
-        const contentUrl = url.includes('?') ? `${url}&alt=media` : `${url}?alt=media`;
-        console.log(`Content URL with alt=media: ${contentUrl}`);
-        
-        // Return the URL with a flag indicating it should be fetched through proxy
-        return {
-          url: contentUrl,
-          useProxy: true
-        };
-      } catch (error) {
-        console.error(`Error getting URL for ${normalizedPath}:`, error);
-        
-        // Si el archivo no existe, intentar con la ruta original
-        if (error.code === 'storage/object-not-found') {
-          console.log(`File not found at ${normalizedPath}, trying original path: ${path}`);
-          const url = await getPublicUrl(path);
-          console.log(`Successfully retrieved URL with original path: ${url}`);
-          
-          // Ensure the URL has the alt=media parameter
-          const contentUrl = url.includes('?') ? `${url}&alt=media` : `${url}?alt=media`;
-          
-          return {
-            url: contentUrl,
-            useProxy: true
-          };
-        }
-        
-        // Si todos los intentos fallan y tenemos contenido mock, usarlo como último recurso
-        if (MOCK_STORIES[filename]) {
-          console.log(`Using mock content for: ${filename} as last resort`);
-          return `mock://${filename}`;
-        }
-        
-        throw error;
-      }
-    });
+    // Try to get from cache first
+    const textRef = ref(storage, normalizedPath);
+    const url = await getDownloadURL(textRef);
+    console.log(`Successfully retrieved URL for ${normalizedPath}`);
+    return url;
   } catch (error) {
     console.error(`Error getting story text URL for path ${path}:`, error);
-    if (error.code === 'storage/object-not-found') {
-      console.error(`File not found at path: ${path}`);
-    } else if (error.code === 'storage/unauthorized') {
-      console.error(`No permission to access file at path: ${path}`);
-    }
-    
-    // Si tenemos contenido mock para este archivo, usarlo como último recurso
-    const filename = path.split('/').pop();
-    if (MOCK_STORIES[filename]) {
-      console.log(`Using mock content for: ${filename} as last resort`);
-      return `mock://${filename}`;
-    }
-    
     throw error;
   }
-};
-
-// Add proxy initialization
-let proxyReady = false;
-let proxyReadyPromise = new Promise((resolve) => {
-    window.addEventListener('message', function(event) {
-        if (event.data && event.data.type === 'proxyReady') {
-            console.log('[Audio] Proxy service is ready');
-            proxyReady = true;
-            resolve();
-        }
-    });
-});
-
-// Add mock audio URLs
-const MOCK_AUDIO_URLS = {
-  'dragon-no-volar.mp3': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/audio%2Fdragon-no-volar.mp3?alt=media',
-  'dragon-share.mp3': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/audio%2Fdragon-share.mp3?alt=media'
-};
-
-// Add mock image URLs
-const MOCK_IMAGE_URLS = {
-  'dragon-no-volar.jpg': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/images%2Fdragon-no-volar.jpg?alt=media',
-  'princesa-valiente.jpg': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/images%2Fprincesa-valiente.jpg?alt=media',
-  'magic-forest.jpg': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/images%2Fmagic-forest.jpg?alt=media',
-  'dragon-share.jpg': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/images%2Fdragon-share.jpg?alt=media',
-  'default.jpg': 'https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/images%2Fdefault-story.jpg?alt=media'
-};
-
-/**
- * Get download URL for a story audio file
- */
-export const getStoryAudioUrl = async (audioPath) => {
-    try {
-        if (!audioPath) {
-            console.error('[AUDIO] No path provided for audio');
-            throw new Error('No path provided for audio');
-        }
-        
-        console.log('[AUDIO] === INICIANDO OBTENCIÓN DE URL DE AUDIO ===');
-        console.log('[AUDIO] Ruta original:', audioPath);
-        
-        // Normalize the path
-        const normalizedPath = normalizeStoragePath(audioPath);
-        console.log('[AUDIO] Ruta normalizada:', normalizedPath);
-        
-        // Extract filename
-        const filename = normalizedPath.split('/').pop();
-        console.log('[AUDIO] Nombre de archivo:', filename);
-        
-        // Check if mock URL exists for this file (just for logging)
-        if (MOCK_AUDIO_URLS[filename]) {
-            console.log(`[AUDIO] ⚠ Existe URL mock disponible para: ${filename}`);
-        }
-        
-        // Get the file reference
-        const audioRef = ref(storage, normalizedPath);
-        console.log('[AUDIO] Referencia creada');
-        
-        try {
-            // MÉTODO 1: Get the download URL directly
-            console.log('[AUDIO] MÉTODO 1: Obteniendo URL directa...');
-            const url = await getDownloadURL(audioRef);
-            console.log('[AUDIO] ✓ URL obtenida directamente:', url);
-            
-            // Ensure the URL has the alt=media parameter for direct content access
-            const contentUrl = url.includes('?') ? `${url}&alt=media` : `${url}?alt=media`;
-            console.log('[AUDIO] URL con alt=media:', contentUrl);
-            
-            // Wait for proxy to be ready if needed
-            if (!proxyReady) {
-                console.log('[AUDIO] Esperando a que el servicio proxy esté listo...');
-                await proxyReadyPromise;
-            }
-            
-            // Return URL with proxy flag
-            console.log('[AUDIO] ✓ ÉXITO! URL real obtenida');
-            console.log('[AUDIO] === FIN DE OBTENCIÓN (MÉTODO 1 EXITOSO) ===');
-            return {
-                url: contentUrl,
-                useProxy: true
-            };
-        } catch (error) {
-            console.error('[AUDIO] ✗ Error obteniendo URL de audio:', {
-                error: error.message,
-                code: error.code || 'unknown'
-            });
-            
-            // MÉTODO 2: Try with a different path format
-            console.log('[AUDIO] MÉTODO 2: Probando con formato de ruta alternativo...');
-            try {
-                // Extract filename from normalized path
-                const filename = normalizedPath.split('/').pop();
-                const altPath = `audio/${filename}`;
-                
-                if (altPath !== normalizedPath) {
-                    console.log('[AUDIO] Probando ruta alternativa:', altPath);
-                    const altRef = ref(storage, altPath);
-                    const altUrl = await getDownloadURL(altRef);
-                    console.log('[AUDIO] ✓ URL obtenida con ruta alternativa:', altUrl);
-                    
-                    // Ensure the URL has the alt=media parameter
-                    const contentUrl = altUrl.includes('?') ? `${altUrl}&alt=media` : `${altUrl}?alt=media`;
-                    console.log('[AUDIO] URL con alt=media:', contentUrl);
-                    
-                    console.log('[AUDIO] ✓ ÉXITO! URL real obtenida con ruta alternativa');
-                    console.log('[AUDIO] === FIN DE OBTENCIÓN (MÉTODO 2 EXITOSO) ===');
-                    return {
-                        url: contentUrl,
-                        useProxy: true
-                    };
-                } else {
-                    console.log('[AUDIO] La ruta alternativa es igual a la normalizada, saltando...');
-                }
-            } catch (altError) {
-                console.error('[AUDIO] ✗ Error con ruta alternativa:', altError.message);
-            }
-            
-            // MÉTODO 3: Try direct URL construction
-            console.log('[AUDIO] MÉTODO 3: Construyendo URL directa...');
-            try {
-                const encodedPath = encodeURIComponent(normalizedPath);
-                const directUrl = `https://firebasestorage.googleapis.com/v0/b/${storage.app.options.storageBucket}/o/${encodedPath}?alt=media`;
-                console.log('[AUDIO] URL directa construida:', directUrl);
-                
-                // Try to validate the URL by making a HEAD request through the proxy
-                console.log('[AUDIO] Verificando si la URL directa es válida...');
-                
-                // We'll assume the URL is valid for now
-                console.log('[AUDIO] ✓ ÉXITO! URL directa construida');
-                console.log('[AUDIO] === FIN DE OBTENCIÓN (MÉTODO 3 EXITOSO) ===');
-                return {
-                    url: directUrl,
-                    useProxy: true
-                };
-            } catch (directError) {
-                console.error('[AUDIO] ✗ Error construyendo URL directa:', directError.message);
-            }
-            
-            // MÉTODO 4: Try with Firebase Storage URL patterns
-            console.log('[AUDIO] MÉTODO 4: Probando con patrones de URL de Firebase Storage...');
-            try {
-                // Try different URL patterns
-                const urlPatterns = [
-                    `https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.appspot.com/o/audio%2F${encodeURIComponent(filename)}?alt=media`,
-                    `https://firebasestorage.googleapis.com/v0/b/cuentacuentos-b2e64.firebasestorage.app/o/audio%2F${encodeURIComponent(filename)}?alt=media`,
-                    `https://storage.googleapis.com/cuentacuentos-b2e64.appspot.com/audio/${filename}`
-                ];
-                
-                console.log('[AUDIO] Probando patrones de URL:', urlPatterns);
-                
-                // We'll use the first pattern for now
-                const patternUrl = urlPatterns[0];
-                console.log('[AUDIO] ✓ Usando patrón de URL:', patternUrl);
-                console.log('[AUDIO] === FIN DE OBTENCIÓN (MÉTODO 4) ===');
-                return {
-                    url: patternUrl,
-                    useProxy: true
-                };
-            } catch (patternError) {
-                console.error('[AUDIO] ✗ Error con patrones de URL:', patternError.message);
-            }
-            
-            // If all methods fail, use mock URL as last resort
-            console.warn(`[AUDIO] ⚠ TODOS LOS MÉTODOS FALLARON para ${filename}`);
-            
-            if (MOCK_AUDIO_URLS[filename]) {
-                console.warn(`[AUDIO] ⚠ USANDO URL MOCK como último recurso`);
-                const mockUrl = MOCK_AUDIO_URLS[filename];
-                console.log(`[AUDIO] URL mock: ${mockUrl}`);
-                console.log('[AUDIO] === FIN DE OBTENCIÓN (USANDO MOCK) ===');
-                return mockUrl;
-            }
-            
-            console.error('[AUDIO] ✗ No hay URL disponible (ni real ni mock)');
-            throw error;
-        }
-    } catch (error) {
-        console.error('[AUDIO] FALLO CRÍTICO obteniendo URL de audio:', error.message);
-        
-        // If all else fails, try mock URL as last resort
-        const filename = audioPath.split('/').pop();
-        if (MOCK_AUDIO_URLS[filename]) {
-            console.warn(`[AUDIO] ⚠ USANDO URL MOCK como último recurso después de error crítico`);
-            return MOCK_AUDIO_URLS[filename];
-        }
-        
-        throw error;
-    }
 };
 
 /**
@@ -502,35 +254,17 @@ export const getStoryTextContent = async (path) => {
       } catch (urlError) {
         console.warn(`[TEXT] ✗ Método 2 falló: ${urlError.message}`);
       }
-
-      // Si llegamos aquí, todos los métodos fallaron. Usar contenido mock como último recurso
-      console.warn(`[TEXT] ⚠ TODOS LOS MÉTODOS FALLARON para ${filename}`);
       
-      // Usar contenido mock solo como último recurso
-      if (MOCK_STORIES[filename]) {
-        console.warn(`[TEXT] ⚠ USANDO CONTENIDO MOCK como último recurso`);
-        const mockContent = MOCK_STORIES[filename];
-        console.log(`[TEXT] Vista previa del contenido mock: ${mockContent.substring(0, 100)}...`);
-        console.log(`[TEXT] === FIN DE CARGA (USANDO MOCK) ===`);
-        return mockContent;
-      } else {
-        console.error(`[TEXT] ✗ No hay contenido disponible (ni real ni mock) para ${filename}`);
-        throw new Error(`No content available for ${filename}`);
-      }
+      // If all methods fail, use mock content
+      console.log(`[TEXT] ✗ Todos los métodos fallaron, usando contenido mock`);
+      return MOCK_STORIES[filename] || `# ${filename}\n\nEste es un contenido de ejemplo generado automáticamente porque no se pudo cargar el archivo original.\n\nFin`;
     } catch (error) {
-      console.error(`[TEXT] Error obteniendo contenido de texto:`, error);
-      
-      // If all else fails, try with mock content as last resort
-      if (MOCK_STORIES[filename]) {
-        console.warn(`[TEXT] ⚠ USANDO CONTENIDO MOCK como último recurso después de error`);
-        return MOCK_STORIES[filename];
-      }
-      
-      throw error;
+      console.error(`[TEXT] Error general obteniendo contenido de texto para ${path}:`, error);
+      return `Error al cargar el contenido. Por favor, inténtelo de nuevo más tarde.`;
     }
   } catch (error) {
-    console.error(`[TEXT] FALLO CRÍTICO obteniendo contenido para ${path}:`, error);
-    throw error;
+    console.error(`[TEXT] Error general obteniendo contenido de texto para ${path}:`, error);
+    return `Error al cargar el contenido. Por favor, inténtelo de nuevo más tarde.`;
   }
 };
 
@@ -830,97 +564,131 @@ export const inspectStorageFile = async (path) => {
 };
 
 /**
+ * Get download URL for a story audio file
+ */
+export const getStoryAudioUrl = async (path) => {
+  try {
+    if (!path) {
+      console.error("[AUDIO] No path provided for story audio");
+      throw new Error("No path provided for story audio");
+    }
+    
+    console.log(`[AUDIO] === INICIANDO CARGA DE AUDIO ===`);
+    console.log(`[AUDIO] Ruta original: ${path}`);
+    
+    // Normalize the path
+    const normalizedPath = normalizeStoragePath(path);
+    console.log(`[AUDIO] Ruta normalizada: ${normalizedPath}`);
+    
+    // Extract the filename
+    const filename = normalizedPath.split('/').pop();
+    console.log(`[AUDIO] Nombre de archivo: ${filename}`);
+    
+    // Use cache service to get audio URL
+    const url = await getStoryAudioWithCache(filename, normalizedPath, async () => {
+      try {
+        console.log(`[AUDIO] Intentando obtener URL de Firebase para: ${normalizedPath}`);
+        const audioRef = ref(storage, normalizedPath);
+        
+        try {
+          const url = await getDownloadURL(audioRef);
+          console.log(`[AUDIO] ✓ ÉXITO! URL de audio obtenida: ${url}`);
+          
+          // Verificar que la URL es válida
+          if (!url || typeof url !== 'string') {
+            throw new Error("Invalid audio URL received");
+          }
+          
+          // Verificar que la URL es accesible
+          try {
+            console.log(`[AUDIO] Verificando acceso a URL: ${url}`);
+            const response = await fetch(url, {
+              method: 'HEAD',
+              mode: 'cors',
+              credentials: 'omit'
+            });
+            
+            if (!response.ok) {
+              throw new Error(`URL not accessible: ${response.status} ${response.statusText}`);
+            }
+            
+            console.log(`[AUDIO] ✓ URL verificada y accesible`);
+            return url;
+          } catch (fetchError) {
+            console.warn(`[AUDIO] ⚠ Error verificando URL: ${fetchError.message}`);
+            // Si hay un error de CORS, intentar con una URL mock
+            if (fetchError.message.includes('CORS')) {
+              console.log('[AUDIO] Error de CORS detectado, devolviendo URL mock');
+              return `mock://${normalizedPath}`;
+            }
+            throw fetchError;
+          }
+        } catch (downloadError) {
+          console.error(`[AUDIO] Error al obtener URL de descarga:`, downloadError);
+          
+          // Si hay un error de CORS, intentar con una URL mock
+          if (downloadError.message && downloadError.message.includes('CORS')) {
+            console.log('[AUDIO] Error de CORS detectado, devolviendo URL mock');
+            return `mock://${normalizedPath}`;
+          }
+          
+          throw downloadError;
+        }
+      } catch (error) {
+        console.error(`[AUDIO] Error getting audio URL for ${path}:`, error);
+        throw error;
+      }
+    });
+
+    if (!url) {
+      console.error(`[AUDIO] No se pudo obtener URL de audio para ${path}`);
+      throw new Error("No audio URL received");
+    }
+
+    console.log(`[AUDIO] === FIN DE CARGA DE AUDIO ===`);
+    return url;
+  } catch (error) {
+    console.error(`[AUDIO] Error general obteniendo URL de audio para ${path}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Get download URL for a story image file
  */
-export const getStoryImageUrl = async (imagePath) => {
+export const getStoryImageUrl = async (path) => {
   try {
-    if (!imagePath) {
+    if (!path) {
       console.error("[IMAGE] No path provided for story image");
       throw new Error("No path provided for story image");
     }
     
-    console.log(`[IMAGE] === INICIANDO OBTENCIÓN DE URL DE IMAGEN ===`);
-    console.log(`[IMAGE] Ruta original: ${imagePath}`);
+    console.log(`[IMAGE] === INICIANDO CARGA DE IMAGEN ===`);
+    console.log(`[IMAGE] Ruta original: ${path}`);
     
     // Normalize the path
-    const normalizedPath = normalizeStoragePath(imagePath);
+    const normalizedPath = normalizeStoragePath(path);
     console.log(`[IMAGE] Ruta normalizada: ${normalizedPath}`);
     
-    // Extract the filename from the path
+    // Extract the filename
     const filename = normalizedPath.split('/').pop();
     console.log(`[IMAGE] Nombre de archivo: ${filename}`);
     
-    // Check if we have mock content for this file
-    if (MOCK_IMAGE_URLS[filename]) {
-      console.log(`[IMAGE] ✓ Usando URL mock para: ${filename}`);
-      return MOCK_IMAGE_URLS[filename];
-    }
-    
-    // Use withRetry to handle retries
-    return await withRetry(async () => {
+    // Use cache service to get image URL
+    return await getStoryImageWithCache(filename, normalizedPath, async () => {
       try {
-        // Get public URL for the image
-        console.log(`[IMAGE] Intentando obtener URL pública para: ${normalizedPath}`);
-        const url = await getPublicUrl(normalizedPath);
-        console.log(`[IMAGE] ✓ URL obtenida con éxito: ${url}`);
+        const imageRef = ref(storage, normalizedPath);
+        const url = await getDownloadURL(imageRef);
+        console.log(`[IMAGE] ✓ ÉXITO! URL de imagen obtenida: ${url}`);
+        console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN ===`);
         return url;
       } catch (error) {
-        console.error(`[IMAGE] ✗ Error obteniendo URL para ${normalizedPath}:`, error);
-        
-        // If the file doesn't exist, try with the original path
-        if (error.code === 'storage/object-not-found') {
-          console.log(`[IMAGE] Archivo no encontrado en ${normalizedPath}, probando con ruta original: ${imagePath}`);
-          try {
-            const url = await getPublicUrl(imagePath);
-            console.log(`[IMAGE] ✓ URL obtenida con ruta original: ${url}`);
-            return url;
-          } catch (originalPathError) {
-            console.error(`[IMAGE] ✗ Error con ruta original:`, originalPathError);
-            
-            // Try with a different path format (directly in images folder)
-            try {
-              const simpleImagePath = `images/${filename}`;
-              console.log(`[IMAGE] Intentando con ruta simplificada: ${simpleImagePath}`);
-              const url = await getPublicUrl(simpleImagePath);
-              console.log(`[IMAGE] ✓ URL obtenida con ruta simplificada: ${url}`);
-              return url;
-            } catch (simplePathError) {
-              console.error(`[IMAGE] ✗ Error con ruta simplificada:`, simplePathError);
-            }
-          }
-        }
-        
-        // If all attempts fail and we have mock content, use it as a last resort
-        if (MOCK_IMAGE_URLS[filename]) {
-          console.warn(`[IMAGE] ⚠ Usando URL mock como último recurso para: ${filename}`);
-          return MOCK_IMAGE_URLS[filename];
-        }
-        
-        // If we have a mock URL for a generic image, use that
-        if (MOCK_IMAGE_URLS['default.jpg']) {
-          console.warn(`[IMAGE] ⚠ Usando imagen por defecto`);
-          return MOCK_IMAGE_URLS['default.jpg'];
-        }
-        
+        console.error(`[IMAGE] Error getting image URL for ${path}:`, error);
         throw error;
       }
     });
   } catch (error) {
-    console.error(`[IMAGE] ERROR CRÍTICO obteniendo URL de imagen para ${imagePath}:`, error);
-    
-    // If we have mock content for this file, use it as a last resort
-    const filename = imagePath.split('/').pop();
-    if (MOCK_IMAGE_URLS[filename]) {
-      console.warn(`[IMAGE] ⚠ Usando URL mock como último recurso después de error crítico`);
-      return MOCK_IMAGE_URLS[filename];
-    }
-    
-    // If we have a mock URL for a generic image, use that
-    if (MOCK_IMAGE_URLS['default.jpg']) {
-      console.warn(`[IMAGE] ⚠ Usando imagen por defecto después de error crítico`);
-      return MOCK_IMAGE_URLS['default.jpg'];
-    }
-    
+    console.error(`[IMAGE] Error general obteniendo URL de imagen para ${path}:`, error);
     throw error;
   }
 };
@@ -1089,5 +857,41 @@ export const createStoryImages = async () => {
       error: error.message,
       details: { message: error.message, code: error.code, stack: error.stack }
     };
+  }
+};
+
+/**
+ * Fetch only story metadata without loading full content
+ * This is used for initial load to improve performance
+ */
+export const fetchStoryMetadata = async () => {
+  try {
+    console.log("Iniciando fetchStoryMetadata...");
+    const storyExamplesRef = collection(db, "storyExamples");
+    const storyExamplesSnapshot = await getDocs(storyExamplesRef);
+    
+    console.log(`Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
+    
+    const storyMetadataList = storyExamplesSnapshot.docs.map(doc => {
+      const data = doc.data();
+      
+      // Solo incluimos los metadatos básicos necesarios para la vista inicial
+      return {
+        id: doc.id,
+        title: data.title || `Story ${doc.id}`,
+        age: data.age || 'all',
+        language: data.language || 'spanish',
+        level: data.level || 'beginner',
+        textPath: data.textPath || null,
+        audioPath: data.audioPath || null,
+        imagePath: data.imagePath || `images/${doc.id}.jpg`,
+        // No incluimos el contenido completo aquí
+      };
+    });
+    
+    return storyMetadataList;
+  } catch (error) {
+    console.error("Error fetching story metadata:", error);
+    throw error;
   }
 }; 

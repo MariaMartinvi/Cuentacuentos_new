@@ -16,16 +16,16 @@ const AudioPlayer = ({ audioUrl, title }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [debugInfo, setDebugInfo] = useState('');
-  const [usingWebAudio, setUsingWebAudio] = useState(true); // Use Web Audio API by default
+  const [usingWebAudio, setUsingWebAudio] = useState(true);
   const [startTime, setStartTime] = useState(0);
   const [audioBuffer, setAudioBuffer] = useState(null);
   const animationRef = useRef(null);
   const [retryCount, setRetryCount] = useState(0);
-  const [showError, setShowError] = useState(false); // New state to control error visibility
+  const [showError, setShowError] = useState(false);
+  const loadingTimeoutRef = useRef(null);
 
   // Initialize Web Audio API
   useEffect(() => {
-    // Create AudioContext
     if (!audioContextRef.current) {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -33,24 +33,26 @@ const AudioPlayer = ({ audioUrl, title }) => {
         gainNodeRef.current = audioContextRef.current.createGain();
         gainNodeRef.current.connect(audioContextRef.current.destination);
       } catch (err) {
-        console.error('Failed to initialize Web Audio API:', err);
+        console.error('[AUDIO] Failed to initialize Web Audio API:', err);
         setUsingWebAudio(false);
       }
     }
 
     return () => {
-      // Clean up animation frame
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
       
-      // Stop any playing audio
       if (sourceNodeRef.current) {
         try {
           sourceNodeRef.current.stop();
         } catch (e) {
           // Ignore errors if already stopped
         }
+      }
+
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
       }
     };
   }, []);
@@ -60,11 +62,21 @@ const AudioPlayer = ({ audioUrl, title }) => {
     const fetchAudio = async () => {
       setLoading(true);
       setError(null);
-      setShowError(false); // Reset error visibility
+      setShowError(false);
+      
+      // Set a timeout to prevent infinite loading
+      loadingTimeoutRef.current = setTimeout(() => {
+        if (loading) {
+          console.warn('[AUDIO] Loading timeout reached, switching to HTML5 Audio');
+          setUsingWebAudio(false);
+          setLoading(false);
+        }
+      }, 10000); // 10 second timeout
       
       if (!audioUrl) {
+        console.error("[AUDIO] No audio URL provided");
         setError('No audio URL provided');
-        setShowError(true); // Show this error
+        setShowError(true);
         setLoading(false);
         return;
       }
@@ -78,15 +90,20 @@ const AudioPlayer = ({ audioUrl, title }) => {
         } else {
           throw new Error('Invalid audio URL format');
         }
+
+        console.log("[AUDIO] Source URL:", sourceUrl);
         
         // Ensure the URL has the alt=media parameter
         if (!sourceUrl.includes('alt=media')) {
           sourceUrl = sourceUrl.includes('?') ? `${sourceUrl}&alt=media` : `${sourceUrl}?alt=media`;
         }
         
-        // Try direct fetch first since it's more reliable
+        // Try direct fetch first with timeout
         try {
-          // Fallback to direct fetch with improved headers
+          console.log("[AUDIO] Attempting direct fetch...");
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+          
           const response = await fetch(sourceUrl, {
             method: 'GET',
             mode: 'cors',
@@ -95,8 +112,11 @@ const AudioPlayer = ({ audioUrl, title }) => {
               'Accept': 'audio/*',
               'Origin': window.location.origin
             },
-            cache: 'no-cache'
+            cache: 'no-cache',
+            signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -117,14 +137,16 @@ const AudioPlayer = ({ audioUrl, title }) => {
           setAudioBuffer(decodedData);
           setDuration(decodedData.duration);
           setLoading(false);
+          clearTimeout(loadingTimeoutRef.current);
           return;
         } catch (directFetchErr) {
+          console.warn("[AUDIO] Direct fetch failed:", directFetchErr);
           // Continue to proxy fetch as fallback
-          console.warn("Direct fetch failed, trying proxy:", directFetchErr);
         }
         
-        // Try using proxy as fallback
+        // Try using proxy as fallback with timeout
         try {
+          console.log("[AUDIO] Attempting proxy fetch...");
           const audioBlob = await fetchThroughProxy(sourceUrl, 'blob');
           const arrayBuffer = await audioBlob.arrayBuffer();
           
@@ -141,27 +163,25 @@ const AudioPlayer = ({ audioUrl, title }) => {
           setAudioBuffer(decodedData);
           setDuration(decodedData.duration);
           setLoading(false);
+          clearTimeout(loadingTimeoutRef.current);
           return;
         } catch (proxyErr) {
-          throw proxyErr; // Rethrow to be caught by outer catch
+          throw proxyErr;
         }
       } catch (err) {
-        console.error('Error loading audio:', err);
+        console.error('[AUDIO] Error loading audio:', err);
         
         // Fallback to HTML5 Audio if Web Audio API fails
         if (usingWebAudio && retryCount < 1) {
           setUsingWebAudio(false);
           setRetryCount(retryCount + 1);
-          console.log("Switching to HTML5 Audio fallback");
+          console.log("[AUDIO] Switching to HTML5 Audio fallback");
         } else {
           setError(`Failed to load audio: ${err.message}`);
-          // Don't show the error immediately if we're going to try HTML5 Audio
           if (!usingWebAudio || retryCount >= 1) {
-            // Only show error after a delay if audio still isn't working
             setTimeout(() => {
-              // Check if audio is actually working despite the error
               if (audioRef.current && audioRef.current.readyState > 0) {
-                console.log("Audio is actually working, hiding error");
+                console.log("[AUDIO] Audio is actually working, hiding error");
                 setShowError(false);
               } else {
                 setShowError(true);
@@ -170,6 +190,8 @@ const AudioPlayer = ({ audioUrl, title }) => {
           }
           setLoading(false);
         }
+      } finally {
+        clearTimeout(loadingTimeoutRef.current);
       }
     };
     
@@ -187,19 +209,30 @@ const AudioPlayer = ({ audioUrl, title }) => {
       }
       
       if (audioRef.current) {
+        console.log("[AUDIO] Setting HTML5 audio source:", sourceUrl);
         audioRef.current.src = sourceUrl;
         audioRef.current.load();
         
+        // Set a timeout for HTML5 audio loading
+        const html5Timeout = setTimeout(() => {
+          if (loading) {
+            console.warn('[AUDIO] HTML5 Audio loading timeout');
+            setError('Audio loading timeout');
+            setShowError(true);
+            setLoading(false);
+          }
+        }, 10000);
+        
         audioRef.current.onloadedmetadata = () => {
+          console.log("[AUDIO] HTML5 audio metadata loaded");
           setDuration(audioRef.current.duration);
           setLoading(false);
-          // If we get here, audio is working, so hide any error
           setShowError(false);
+          clearTimeout(html5Timeout);
         };
         
         audioRef.current.ontimeupdate = () => {
           setCurrentTime(audioRef.current.currentTime);
-          // If we're getting timeupdate events, audio is working
           if (error) {
             setShowError(false);
           }
@@ -211,19 +244,21 @@ const AudioPlayer = ({ audioUrl, title }) => {
         };
         
         audioRef.current.oncanplay = () => {
-          // Audio can play, hide any error
+          console.log("[AUDIO] HTML5 audio can play");
           setShowError(false);
+          clearTimeout(html5Timeout);
         };
         
         audioRef.current.onerror = (e) => {
-          console.error('HTML5 Audio error:', e);
+          console.error('[AUDIO] HTML5 Audio error:', e);
           setError(`HTML5 Audio error: ${e.target.error ? e.target.error.message : 'Unknown error'}`);
-          setShowError(true); // Show this error
+          setShowError(true);
           setLoading(false);
+          clearTimeout(html5Timeout);
         };
       }
     }
-  }, [audioUrl, usingWebAudio, error]);
+  }, [audioUrl, usingWebAudio, error, loading]);
 
   // Update current time during playback
   const updatePlaybackTime = () => {
@@ -243,7 +278,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
           audioRef.current.pause();
         } else {
           audioRef.current.play().catch(err => {
-            console.error('Error playing audio:', err);
+            console.error('[AUDIO] Error playing audio:', err);
             setError(`Error playing audio: ${err.message}`);
             setShowError(true);
           });
@@ -258,7 +293,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
     }
     
     try {
-      // Resume audio context if it's suspended (browser autoplay policy)
+      // Resume audio context if it's suspended
       if (audioContextRef.current.state === 'suspended') {
         audioContextRef.current.resume();
       }
@@ -299,7 +334,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
       
       setIsPlaying(!isPlaying);
     } catch (playError) {
-      console.error('Error controlling playback:', playError);
+      console.error('[AUDIO] Error controlling playback:', playError);
       setError(`Error controlling playback: ${playError.message}`);
     }
   };
@@ -361,7 +396,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
     return `${minutes}:${seconds}`;
   };
 
-  // Get the download URL (direct URL for download button)
+  // Get the download URL
   const getDownloadUrl = () => {
     if (typeof audioUrl === 'object' && audioUrl.url) {
       return audioUrl.url;
@@ -379,53 +414,21 @@ const AudioPlayer = ({ audioUrl, title }) => {
   };
 
   return (
-    <div className="audio-player-container">
-      <h3>{title || t('audioPlayer.title')}</h3>
-      
-      {error && showError && (
-        <div className="audio-player-error">
-          {error}
-          <div className="audio-error-actions">
-            <button onClick={toggleAudioEngine} className="toggle-audio-engine-btn">
-              {usingWebAudio ? 'Try HTML5 Audio' : 'Try Web Audio API'}
-            </button>
-          </div>
-        </div>
-      )}
-      
-      <div className="audio-player-controls">
-        <button 
-          className="audio-player-button" 
+    <div className="audio-player">
+      <audio ref={audioRef} src={getDownloadUrl()} />
+      <div className="player-controls">
+        <button
           onClick={togglePlay}
-          disabled={loading || (!audioBuffer && usingWebAudio && !audioRef.current?.readyState)}
+          className="play-pause-btn"
+          disabled={loading}
           aria-label={isPlaying ? t('audioPlayer.pause') : t('audioPlayer.play')}
         >
           {isPlaying ? '❚❚' : '▶'}
         </button>
-        
-        <div className="audio-player-time">
-          {formatTime(currentTime)}
-        </div>
-        
-        <div 
-          className="audio-player-progress" 
-          onClick={handleProgress}
-          aria-label={t('audioPlayer.progress')}
-        >
-          <div 
-            className="audio-player-progress-bar" 
-            style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
-          />
-        </div>
-        
-        <div className="audio-player-time">
-          {formatTime(duration)}
-        </div>
-        
         <a 
           href={getDownloadUrl()} 
-          download={`${t('audioPlayer.downloadFileName')}.mp3`}
-          className="audio-download-button"
+          download={`${title || 'audio'}.mp3`}
+          className="download-audio-btn"
           aria-label={t('audioPlayer.download')}
           target="_blank"
           rel="noopener noreferrer"
@@ -433,17 +436,6 @@ const AudioPlayer = ({ audioUrl, title }) => {
           {t('audioPlayer.download')}
         </a>
       </div>
-      
-      {loading && (
-        <div className="audio-loading">
-          {t('audioPlayer.loading')}
-        </div>
-      )}
-      
-      {/* HTML5 Audio element (hidden) */}
-      {!usingWebAudio && (
-        <audio ref={audioRef} style={{ display: 'none' }} />
-      )}
     </div>
   );
 };
