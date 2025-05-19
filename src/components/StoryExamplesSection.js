@@ -182,7 +182,6 @@ const StoryExamplesSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
-    age: 'all',
     language: 'all',
     level: 'all'
   });
@@ -236,8 +235,7 @@ const StoryExamplesSection = () => {
   useEffect(() => {
     if (stories.length > 0) {
       const filtered = stories.filter(story => {
-        return (filters.age === 'all' || story.age === filters.age) &&
-               (filters.language === 'all' || story.language === filters.language) &&
+        return (filters.language === 'all' || story.language === filters.language) &&
                (filters.level === 'all' || story.level === filters.level);
       });
       
@@ -347,20 +345,6 @@ const StoryExamplesSection = () => {
       <div className="filters-container">
         <h3>{t('storyExamples.filters.title')}</h3>
         <div className="filters">
-          <div className="filter-group">
-            <label htmlFor="home-age-filter">{t('storyExamples.filters.age')}</label>
-            <select 
-              id="home-age-filter" 
-              value={filters.age}
-              onChange={(e) => handleFilterChange('age', e.target.value)}
-            >
-              <option value="all">{t('storyExamples.ageGroups.all')}</option>
-              <option value="3to5">{t('storyExamples.ageGroups.3to5')}</option>
-              <option value="6to8">{t('storyExamples.ageGroups.6to8')}</option>
-              <option value="9to12">{t('storyExamples.ageGroups.9to12')}</option>
-            </select>
-          </div>
-
           <div className="filter-group">
             <label htmlFor="home-language-filter">{t('storyExamples.filters.language')}</label>
             <select 
