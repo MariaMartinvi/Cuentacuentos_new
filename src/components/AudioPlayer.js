@@ -425,6 +425,15 @@ const AudioPlayer = ({ audioUrl, title }) => {
         >
           {isPlaying ? '❚❚' : '▶'}
         </button>
+        <div className="audio-player-progress" onClick={handleProgress}>
+          <div 
+            className="audio-player-progress-bar" 
+            style={{ width: `${(currentTime / duration) * 100}%` }}
+          />
+        </div>
+        <div className="audio-player-time">
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </div>
         <a 
           href={getDownloadUrl()} 
           download={`${title || 'audio'}.mp3`}

@@ -4,6 +4,7 @@ import { generateStory } from '../services/storyService.js';
 import { getCurrentUser } from '../services/authService';
 import { useNavigate, Link } from 'react-router-dom';
 import { checkServerHealth, diagnoseBackendIssue } from '../services/storyService';
+import AudioPlayer from './AudioPlayer';
 import './StoryForm.css';
 
 function StoryForm({ onStoryGenerated }) {
@@ -20,6 +21,7 @@ function StoryForm({ onStoryGenerated }) {
   const [ageGroup, setAgeGroup] = useState('default');
   const [childNames, setChildNames] = useState('');
   const [englishLevel, setEnglishLevel] = useState('intermediate');
+  const [audioUrl, setAudioUrl] = useState(null);
 
   // Special handler for rate limit errors with countdown
   const formatTimeRemaining = (milliseconds) => {
@@ -742,6 +744,12 @@ function StoryForm({ onStoryGenerated }) {
           </button>
         </div>
       </form>
+
+      {audioUrl && (
+        <div className="audio-player-section">
+          <AudioPlayer audioUrl={audioUrl} title={topic} />
+        </div>
+      )}
     </div>
   );
 }
