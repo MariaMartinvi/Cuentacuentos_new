@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata } from '../services/storyExamplesService';
+import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata, addProtagonistaToStory } from '../services/storyExamplesService';
 import { getStoriesWithCache } from '../services/cacheService';
 import StoryCard from './StoryCard';
 import './StoryExamplesSection.css';
@@ -210,6 +210,7 @@ const StoryExamplesSection = () => {
         
         if (storyData && storyData.length > 0) {
           console.log(`✓ Éxito! Cargados ${storyData.length} metadatos de historias`);
+          console.log("Ejemplo de historia con campos:", storyData[0]);
           // Mostrar solo un subconjunto de historias en la página principal (máximo 6)
           const limitedStories = storyData.slice(0, 6);
           setStories(limitedStories);
@@ -312,6 +313,30 @@ const StoryExamplesSection = () => {
       setError(error);
     } finally {
       setLoadingMore(false);
+    }
+  };
+
+  // Add a function to test adding a protagonista field
+  const handleAddProtagonista = async (storyId) => {
+    try {
+      console.log("Añadiendo protagonista de prueba...");
+      const success = await addProtagonistaToStory(storyId, "Dragón Puff");
+      
+      if (success) {
+        alert("Campo protagonista añadido correctamente. Recargando datos...");
+        // Reload the data
+        const storyData = await fetchStoryMetadata();
+        if (storyData && storyData.length > 0) {
+          const limitedStories = storyData.slice(0, 6);
+          setStories(limitedStories);
+          setFilteredStories(limitedStories);
+        }
+      } else {
+        alert("Error al añadir el campo protagonista.");
+      }
+    } catch (error) {
+      console.error("Error al añadir protagonista:", error);
+      alert("Error al añadir el campo protagonista: " + error.message);
     }
   };
 

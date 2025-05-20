@@ -923,7 +923,8 @@ export const fetchStoryMetadata = async () => {
         textPath: data.textPath || null,
         audioPath: data.audioPath || null,
         imagePath: data.imagePath || `images/${doc.id}.jpg`,
-        protagonista: data.protagonista || null, // Only use the value from Firebase, no defaults
+        protagonista: data.protagonista || null,
+        // No incluimos el contenido completo aquí
       };
     });
     
