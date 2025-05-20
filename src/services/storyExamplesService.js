@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, limit } from "firebase/firestore";
+import { collection, getDocs, query, where, limit, doc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, getBlob, getBytes, getMetadata, uploadString } from "firebase/storage";
 import { db, storage, withRetry, withTimeout, getPublicUrl } from "../firebase/config";
 import { fetchThroughProxy } from "./proxyService";
@@ -73,6 +73,7 @@ export const fetchStoryExamples = async () => {
         textPath: data.textPath || null,
         audioPath: data.audioPath || null,
         imagePath: data.imagePath || `images/${doc.id}.jpg`, // Add default imagePath if missing
+        protagonista: data.protagonista || null,
         ...data // Preservar otros campos
       };
       
@@ -80,7 +81,8 @@ export const fetchStoryExamples = async () => {
         title: storyData.title,
         textPath: storyData.textPath,
         audioPath: storyData.audioPath,
-        imagePath: storyData.imagePath
+        imagePath: storyData.imagePath,
+        protagonista: storyData.protagonista
       });
       
       return storyData;
@@ -122,10 +124,21 @@ export const fetchFilteredStoryExamples = async (filters) => {
     }
     
     const storyExamplesSnapshot = await getDocs(storyExamplesQuery);
-    let storyExamplesList = storyExamplesSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+    let storyExamplesList = storyExamplesSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        title: data.title || `Story ${doc.id}`,
+        age: data.age || 'all',
+        language: data.language || 'spanish',
+        level: data.level || 'beginner',
+        textPath: data.textPath || null,
+        audioPath: data.audioPath || null,
+        imagePath: data.imagePath || `images/${doc.id}.jpg`,
+        protagonista: data.protagonista || null,
+        ...data // Preservar otros campos
+      };
+    });
     
     // Apply remaining filters in memory
     if (constraints.length > 1) {
@@ -872,6 +885,31 @@ export const fetchStoryMetadata = async () => {
     
     console.log(`Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
     
+    // Log all fields for each document with more visible formatting
+    console.log("=== DETALLES DE DOCUMENTOS ===");
+    storyExamplesSnapshot.docs.forEach(doc => {
+      const data = doc.data();
+      console.log(`\nDocumento ${doc.id}:`, {
+        title: data.title,
+        age: data.age,
+        language: data.language,
+        level: data.level,
+        textPath: data.textPath,
+        audioPath: data.audioPath,
+        imagePath: data.imagePath,
+        protagonista: data.protagonista,
+        allFields: Object.keys(data)
+      });
+      
+      // Specifically check for protagonista field
+      if (data.protagonista) {
+        console.log(`✓ Documento ${doc.id} tiene protagonista: "${data.protagonista}"`);
+      } else {
+        console.log(`✗ Documento ${doc.id} NO tiene campo protagonista`);
+      }
+    });
+    console.log("=== FIN DE DETALLES DE DOCUMENTOS ===\n");
+    
     const storyMetadataList = storyExamplesSnapshot.docs.map(doc => {
       const data = doc.data();
       
@@ -885,13 +923,44 @@ export const fetchStoryMetadata = async () => {
         textPath: data.textPath || null,
         audioPath: data.audioPath || null,
         imagePath: data.imagePath || `images/${doc.id}.jpg`,
-        // No incluimos el contenido completo aquí
+        protagonista: data.protagonista || null, // Only use the value from Firebase, no defaults
       };
     });
+    
+    // Log the final metadata list with protagonista field highlighted
+    console.log("=== LISTA FINAL DE METADATOS ===");
+    storyMetadataList.forEach(story => {
+      console.log(`\nStory ${story.id}:`, {
+        title: story.title,
+        protagonista: story.protagonista || "NO TIENE PROTAGONISTA",
+        allFields: Object.keys(story)
+      });
+    });
+    console.log("=== FIN DE LISTA DE METADATOS ===\n");
     
     return storyMetadataList;
   } catch (error) {
     console.error("Error fetching story metadata:", error);
     throw error;
+  }
+};
+
+/**
+ * Update a story with a protagonista field for testing
+ */
+export const addProtagonistaToStory = async (storyId, protagonista) => {
+  try {
+    console.log(`Añadiendo protagonista "${protagonista}" a la historia con ID: ${storyId}...`);
+    
+    const storyRef = doc(db, "storyExamples", storyId);
+    await updateDoc(storyRef, {
+      protagonista: protagonista
+    });
+    
+    console.log(`✓ Protagonista añadido correctamente a la historia ${storyId}`);
+    return true;
+  } catch (error) {
+    console.error(`Error añadiendo protagonista a la historia ${storyId}:`, error);
+    return false;
   }
 }; 

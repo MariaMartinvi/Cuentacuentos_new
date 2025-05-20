@@ -100,7 +100,7 @@ function HomePage() {
         )}
       </main>
       
-      {/* Story Examples Section */}
+      {/* Personalized Story Examples Section */}
       {!generatedStory && <StoryExamplesSection />}
     </div>
   );

@@ -1,6 +1,6 @@
-# Story Examples Setup Guide
+# Personalized Story Examples Setup Guide
 
-This guide will help you set up the "Ejemplos de cuentos" (Story Examples) feature using Firebase for storing and retrieving story texts and audio files.
+This guide will help you set up the "Ejemplos de cuentos" (Personalized Story Examples) feature using Firebase for storing and retrieving story texts and audio files.
 
 ## 1. Firebase Setup
 
@@ -107,7 +107,7 @@ This script will:
 4. Test the filtering functionality
 5. Click on the "Read story" and "Listen to audio" links to ensure they work properly
 
-## 7. Customizing the Story Examples
+## 7. Customizing the Personalized Story Examples
 
 To add or modify the example stories:
 

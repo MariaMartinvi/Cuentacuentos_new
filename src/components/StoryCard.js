@@ -15,6 +15,25 @@ const StoryCard = ({ story, onStoryClick }) => {
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // Debug: log the story object to check if it has the protagonista field
+  useEffect(() => {
+    console.log("\n=== STORYCARD RECIBIÓ STORY ===");
+    console.log("ID:", story.id);
+    console.log("Título:", story.title);
+    console.log("Protagonista:", story.protagonista || "NO TIENE PROTAGONISTA");
+    console.log("Todos los campos:", Object.keys(story));
+    console.log("=== FIN DE STORYCARD LOG ===\n");
+  }, [story]);
+
+  // Debug: log when the protagonista field is rendered
+  useEffect(() => {
+    if (story.protagonista) {
+      console.log(`\n=== RENDERIZANDO PROTAGONISTA PARA ${story.id} ===`);
+      console.log("Valor:", story.protagonista);
+      console.log("=== FIN DE RENDERIZACIÓN ===\n");
+    }
+  }, [story.protagonista, story.id]);
+
   useEffect(() => {
     const loadImageUrl = async () => {
       if (story.imagePath) {
@@ -110,6 +129,12 @@ const StoryCard = ({ story, onStoryClick }) => {
         </div>
         <div className="story-card-content">
           <h3 className="story-card-title">{story.title}</h3>
+          {story.protagonista && story.protagonista.trim() !== '' && (
+            <p className="story-card-protagonist">
+              <span className="protagonist-label">{t('storyExamples.storyCard.protagonist')}: </span>
+              <span className="protagonist-name">{story.protagonista}</span>
+            </p>
+          )}
           <p className="error-message">{error.message || t('common.error')}</p>
         </div>
       </div>
@@ -132,6 +157,12 @@ const StoryCard = ({ story, onStoryClick }) => {
       </div>
       <div className="story-card-content">
         <h3 className="story-card-title">{story.title}</h3>
+        {story.protagonista && story.protagonista.trim() !== '' && (
+          <p className="story-card-protagonist">
+            <span className="protagonist-label">{t('storyExamples.storyCard.protagonist')}: </span>
+            <span className="protagonist-name">{story.protagonista}</span>
+          </p>
+        )}
         <div className="story-card-metadata">
           <span className="story-card-age">
             {t(`storyExamples.ageGroups.${story.age}`)}

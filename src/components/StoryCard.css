@@ -153,6 +153,21 @@
   color: #333;
 }
 
+.story-card-protagonist {
+  margin: 8px 0;
+  font-size: 1.1em;
+}
+
+.protagonist-label {
+  color: #666;
+  font-weight: normal;
+}
+
+.protagonist-name {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
 .story-card-metadata {
   display: flex;
   flex-wrap: wrap;

@@ -402,7 +402,7 @@
     "moreInfo": "Más información"
   },
   "storyExamples": {
-    "title": "Ejemplos de Cuentos",
+    "title": "Ejemplos de Cuentos Personalizados",
     "description": "Explora nuestra colección de cuentos de ejemplo generados por Mi Cuentacuentos para todas las edades y niveles de idioma.",
     "filters": {
       "title": "Filtrar por:",
@@ -432,7 +432,8 @@
       "language": "Idioma:",
       "level": "Nivel:",
       "readStory": "Leer cuento",
-      "listenAudio": "Escuchar audio"
+      "listenAudio": "Escuchar audio",
+      "protagonist": "Protagonista"
     },
     "noResults": "No se encontraron cuentos con los filtros seleccionados."
   }

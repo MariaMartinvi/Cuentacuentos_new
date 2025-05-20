@@ -35,7 +35,7 @@
     "learnMore": "Más información"
   },
   "storyExamples": {
-    "title": "Ejemplos de Cuentos",
+    "title": "Ejemplos de Cuentos Personalizados",
     "description": "Explora nuestra colección de cuentos de ejemplo generados por Mi Cuentacuentos para todas las edades y niveles de idioma.",
     "viewStory": "Ver Cuento",
     "noResults": "No se encontraron cuentos con los filtros seleccionados.",
@@ -68,7 +68,8 @@
       "level": "Nivel:",
       "readStory": "Leer cuento",
       "listenAudio": "Escuchar audio",
-      "usingMockContent": "Usando contenido de ejemplo"
+      "usingMockContent": "Usando contenido de ejemplo",
+      "protagonist": "Protagonista"
     },
     "mockContent": {
       "badge": "Ejemplo",
@@ -109,7 +110,7 @@
     "copyright": "Generador de Cuentos IA. Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "inBarcelona": "en Barcelona",
-    "storyExamples": "Ejemplos de Cuentos"
+    "storyExamples": "Ejemplos de Cuentos Personalizados"
   },
   "audioPlayer": {
     "title": "Audio del Cuento",
