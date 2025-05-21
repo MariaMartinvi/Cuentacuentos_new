@@ -286,7 +286,9 @@
     "multipleGenresTitle": "Múltiples Géneros",
     "multipleGenresDescription": "Elige entre aventura, fantasía, ciencia ficción, humor y más.",
     "audioConversionTitle": "Audio en Diferentes Voces",
-    "audioConversionDescription": "Convierte tus historias en audio con diferentes voces y acentos."
+    "audioConversionDescription": "Convierte tus historias en audio con diferentes voces y acentos.",
+    "languageLevelsTitle": "Diferentes Niveles de Idioma",
+    "languageLevelsDescription": "Nivel básico, intermedio o avanzado de inglés y español. Aprende idiomas mientras escuchas un cuento."
   },
 
   "audioPlayer": {
