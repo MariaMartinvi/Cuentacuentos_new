@@ -246,4 +246,58 @@
     order: 4;
     margin-top: 0.5rem;
   }
+}
+
+.Player_Controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.download-audio-button,
+.share-audio-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4361ee;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+}
+
+.download-audio-button:hover,
+.share-audio-button:hover {
+  background-color: #3a56d4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.4);
+}
+
+.btn-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .Player_Controls {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .download-audio-button,
+  .share-audio-button {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+  }
 } 

@@ -191,7 +191,6 @@ function StoryDisplay({ story }) {
             <span className="btn-icon">💾</span> {t('storyDisplay.downloadText')}
           </button>
           <button 
-            className="share-button" 
             onClick={handleShareAudio}
             title={t('common.share')}
           >
