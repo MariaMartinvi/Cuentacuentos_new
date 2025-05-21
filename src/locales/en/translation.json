@@ -386,7 +386,15 @@
     "copyright": "AI Story Generator. All rights reserved.",
     "madeWith": "Made with",
     "inBarcelona": "in Barcelona",
-    "storyExamples": "Personalized Story Examples"
+    "storyExamples": "Personalized Story Examples",
+    "aboutDescription": "Mi Cuentacuentos is a platform that generates personalized stories for children, helping them learn languages while having fun.",
+    "examples": "Examples",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "legal": "Legal",
+    "cookies": "Cookie Policy",
+    "rights": "All rights reserved.",
+    "socialMedia": "Follow Us"
   },
   "cookies": {
     "title": "We use cookies",

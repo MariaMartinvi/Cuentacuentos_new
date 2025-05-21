@@ -381,12 +381,20 @@
     "quickLinks": "Enlaces Rápidos",
     "howItWorks": "Cómo Funciona",
     "aboutUs": "Sobre Nosotros",
+    "aboutDescription": "Mi Cuentacuentos es una plataforma que genera cuentos personalizados para niños, ayudándoles a aprender idiomas mientras se divierten.",
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
     "copyright": "Generador de Cuentos IA. Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "inBarcelona": "en Barcelona",
-    "storyExamples": "Ejemplos de cuentos"
+    "storyExamples": "Ejemplos de cuentos",
+    "examples": "Ejemplos",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "legal": "Legal",
+    "cookies": "Política de Cookies",
+    "rights": "Todos los derechos reservados.",
+    "socialMedia": "Síguenos"
   },
   "common": {
     "learnMore": "Saber más",
