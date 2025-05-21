@@ -377,11 +377,12 @@
   },
   "footer": {
     "title": "Mi Cuentacuentos",
-    "description": "Genera cuentos personalizados para niños con inteligencia artificial. Convierte historias en audio con diferentes voces y acentos.",
+    "description": "Genera cuentos personalizados para niños con inteligencia artificial. Convierte las historias en audio con diferentes voces y acentos.",
     "quickLinks": "Enlaces Rápidos",
     "howItWorks": "Cómo Funciona",
     "aboutUs": "Sobre Nosotros",
     "storyExamples": "Ejemplos de Cuentos",
+    "blog": "Blog",
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
     "contact": "Contacto",
@@ -442,5 +443,73 @@
       "protagonist": "Protagonista"
     },
     "noResults": "No se encontraron cuentos con los filtros seleccionados."
+  },
+  "blog": {
+    "title": "Nuestro Blog",
+    "description": "Descubre consejos, historias y reflexiones sobre la educación infantil y el aprendizaje de idiomas",
+    "categoriesTitle": "Explora por Categoría",
+    "categories": {
+      "benefits": "Beneficios del Aprendizaje",
+      "benefitsDesc": "Descubre cómo el aprendizaje temprano de idiomas beneficia el desarrollo de tu hijo",
+      "tips": "Consejos para Padres",
+      "tipsDesc": "Consejos prácticos para padres que apoyan el aprendizaje de sus hijos",
+      "examples": "Ejemplos de Cuentos",
+      "examplesDesc": "Explora nuestra colección de cuentos personalizados y su impacto",
+      "testimonials": "Historias de Éxito",
+      "testimonialsDesc": "Experiencias reales de familias que usan nuestra plataforma"
+    },
+    "featuredTitle": "Artículos Destacados",
+    "featured": {
+      "earlyLearning": {
+        "title": "Los Beneficios del Aprendizaje Temprano de Idiomas",
+        "excerpt": "Descubre cómo comenzar la educación lingüística temprana puede moldear el éxito futuro de tu hijo"
+      },
+      "bedtimeStories": {
+        "title": "Haciendo los Cuentos más Interesantes",
+        "excerpt": "Aprende formas creativas de hacer la hora del cuento más interactiva y divertida"
+      },
+      "successStory": {
+        "title": "Cómo la Familia García Encontró el Éxito",
+        "excerpt": "Una historia conmovedora del viaje de una familia con nuestra plataforma"
+      }
+    },
+    "readMore": "Leer Más",
+    "newsletter": {
+      "title": "Mantente Informado",
+      "description": "Suscríbete a nuestro boletín para recibir los últimos consejos e historias",
+      "placeholder": "Ingresa tu email",
+      "subscribe": "Suscribirse"
+    },
+    "share": "Compartir este artículo",
+    "relatedPosts": "Artículos Relacionados",
+    "posts": {
+      "1": {
+        "title": "Los Beneficios del Aprendizaje Temprano de Idiomas",
+        "content": "Aprender un nuevo idioma a una edad temprana tiene numerosos beneficios para el desarrollo cognitivo de los niños...",
+        "author": "María Rodríguez",
+        "date": "20 de Marzo, 2024",
+        "category": "Beneficios del Aprendizaje",
+        "readingTime": "5 min de lectura",
+        "tags": ["aprendizaje temprano", "desarrollo lingüístico", "habilidades cognitivas"]
+      },
+      "2": {
+        "title": "Haciendo los Cuentos más Interesantes",
+        "content": "Los cuentos antes de dormir son más que una rutina - son una oportunidad para aprender y crear vínculos...",
+        "author": "Juan Smith",
+        "date": "18 de Marzo, 2024",
+        "category": "Consejos para Padres",
+        "readingTime": "4 min de lectura",
+        "tags": ["cuentos", "crianza", "hábitos de lectura"]
+      },
+      "3": {
+        "title": "Cómo la Familia García Encontró el Éxito",
+        "content": "La familia García comparte su experiencia usando nuestra plataforma para ayudar a sus hijos a aprender...",
+        "author": "Ana García",
+        "date": "15 de Marzo, 2024",
+        "category": "Historias de Éxito",
+        "readingTime": "6 min de lectura",
+        "tags": ["historia de éxito", "experiencia familiar", "viaje de aprendizaje"]
+      }
+    }
   }
 } 

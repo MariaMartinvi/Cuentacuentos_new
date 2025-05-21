@@ -36,6 +36,7 @@ function Footer() {
               <li><Link to="/como-funciona" onClick={scrollToTop}>{t('footer.howItWorks')}</Link></li>
               <li><Link to="/about" onClick={scrollToTop}>{t('footer.aboutUs')}</Link></li>
               <li><Link to="/story-examples" onClick={scrollToTop}>{t('footer.storyExamples')}</Link></li>
+              <li><Link to="/blog" onClick={scrollToTop}>{t('footer.blog')}</Link></li>
               <li><Link to="/terminos" onClick={scrollToTop}>{t('footer.terms')}</Link></li>
               <li><Link to="/politica" onClick={scrollToTop}>{t('footer.privacy')}</Link></li>
             </ul>

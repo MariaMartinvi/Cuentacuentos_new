@@ -382,6 +382,7 @@
     "howItWorks": "How It Works",
     "aboutUs": "About Us",
     "storyExamples": "Story Examples",
+    "blog": "Blog",
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "contact": "Contact",
@@ -441,5 +442,73 @@
     "download": "Download audio",
     "downloadFileName": "story",
     "loading": "Loading audio..."
+  },
+  "blog": {
+    "title": "Our Blog",
+    "description": "Discover tips, stories, and insights about children's education and language learning",
+    "categoriesTitle": "Explore by Category",
+    "categories": {
+      "benefits": "Benefits of Learning",
+      "benefitsDesc": "Discover how early language learning benefits your child's development",
+      "tips": "Parent Tips",
+      "tipsDesc": "Practical advice for parents to support their children's learning journey",
+      "examples": "Story Examples",
+      "examplesDesc": "Explore our collection of personalized stories and their impact",
+      "testimonials": "Success Stories",
+      "testimonialsDesc": "Real experiences from families using our platform"
+    },
+    "featuredTitle": "Featured Articles",
+    "featured": {
+      "earlyLearning": {
+        "title": "The Benefits of Early Language Learning",
+        "excerpt": "Discover how starting language education early can shape your child's future success"
+      },
+      "bedtimeStories": {
+        "title": "Making Bedtime Stories More Engaging",
+        "excerpt": "Learn creative ways to make storytime more interactive and fun"
+      },
+      "successStory": {
+        "title": "How the García Family Found Success",
+        "excerpt": "A heartwarming story of one family's journey with our platform"
+      }
+    },
+    "readMore": "Read More",
+    "newsletter": {
+      "title": "Stay Updated",
+      "description": "Subscribe to our newsletter for the latest tips and stories",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "share": "Share this article",
+    "relatedPosts": "Related Articles",
+    "posts": {
+      "1": {
+        "title": "The Benefits of Early Language Learning",
+        "content": "Learning a new language at an early age has numerous benefits for children's cognitive development...",
+        "author": "Maria Rodriguez",
+        "date": "March 20, 2024",
+        "category": "Benefits of Learning",
+        "readingTime": "5 min read",
+        "tags": ["early learning", "language development", "cognitive skills"]
+      },
+      "2": {
+        "title": "Making Bedtime Stories More Engaging",
+        "content": "Bedtime stories are more than just a routine - they're an opportunity for learning and bonding...",
+        "author": "John Smith",
+        "date": "March 18, 2024",
+        "category": "Parent Tips",
+        "readingTime": "4 min read",
+        "tags": ["bedtime stories", "parenting", "reading habits"]
+      },
+      "3": {
+        "title": "How the García Family Found Success",
+        "content": "The García family shares their journey of using our platform to help their children learn...",
+        "author": "Ana García",
+        "date": "March 15, 2024",
+        "category": "Success Stories",
+        "readingTime": "6 min read",
+        "tags": ["success story", "family experience", "learning journey"]
+      }
+    }
   }
 } 
