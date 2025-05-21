@@ -68,12 +68,13 @@
     "paymentInfo": "Secure payment processed by Stripe. We do not store your card information."
   },
   "common": {
-    "learnMore": "Try it",
+    "learnMore": "Learn more",
     "viewAllStories": "View all stories",
     "seeAllStories": "See all stories",
     "errorLoading": "Error loading stories",
     "retryLoading": "Retry",
-    "loading": "Loading..."
+    "share": "Share",
+    "shareNotSupported": "Sharing is not supported in this browser"
   },
   "storyForm": {
     "title": "Story Generator",

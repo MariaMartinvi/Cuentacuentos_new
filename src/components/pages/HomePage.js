@@ -6,6 +6,7 @@ import StoryExamplesSection from '../StoryExamplesSection.js';
 import '../../styles/global.css';
 import '../FeaturesSection.css';
 import SEO from '../SEO';
+import BreadcrumbSchema from '../BreadcrumbSchema.js';
 
 function HomePage() {
   const [generatedStory, setGeneratedStory] = useState(null);
@@ -44,6 +45,14 @@ function HomePage() {
     'historias con IA'
   ];
 
+  // Breadcrumb items
+  const breadcrumbItems = [
+    {
+      name: i18n.language === 'es' ? 'Inicio' : 'Home',
+      url: '/'
+    }
+  ];
+
   return (
     <div className="app">
       <SEO 
@@ -55,7 +64,40 @@ function HomePage() {
           'Generate personalized stories for children with artificial intelligence. Convert stories to audio with different voices and accents to learn languages.'}
         keywords={keywords}
         lang={i18n.language}
-      />
+        pageType="WebSite"
+      >
+        {/* FAQ Schema for SEO */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            'mainEntity': [
+              {
+                '@type': 'Question',
+                'name': i18n.language === 'es' ? '¿Cómo funciona Mi Cuentacuentos?' : 'How does My Storyteller work?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': i18n.language === 'es' ? 
+                    'Simplemente ingresa los datos del personaje principal, tema y otros detalles para generar un cuento personalizado. Luego puedes escucharlo en audio en varios idiomas y voces.' : 
+                    'Simply enter the main character details, theme, and other information to generate a personalized story. You can then listen to it in audio in various languages and voices.'
+                }
+              },
+              {
+                '@type': 'Question',
+                'name': i18n.language === 'es' ? '¿Puedo usar Mi Cuentacuentos para aprender idiomas?' : 'Can I use My Storyteller to learn languages?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': i18n.language === 'es' ? 
+                    'Sí, puedes generar y escuchar historias en diferentes idiomas con distintos acentos para practicar y mejorar tus habilidades lingüísticas.' : 
+                    'Yes, you can generate and listen to stories in different languages with various accents to practice and improve your language skills.'
+                }
+              }
+            ]
+          })}
+        </script>
+      </SEO>
+
+      <BreadcrumbSchema items={breadcrumbItems} />
       
       <div className="hero-section">
         <div className="hero-container">
@@ -64,44 +106,42 @@ function HomePage() {
         </div>
       </div>
 
-      <main className="container">
-        <StoryForm onStoryGenerated={handleStoryGenerated} />
-
-        {generatedStory && (
-          <StoryDisplay story={generatedStory} />
-        )}
-
-        {!generatedStory && (
-          <div className="features-preview">
-            <h2>{t('homepage.featuresTitle')}</h2>
+      <div className="main-content">
+        <div className="container">
+          <StoryForm onStoryGenerated={handleStoryGenerated} />
+          
+          {generatedStory && (
+            <StoryDisplay story={generatedStory} />
+          )}
+        </div>
+        
+        <div className="features-section">
+          <div className="container">
+            <h2 className="section-title">{t('homepage.featuresTitle')}</h2>
             <div className="features-grid">
               <div className="feature-card">
-                <div className="feature-icon">✨</div>
+                <div className="feature-icon">🎯</div>
                 <h3>{t('homepage.uniqueStoriesTitle')}</h3>
                 <p>{t('homepage.uniqueStoriesDescription')}</p>
-                <a href="#" onClick={scrollToStoryForm}>{t('common.learnMore')}</a>
               </div>
-
+              
               <div className="feature-card">
-                <div className="feature-icon">🎭</div>
-                <h3>{t('homepage.multipleGenresTitle')}</h3>
-                <p>{t('homepage.multipleGenresDescription')}</p>
-                <a href="#" onClick={scrollToStoryForm}>{t('common.learnMore')}</a>
+                <div className="feature-icon">🌍</div>
+                <h3>Diferentes Niveles de Idioma</h3>
+                <p>Nivel básico, intermedio o avanzado de inglés y español. Aprende idiomas mientras escuchas un cuento.</p>
               </div>
-
+              
               <div className="feature-card">
-                <div className="feature-icon">🔊</div>
+                <div className="feature-icon">🎧</div>
                 <h3>{t('homepage.audioConversionTitle')}</h3>
                 <p>{t('homepage.audioConversionDescription')}</p>
-                <a href="#" onClick={scrollToStoryForm}>{t('common.learnMore')}</a>
               </div>
             </div>
           </div>
-        )}
-      </main>
-      
-      {/* Personalized Story Examples Section */}
-      {!generatedStory && <StoryExamplesSection />}
+        </div>
+
+        <StoryExamplesSection />
+      </div>
     </div>
   );
 }

@@ -404,6 +404,42 @@ const AudioPlayer = ({ audioUrl, title }) => {
     return audioUrl;
   };
 
+  // Handle audio download
+  const handleDownload = () => {
+    const element = document.createElement('a');
+    element.href = getDownloadUrl();
+    element.download = `${title || 'audio'}.mp3`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  // Handle audio sharing
+  const handleShareAudio = async () => {
+    try {
+      const response = await fetch(getDownloadUrl());
+      const blob = await response.blob();
+      const file = new File([blob], `${title || 'audio'}.mp3`, { type: 'audio/mp3' });
+      
+      if (navigator.share) {
+        await navigator.share({
+          title: title || 'Audio',
+          text: `${title || 'Audio'}\n\nEscucha este audio en Mi Cuentacuentos`,
+          files: [file]
+        });
+      } else {
+        setError(t('common.shareNotSupported'));
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+      }
+    } catch (error) {
+      console.error('Error sharing audio:', error);
+      setError(t('audioPlayer.shareError'));
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+    }
+  };
+
   // Toggle between Web Audio API and HTML5 Audio
   const toggleAudioEngine = () => {
     setUsingWebAudio(!usingWebAudio);
@@ -434,16 +470,18 @@ const AudioPlayer = ({ audioUrl, title }) => {
         <div className="audio-player-time">
           {formatTime(currentTime)} / {formatTime(duration)}
         </div>
-        <a 
-          href={getDownloadUrl()} 
-          download={`${title || 'audio'}.mp3`}
-          className="download-audio-btn"
-          aria-label={t('audioPlayer.download')}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t('audioPlayer.download')}
-        </a>
+        <div className="Player_Controls">
+          <button className="download-audio-button" onClick={handleDownload}>
+            <span className="btn-icon">💾</span> {t('audioPlayer.download')}
+          </button>
+          <button 
+            className="share-audio-button" 
+            onClick={handleShareAudio}
+            title={t('common.share')}
+          >
+            <span className="btn-icon">📤</span> {t('common.share')}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,11 @@
   functions = "netlify/functions"
 
 [[redirects]]
+  from = "/dynamic-sitemap.xml"
+  to = "/.netlify/functions/dynamic-sitemap"
+  status = 200
+
+[[redirects]]
   from = "/auth/google/callback"
   to = "/index.html"
   status = 200

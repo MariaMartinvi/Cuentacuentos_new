@@ -97,7 +97,9 @@
     "viewAllStories": "Ver todos los cuentos",
     "seeAllStories": "Ver todos los cuentos",
     "errorLoading": "Error al cargar los cuentos",
-    "retryLoading": "Reintentar"
+    "retryLoading": "Reintentar",
+    "share": "Compartir",
+    "shareNotSupported": "Compartir no está soportado en este navegador"
   },
   "footer": {
     "title": "Generador de Cuentos IA",
@@ -119,6 +121,56 @@
     "progress": "Progreso del audio",
     "download": "Descargar",
     "downloadFileName": "audio-cuento",
-    "loading": "Cargando audio..."
+    "loading": "Cargando audio...",
+    "shareNotSupported": "Compartir no está soportado en este navegador",
+    "shareError": "Error al compartir",
+    "share": {
+      "title": "Compartir audio",
+      "audioTitle": "Compartir audio del cuento",
+      "textTitle": "Compartir texto del cuento",
+      "tiktok": "Compartir en TikTok",
+      "instagram": "Compartir en Instagram",
+      "twitter": "Compartir en Twitter"
+    }
+  },
+  "storyDisplay": {
+    "title": "Tu Cuento",
+    "copyText": "Copiar texto",
+    "downloadText": "Descargar texto",
+    "shareText": "Compartir texto",
+    "shareAudio": "Compartir audio",
+    "shareNotSupported": "Compartir no está soportado en este navegador",
+    "copySuccess": "Texto copiado al portapapeles",
+    "shareError": "Error al compartir",
+    "textOptions": "Opciones de texto",
+    "audioOptions": "Opciones de audio",
+    "generateAudio": "Generar audio",
+    "generatingAudio": "Generando audio...",
+    "audioError": "Error al generar el audio",
+    "audioLimitReached": "Has alcanzado el límite de 4 generaciones de audio",
+    "voiceType": "Tipo de voz",
+    "voiceFemale": "Mujer (España)",
+    "voiceMale": "Hombre (España)",
+    "voiceFemaleLatam": "Mujer (Latinoamérica)",
+    "voiceMaleLatam": "Hombre (Latinoamérica)",
+    "voiceFemaleEnglish": "Mujer (Inglés)",
+    "voiceMaleEnglish": "Hombre (Inglés)",
+    "speechRate": "Velocidad de habla",
+    "speedVerySlow": "Muy lenta",
+    "speedSlow": "Lenta",
+    "speedNormal": "Normal",
+    "speedFast": "Rápida",
+    "speedVeryFast": "Muy rápida",
+    "backgroundMusic": "Música de fondo",
+    "noMusic": "Sin música",
+    "randomMusic": "Música aleatoria",
+    "relaxingMusic": "Relajante",
+    "magicalMusic": "Mágica",
+    "adventureMusic": "Aventura",
+    "bedtimeMusic": "Para dormir",
+    "pianoMusic": "Piano",
+    "forestMusic": "Bosque",
+    "musicBoxMusic": "Caja musical",
+    "journeyMusic": "Viaje"
   }
 } 

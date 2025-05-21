@@ -387,12 +387,13 @@
     "storyExamples": "Ejemplos de cuentos"
   },
   "common": {
-    "learnMore": "Pruébalo",
+    "learnMore": "Saber más",
     "viewAllStories": "Ver todos los cuentos",
     "seeAllStories": "Ver todos los cuentos",
     "errorLoading": "Error al cargar los cuentos",
     "retryLoading": "Reintentar",
-    "loading": "Cargando..."
+    "share": "Compartir",
+    "shareNotSupported": "Compartir no está soportado en este navegador"
   },
   "cookies": {
     "title": "Usamos cookies",

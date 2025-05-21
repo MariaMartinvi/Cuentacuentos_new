@@ -179,6 +179,118 @@
   background: #27ae60;
 }
 
+.social-sharing {
+  margin: 10px 0 !important;
+  padding: 10px !important;
+  background-color: #f8f9fa !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
+  width: 100% !important;
+}
+
+.social-sharing h4 {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  text-align: right !important;
+}
+
+.social-buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.social-icon,
+.share-button,
+.share-button.tiktok,
+.share-button.instagram,
+.share-button.twitter,
+.share-button.whatsapp {
+  all: unset;
+}
+
+.share-button {
+  padding: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-icon {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  transform: scale(1) !important;
+}
+
+.share-button.tiktok {
+  background-color: #000000 !important;
+}
+
+.share-button.tiktok:hover {
+  background-color: #333333 !important;
+}
+
+.share-button.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+}
+
+.share-button.instagram:hover {
+  opacity: 0.9 !important;
+}
+
+.share-button.twitter {
+  background-color: #1DA1F2 !important;
+}
+
+.share-button.twitter:hover {
+  background-color: #1a8cd8 !important;
+}
+
+.share-button.whatsapp {
+  background-color: #25D366 !important;
+}
+
+.share-button.whatsapp:hover {
+  background-color: #128C7E !important;
+}
+
+.share-button-text {
+  background-color: #9C27B0 !important;
+  color: white !important;
+  font-weight: 500 !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.6rem 1rem !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: background 0.3s ease !important;
+}
+
+.share-button-text:hover {
+  background-color: #7B1FA2 !important;
+}
+
 .alert-message {
   position: fixed;
   top: 20px;
@@ -279,4 +391,151 @@
   background-color: #f5f5f5;
   padding: 8px;
   border-radius: 4px;
+}
+
+.text-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.text-actions button {
+  flex-shrink: 0 !important;
+}
+
+.social-share-container {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  flex-wrap: nowrap !important;
+}
+
+.social-share-container .share-button {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  flex: 0 0 32px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+.social-share-container .social-icon {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  object-fit: contain !important;
+}
+
+.social-share-container .share-button.tiktok,
+.social-share-container .share-button.instagram,
+.social-share-container .share-button.twitter,
+.social-share-container .share-button.whatsapp {
+  all: initial !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  flex: 0 0 32px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+.social-share-container .share-button.tiktok {
+  background-color: #000000 !important;
+}
+
+.social-share-container .share-button.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+}
+
+.social-share-container .share-button.twitter {
+  background-color: #1DA1F2 !important;
+}
+
+.social-share-container .share-button.whatsapp {
+  background-color: #25D366 !important;
+}
+
+.share-audio-btn {
+  background-color: #9C27B0 !important;
+}
+
+.share-audio-btn:hover {
+  background-color: #7B1FA2 !important;
+}
+
+@media (max-width: 768px) {
+  .text-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    align-items: center !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  
+  .text-actions::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .text-actions button:not(.share-button) {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.8rem !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .social-share-container {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    gap: 4px !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .social-share-container .share-button {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    flex: 0 0 32px !important;
+  }
+  
+  .social-share-container .social-icon {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+  }
 } 

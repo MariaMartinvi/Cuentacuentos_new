@@ -99,6 +99,47 @@ function StoryDisplay({ story }) {
     }
   };
 
+  const handleDownloadAudio = async () => {
+    try {
+      const response = await fetch(audioUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `cuento-${story.title}.mp3`, { type: 'audio/mp3' });
+      
+      if (navigator.share) {
+        await navigator.share({
+          title: story.title,
+          text: `${story.title}\n\nEscucha este cuento en Mi Cuentacuentos`,
+          files: [file]
+        });
+      } else {
+        // Si no hay API de compartir, descargamos el archivo
+        const element = document.createElement('a');
+        element.href = URL.createObjectURL(blob);
+        element.download = `cuento-${story.title}.mp3`;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      }
+    } catch (error) {
+      console.error('Error sharing audio:', error);
+      setAlertMessage(t('storyDisplay.shareError'));
+      setTimeout(() => setAlertMessage(null), 3000);
+    }
+  };
+
+  const handleShareAudio = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: story.title,
+        text: `${story.title}\n\n${story.content}\n\nLee más cuentos en Mi Cuentacuentos`,
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      setAlertMessage(t('common.shareNotSupported'));
+      setTimeout(() => setAlertMessage(null), 3000);
+    }
+  };
+
   return (
     <div className="story-display">
       {alertMessage && (
@@ -113,6 +154,37 @@ function StoryDisplay({ story }) {
       </h3>
 
       {audioUrl && <AudioPlayer audioUrl={audioUrl} />}
+
+      {audioUrl && (
+        <div className="audio-actions">
+          {/* Share button moved to AudioPlayer component */}
+        </div>
+      )}
+
+      <div className="story-content">
+        {story.content.split('\n').map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </div>
+
+      <div className="action-section">
+        <div className="action-title">{t('storyDisplay.textOptions')}</div>
+        <div className="text-actions">
+          <button onClick={handleCopyToClipboard}>
+            <span className="btn-icon">📋</span> {t('storyDisplay.copyText')}
+          </button>
+          <button onClick={handleDownloadText}>
+            <span className="btn-icon">💾</span> {t('storyDisplay.downloadText')}
+          </button>
+          <button 
+            className="share-button" 
+            onClick={handleShareAudio}
+            title={t('common.share')}
+          >
+            <span className="btn-icon">📤</span> {t('common.share')}
+          </button>
+        </div>
+      </div>
 
       <div className="action-section audio-section">
         <div className="action-title">{t('storyDisplay.audioOptions')}</div>
@@ -192,24 +264,6 @@ function StoryDisplay({ story }) {
             <p>{t('storyDisplay.audioLimitReached')}</p>
           </div>
         )}
-      </div>
-
-      <div className="story-content">
-        {story.content.split('\n').map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-      </div>
-
-      <div className="action-section">
-        <div className="action-title">{t('storyDisplay.textOptions')}</div>
-        <div className="text-actions">
-          <button onClick={handleCopyToClipboard}>
-            <span className="btn-icon">📋</span> {t('storyDisplay.copyText')}
-          </button>
-          <button onClick={handleDownloadText}>
-            <span className="btn-icon">💾</span> {t('storyDisplay.downloadText')}
-          </button>
-        </div>
       </div>
     </div>
   );
