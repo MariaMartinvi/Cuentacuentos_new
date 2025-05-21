@@ -127,8 +127,8 @@ function HomePage() {
               
               <div className="feature-card">
                 <div className="feature-icon">🌍</div>
-                <h3>Diferentes Niveles de Idioma</h3>
-                <p>Nivel básico, intermedio o avanzado de inglés y español. Aprende idiomas mientras escuchas un cuento.</p>
+                <h3>{t('homepage.languageLevelsTitle')}</h3>
+                <p>{t('homepage.languageLevelsDescription')}</p>
               </div>
               
               <div className="feature-card">

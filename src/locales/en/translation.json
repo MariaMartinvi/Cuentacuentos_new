@@ -74,7 +74,8 @@
     "errorLoading": "Error loading stories",
     "retryLoading": "Retry",
     "share": "Share",
-    "shareNotSupported": "Sharing is not supported in this browser"
+    "shareNotSupported": "Sharing is not supported in this browser",
+    "loading": "Loading..."
   },
   "storyForm": {
     "title": "Story Generator",
@@ -300,7 +301,9 @@
     "multipleGenresTitle": "Multiple Genres",
     "multipleGenresDescription": "Choose from adventure, fantasy, science fiction, humor, and more.",
     "audioConversionTitle": "Audio in Different Voices",
-    "audioConversionDescription": "Convert your stories to audio with different voices and accents."
+    "audioConversionDescription": "Convert your stories to audio with different voices and accents.",
+    "languageLevelsTitle": "Different Language Levels",
+    "languageLevelsDescription": "Basic, intermediate or advanced level in English and Spanish. Learn languages while listening to a story."
   },
   "navbar": {
     "appName": "MyStoryTeller",

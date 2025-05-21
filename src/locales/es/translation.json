@@ -393,7 +393,8 @@
     "errorLoading": "Error al cargar los cuentos",
     "retryLoading": "Reintentar",
     "share": "Compartir",
-    "shareNotSupported": "Compartir no está soportado en este navegador"
+    "shareNotSupported": "Compartir no está soportado en este navegador",
+    "loading": "Cargando..."
   },
   "cookies": {
     "title": "Usamos cookies",

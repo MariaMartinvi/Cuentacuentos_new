@@ -82,10 +82,24 @@ function StoryDisplay({ story }) {
         console.log("URL de audio recibida:", audioData.audioUrl.substring(0, 50) + "...");
         setAudioUrl(audioData.audioUrl);
         setAudioCount(prev => prev + 1);
+        // Scroll to title and audio player after audio is generated
+        setTimeout(() => {
+          const storyTitleElement = document.querySelector('.story-display h3');
+          if (storyTitleElement) {
+            storyTitleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       } else if (audioData.audioData) {
         console.log("Datos de audio recibidos, convirtiendo a URL...");
         setAudioUrl(`data:audio/mp3;base64,${audioData.audioData}`);
         setAudioCount(prev => prev + 1);
+        // Scroll to title and audio player after audio is generated
+        setTimeout(() => {
+          const storyTitleElement = document.querySelector('.story-display h3');
+          if (storyTitleElement) {
+            storyTitleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       } else {
         throw new Error("La respuesta del servidor no contiene datos de audio válidos");
       }
