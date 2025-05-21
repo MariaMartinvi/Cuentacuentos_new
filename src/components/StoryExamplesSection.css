@@ -650,6 +650,14 @@
   
   .story-examples-section .stories-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 0 1rem;
+    gap: 1.5rem;
+    justify-items: center;
+  }
+  
+  .story-examples-section .story-card {
+    width: 100%;
+    max-width: 320px;
   }
   
   .story-examples-section .section-header h2 {
@@ -681,6 +689,11 @@
 @media (max-width: 480px) {
   .story-examples-section .stories-grid {
     grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+  }
+  
+  .story-examples-section .story-card {
+    max-width: 100%;
   }
   
   .story-modal-close {
