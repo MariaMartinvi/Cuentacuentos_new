@@ -107,6 +107,10 @@
       gap: 2rem;
     }
   
+    .footer-section p {
+      padding: 0 1.5rem;
+    }
+  
     .social-links {
       justify-content: center;
     }
