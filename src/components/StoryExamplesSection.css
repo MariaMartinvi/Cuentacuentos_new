@@ -1,5 +1,7 @@
 .story-examples-section {
-  padding: 4rem 0;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
   background: linear-gradient(to bottom, #f8f9fa, #edf0f7);
   margin-top: 3rem;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -53,6 +55,12 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
+}
+
+.story-examples-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
 }
 
 /* Filters styling */
@@ -622,6 +630,14 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .story-examples-section {
+    padding: 1rem;
+  }
+  
+  .story-examples-description {
+    padding: 0 1.5rem;
+  }
+  
   .story-examples-section .filters {
     flex-direction: column;
     gap: 1rem;
