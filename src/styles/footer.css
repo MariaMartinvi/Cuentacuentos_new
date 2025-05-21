@@ -1,160 +1,119 @@
 .footer {
-    background-color: var(--primary-dark);
-    color: white;
-    padding: 2rem 1rem;
-    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    padding: 3rem 0 1.5rem;
+    margin-top: 2rem;
+    font-family: 'Inter', sans-serif;
   }
   
   .footer-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
   }
   
   .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .footer-section {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
   }
   
-  .footer-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
+  .footer-section h3 {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
   }
   
-  .footer-logo:hover {
-    color: var(--primary-light);
+  .footer-section p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
   
   .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 0.8rem;
   }
   
   .footer-links a {
-    color: white;
+    color: #666;
     text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
   }
   
   .footer-links a:hover {
-    color: var(--primary-light);
+    color: #4361ee;
   }
   
-  .footer-social {
+  .social-links {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;
   }
   
-  .footer-social a {
-    color: white;
+  .social-icon {
+    color: #4361ee;
     font-size: 1.5rem;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    opacity: 0.9;
   }
   
-  .footer-social a:hover {
-    color: var(--primary-light);
+  .social-icon:hover {
+    color: #3a56d4;
+    opacity: 1;
+    transform: scale(1.1);
   }
   
-  .footer-copyright {
+  .footer-bottom {
     text-align: center;
-    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .footer-bottom p {
+    color: #666;
     font-size: 0.9rem;
-    color: var(--text-light);
+    margin: 0;
+  }
+  
+  .made-with {
+    margin-top: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .heart {
+    color: #4361ee;
+    margin: 0 0.3rem;
   }
   
   @media (max-width: 768px) {
-    .footer-container {
-      flex-direction: column;
-      text-align: center;
-      gap: 1.5rem;
-    }
-  
     .footer-content {
-      flex-direction: column;
-      align-items: center;
+      grid-template-columns: 1fr;
+      text-align: center;
       gap: 2rem;
     }
   
+    .social-links {
+      justify-content: center;
+    }
+  
     .footer-links {
-      justify-content: center;
-    }
-  
-    .footer-social {
-      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
-  .footer-bottom {
-    text-align: center; /* Centra el texto horizontalmente */
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    width: 100%; /* Ensure it takes the full width */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .footer-bottom .centered-text {
-    margin-bottom: 0.5rem;
-  }
-  
-  .footer-bottom .made-with {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    text-align: center;
-  }
-  
-  .footer-bottom .heart {
-    color: red; /* Color del corazón */
-  }
-
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-  margin-bottom: 1.5rem;
-}
-
-.footer-section h3 {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  color: white;
-}
-
-.footer-section p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 1rem;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links li {
-  margin-bottom: 0.5rem;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-links a:hover {
-  color: white;
-  text-decoration: underline;
-}

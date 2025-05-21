@@ -1,7 +1,5 @@
 .story-examples-section {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 4rem 0;
   background: linear-gradient(to bottom, #f8f9fa, #edf0f7);
   margin-top: 3rem;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -55,12 +53,6 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
-}
-
-.story-examples-description {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
 }
 
 /* Filters styling */
@@ -630,14 +622,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .story-examples-section {
-    padding: 1rem;
-  }
-  
-  .story-examples-description {
-    padding: 0 1.5rem;
-  }
-  
   .story-examples-section .filters {
     flex-direction: column;
     gap: 1rem;
@@ -650,14 +634,6 @@
   
   .story-examples-section .stories-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    padding: 0 1rem;
-    gap: 1.5rem;
-    justify-items: center;
-  }
-  
-  .story-examples-section .story-card {
-    width: 100%;
-    max-width: 320px;
   }
   
   .story-examples-section .section-header h2 {
@@ -689,11 +665,6 @@
 @media (max-width: 480px) {
   .story-examples-section .stories-grid {
     grid-template-columns: 1fr;
-    padding: 0 0.5rem;
-  }
-  
-  .story-examples-section .story-card {
-    max-width: 100%;
   }
   
   .story-modal-close {

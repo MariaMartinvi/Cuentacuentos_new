@@ -376,25 +376,19 @@
     "learnMore": "Learn more"
   },
   "footer": {
-    "title": "AI Story Generator",
-    "description": "Create engaging stories in English with artificial intelligence. Customize, generate, and listen to your stories with our free tool.",
+    "title": "Mi Cuentacuentos",
+    "description": "Generate personalized stories for children with artificial intelligence. Convert stories into audio with different voices and accents.",
     "quickLinks": "Quick Links",
     "howItWorks": "How It Works",
     "aboutUs": "About Us",
-    "terms": "Terms & Conditions",
+    "storyExamples": "Story Examples",
+    "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
-    "copyright": "AI Story Generator. All rights reserved.",
-    "madeWith": "Made with",
-    "inBarcelona": "in Barcelona",
-    "storyExamples": "Personalized Story Examples",
-    "aboutDescription": "Mi Cuentacuentos is a platform that generates personalized stories for children, helping them learn languages while having fun.",
-    "examples": "Examples",
-    "pricing": "Pricing",
     "contact": "Contact",
-    "legal": "Legal",
-    "cookies": "Cookie Policy",
-    "rights": "All rights reserved.",
-    "socialMedia": "Follow Us"
+    "followUs": "Follow Us",
+    "copyright": "Mi Cuentacuentos. All rights reserved.",
+    "madeWith": "Made with",
+    "inBarcelona": "in Barcelona"
   },
   "cookies": {
     "title": "We use cookies",
