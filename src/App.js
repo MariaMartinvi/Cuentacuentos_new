@@ -9,11 +9,8 @@ import AppRoutes from './routes';
 import CookieConsent from './components/CookieConsent';
 import { initProxy, cleanupProxy } from './services/proxyService';
 
-// Determinar la URL correcta basada en el entorno
-const isProduction = window.location.hostname !== 'localhost';
-const API_URL = isProduction 
-  ? 'https://generadorcuentos.onrender.com'
-  : 'http://localhost:5001';
+// Use production server URL
+const API_URL = 'https://generadorcuentos.onrender.com';
 
 function App() {
   

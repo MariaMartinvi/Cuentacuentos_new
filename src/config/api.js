@@ -1,9 +1,5 @@
-// Configuración de la API
-const isProduction = process.env.NODE_ENV === 'production' || window.location.hostname !== 'localhost';
-
-export const API_URL = isProduction 
-  ? 'https://generadorcuentos.onrender.com'
-  : 'http://localhost:5001';
+// API configuration
+export const API_URL = 'https://generadorcuentos.onrender.com';
 
 export const API_ENDPOINTS = {
   AUTH: {

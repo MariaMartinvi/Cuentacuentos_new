@@ -9,14 +9,9 @@ const MIN_REQUEST_INTERVAL = 10000; // Minimum 10 seconds between requests
 let pendingRequest = false;
 let rateLimitedUntil = null;
 
-// Forzar el uso de 10.0.2.2 en el emulador
-const API_URL = window.Capacitor 
-  ? 'http://10.0.2.2:5001/api'  // URL específica para el emulador de Android
-  : `${config.apiUrl}/api`;
-
-const backendBaseUrl = window.Capacitor
-  ? 'http://10.0.2.2:5001'  // URL específica para el emulador de Android
-  : config.apiUrl;
+// Use production server URL from config
+const API_URL = `${config.apiUrl}/api`;
+const backendBaseUrl = config.apiUrl;
 
 console.log('StoryService - Using API URL:', API_URL);
 console.log('StoryService - Using backend base URL:', backendBaseUrl);

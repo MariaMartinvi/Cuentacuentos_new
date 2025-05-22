@@ -2,10 +2,8 @@ import axios from 'axios';
 import i18next from 'i18next';
 import config from '../config';
 
-// Forzar el uso de 10.0.2.2 en el emulador
-const API_URL = window.Capacitor 
-  ? 'http://10.0.2.2:5001'  // URL específica para el emulador de Android
-  : config.apiUrl;
+// Use API URL from config
+const API_URL = config.apiUrl;
 
 console.log('AuthService - Using API URL:', API_URL);
 
@@ -99,10 +97,8 @@ export const register = async (email, password) => {
   try {
     console.log('Registering user:', email);
     
-    // Forzar el uso de la URL del emulador para registro
-    const registerUrl = window.Capacitor 
-      ? 'http://10.0.2.2:5001/api/auth/register' 
-      : `${API_URL}/api/auth/register`;
+    // Use API_URL constant instead of hardcoded URL
+    const registerUrl = `${API_URL}/api/auth/register`;
     
     console.log('Making register request to:', registerUrl);
 
@@ -142,10 +138,8 @@ export const register = async (email, password) => {
 
 export const login = async (email, password) => {
   try {
-    // Forzar el uso de la URL del emulador para login
-    const loginUrl = window.Capacitor 
-      ? 'http://10.0.2.2:5001/api/auth/login' 
-      : `${API_URL}/api/auth/login`;
+    // Use API_URL constant instead of hardcoded URL
+    const loginUrl = `${API_URL}/api/auth/login`;
     
     console.log('Making login request to:', loginUrl);
     
@@ -231,10 +225,8 @@ export const getCurrentUser = async () => {
       return userCache.data;
     }
 
-    // Forzar el uso de la URL del emulador para obtener el usuario actual
-    const currentUserUrl = window.Capacitor 
-      ? 'http://10.0.2.2:5001/api/auth/me' 
-      : `${API_URL}/api/auth/me`;
+    // Use API_URL constant instead of hardcoded URL
+    const currentUserUrl = `${API_URL}/api/auth/me`;
     
     console.log('Making request to get current user at:', currentUserUrl);
 
@@ -283,10 +275,8 @@ export const refreshToken = async () => {
       throw new Error('No user found');
     }
 
-    // Forzar el uso de la URL del emulador para refresh token
-    const refreshUrl = window.Capacitor 
-      ? 'http://10.0.2.2:5001/auth/refresh-token' 
-      : `${API_URL}/auth/refresh-token`;
+    // Use API_URL constant instead of hardcoded URL
+    const refreshUrl = `${API_URL}/auth/refresh-token`;
     
     console.log('Refreshing token at:', refreshUrl);
 
@@ -318,10 +308,7 @@ export const refreshToken = async () => {
 
 export const loginWithGoogle = async () => {
   try {
-    // Forzar el uso de la URL del emulador para Google login
-    const googleLoginUrl = window.Capacitor 
-      ? 'http://10.0.2.2:5001/auth/google' 
-      : `${API_URL}/auth/google`;
+    const googleLoginUrl = `${API_URL}/auth/google`;
     
     console.log('Making Google login request to:', googleLoginUrl);
 
@@ -330,14 +317,21 @@ export const loginWithGoogle = async () => {
       headers: {
         'Accept': 'application/json'
       },
-      credentials: 'include'
+      credentials: 'include',
+      // Add timeout configuration
+      signal: AbortSignal.timeout(30000) // 30 second timeout
     });
 
     if (!response.ok) {
-      throw new Error('Failed to initiate Google login');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Failed to initiate Google login');
     }
 
     const data = await response.json();
+    
+    if (!data.token) {
+      throw new Error('No token received from server');
+    }
     
     // Store the token and user data
     localStorage.setItem('token', data.token);
@@ -346,6 +340,9 @@ export const loginWithGoogle = async () => {
     return data;
   } catch (error) {
     console.error('Google login error:', error);
+    if (error.name === 'AbortError') {
+      throw new Error('Login request timed out. Please try again.');
+    }
     throw error;
   }
 }; 
