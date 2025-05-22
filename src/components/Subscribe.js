@@ -89,9 +89,9 @@ const Subscribe = () => {
         <p className="subscribe-subtitle">{t('subscription.planDescription')}</p>
 
         <div className="premium-features-banner">
-          <div className="premium-features-icon">⭐</div>
           <div className="premium-features-text">
             <p className="premium-features-title">
+              <span className="premium-features-icon">⭐</span>
               <span className="price-amount">5€</span>
             </p>
             <p className="premium-features-subtitle">{t('subscription.cancelInfo')}</p>
