@@ -127,3 +127,11 @@
       min-width: 100%;
     }
   }
+
+  /* Language Levels Highlight */
+  .language-levels {
+    color: #FF6B6B;  /* Bright coral color */
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+    display: inline-block;
+  }

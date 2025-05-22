@@ -102,7 +102,14 @@ function HomePage() {
       <div className="hero-section">
         <div className="hero-container">
           <h1>{t('homepage.heroTitle')}</h1>
-          <p>{t('homepage.heroDescription')}</p>
+          <p>
+            {t('homepage.heroDescription').split(':').map((part, index, array) => {
+              if (index === array.length - 1) {
+                return <span key={index} className="language-levels">{part}</span>;
+              }
+              return part + ':';
+            })}
+          </p>
         </div>
       </div>
 
