@@ -2,7 +2,7 @@
 const isProduction = process.env.NODE_ENV === 'production' || window.location.hostname !== 'localhost';
 
 export const API_URL = isProduction 
-  ? 'https://api.micuentacuentos.com'
+  ? 'https://generadorcuentos.onrender.com'
   : 'http://localhost:5001';
 
 export const API_ENDPOINTS = {
