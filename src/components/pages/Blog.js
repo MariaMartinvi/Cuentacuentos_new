@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import config from '../../config';
 import '../../styles/blog.css';
+import { API_URL, API_ENDPOINTS } from '../../config/api';
 
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -107,7 +108,7 @@ const Blog = () => {
     }
 
     try {
-      const response = await fetch(`${config.apiUrl}/api/newsletter/subscribe`, {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.NEWSLETTER.SUBSCRIBE}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,6 +129,7 @@ const Blog = () => {
       });
       setEmail(''); // Limpiar el input después de una suscripción exitosa
     } catch (error) {
+      console.error('Newsletter subscription error:', error);
       setNewsletterStatus({
         type: 'error',
         message: error.message || t('blog.newsletter.error')
