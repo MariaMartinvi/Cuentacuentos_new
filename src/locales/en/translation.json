@@ -431,6 +431,7 @@
     "title": "Our Blog",
     "description": "Discover tips, stories, and insights about children's education and language learning",
     "categoriesTitle": "Explore by Category",
+    "exploreCategory": "Explore Category",
     "categories": {
       "benefits": "Benefits of Learning",
       "benefitsDesc": "Discover how early language learning benefits your child's development",

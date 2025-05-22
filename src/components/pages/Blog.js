@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import config from '../../config';
 import '../../styles/blog.css';
 import { API_URL, API_ENDPOINTS } from '../../config/api';
@@ -37,8 +37,11 @@ const ArrowIcon = () => (
 
 const Blog = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState({ type: '', message: '' });
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const categories = useMemo(() => [
     {
@@ -93,6 +96,16 @@ const Blog = () => {
       date: '2024-03-15'
     }
   ], [t]);
+
+  const filteredPosts = useMemo(() => {
+    if (!selectedCategory) return featuredPosts;
+    return featuredPosts.filter(post => post.category === selectedCategory);
+  }, [featuredPosts, selectedCategory]);
+
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategory(categoryId);
+    navigate(`/blog?category=${categoryId}`);
+  };
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
@@ -150,20 +163,24 @@ const Blog = () => {
           {categories.map(category => (
             <div 
               key={category.id} 
-              className="category-card"
+              className={`category-card ${selectedCategory === category.id ? 'active' : ''}`}
+              onClick={() => handleCategoryClick(category.id)}
             >
               <span className="category-icon">{category.icon}</span>
               <h3>{category.title}</h3>
               <p>{category.description}</p>
+              <span className="category-link">
+                {t('blog.exploreCategory')} <ArrowIcon />
+              </span>
             </div>
           ))}
         </div>
       </section>
 
       <section className="featured-posts">
-        <h2>{t('blog.featuredTitle')}</h2>
+        <h2>{selectedCategory ? categories.find(c => c.id === selectedCategory)?.title : t('blog.featuredTitle')}</h2>
         <div className="posts-grid">
-          {featuredPosts.map(post => (
+          {filteredPosts.map(post => (
             <article key={post.id} className="post-card">
               <div className="post-image">
                 <img src={post.image} alt={post.title} />

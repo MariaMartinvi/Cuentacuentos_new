@@ -47,11 +47,26 @@
   color: inherit;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
 }
 
-.category-card:hover {
+.category-card:hover,
+.category-card.active {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-card.active {
+  background: #f8f9fa;
+  border: 2px solid #4361ee;
+}
+
+.category-card.active .category-link {
+  color: #4361ee;
 }
 
 .category-icon {
@@ -69,6 +84,31 @@
   color: #666;
   font-size: 0.95rem;
   line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.category-link {
+  color: #4361ee;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  transition: color 0.3s ease;
+}
+
+.category-link svg {
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-link {
+  color: #3a56d4;
+}
+
+.category-card:hover .category-link svg {
+  transform: translateX(4px);
 }
 
 .featured-posts {
