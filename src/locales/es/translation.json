@@ -7,27 +7,7 @@
     "cancelledTitle": "Suscripción Finalizada",
     "cancelledDescription": "Tu suscripción ha finalizado. ¡Suscríbete de nuevo para generar más historias!",
     "storyLimit": "Has alcanzado tu límite de historias. Por favor, suscríbete para generar más historias.",
-    "subscribe": {
-      "title": "Actualizar a Premium",
-      "features": {
-        "title": "Características Premium",
-        "unlimited": "Generación ilimitada de cuentos",
-        "priority": "Soporte prioritario",
-        "support": "Soporte al cliente 24/7"
-      },
-      "price": {
-        "title": "Precio de Suscripción",
-        "amount": "5€/mes"
-      },
-      "button": "Plan Premium",
-      "error": {
-        "noEmail": "Se requiere el correo electrónico del usuario",
-        "noSession": "Respuesta de sesión inválida del servidor",
-        "stripeLoad": "Error al cargar Stripe. Por favor, inténtelo de nuevo más tarde.",
-        "general": "Ocurrió un error durante la suscripción. Por favor, inténtelo de nuevo."
-      },
-      "closeError": "Cerrar mensaje de error"
-    },
+    "subscribe": "Suscribirse",
     "resubscribe": "Reactivar Suscripción",
     "processing": "Procesando...",
     "loading": "Cargando...",
@@ -63,7 +43,18 @@
       "4": "Acceso a todas las funciones premium"
     },
     "cancelInfo": "Puedes cancelar tu suscripción en cualquier momento. El acceso premium continuará hasta el final del período pagado.",
-    "paymentInfo": "Pago seguro procesado por Stripe. No almacenamos información de tu tarjeta."
+    "paymentInfo": "Pago seguro procesado por Stripe. No almacenamos información de tu tarjeta.",
+    "premium": {
+      "title": "Plan Premium",
+      "price": "5€/mes",
+      "features": {
+        "0": "30 audiocuentos mensuales",
+        "1": "Cuentos en español e inglés",
+        "2": "Diferentes voces y acentos",
+        "3": "Soporte prioritario",
+        "4": "Acceso a todas las funciones premium"
+      }
+    }
   },
   "auth": {
     "login": "Iniciar Sesión",

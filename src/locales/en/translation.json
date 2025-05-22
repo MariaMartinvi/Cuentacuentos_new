@@ -7,27 +7,7 @@
     "cancelledTitle": "Subscription Ended",
     "cancelledDescription": "Your subscription has ended. Subscribe again to generate more stories!",
     "storyLimit": "You have reached your story limit. Please subscribe to generate more stories.",
-    "subscribe": {
-      "title": "Upgrade to Premium",
-      "features": {
-        "title": "Premium Features",
-        "unlimited": "Unlimited story generation",
-        "priority": "Priority support",
-        "support": "24/7 customer support"
-      },
-      "price": {
-        "title": "Subscription Price",
-        "amount": "€5/month"
-      },
-      "button": "Premium Plan",
-      "error": {
-        "noEmail": "User email is required",
-        "noSession": "Invalid session response from server",
-        "stripeLoad": "Error loading Stripe. Please try again later.",
-        "general": "An error occurred during subscription. Please try again."
-      },
-      "closeError": "Close error message"
-    },
+    "subscribe": "Subscribe",
     "resubscribe": "Reactivate Subscription",
     "processing": "Processing...",
     "error": "An error occurred. Please try again.",
@@ -57,12 +37,16 @@
     "noSessionId": "No session ID found. Please contact support if you believe this is an error.",
     "planTitle": "Premium Plan",
     "planDescription": "For just €5 per month, generate 30 audio stories in any language",
-    "features": {
-      "0": "30 audio stories per month",
-      "1": "Stories in English and Spanish",
-      "2": "Different voices and accents",
-      "3": "Priority support",
-      "4": "Access to all premium features"
+    "premium": {
+      "title": "Premium Plan",
+      "price": "€5/month",
+      "features": {
+        "0": "30 audio stories per month",
+        "1": "Stories in English and Spanish",
+        "2": "Different voices and accents",
+        "3": "Priority support",
+        "4": "Access to all premium features"
+      }
     },
     "cancelInfo": "You can cancel your subscription at any time. Premium access will continue until the end of the paid period.",
     "paymentInfo": "Secure payment processed by Stripe. We do not store your card information."
