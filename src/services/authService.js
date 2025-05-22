@@ -1,11 +1,13 @@
 import axios from 'axios';
 import i18next from 'i18next';
+import config from '../config';
 
-// Determinar la URL correcta basada en el entorno
-const isProduction = window.location.hostname !== 'localhost';
-const API_URL = isProduction 
-  ? 'https://generadorcuentos.onrender.com'
-  : 'http://localhost:5001';
+// Forzar el uso de 10.0.2.2 en el emulador
+const API_URL = window.Capacitor 
+  ? 'http://10.0.2.2:5001'  // URL específica para el emulador de Android
+  : config.apiUrl;
+
+console.log('AuthService - Using API URL:', API_URL);
 
 // Cache para getCurrentUser
 let userCache = {
@@ -21,11 +23,13 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
-  }
+  },
+  timeout: 10000 // 10 segundos de timeout
 });
 
 // Interceptor para agregar el token a las peticiones
 axiosInstance.interceptors.request.use(config => {
+  console.log('Making request to:', `${API_URL}${config.url}`);
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -35,8 +39,19 @@ axiosInstance.interceptors.request.use(config => {
 
 // Interceptor para manejar errores de red
 axiosInstance.interceptors.response.use(
-  response => response,
+  response => {
+    console.log('Response received:', response.status);
+    return response;
+  },
   error => {
+    console.error('Request failed:', {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      error: error.message
+    });
+
     if (error.code === 'ERR_NETWORK') {
       console.error('Network error - Unable to connect to the server');
       throw new Error('Unable to connect to the server. Please check if the backend server is running.');
@@ -83,11 +98,26 @@ const retryRequest = async (fn, maxRetries = 3, delay = 1000) => {
 export const register = async (email, password) => {
   try {
     console.log('Registering user:', email);
-    console.log('API URL:', API_URL);
-    const response = await axiosInstance.post('/api/auth/register', {
+    
+    // Forzar el uso de la URL del emulador para registro
+    const registerUrl = window.Capacitor 
+      ? 'http://10.0.2.2:5001/api/auth/register' 
+      : `${API_URL}/api/auth/register`;
+    
+    console.log('Making register request to:', registerUrl);
+
+    const response = await axios.post(registerUrl, {
       email,
       password
+    }, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 10000
     });
+
     console.log('Registration successful:', response.data);
     return response.data;
   } catch (error) {
@@ -95,7 +125,6 @@ export const register = async (email, password) => {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
-      url: `${API_URL}/api/auth/register`,
       error: error
     });
     
@@ -113,13 +142,26 @@ export const register = async (email, password) => {
 
 export const login = async (email, password) => {
   try {
-    console.log('Making login request to:', `${API_URL}/api/auth/login`);
+    // Forzar el uso de la URL del emulador para login
+    const loginUrl = window.Capacitor 
+      ? 'http://10.0.2.2:5001/api/auth/login' 
+      : `${API_URL}/api/auth/login`;
+    
+    console.log('Making login request to:', loginUrl);
     
     // Use the retrying mechanism for login requests
     const response = await retryRequest(async () => {
-      return await axiosInstance.post('/api/auth/login', {
+      // Usar axios directamente con la URL completa en lugar de la instancia configurada
+      return await axios.post(loginUrl, {
         email,
         password
+      }, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 10000
       });
     });
     
@@ -189,11 +231,21 @@ export const getCurrentUser = async () => {
       return userCache.data;
     }
 
-    console.log('Making request to /api/auth/me with token');
-    const response = await axiosInstance.get('/api/auth/me', {
+    // Forzar el uso de la URL del emulador para obtener el usuario actual
+    const currentUserUrl = window.Capacitor 
+      ? 'http://10.0.2.2:5001/api/auth/me' 
+      : `${API_URL}/api/auth/me`;
+    
+    console.log('Making request to get current user at:', currentUserUrl);
+
+    const response = await axios.get(currentUserUrl, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      withCredentials: true,
+      timeout: 10000
     });
 
     console.log('Response from /api/auth/me:', response.data);
@@ -231,8 +283,22 @@ export const refreshToken = async () => {
       throw new Error('No user found');
     }
 
-    const response = await axios.post(`${API_URL}/auth/refresh-token`, {
+    // Forzar el uso de la URL del emulador para refresh token
+    const refreshUrl = window.Capacitor 
+      ? 'http://10.0.2.2:5001/auth/refresh-token' 
+      : `${API_URL}/auth/refresh-token`;
+    
+    console.log('Refreshing token at:', refreshUrl);
+
+    const response = await axios.post(refreshUrl, {
       email: user.email
+    }, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 10000
     });
 
     if (response.data.token) {
@@ -252,7 +318,14 @@ export const refreshToken = async () => {
 
 export const loginWithGoogle = async () => {
   try {
-    const response = await fetch(`${API_URL}/auth/google`, {
+    // Forzar el uso de la URL del emulador para Google login
+    const googleLoginUrl = window.Capacitor 
+      ? 'http://10.0.2.2:5001/auth/google' 
+      : `${API_URL}/auth/google`;
+    
+    console.log('Making Google login request to:', googleLoginUrl);
+
+    const response = await fetch(googleLoginUrl, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'

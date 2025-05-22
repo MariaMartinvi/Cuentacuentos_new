@@ -1,5 +1,7 @@
 import i18n from 'i18next'; // Importar i18n para usar traducciones globales
 import { getAuthHeader, getCurrentUser, refreshToken } from './authService';
+import config from '../config';
+import axios from 'axios';
 
 // Rate limiting and throttling variables
 let lastRequestTime = 0;
@@ -7,16 +9,17 @@ const MIN_REQUEST_INTERVAL = 10000; // Minimum 10 seconds between requests
 let pendingRequest = false;
 let rateLimitedUntil = null;
 
-// Determinar la URL correcta basada en el entorno
-const isProduction = window.location.hostname !== 'localhost';
-const API_URL = isProduction 
-  ? 'https://generadorcuentos.onrender.com/api'
-  : 'http://localhost:5001/api';
+// Forzar el uso de 10.0.2.2 en el emulador
+const API_URL = window.Capacitor 
+  ? 'http://10.0.2.2:5001/api'  // URL específica para el emulador de Android
+  : `${config.apiUrl}/api`;
 
-// URL base para el backend
-const backendBaseUrl = isProduction
-  ? 'https://generadorcuentos.onrender.com'
-  : 'http://localhost:5001';
+const backendBaseUrl = window.Capacitor
+  ? 'http://10.0.2.2:5001'  // URL específica para el emulador de Android
+  : config.apiUrl;
+
+console.log('StoryService - Using API URL:', API_URL);
+console.log('StoryService - Using backend base URL:', backendBaseUrl);
 
 // Timeout en milisegundos (2 minutos)
 const FETCH_TIMEOUT = 120000;
@@ -552,3 +555,10 @@ console.log(
   '  await import(\'./services/storyService.js\').then(m => m.diagnoseCuentosAPI())',
   'font-size: 12px; color: #333;'
 );
+
+// Configure axios instance
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  timeout: 120000 // 2 minutos de timeout
+});

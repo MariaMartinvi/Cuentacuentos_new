@@ -38,7 +38,14 @@ export const SubscriptionProvider = ({ children }) => {
     try {
       setIsLoading(true);
       
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/stripe/cancel-subscription`, {
+      // Usar la URL correcta para el emulador de Android
+      const apiUrl = window.Capacitor
+        ? 'http://10.0.2.2:5001'
+        : process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      
+      console.log('Subscription Context - Using API URL:', apiUrl);
+      
+      const response = await fetch(`${apiUrl}/api/stripe/cancel-subscription`, {
         method: 'POST',
         credentials: 'include',
         headers: {

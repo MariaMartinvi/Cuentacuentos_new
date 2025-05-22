@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mi Cuenta Cuentos</string>
+    <string name="title_activity_main">Mi Cuenta Cuentos</string>
+    <string name="package_name">com.micuentacuentos.app</string>
+    <string name="custom_url_scheme">com.micuentacuentos.app</string>
+</resources>

@@ -9,9 +9,16 @@ import { GoogleLogin } from '@react-oauth/google';
 
 // Determinar la URL correcta basada en el entorno
 const isProduction = window.location.hostname !== 'localhost';
-const API_URL = isProduction 
-  ? 'https://generadorcuentos.onrender.com'
-  : 'http://localhost:5001';
+const isEmulator = window.Capacitor;
+
+// Usar 10.0.2.2 para el emulador Android
+const API_URL = isEmulator 
+  ? 'http://10.0.2.2:5001'
+  : isProduction 
+    ? 'https://generadorcuentos.onrender.com'
+    : 'http://localhost:5001';
+
+console.log('Register component - Using API URL:', API_URL, 'isEmulator:', isEmulator, 'hostname:', window.location.hostname);
 
 const Register = () => {
   const { t, i18n } = useTranslation();
