@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
         // Configurar el token en axios para futuras peticiones
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
+        // Obtener la información del usuario
         const currentUser = await getCurrentUser();
         if (currentUser) {
           // Ensure isPremium is set based on subscription status

@@ -1,28 +1,65 @@
 import axios from 'axios';
+const { generateCompletion } = require('../../generador-cuentos-backend/utils/openaiService');
 
 export async function handler(event, context) {
   // Allow only POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: 'Method Not Allowed' }),
+      body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
 
   try {
-    // Parse the request body
-    const storyParams = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
+    console.log('Received request body:', requestBody);
 
-    // Get the OpenAI API key from environment variables
-    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+    const {
+      topic,
+      length,
+      storyType,
+      creativityLevel,
+      ageGroup,
+      childNames,
+      englishLevel,
+      spanishLevel,
+      language
+    } = requestBody;
 
-    if (!OPENAI_API_KEY) {
+    // Validate required fields
+    if (!topic) {
       return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'API key is not configured' }),
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Topic is required' }),
       };
     }
 
+    // Construct story parameters
+    const storyParams = {
+      topic,
+      length,
+      storyType,
+      creativityLevel,
+      ageGroup,
+      childNames,
+      englishLevel,
+      spanishLevel,
+      language: language || 'es' // Ensure language is set, default to Spanish if not provided
+    };
+
+    console.log('Generating story with params:', storyParams);
+
+    // Generate the story
+    const story = await generateCompletion(storyParams);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ story }),
+    };
+  } catch (error) {
+    console.error('Error generating story:', error);
+    return {
+      statusCode: 500,
     // Validate required parameters
     if (!storyParams.topic) {
       return {

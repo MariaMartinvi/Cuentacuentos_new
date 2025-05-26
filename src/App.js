@@ -13,32 +13,6 @@ import { initProxy, cleanupProxy } from './services/proxyService';
 const API_URL = 'https://generadorcuentos.onrender.com';
 
 function App() {
-  
-  // Pre-calentar el servidor de Render al cargar la aplicación
-  useEffect(() => {
-    const preWarmServer = async () => {
-      try {
-        console.log('Pre-calentando el servidor...');
-        await fetch(`${API_URL}/test`, { 
-          method: 'GET',
-          mode: 'no-cors',
-          cache: 'no-store'
-        });
-      } catch (e) {
-        console.log('Error pre-calentando el servidor, pero continuando...');
-      }
-    };
-    
-    preWarmServer();
-    
-    // También establecer un intervalo para mantenerlo activo
-    const keepWarmInterval = setInterval(() => {
-      preWarmServer();
-    }, 4 * 60 * 1000); // Cada 4 minutos
-    
-    return () => clearInterval(keepWarmInterval);
-  }, []);
-  
   // Inicializar el proxy para Firebase Storage
   useEffect(() => {
     console.log('Inicializando proxy para Firebase Storage...');

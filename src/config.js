@@ -3,9 +3,11 @@ const isMobile = window.Capacitor !== undefined;
 
 // Configuración global
 const config = {
-  apiUrl: 'https://generadorcuentos.onrender.com',
+  apiUrl: process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:5001'
+    : 'https://generadorcuentos.onrender.com',
   isMobile: isMobile,
-  isProduction: true
+  isProduction: process.env.NODE_ENV === 'production'
 };
 
 console.log('Config - Is mobile:', isMobile);

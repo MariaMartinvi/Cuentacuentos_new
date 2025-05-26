@@ -19,20 +19,10 @@ console.log('StoryService - Using backend base URL:', backendBaseUrl);
 // Timeout en milisegundos (2 minutos)
 const FETCH_TIMEOUT = 120000;
 
-// Configuración común para fetch
-const fetchConfig = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    ...getAuthHeader()
-  },
-  mode: 'cors',
-  credentials: 'include'
-};
-
 // Client-side rate limiting and throttling
 const waitForRequestSlot = async () => {
+  console.log('Checking request slot availability...');
+  
   // If we know the API is rate limited, wait until the specified time
   if (rateLimitedUntil && new Date() < rateLimitedUntil) {
     const waitTime = rateLimitedUntil.getTime() - new Date().getTime();
@@ -66,6 +56,7 @@ const waitForRequestSlot = async () => {
   // Update request tracking
   pendingRequest = true;
   lastRequestTime = Date.now();
+  console.log('Request slot acquired');
 };
 
 // Enhanced error diagnostics function
@@ -155,17 +146,28 @@ export const diagnoseBackendIssue = async () => {
 };
 
 export const generateStory = async (storyData) => {
+  console.log('generateStory called with data:', storyData);
+  
+  // Si ya hay una solicitud en curso, no permitir otra
+  if (pendingRequest) {
+    console.log('⏳ A story generation request is already in progress');
+    throw new Error('A story generation request is already in progress');
+  }
+
   try {
-    // Apply client-side throttling
-    await waitForRequestSlot();
+    // Marcar que hay una solicitud en curso
+    pendingRequest = true;
+    console.log('Request marked as pending');
     
     const user = await getCurrentUser();
     if (!user) {
+      console.log('No authenticated user found');
       pendingRequest = false;
       throw new Error('User not authenticated');
     }
 
     // Check server health before making the request
+    console.log('Checking server health...');
     const serverHealth = await checkServerHealth();
     if (!serverHealth.healthy) {
       console.error('Server health check failed:', serverHealth.details);
@@ -182,207 +184,28 @@ export const generateStory = async (storyData) => {
       };
     }
 
-    // For handling rate limits with exponential backoff
-    let retryCount = 0;
-    const maxRetries = 3;
-    const baseDelay = 2000; // Base delay of 2 seconds
+    console.log('Making story generation request...');
+    const response = await axios.post(`${API_URL}/stories/generate`, {
+      ...storyData,
+      email: user.email
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...getAuthHeader()
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
 
-    const makeRequest = async (retry = false) => {
-      try {
-        // Crear un controlador de aborto para el timeout
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
-
-        try {
-          const response = await fetch(`${API_URL}/stories/generate`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              ...getAuthHeader()
-            },
-            body: JSON.stringify({
-              ...storyData,
-              email: user.email
-            }),
-            signal: controller.signal
-          });
-
-          // Limpiar el timeout
-          clearTimeout(timeoutId);
-
-          if (response.status === 401 && !retry) {
-            // Token expired, try to refresh
-            await refreshToken();
-            // Retry the request with new token
-            return makeRequest(true);
-          }
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            // For debugging, log more detailed info about the server response
-            console.error('Server error details:', {
-              status: response.status,
-              statusText: response.statusText,
-              data
-            });
-            
-            // Handle rate limit specially (429 status)
-            if (response.status === 429 && retryCount < maxRetries) {
-              retryCount++;
-              
-              // Set rate limit flag with a backoff time
-              // For first retry, wait 1 minute, then 5 minutes, then 15 minutes
-              const rateLimitMinutes = [1, 5, 15][retryCount - 1] || 15;
-              rateLimitedUntil = new Date(Date.now() + rateLimitMinutes * 60 * 1000);
-              console.warn(`🚨 Rate limit detected. API will be paused until ${rateLimitedUntil.toLocaleTimeString()}`);
-              
-              // Calculate exponential backoff delay
-              const delay = baseDelay * Math.pow(2, retryCount - 1);
-              console.log(`Rate limit hit. Retrying in ${delay}ms (attempt ${retryCount} of ${maxRetries})...`);
-              
-              // Show message on the console for debugging
-              console.warn(`🕒 Rate limit exceeded. Waiting ${delay/1000} seconds before retrying...`);
-              
-              // Wait for the delay
-              await new Promise(resolve => setTimeout(resolve, delay));
-              
-              // Retry the request
-              return makeRequest(false);
-            }
-            
-            throw {
-              response: {
-                status: response.status,
-                data: {
-                  error: data.error,
-                  message: data.message || (response.status === 429 ? 
-                    (i18n.language === 'es' ? 
-                      'Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.' : 
-                      'Rate limit exceeded. Please try again later.') : 
-                    'Unknown error')
-                }
-              }
-            };
-          }
-
-          return data;
-        } finally {
-          clearTimeout(timeoutId);
-        }
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          // El tiempo de espera expiró o la señal fue abortada
-          throw {
-            response: {
-              data: {
-                error: 'Request timed out',
-                message: i18n.language === 'es'
-                  ? 'La solicitud tardó demasiado tiempo. Por favor, inténtalo de nuevo.'
-                  : 'The request took too long. Please try again.'
-              }
-            }
-          };
-        }
-        
-        if (error.message === 'Token expired' && !retry) {
-          // Token expired, try to refresh
-          await refreshToken();
-          // Retry the request with new token
-          return makeRequest(true);
-        }
-        throw error;
-      }
-    };
-
-    try {
-      const result = await makeRequest();
-      pendingRequest = false;
-      return result;
-    } catch (error) {
-      pendingRequest = false;
-      
-      // Run diagnostics on critical errors
-      if (error.response?.status === 500) {
-        console.warn('🚨 Critical server error detected, running diagnostics...');
-        const diagnosticResult = await diagnoseBackendIssue();
-        console.log('📊 Diagnostic result:', diagnosticResult);
-        
-        // Enhance error with diagnostic info
-        if (diagnosticResult.issue) {
-          error.diagnostics = diagnosticResult;
-        }
-      }
-      
-      throw error;
-    }
+    console.log('Story generated successfully');
+    return response.data;
   } catch (error) {
-    pendingRequest = false;
-    console.error('Story generation error:', error);
-    
-    // Enhanced error handling
-    if (error.response?.status === 429) {
-      console.error('OpenAI rate limit exceeded');
-      
-      // Check specifically for insufficient quota errors
-      if (error.response?.data?.error?.code === 'insufficient_quota' || 
-          (error.response?.data?.error?.message && error.response?.data?.error?.message.includes('exceeded your current quota'))) {
-        console.error('🚫 OpenAI API quota exceeded - billing issue detected');
-        throw new Error('OpenAI API quota exceeded. The service is currently unavailable. Please contact support.');
-      }
-      
-      throw new Error('OpenAI rate limit exceeded. Please try again later.');
-    } else if (error.response?.status === 401) {
-      // Token expired, try to refresh
-      await refreshToken();
-      throw new Error('Token expired. Please log in again.');
-    }
-    
-    // Special handling for rate limit errors to provide clear guidance
-    if (error.response?.status === 429) {
-      // Check if this is a quota/billing issue rather than a temporary rate limit
-      if (error.response?.data?.error?.code === 'insufficient_quota' || 
-          (error.response?.data?.error?.message && error.response?.data?.error?.message.includes('exceeded your current quota'))) {
-        
-        console.error('🚫 OpenAI API quota exceeded - billing issue detected');
-        
-        throw {
-          response: {
-            status: 429,
-            data: {
-              error: 'API quota exceeded',
-              message: i18n.language === 'es'
-                ? 'El servicio de generación de cuentos no está disponible en este momento. Por favor, contacta a soporte.'
-                : 'The story generation service is currently unavailable. Please contact support.',
-              isQuotaExceeded: true
-            }
-          }
-        };
-      }
-      
-      // Set rate limit flag with a default backoff time of 5 minutes
-      rateLimitedUntil = new Date(Date.now() + 5 * 60 * 1000);
-      console.warn(`🚨 Rate limit enforced. API will be paused until ${rateLimitedUntil.toLocaleTimeString()}`);
-      
-      const rateLimitMsg = i18n.language === 'es'
-        ? 'El servidor está procesando demasiadas solicitudes en este momento. Por favor, espera unos minutos antes de intentarlo nuevamente. Estamos trabajando para mejorar esto.'
-        : 'The server is processing too many requests right now. Please wait a few minutes before trying again. We are working to improve this.';
-      
-      throw {
-        response: {
-          status: 429,
-          data: {
-            error: 'Rate limit exceeded',
-            message: rateLimitMsg,
-            isRateLimit: true,
-            retryAfter: rateLimitedUntil.toISOString()
-          }
-        }
-      };
-    }
-    
+    console.error('Error in story generation request:', error);
     throw error;
+  } finally {
+    pendingRequest = false;
+    console.log('Request completed, pendingRequest set to false');
   }
 };
 
