@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
@@ -8,9 +8,11 @@ function Navbar() {
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
+    setIsLanguageDropdownOpen(false);
   };
 
   const scrollToTop = () => {
@@ -19,6 +21,15 @@ function Navbar() {
       behavior: 'smooth'
     });
   };
+
+  const languages = [
+    { code: 'en', name: t('navbar.languages.en') },
+    { code: 'es', name: t('navbar.languages.es') },
+    { code: 'ca', name: t('navbar.languages.ca') },
+    { code: 'fr', name: t('navbar.languages.fr') },
+    { code: 'it', name: t('navbar.languages.it') },
+    { code: 'de', name: t('navbar.languages.de') }
+  ];
 
   return (
     <nav className="navbar">
@@ -55,22 +66,27 @@ function Navbar() {
               <Link to="/register" className="register-nav-link" onClick={scrollToTop}>{t('navbar.register')}</Link>
             </>
           )}
+        </div>
+        <div className="language-selector">
           <button
-            onClick={() => changeLanguage('en')}
-            className={`language-button ${
-              i18n.language === 'en' ? 'active-language' : ''
-            }`}
+            className="language-button"
+            onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
           >
-            {t('navbar.english')}
+            {t(`navbar.languages.${i18n.language}`)}
           </button>
-          <button
-            onClick={() => changeLanguage('es')}
-            className={`language-button ${
-              i18n.language === 'es' ? 'active-language' : ''
-            }`}
-          >
-            {t('navbar.spanish')}
-          </button>
+          {isLanguageDropdownOpen && (
+            <div className="language-dropdown">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang.code)}
+                  className={i18n.language === lang.code ? 'active-language' : ''}
+                >
+                  {lang.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </nav>

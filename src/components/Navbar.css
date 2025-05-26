@@ -121,7 +121,7 @@
   /* Selector de idioma */
   .language-selector {
     position: relative;
-    margin-right: 1rem;
+    margin-left: 1rem;
   }
   
   .language-button {
@@ -133,26 +133,25 @@
     font-weight: 600;
     color: #555;
     transition: all 0.3s ease;
+    min-width: 120px;
+    text-align: left;
+    position: relative;
+  }
+  
+  .language-button::after {
+    content: '▼';
+    font-size: 0.8em;
     margin-left: 8px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   .language-button:hover {
     background-color: #f0f4ff;
     border-color: #4361ee;
-    color: #2d3748; /* Darker text on hover */
-  }
-  
-  .language-button.active-language {
-    background-color: #4361ee;
-    color: #ffffff !important;
-    border-color: #4361ee;
-    font-weight: 600;
-  }
-  
-  .language-button.active-language:hover {
-    background-color: #3a56e3;
-    color: #ffffff !important;
-    border-color: #3a56e3;
+    color: #2d3748;
   }
   
   .language-dropdown {
@@ -177,10 +176,21 @@
     border: none;
     cursor: pointer;
     transition: background-color 0.2s;
+    color: #555;
   }
   
   .language-dropdown button:hover {
-    background-color: #f8f9fa;
+    background-color: #f0f4ff;
+    color: #4361ee;
+  }
+  
+  .language-dropdown button.active-language {
+    background-color: #4361ee;
+    color: white;
+  }
+  
+  .language-dropdown button.active-language:hover {
+    background-color: #3a56e3;
   }
   
   /* Menú hamburguesa para móvil */

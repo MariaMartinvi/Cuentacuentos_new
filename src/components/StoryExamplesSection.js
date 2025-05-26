@@ -380,6 +380,10 @@ const StoryExamplesSection = () => {
               <option value="all">{t('storyExamples.languages.all')}</option>
               <option value="spanish">{t('storyExamples.languages.spanish')}</option>
               <option value="english">{t('storyExamples.languages.english')}</option>
+              <option value="catalan">{t('storyExamples.languages.catalan')}</option>
+              <option value="german">{t('storyExamples.languages.german')}</option>
+              <option value="italian">{t('storyExamples.languages.italian')}</option>
+              <option value="french">{t('storyExamples.languages.french')}</option>
             </select>
           </div>
 

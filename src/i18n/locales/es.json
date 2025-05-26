@@ -47,14 +47,18 @@
     },
     "ageGroups": {
       "all": "Todas las edades",
-      "3to5": "3 a 5 años",
-      "6to8": "6 a 8 años",
-      "9to12": "9 a 12 años"
+      "3to5": "3-5 años",
+      "6to8": "6-8 años",
+      "9to12": "9-12 años"
     },
     "languages": {
       "all": "Todos los idiomas",
       "spanish": "Español",
-      "english": "Inglés"
+      "english": "Inglés",
+      "catalan": "Catalán",
+      "german": "Alemán",
+      "italian": "Italiano",
+      "french": "Francés"
     },
     "levels": {
       "all": "Todos los niveles",
@@ -75,18 +79,28 @@
       "badge": "Ejemplo",
       "explanation": "Este es contenido de ejemplo. El contenido real se cargará desde Firebase cuando esté disponible."
     },
-    "audioNotAvailable": "El audio no está disponible para este cuento."
+    "audioNotAvailable": "El audio no está disponible para este cuento.",
+    "stories": {
+      "vainCaterpillar": "La Oruga Vanidosa",
+      "definitiveMatch": "El Partido Definitivo",
+      "friendlyGhost": "El Fantasma Amistoso",
+      "snowWhite": "Blancanieves",
+      "enchantedForest": "El Bosque Encantado",
+      "amaral": "Amaral"
+    }
   },
   "homepage": {
-    "heroTitle": "Cuentos personalizados para niños",
-    "heroDescription": "Genera cuentos infantiles personalizados con inteligencia artificial y conviértelos en audio para aprender idiomas",
-    "featuresTitle": "Características Principales",
-    "uniqueStoriesTitle": "Historias Únicas",
-    "uniqueStoriesDescription": "Cada historia es única y personalizada según tus preferencias",
+    "heroTitle": "Crea Cuentos Mágicos para tus Niños",
+    "heroDescription": "Transforma tus ideas en cuentos únicos con nuestro generador de historias impulsado por IA",
+    "featuresTitle": "¿Por qué elegirnos?",
+    "uniqueStoriesTitle": "Cuentos Únicos",
+    "uniqueStoriesDescription": "Cada cuento es único y personalizado para tu hijo",
     "multipleGenresTitle": "Múltiples Géneros",
-    "multipleGenresDescription": "Elige entre aventuras, fantasía, ciencia ficción y más",
+    "multipleGenresDescription": "Elige entre varios géneros que coincidan con los intereses de tu hijo",
     "audioConversionTitle": "Conversión a Audio",
-    "audioConversionDescription": "Convierte tus historias en audio con diferentes voces y acentos",
+    "audioConversionDescription": "Convierte tus cuentos en audio de alta calidad",
+    "languageLevelsTitle": "Niveles de Idioma Adaptados",
+    "languageLevelsDescription": "Cuentos adaptados a diferentes niveles de dominio del idioma, desde principiante hasta avanzado",
     "storyExamples": {
       "title": "Explora Nuestros Cuentos",
       "description": "Descubre nuestra colección de cuentos de ejemplo para todas las edades"
@@ -99,20 +113,23 @@
     "errorLoading": "Error al cargar los cuentos",
     "retryLoading": "Reintentar",
     "share": "Compartir",
-    "shareNotSupported": "Compartir no está soportado en este navegador"
+    "shareNotSupported": "Compartir no está soportado en este navegador",
+    "loading": "Cargando..."
   },
   "footer": {
-    "title": "Generador de Cuentos IA",
-    "description": "Crea historias cautivadoras en español con inteligencia artificial. Personaliza, genera y escucha tus cuentos con nuestra herramienta gratuita.",
+    "title": "Generador de Cuentos con IA",
+    "description": "Crea cuentos atractivos en inglés con inteligencia artificial. Personaliza, genera y escucha tus cuentos con nuestra herramienta gratuita.",
     "quickLinks": "Enlaces Rápidos",
     "howItWorks": "Cómo Funciona",
     "aboutUs": "Sobre Nosotros",
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
-    "copyright": "Generador de Cuentos IA. Todos los derechos reservados.",
+    "copyright": "© 2025 Generador de Cuentos con IA. Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "inBarcelona": "en Barcelona",
-    "storyExamples": "Ejemplos de Cuentos Personalizados"
+    "storyExamples": "Ejemplos de Cuentos",
+    "blog": "Blog",
+    "followUs": "Síguenos"
   },
   "audioPlayer": {
     "title": "Audio del Cuento",
@@ -172,5 +189,345 @@
     "forestMusic": "Bosque",
     "musicBoxMusic": "Caja musical",
     "journeyMusic": "Viaje"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "ca": "Catalán",
+      "fr": "Francés",
+      "it": "Italiano",
+      "de": "Alemán"
+    }
+  },
+  "storyForm": {
+    "title": "Crea Tu Cuento",
+    "topicLabel": "Tema del Cuento",
+    "topic": "Tema del Cuento",
+    "topicPlaceholder": "Ingresa un tema para tu cuento...",
+    "childNamesLabel": "Nombres de los Niños (opcional)",
+    "childNames": "Nombres de los Niños (opcional)",
+    "childNamesPlaceholder": "Ingresa nombres separados por comas...",
+    "englishLevelLabel": "Nivel de Inglés",
+    "englishLevel": "Nivel de Inglés",
+    "englishLevels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "native": "Nativo"
+    },
+    "englishLevelBeginner": "Principiante",
+    "englishLevelIntermediate": "Intermedio",
+    "englishLevelAdvanced": "Avanzado",
+    "lengthLabel": "Duración del Cuento",
+    "storyLength": "Duración del Cuento",
+    "lengths": {
+      "short": "Corto",
+      "medium": "Medio",
+      "long": "Largo"
+    },
+    "lengthShort": "Corto",
+    "lengthMedium": "Medio",
+    "lengthLong": "Largo",
+    "typeLabel": "Tipo de Cuento",
+    "storyType": "Tipo de Cuento",
+    "types": {
+      "original": "Original",
+      "fairyTale": "Cuento de Hadas",
+      "adventure": "Aventura",
+      "educational": "Educativo",
+      "classic": "Clásico",
+      "humor": "Humor",
+      "sciFi": "Ciencia Ficción",
+      "horror": "Terror",
+      "fantasy": "Fantasía"
+    },
+    "typeOriginal": "Original",
+    "typeClassic": "Clásico",
+    "typeHumor": "Humor",
+    "typeSciFi": "Ciencia Ficción",
+    "typeHorror": "Terror",
+    "typeAdventure": "Aventura",
+    "typeFantasy": "Fantasía",
+    "ageGroupLabel": "Grupo de Edad",
+    "ageGroup": "Grupo de Edad",
+    "ageGroups": {
+      "default": "Por Defecto",
+      "3to5": "3-5 años",
+      "6to8": "6-8 años",
+      "9to12": "9-12 años"
+    },
+    "ageGroupDefault": "Por Defecto",
+    "ageGroup3to5": "3-5 años",
+    "ageGroup6to8": "6-8 años",
+    "ageGroup9to12": "9-12 años",
+    "creativityLevelLabel": "Nivel de Creatividad",
+    "creativityLevel": "Nivel de Creatividad",
+    "creativityLevels": {
+      "conservative": "Conservador",
+      "balanced": "Equilibrado",
+      "innovative": "Innovador",
+      "standard": "Estándar",
+      "creative": "Muy Creativo"
+    },
+    "creativityStandard": "Estándar",
+    "creativityInnovative": "Innovador",
+    "creativityCreative": "Muy Creativo",
+    "generateButton": "Generar Cuento",
+    "generating": "Generando...",
+    "loginRequired": "Por favor inicia sesión para generar cuentos",
+    "error": "Error al generar el cuento",
+    "rateLimit": "Límite de uso alcanzado. Por favor intenta de nuevo en",
+    "serverError": "Error del Servidor",
+    "serverWarning": "Rendimiento Limitado",
+    "serverChecking": "Verificando el estado del servidor...",
+    "serverIssues": "El servidor está experimentando problemas.",
+    "serverSlowdowns": "El servidor está experimentando ralentizaciones.",
+    "adminNote": "Nota: El servicio de IA ha alcanzado su límite de uso. Los administradores han sido notificados.",
+    "resetButton": "Reiniciar",
+    "storyLimitReached": "Has alcanzado tu límite de cuentos gratuitos. Por favor suscríbete para generar más cuentos.",
+    "generalError": "Ocurrió un error al generar el cuento. Por favor intenta de nuevo.",
+    "alertTopicRequired": "Escribe aquí el tema de tu cuento",
+    "alertError": "Ocurrió un error al generar el cuento",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "alertEmailRequired": "Por favor ingresa tu correo electrónico",
+    "clickToLogin": "Haz clic aquí para iniciar sesión"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Nos encantaría saber de ti",
+    "description": "¿Tienes alguna pregunta o sugerencia? Estamos aquí para ayudarte.",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Ingresa tu nombre",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingresa tu correo electrónico",
+      "message": "Mensaje",
+      "messagePlaceholder": "Ingresa tu mensaje",
+      "submit": "Enviar Mensaje"
+    },
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Error al enviar el mensaje",
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Correo electrónico",
+      "emailText": "info@micuentacuentos.com",
+      "location": "Ubicación",
+      "locationText": "Barcelona, España",
+      "hours": "Horario de Atención",
+      "hoursText": "Lunes a Viernes: 9:00 - 18:00"
+    }
+  },
+  "terminos": {
+    "title": "Términos y Condiciones",
+    "introduccion": "Introducción",
+    "introduccionTexto": "Bienvenido a Mi Cuentacuentos. Al acceder y utilizar nuestro servicio, aceptas estos términos y condiciones. Estos términos rigen tu uso de nuestra plataforma de generación de cuentos personalizados.",
+    "uso": "Uso del Servicio",
+    "usoTexto": "Nuestro servicio está destinado a generar cuentos personalizados. Debes usar el servicio de manera responsable y respetando los derechos de autor. No está permitido: 1) Generar contenido ilegal, ofensivo o inapropiado. 2) Intentar acceder a áreas restringidas del sistema. 3) Compartir tu cuenta con terceros. 4) Usar el servicio para fines comerciales sin autorización.",
+    "suscripcion": "Suscripción y Pagos",
+    "suscripcionTexto": "Ofrecemos planes gratuitos y de pago. Las suscripciones se renuevan automáticamente y pueden cancelarse en cualquier momento. Los pagos se procesan de forma segura a través de Stripe. No almacenamos información de tarjetas de crédito. Los usuarios del plan gratuito tienen acceso limitado a ciertas funciones. El plan premium ofrece acceso ilimitado a todas las funciones.",
+    "propiedad": "Propiedad Intelectual",
+    "propiedadTexto": "Los cuentos generados son propiedad del usuario que los crea. Mi Cuentacuentos se reserva el derecho de usar los cuentos de forma anónima para mejorar el servicio. La plataforma y su tecnología son propiedad exclusiva de Mi Cuentacuentos. No está permitido copiar, modificar o distribuir el código o la interfaz sin autorización.",
+    "limitacion": "Limitación de Responsabilidad",
+    "limitacionTexto": "No somos responsables del contenido generado por los usuarios ni de ningún daño resultante del uso del servicio. El servicio se proporciona 'tal cual' sin garantías de ningún tipo. No garantizamos la disponibilidad continua del servicio ni la precisión de los cuentos generados.",
+    "contacto": "Contacto y Soporte",
+    "contactoTexto": "Para cualquier pregunta sobre estos términos, contáctanos a través de nuestro formulario de contacto. Ofrecemos soporte por correo electrónico de lunes a viernes de 9:00 a 18:00. Para problemas técnicos urgentes, los usuarios premium tienen acceso a soporte prioritario."
+  },
+  "politica": {
+    "title": "Política de Privacidad",
+    "introduccion": "Introducción",
+    "introduccionTexto": "En Mi Cuentacuentos, nos tomamos muy en serio la privacidad de nuestros usuarios. Esta política explica cómo manejamos tus datos personales y cómo protegemos tu privacidad mientras utilizas nuestro servicio de generación de cuentos.",
+    "datos": "Datos que Recopilamos",
+    "datosTexto": "Recopilamos la siguiente información: 1) Datos de registro: nombre, correo electrónico y contraseña (encriptada). 2) Datos de uso: preferencias de cuentos, historial de generación y configuración. 3) Datos de pago: procesados de forma segura por Stripe, sin almacenar información de tarjetas. 4) Cookies: para mejorar la experiencia y analizar el uso del sitio.",
+    "usoDatos": "Uso de Datos",
+    "usoDatosTexto": "Usamos tus datos para: 1) Proporcionar y mejorar el servicio. 2) Personalizar tu experiencia. 3) Procesar pagos de forma segura. 4) Enviar actualizaciones importantes. 5) Responder a consultas de soporte. No compartimos tus datos con terceros excepto para el procesamiento de pagos o cuando lo requiere la ley.",
+    "seguridad": "Seguridad y Protección",
+    "seguridadTexto": "Implementamos medidas de seguridad robustas: 1) Encriptación de datos sensibles. 2) Autenticación segura. 3) Protección contra acceso no autorizado. 4) Copias de seguridad regulares. 5) Monitoreo continuo de seguridad. Los datos de pago se procesan exclusivamente a través de Stripe, cumpliendo con los más altos estándares de seguridad.",
+    "cookies": "Cookies",
+    "cookiesTexto": "Usamos cookies para: 1) Mantener tu sesión activa. 2) Recordar tus preferencias. 3) Analizar el uso del sitio. 4) Mejorar el rendimiento. Puedes gestionar tus preferencias de cookies en cualquier momento. Algunas funciones pueden no estar disponibles si desactivas las cookies esenciales.",
+    "derechos": "Tus Derechos",
+    "derechosTexto": "Tienes derecho a: 1) Acceder a tus datos personales. 2) Corregir información inexacta. 3) Solicitar la eliminación de tus datos. 4) Exportar tus datos en un formato estándar. 5) Retirar tu consentimiento en cualquier momento. Para ejercer estos derechos, contáctanos a través de nuestro formulario de contacto."
+  },
+  "comoFunciona": {
+    "title": "Cómo Funciona",
+    "description": "Descubre cómo crear cuentos mágicos que ayudan a tus hijos a aprender idiomas mientras se duermen",
+    "step1": {
+      "title": "Paso 1: Elige y Personaliza",
+      "description": "Selecciona el tema del cuento y personaliza los detalles: género, duración y nivel de idioma. Añade los nombres de los personajes principales para hacer el cuento más personal y atractivo para los niños.",
+      "features": {
+        "0": "Temas creativos y originales",
+        "1": "Niveles de idioma adaptados a cada edad",
+        "2": "Múltiples géneros y duraciones de cuentos"
+      }
+    },
+    "step2": {
+      "title": "Paso 2: Genera tu Cuento",
+      "description": "Con solo un clic, nuestra inteligencia artificial creará un cuento único en el idioma seleccionado. Perfecto para que los niños se familiaricen naturalmente con nuevos idiomas mientras disfrutan de un cuento cautivador.",
+      "features": {
+        "0": "Generación instantánea de cuentos",
+        "1": "Contenido narrativo de alta calidad",
+        "2": "Lenguaje y temas apropiados para la edad"
+      }
+    },
+    "step3": {
+      "title": "Paso 3: Escucha y Aprende",
+      "description": "Convierte tu cuento en un audiolibro con voces nativas y diferentes acentos. Los niños aprenderán la pronunciación correcta mientras disfrutan de sus cuentos favoritos en otro idioma. ¡Perfecto para aprender mientras se duermen!",
+      "features": {
+        "0": "Voces nativas auténticas",
+        "1": "Múltiples acentos disponibles",
+        "2": "Descarga para escuchar sin conexión"
+      }
+    }
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "subtitle": "Creando Cuentos Mágicos para Niños",
+    "mission": {
+      "title": "Nuestra Misión",
+      "text": "Nuestra misión es crear cuentos únicos y atractivos que inspiren la imaginación y el amor por la lectura de los niños."
+    },
+    "vision": {
+      "title": "Nuestra Visión",
+      "text": "Visualizamos un mundo donde cada niño tenga acceso a cuentos personalizados que despierten su creatividad y alegría por el aprendizaje."
+    },
+    "team": {
+      "title": "Nuestro Equipo",
+      "description": "Somos un equipo apasionado de desarrolladores, escritores y creativos trabajando juntos para crear la mejor experiencia de generación de cuentos. Visita comartinvi.com",
+      "members": {
+        "developer": {
+          "name": "Desarrolladores",
+          "role": "Expertos en tecnología y programación"
+        },
+        "writer": {
+          "name": "Escritores",
+          "role": "Profesionales de literatura infantil"
+        },
+        "creative": {
+          "name": "Creativos",
+          "role": "Especialistas en diseño y experiencia de usuario"
+        }
+      }
+    },
+    "values": {
+      "title": "Nuestros Valores",
+      "creatividad": "Creatividad",
+      "creatividadText": "Creemos en el poder de la imaginación y la narración creativa.",
+      "accesibilidad": "Accesibilidad",
+      "accesibilidadText": "Hacemos que la creación de cuentos sea accesible para todos.",
+      "calidad": "Calidad",
+      "calidadText": "Mantenemos altos estándares en todos nuestros cuentos y servicios.",
+      "creativity": "Creatividad",
+      "creativityText": "Creemos en el poder de la imaginación y la narración creativa.",
+      "education": "Educación",
+      "educationText": "Nos comprometemos a crear cuentos que sean tanto entretenidos como educativos.",
+      "innovation": "Innovación",
+      "innovationText": "Innovamos constantemente para proporcionar la mejor experiencia de narración.",
+      "quality": "Calidad",
+      "qualityText": "Mantenemos altos estándares en todos nuestros cuentos y servicios.",
+      "accessibility": "Accesibilidad",
+      "accessibilityText": "Hacemos que la creación de cuentos sea accesible para todos."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Últimos Artículos y Consejos",
+    "description": "Descubre artículos sobre cuentos infantiles, aprendizaje de idiomas y escritura creativa",
+    "readMore": "Leer Más",
+    "categoriesTitle": "Categorías",
+    "categories": {
+      "benefits": "Beneficios",
+      "benefitsDesc": "Descubre cómo nuestros cuentos pueden beneficiar el desarrollo de tu hijo",
+      "tips": "Consejos",
+      "tipsDesc": "Consejos útiles para aprovechar al máximo nuestra plataforma de cuentos",
+      "examples": "Ejemplos",
+      "examplesDesc": "Explora cuentos de ejemplo y su valor educativo",
+      "testimonials": "Testimonios",
+      "testimonialsDesc": "Lee lo que padres y educadores dicen sobre nuestros cuentos"
+    },
+    "exploreCategory": "Explorar Categoría",
+    "featuredTitle": "Artículos Destacados",
+    "featured": {
+      "earlyLearning": {
+        "title": "Los Beneficios del Aprendizaje Temprano de Idiomas a través de Cuentos",
+        "excerpt": "Descubre cómo los cuentos pueden ayudar a los niños a aprender idiomas naturalmente desde una edad temprana"
+      },
+      "bedtimeStories": {
+        "title": "Creando la Rutina Perfecta de Cuentos para Dormir",
+        "excerpt": "Aprende cómo hacer que los cuentos antes de dormir sean una experiencia mágica de aprendizaje"
+      },
+      "successStory": {
+        "title": "Cómo los Cuentos Transformaron el Viaje Lingüístico de Nuestra Familia",
+        "excerpt": "La experiencia de una familia usando nuestra plataforma para aprender idiomas juntos"
+      }
+    },
+    "newsletter": {
+      "title": "Suscríbete a Nuestro Boletín",
+      "description": "Recibe los últimos artículos y consejos en tu bandeja de entrada",
+      "placeholder": "Ingresa tu correo electrónico",
+      "subscribe": "Suscribirse"
+    },
+    "post": {
+      "title": "Artículo del Blog",
+      "backToBlog": "Volver al Blog",
+      "author": "Por",
+      "published": "Publicado el",
+      "readTime": "{{minutes}} min de lectura",
+      "share": {
+        "title": "Compartir este artículo",
+        "facebook": "Compartir en Facebook",
+        "twitter": "Compartir en Twitter",
+        "linkedin": "Compartir en LinkedIn",
+        "whatsapp": "Compartir en WhatsApp"
+      },
+      "related": {
+        "title": "Artículos Relacionados",
+        "noRelated": "No se encontraron artículos relacionados"
+      },
+      "tags": ["Educación", "Aprendizaje de Idiomas", "Cuentos", "Consejos", "Paternidad", "Niños", "Lectura", "Desarrollo"],
+      "categories": {
+        "title": "Categorías",
+        "benefits": "Beneficios",
+        "tips": "Consejos",
+        "examples": "Ejemplos",
+        "testimonials": "Testimonios"
+      }
+    },
+    "posts": {
+      "1": {
+        "title": "Los Beneficios del Aprendizaje Temprano de Idiomas a través de Cuentos",
+        "content": "Contenido del artículo sobre aprendizaje temprano...",
+        "author": "Juan Pérez",
+        "date": "2024-03-20",
+        "category": "Beneficios",
+        "readingTime": "5 min de lectura",
+        "tags": ["Educación", "Aprendizaje de Idiomas", "Desarrollo Temprano"]
+      },
+      "2": {
+        "title": "Creando la Rutina Perfecta de Cuentos para Dormir",
+        "content": "Contenido del artículo sobre cuentos para dormir...",
+        "author": "María García",
+        "date": "2024-03-18",
+        "category": "Consejos",
+        "readingTime": "4 min de lectura",
+        "tags": ["Paternidad", "Hora de Dormir", "Lectura"]
+      },
+      "3": {
+        "title": "Cómo los Cuentos Transformaron el Viaje Lingüístico de Nuestra Familia",
+        "content": "Contenido del artículo sobre historia de éxito...",
+        "author": "Ana Martínez",
+        "date": "2024-03-15",
+        "category": "Testimonios",
+        "readingTime": "6 min de lectura",
+        "tags": ["Historia de Éxito", "Familia", "Aprendizaje de Idiomas"]
+      }
+    },
+    "share": "Compartir este artículo",
+    "relatedPosts": "Artículos Relacionados"
   }
 } 

@@ -43,7 +43,7 @@ function Footer() {
           </div>
 
           <div className="footer-section">
-            <h3>Síguenos</h3>
+            <h3>{t('footer.followUs')}</h3>
             <div className="social-links">
               <a href="https://tiktok.com/@micuentacuentos" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <i className="fab fa-tiktok"></i>
@@ -57,7 +57,7 @@ function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p className="centered-text">© {currentYear} {t('footer.copyright')}</p>
+          <p className="centered-text">{t('footer.copyright')}</p>
           <div className="made-with">
             {t('footer.madeWith')} <span className="heart">❤️</span> {t('footer.inBarcelona')}
           </div>
