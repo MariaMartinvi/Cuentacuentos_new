@@ -54,7 +54,8 @@
     "connectingServer": "Connecting to server...",
     "wakingUpServer": "Waking up the server...",
     "preparingRedirect": "Preparing redirection...",
-    "timeElapsed": "Time elapsed: {{seconds}} seconds"
+    "timeElapsed": "Time elapsed: {{seconds}} seconds",
+    "passwordsDontMatch": "Passwords do not match"
   },
   "login": {
     "title": "Welcome back",

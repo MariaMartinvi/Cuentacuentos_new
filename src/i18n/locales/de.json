@@ -310,9 +310,11 @@
     "confirmPasswordLabel": "Passwort bestätigen",
     "confirmPasswordPlaceholder": "Geben Sie Ihr Passwort erneut ein",
     "createAccount": "Konto erstellen",
-    "alreadyAccount": "Haben Sie bereits ein Konto?",
+    "alreadyAccount": "Hast du bereits ein Konto?",
     "login": "Anmelden",
-    "signInWithGoogle": "Mit Google registrieren"
+    "signInWithGoogle": "Mit Google registrieren",
+    "passwordsDontMatch": "Passwörter stimmen nicht überein",
+    "loading": "Wird verarbeitet..."
   },
   "terminos": {
     "title": "Nutzungsbedingungen",

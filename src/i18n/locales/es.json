@@ -590,6 +590,8 @@
     "createAccount": "Crear cuenta",
     "alreadyAccount": "¿Ya tienes cuenta?",
     "login": "Iniciar sesión",
-    "signInWithGoogle": "Registrarse con Google"
+    "signInWithGoogle": "Registrarse con Google",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "loading": "Procesando..."
   }
 } 

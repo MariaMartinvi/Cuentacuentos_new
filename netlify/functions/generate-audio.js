@@ -188,6 +188,48 @@ function getGoogleVoiceDetails(voiceId) {
         gender: 'MALE'
       };
     
+    // Portugués
+    case 'female-portuguese':
+      return {
+        name: 'pt-PT-Neural2-A',
+        languageCode: 'pt-PT',
+        gender: 'FEMALE'
+      };
+    case 'male-portuguese':
+      return {
+        name: 'pt-PT-Neural2-B',
+        languageCode: 'pt-PT',
+        gender: 'MALE'
+      };
+    
+    // Portugués de Portugal
+    case 'female-portuguese-pt':
+      return {
+        name: 'pt-PT-Neural2-A',
+        languageCode: 'pt-PT',
+        gender: 'FEMALE'
+      };
+    case 'male-portuguese-pt':
+      return {
+        name: 'pt-PT-Neural2-B',
+        languageCode: 'pt-PT',
+        gender: 'MALE'
+      };
+    
+    // Portugués de Brasil
+    case 'female-portuguese-br':
+      return {
+        name: 'pt-BR-Neural2-A',
+        languageCode: 'pt-BR',
+        gender: 'FEMALE'
+      };
+    case 'male-portuguese-br':
+      return {
+        name: 'pt-BR-Neural2-B',
+        languageCode: 'pt-BR',
+        gender: 'MALE'
+      };
+    
     default:
       return {
         name: 'es-ES-Neural2-A',

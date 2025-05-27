@@ -313,7 +313,9 @@
     "createAccount": "Kontua sortu",
     "alreadyAccount": "Dagoeneko kontua duzu?",
     "login": "Saioa hasi",
-    "signInWithGoogle": "Google-rekin erregistratu"
+    "signInWithGoogle": "Google-rekin erregistratu",
+    "passwordsDontMatch": "Pasahitzak ez datoz bat",
+    "loading": "Prozesatzen..."
   },
   "terminos": {
     "title": "Terminoak eta Baldintzak",

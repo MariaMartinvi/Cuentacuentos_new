@@ -311,6 +311,8 @@
     "createAccount": "Créer un compte",
     "alreadyAccount": "Vous avez déjà un compte ?",
     "login": "Se connecter",
-    "signInWithGoogle": "S'inscrire avec Google"
+    "signInWithGoogle": "S'inscrire avec Google",
+    "passwordsDontMatch": "Les mots de passe ne correspondent pas",
+    "loading": "Traitement en cours..."
   }
 } 

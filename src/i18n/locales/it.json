@@ -315,7 +315,9 @@
     "createAccount": "Crea account",
     "alreadyAccount": "Hai già un account?",
     "login": "Accedi",
-    "signInWithGoogle": "Registrati con Google"
+    "signInWithGoogle": "Registrati con Google",
+    "passwordsDontMatch": "Le password non coincidono",
+    "loading": "Elaborazione in corso..."
   },
   "terminos": {
     "title": "Termini e Condizioni",

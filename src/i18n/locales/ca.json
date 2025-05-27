@@ -316,7 +316,9 @@
     "createAccount": "Crear compte",
     "alreadyAccount": "Ja tens compte?",
     "login": "Iniciar sessió",
-    "signInWithGoogle": "Registrar-se amb Google"
+    "signInWithGoogle": "Registrar-se amb Google",
+    "passwordsDontMatch": "Les contrasenyes no coincideixen",
+    "loading": "Processant..."
   },
   "terminos": {
     "title": "Termes i Condicions",

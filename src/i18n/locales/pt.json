@@ -172,6 +172,14 @@
     "voiceMaleLatam": "Masculina (América Latina)",
     "voiceFemaleEnglish": "Feminina (Inglês)",
     "voiceMaleEnglish": "Masculina (Inglês)",
+    "voiceFemaleItalian": "Feminina (Italiano)",
+    "voiceMaleItalian": "Masculina (Italiano)",
+    "voiceFemalePortuguesePT": "Feminina (Português de Portugal)",
+    "voiceMalePortuguesePT": "Masculina (Português de Portugal)",
+    "voiceFemalePortugueseBR": "Feminina (Português do Brasil)",
+    "voiceMalePortugueseBR": "Masculina (Português do Brasil)",
+    "voiceFemaleFrench": "Feminina (Francês)",
+    "voiceMaleFrench": "Masculina (Francês)",
     "speechRate": "Velocidade da fala",
     "speedVerySlow": "Muito lenta",
     "speedSlow": "Lenta",
@@ -301,7 +309,9 @@
     "createAccount": "Criar conta",
     "alreadyAccount": "Já tem uma conta?",
     "login": "Entrar",
-    "signInWithGoogle": "Registrar com Google"
+    "signInWithGoogle": "Registrar com Google",
+    "passwordsDontMatch": "As senhas não coincidem",
+    "loading": "Processando..."
   },
   "terminos": {
     "title": "Termos e Condições",

@@ -43,6 +43,9 @@ function StoryDisplay({ story }) {
       case 'fr':
         setVoiceType('female-french');
         break;
+      case 'pt':
+        setVoiceType('female-portuguese');
+        break;
       default:
         setVoiceType('female');
     }
@@ -250,6 +253,10 @@ function StoryDisplay({ story }) {
               <option value="male-german">{t('storyDisplay.voiceMaleGerman')}</option>
               <option value="female-italian">{t('storyDisplay.voiceFemaleItalian')}</option>
               <option value="male-italian">{t('storyDisplay.voiceMaleItalian')}</option>
+              <option value="female-portuguese-pt">{t('storyDisplay.voiceFemalePortuguesePT')}</option>
+              <option value="male-portuguese-pt">{t('storyDisplay.voiceMalePortuguesePT')}</option>
+              <option value="female-portuguese-br">{t('storyDisplay.voiceFemalePortugueseBR')}</option>
+              <option value="male-portuguese-br">{t('storyDisplay.voiceMalePortugueseBR')}</option>
               <option value="female-french">{t('storyDisplay.voiceFemaleFrench')}</option>
               <option value="male-french">{t('storyDisplay.voiceMaleFrench')}</option>
             </select>
