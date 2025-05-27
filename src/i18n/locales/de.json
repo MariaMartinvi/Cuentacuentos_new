@@ -44,7 +44,9 @@
     "loading": "Lädt...",
     "error": "Ein Fehler ist aufgetreten",
     "premiumInfo": "Abonnieren Sie den Premium-Plan, um bis zu 30 Geschichten pro Monat zu generieren",
-    "learnMore": "Mehr erfahren"
+    "learnMore": "Mehr erfahren",
+    "freeLimitReached": "Sie haben das Limit von 3 kostenlosen Geschichten erreicht. Abonnieren Sie, um mehr Geschichten zu generieren.",
+    "cancelInfo": "Ihr Abonnement bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv"
   },
   "storyExamples": {
     "title": "Entdecke unsere Geschichten",
@@ -319,13 +321,13 @@
   "terminos": {
     "title": "Nutzungsbedingungen",
     "introduccion": "Einführung",
-    "introduccionTexto": "Willkommen bei Mi Cuentacuentos. Durch die Nutzung unseres Dienstes akzeptieren Sie diese Nutzungsbedingungen. Diese Bedingungen regeln Ihre Nutzung unserer Plattform zur Generierung personalisierter Geschichten.",
+    "introduccionTexto": "Willkommen bei AudioGretel. Durch die Nutzung unseres Dienstes akzeptieren Sie diese Nutzungsbedingungen. Diese Bedingungen regeln Ihre Nutzung unserer Plattform zur Generierung personalisierter Geschichten.",
     "uso": "Nutzung des Dienstes",
     "usoTexto": "Unser Dienst dient der Generierung personalisierter Geschichten. Sie müssen den Dienst verantwortungsvoll und unter Achtung der Urheberrechte nutzen. Folgendes ist nicht gestattet: 1) Generierung illegaler, beleidigender oder unangemessener Inhalte. 2) Versuch, auf eingeschränkte Bereiche des Systems zuzugreifen. 3) Weitergabe Ihres Kontos an Dritte. 4) Nutzung des Dienstes für kommerzielle Zwecke ohne Genehmigung.",
     "suscripcion": "Abonnement und Zahlungen",
     "suscripcionTexto": "Wir bieten kostenlose und kostenpflichtige Pläne an. Abonnements verlängern sich automatisch und können jederzeit gekündigt werden. Zahlungen werden sicher über Stripe abgewickelt. Wir speichern keine Kreditkarteninformationen. Nutzer des kostenlosen Plans haben eingeschränkten Zugang zu bestimmten Funktionen. Der Premium-Plan bietet unbegrenzten Zugang zu allen Funktionen.",
     "propiedad": "Geistiges Eigentum",
-    "propiedadTexto": "Die generierten Geschichten gehören dem Benutzer, der sie erstellt. Mi Cuentacuentos behält sich das Recht vor, die Geschichten anonym zur Verbesserung des Dienstes zu nutzen. Die Plattform und ihre Technologie sind ausschließliches Eigentum von Mi Cuentacuentos. Es ist nicht gestattet, den Code oder die Benutzeroberfläche ohne Genehmigung zu kopieren, zu modifizieren oder zu verteilen.",
+    "propiedadTexto": "Die generierten Geschichten gehören dem Benutzer, der sie erstellt. AudioGretel behält sich das Recht vor, die Geschichten anonym zur Verbesserung des Dienstes zu nutzen. Die Plattform und ihre Technologie sind ausschließliches Eigentum von AudioGretel. Es ist nicht gestattet, den Code oder die Benutzeroberfläche ohne Genehmigung zu kopieren, zu modifizieren oder zu verteilen.",
     "limitacion": "Haftungsbeschränkung",
     "limitacionTexto": "Wir sind nicht verantwortlich für von Benutzern generierte Inhalte oder für Schäden, die durch die Nutzung des Dienstes entstehen. Der Dienst wird 'wie er ist' ohne jegliche Garantien bereitgestellt. Wir garantieren weder die kontinuierliche Verfügbarkeit des Dienstes noch die Genauigkeit der generierten Geschichten.",
     "contacto": "Kontakt und Support",
@@ -334,7 +336,7 @@
   "politica": {
     "title": "Datenschutzerklärung",
     "introduccion": "Einführung",
-    "introduccionTexto": "Bei Mi Cuentacuentos nehmen wir die Privatsphäre unserer Nutzer sehr ernst. Diese Richtlinie erklärt, wie wir Ihre persönlichen Daten verwalten und Ihre Privatsphäre schützen, während Sie unseren Dienst zur Generierung von Geschichten nutzen.",
+    "introduccionTexto": "Bei AudioGretel nehmen wir die Privatsphäre unserer Nutzer sehr ernst. Diese Richtlinie erklärt, wie wir Ihre persönlichen Daten verwalten und Ihre Privatsphäre schützen, während Sie unseren Dienst nutzen.",
     "datos": "Daten, die wir sammeln",
     "datosTexto": "Wir sammeln folgende Informationen: 1) Registrierungsdaten: Name, E-Mail und Passwort (verschlüsselt). 2) Nutzungsdaten: Geschichtenpräferenzen, Generierungshistorie und Einstellungen. 3) Zahlungsdaten: sicher über Stripe verarbeitet, ohne Speicherung von Karteninformationen. 4) Cookies: zur Verbesserung der Erfahrung und Analyse der Nutzung der Website.",
     "usoDatos": "Nutzung der Daten",

@@ -29,22 +29,24 @@
   "profile": {
     "title": "Mi Perfil",
     "name": "Nombre",
-    "email": "Email",
+    "email": "Correo electrónico",
     "subscriptionStatus": "Estado de la Suscripción",
     "subscriptionFree": "Plan Gratuito",
     "subscriptionActive": "Plan Premium Activo",
     "subscriptionCancelled": "Suscripción Cancelada",
     "cancelSubscription": "Cancelar Suscripción",
     "cancelling": "Cancelando...",
-    "subscriptionCancelled": "Suscripción cancelada exitosamente",
+    "subscriptionCancelled": "Suscripción cancelada con éxito",
     "cancelError": "Error al cancelar la suscripción",
     "noActiveSubscription": "No tienes una suscripción activa",
     "storiesRemaining": "Cuentos Disponibles",
     "storiesRemainingOf": "de",
     "loading": "Cargando...",
-    "error": "Ha ocurrido un error",
+    "error": "Se ha producido un error",
     "premiumInfo": "Suscríbete al plan Premium para generar hasta 30 cuentos al mes",
-    "learnMore": "Más información"
+    "learnMore": "Más información",
+    "freeLimitReached": "Has alcanzado el límite de 3 cuentos gratuitos. Suscríbete para generar más cuentos.",
+    "cancelInfo": "Tu suscripción permanecerá activa hasta el final del período de facturación actual"
   },
   "storyExamples": {
     "title": "Explora nuestros cuentos",

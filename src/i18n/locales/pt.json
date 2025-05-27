@@ -29,8 +29,8 @@
   "profile": {
     "title": "Meu Perfil",
     "name": "Nome",
-    "email": "E-mail",
-    "subscriptionStatus": "Status da Assinatura",
+    "email": "Email",
+    "subscriptionStatus": "Estado da Assinatura",
     "subscriptionFree": "Plano Gratuito",
     "subscriptionActive": "Plano Premium Ativo",
     "subscriptionCancelled": "Assinatura Cancelada",
@@ -44,7 +44,9 @@
     "loading": "Carregando...",
     "error": "Ocorreu um erro",
     "premiumInfo": "Assine o plano Premium para gerar até 30 histórias por mês",
-    "learnMore": "Saiba mais"
+    "learnMore": "Saiba mais",
+    "freeLimitReached": "Você atingiu o limite de 3 histórias gratuitas. Assine para gerar mais histórias.",
+    "cancelInfo": "Sua assinatura permanecerá ativa até o final do período de faturamento atual"
   },
   "storyExamples": {
     "title": "Explore nossas histórias",
@@ -316,13 +318,13 @@
   "terminos": {
     "title": "Termos e Condições",
     "introduccion": "Introdução",
-    "introduccionTexto": "Bem-vindo ao Mi Cuentacuentos. Ao acessar e usar nosso serviço, você aceita estes termos e condições. Estes termos regem seu uso de nossa plataforma de geração de histórias personalizadas.",
+    "introduccionTexto": "Bem-vindo ao AudioGretel. Ao usar nosso serviço, você aceita estes termos e condições. Estes termos regem o uso de nossa plataforma de histórias personalizadas.",
     "uso": "Uso do Serviço",
     "usoTexto": "Nosso serviço destina-se a gerar histórias personalizadas. Você deve usar o serviço de forma responsável e respeitando os direitos autorais. Não é permitido: 1) Gerar conteúdo ilegal, ofensivo ou inadequado. 2) Tentar acessar áreas restritas do sistema. 3) Compartilhar sua conta com terceiros. 4) Usar o serviço para fins comerciais sem autorização.",
     "suscripcion": "Assinatura e Pagamentos",
     "suscripcionTexto": "Oferecemos planos gratuitos e pagos. As assinaturas são renovadas automaticamente e podem ser canceladas a qualquer momento. Os pagamentos são processados com segurança através do Stripe. Não armazenamos informações de cartões de crédito. Usuários do plano gratuito têm acesso limitado a certas funcionalidades. O plano premium oferece acesso ilimitado a todas as funcionalidades.",
     "propiedad": "Propriedade Intelectual",
-    "propiedadTexto": "As histórias geradas são propriedade do usuário que as cria. O Mi Cuentacuentos reserva o direito de usar as histórias de forma anônima para melhorar o serviço. A plataforma e sua tecnologia são propriedade exclusiva do Mi Cuentacuentos. Não é permitido copiar, modificar ou distribuir o código ou a interface sem autorização.",
+    "propiedadTexto": "As histórias criadas pertencem ao usuário que as criou. O AudioGretel reserva o direito de usar as histórias de forma anônima para melhorar o serviço. A plataforma e sua tecnologia são propriedade exclusiva do AudioGretel. Não é permitido copiar, modificar ou distribuir o código ou a interface sem autorização.",
     "limitacion": "Limitação de Responsabilidade",
     "limitacionTexto": "Não somos responsáveis pelo conteúdo gerado pelos usuários nem por qualquer dano resultante do uso do serviço. O serviço é fornecido 'como está' sem garantias de qualquer tipo. Não garantimos a disponibilidade contínua do serviço nem a precisão das histórias geradas.",
     "contacto": "Contato e Suporte",
@@ -331,7 +333,7 @@
   "politica": {
     "title": "Política de Privacidade",
     "introduccion": "Introdução",
-    "introduccionTexto": "No Mi Cuentacuentos, levamos a sério a privacidade de nossos usuários. Esta política explica como gerenciamos seus dados pessoais e como protegemos sua privacidade enquanto você usa nosso serviço de geração de histórias.",
+    "introduccionTexto": "No AudioGretel, levamos muito a sério a privacidade de nossos usuários. Esta política explica como gerenciamos seus dados pessoais e como protegemos sua privacidade enquanto você usa nosso serviço.",
     "datos": "Dados que Coletamos",
     "datosTexto": "Coletamos as seguintes informações: 1) Dados de registro: nome, e-mail e senha (criptografada). 2) Dados de uso: preferências de histórias, histórico de geração e configurações. 3) Dados de pagamento: processados com segurança pelo Stripe, sem armazenar informações de cartões. 4) Cookies: para melhorar a experiência e analisar o uso do site.",
     "usoDatos": "Uso dos Dados",

@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.micuentacuentos.app',
+  appId: 'com.audiogretel.app',
   appName: 'Mi Cuenta Cuentos',
   webDir: 'build',
   server: {

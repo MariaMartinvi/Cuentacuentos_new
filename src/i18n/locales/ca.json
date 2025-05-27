@@ -45,7 +45,8 @@
     "error": "S'ha produït un error",
     "premiumInfo": "Subscriu-te al pla Premium per generar fins a 30 contes al mes",
     "learnMore": "Més informació",
-    "freeLimitReached": "Has arribat al límit de 3 contes gratuïts. Subscriu-te per generar més contes."
+    "freeLimitReached": "Has arribat al límit de 3 contes gratuïts. Subscriu-te per generar més contes.",
+    "cancelInfo": "La teva subscripció romandrà activa fins al final del període de facturació actual"
   },
   "storyExamples": {
     "title": "Explora els nostres contes",
@@ -323,13 +324,13 @@
   "terminos": {
     "title": "Termes i Condicions",
     "introduccion": "Introducció",
-    "introduccionTexto": "Benvingut a Mi Cuentacuentos. En accedir i utilitzar el nostre servei, acceptes aquests termes i condicions. Aquests termes regeixen el teu ús de la nostra plataforma de generació de contes personalitzats.",
+    "introduccionTexto": "Benvingut a AudioGretel. En accedir i utilitzar el nostre servei, acceptes aquests termes i condicions. Aquests termes regeixen el teu ús de la nostra plataforma de generació de contes personalitzats.",
     "uso": "Ús del Servei",
     "usoTexto": "El nostre servei està destinat a generar contes personalitzats. Has d'utilitzar el servei de manera responsable i respectant els drets d'autor. No està permès: 1) Generar contingut il·legal, ofensiu o inadequat. 2) Intentar accedir a àrees restringides del sistema. 3) Compartir el teu compte amb tercers. 4) Utilitzar el servei per a finalitats comercials sense autorització.",
     "suscripcion": "Subscripció i Pagaments",
     "suscripcionTexto": "Oferim plans gratuïts i de pagament. Les subscripcions es renova automàticament i es poden cancel·lar en qualsevol moment. Els pagaments es processen de forma segura a través de Stripe. No emmagatzemem informació de targetes de crèdit. Els usuaris del pla gratuït tenen accés limitat a certes funcions. El pla premium ofereix accés il·limitat a totes les funcions.",
     "propiedad": "Propietat Intel·lectual",
-    "propiedadTexto": "Els contes generats són propietat de l'usuari que els crea. Mi Cuentacuentos es reserva el dret d'utilitzar els contes de forma anònima per millorar el servei. La plataforma i la seva tecnologia són propietat exclusiva de Mi Cuentacuentos. No està permès copiar, modificar o distribuir el codi o la interfície sense autorització.",
+    "propiedadTexto": "Els contes generats són propietat de l'usuari que els crea. AudioGretel es reserva el dret d'utilitzar els contes de forma anònima per millorar el servei. La plataforma i la seva tecnologia són propietat exclusiva de AudioGretel. No està permès copiar, modificar o distribuir el codi o la interfície sense autorització.",
     "limitacion": "Limitació de Responsabilitat",
     "limitacionTexto": "No som responsables del contingut generat pels usuaris ni de cap dany resultant de l'ús del servei. El servei es proporciona 'tal qual' sense garanties de cap tipus. No garantim la disponibilitat contínua del servei ni la precisió dels contes generats.",
     "contacto": "Contacte i Suport",
@@ -338,7 +339,7 @@
   "politica": {
     "title": "Política de Privacitat",
     "introduccion": "Introducció",
-    "introduccionTexto": "A Mi Cuentacuentos, ens prenem molt seriosament la privacitat dels nostres usuaris. Aquesta política explica com gestionem les teves dades personals i com protegim la teva privacitat mentre utilitzes el nostre servei de generació de contes.",
+    "introduccionTexto": "A AudioGretel, ens prenem molt seriosament la privacitat dels nostres usuaris. Aquesta política explica com gestionem les teves dades personals i com protegim la teva privacitat mentre utilitzes el nostre servei.",
     "datos": "Dades que Recopilem",
     "datosTexto": "Recopilem la següent informació: 1) Dades de registre: nom, correu electrònic i contrasenya (encriptada). 2) Dades d'ús: preferències de contes, historial de generació i configuració. 3) Dades de pagament: processades de forma segura per Stripe, sense emmagatzemar informació de targetes. 4) Cookies: per millorar l'experiència i analitzar l'ús del lloc.",
     "usoDatos": "Ús de Dades",

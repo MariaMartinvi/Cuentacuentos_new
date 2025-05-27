@@ -44,7 +44,9 @@
     "loading": "Cargando...",
     "error": "Produciuse un erro",
     "premiumInfo": "Subscríbete ao plan Premium para xerar ata 30 contos ao mes",
-    "learnMore": "Máis información"
+    "learnMore": "Máis información",
+    "freeLimitReached": "Alcanzaches o límite de 3 contos gratuítos. Subscríbete para xerar máis contos.",
+    "cancelInfo": "A túa subscrición permanecerá activa ata o final do período de facturación actual"
   },
   "storyExamples": {
     "title": "Explora os nosos contos",
@@ -323,13 +325,13 @@
   "terminos": {
     "title": "Termos e Condicións",
     "introduccion": "Introdución",
-    "introduccionTexto": "Benvido a Mi Cuentacuentos. Ao acceder e utilizar o noso servizo, aceptas estes termos e condicións. Estes termos rexen o teu uso da nosa plataforma de xeración de contos personalizados.",
+    "introduccionTexto": "Benvido a AudioGretel. Ao usar o noso servizo, aceptas estes termos e condicións. Estes termos rexen o uso da nosa plataforma de contos personalizados.",
     "uso": "Uso do Servizo",
     "usoTexto": "O noso servizo está destinado a xerar contos personalizados. Debes utilizar o servizo de maneira responsable e respectando os dereitos de autor. Non está permitido: 1) Xerar contido ilegal, ofensivo ou inadecuado. 2) Intentar acceder a áreas restrinxidas do sistema. 3) Compartir a túa conta con terceiros. 4) Utilizar o servizo para fins comerciais sen autorización.",
     "suscripcion": "Subscrición e Pagamentos",
     "suscripcionTexto": "Ofrecemos plans gratuítos e de pago. As subscricións renóvanse automaticamente e poden cancelarse en calquera momento. Os pagamentos procésanse de forma segura a través de Stripe. Non almacenamos información de tarxetas de crédito. Os usuarios do plan gratuíto teñen acceso limitado a certas funcións. O plan premium ofrece acceso ilimitado a todas as funcións.",
     "propiedad": "Propiedade Intelectual",
-    "propiedadTexto": "Os contos xerados son propiedade do usuario que os crea. Mi Cuentacuentos resérvase o dereito de utilizar os contos de forma anónima para mellorar o servizo. A plataforma e a súa tecnoloxía son propiedade exclusiva de Mi Cuentacuentos. Non está permitido copiar, modificar ou distribuir o código ou a interface sen autorización.",
+    "propiedadTexto": "Os contos creados pertencen ao usuario que os creou. AudioGretel reserva o dereito de usar os contos de forma anónima para mellorar o servizo. A plataforma e a súa tecnoloxía son propiedade exclusiva de AudioGretel. Non está permitido copiar, modificar ou distribuir o código ou a interface sen autorización.",
     "limitacion": "Limitación de Responsabilidade",
     "limitacionTexto": "Non somos responsables do contido xerado polos usuarios nin de calquera dano resultante do uso do servizo. O servizo proporcionase 'tal cal' sen garantías de ningún tipo. Non garantimos a dispoñibilidade continua do servizo nin a precisión dos contos xerados.",
     "contacto": "Contacto e Soporte",
@@ -338,7 +340,7 @@
   "politica": {
     "title": "Política de Privacidade",
     "introduccion": "Introdución",
-    "introduccionTexto": "En Mi Cuentacuentos, tomamos moi en serio a privacidade dos nosos usuarios. Esta política explica como xestionamos os teus datos persoais e como protexemos a túa privacidade mentres utilizas o noso servizo de xeración de contos.",
+    "introduccionTexto": "En AudioGretel, tomamos moi en serio a privacidade dos nosos usuarios. Esta política explica como xestionamos os teus datos persoais e como protexemos a túa privacidade mentres usas o noso servizo.",
     "datos": "Datos que Recopilamos",
     "datosTexto": "Recopilamos a seguinte información: 1) Datos de rexistro: nome, correo electrónico e contrasinal (encriptado). 2) Datos de uso: preferencias de contos, historial de xeración e configuración. 3) Datos de pagamento: procesados de forma segura por Stripe, sen almacenar información de tarxetas. 4) Cookies: para mellorar a experiencia e analizar o uso do sitio.",
     "usoDatos": "Uso de Datos",

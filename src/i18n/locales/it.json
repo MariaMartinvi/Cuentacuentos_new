@@ -44,7 +44,9 @@
     "loading": "Caricamento...",
     "error": "Si è verificato un errore",
     "premiumInfo": "Abbonati al piano Premium per generare fino a 30 storie al mese",
-    "learnMore": "Scopri di più"
+    "learnMore": "Scopri di più",
+    "freeLimitReached": "Hai raggiunto il limite di 3 storie gratuite. Abbonati per generare più storie.",
+    "cancelInfo": "Il tuo abbonamento rimarrà attivo fino alla fine del periodo di fatturazione corrente"
   },
   "storyExamples": {
     "title": "Esplora le nostre storie",
@@ -322,13 +324,13 @@
   "terminos": {
     "title": "Termini e Condizioni",
     "introduccion": "Introduzione",
-    "introduccionTexto": "Benvenuto su Mi Cuentacuentos. Accedendo e utilizzando il nostro servizio, accetti questi termini e condizioni. Questi termini regolano il tuo utilizzo della nostra piattaforma di generazione di storie personalizzate.",
+    "introduccionTexto": "Benvenuto su AudioGretel. Utilizzando il nostro servizio, accetti questi termini e condizioni. Questi termini regolano l'uso della nostra piattaforma di storie personalizzate.",
     "uso": "Utilizzo del Servizio",
     "usoTexto": "Il nostro servizio è destinato a generare storie personalizzate. Devi utilizzare il servizio in modo responsabile e rispettando i diritti d'autore. Non è consentito: 1) Generare contenuti illegali, offensivi o inappropriati. 2) Tentare di accedere ad aree riservate del sistema. 3) Condividere il tuo account con terzi. 4) Utilizzare il servizio per scopi commerciali senza autorizzazione.",
     "suscripcion": "Abbonamento e Pagamenti",
     "suscripcionTexto": "Offriamo piani gratuiti e a pagamento. Gli abbonamenti si rinnovano automaticamente e possono essere cancellati in qualsiasi momento. I pagamenti vengono elaborati in modo sicuro tramite Stripe. Non memorizziamo informazioni sulle carte di credito. Gli utenti del piano gratuito hanno accesso limitato a determinate funzioni. Il piano premium offre accesso illimitato a tutte le funzioni.",
     "propiedad": "Proprietà Intellettuale",
-    "propiedadTexto": "Le storie generate sono di proprietà dell'utente che le crea. Mi Cuentacuentos si riserva il diritto di utilizzare le storie in forma anonima per migliorare il servizio. La piattaforma e la sua tecnologia sono di esclusiva proprietà di Mi Cuentacuentos. Non è consentito copiare, modificare o distribuire il codice o l'interfaccia senza autorizzazione.",
+    "propiedadTexto": "Le storie create appartengono all'utente che le ha create. AudioGretel si riserva il diritto di utilizzare le storie in modo anonimo per migliorare il servizio. La piattaforma e la sua tecnologia sono di proprietà esclusiva di AudioGretel. Non è consentito copiare, modificare o distribuire il codice o l'interfaccia senza autorizzazione.",
     "limitacion": "Limitazione di Responsabilità",
     "limitacionTexto": "Non siamo responsabili dei contenuti generati dagli utenti né di eventuali danni derivanti dall'utilizzo del servizio. Il servizio viene fornito 'così com'è' senza garanzie di alcun tipo. Non garantiamo la disponibilità continua del servizio né l'accuratezza delle storie generate.",
     "contacto": "Contatto e Supporto",
@@ -337,7 +339,7 @@
   "politica": {
     "title": "Politica sulla Privacy",
     "introduccion": "Introduzione",
-    "introduccionTexto": "In Mi Cuentacuentos, prendiamo molto sul serio la privacy dei nostri utenti. Questa politica spiega come gestiamo i tuoi dati personali e come proteggiamo la tua privacy mentre utilizzi il nostro servizio di generazione di storie.",
+    "introduccionTexto": "In AudioGretel, prendiamo molto sul serio la privacy dei nostri utenti. Questa politica spiega come gestiamo i tuoi dati personali e come proteggiamo la tua privacy mentre utilizzi il nostro servizio.",
     "datos": "Dati che Raccogliamo",
     "datosTexto": "Raccogliamo le seguenti informazioni: 1) Dati di registrazione: nome, email e password (crittografata). 2) Dati di utilizzo: preferenze delle storie, cronologia di generazione e impostazioni. 3) Dati di pagamento: elaborati in modo sicuro tramite Stripe, senza memorizzare informazioni sulle carte. 4) Cookie: per migliorare l'esperienza e analizzare l'utilizzo del sito.",
     "usoDatos": "Utilizzo dei Dati",

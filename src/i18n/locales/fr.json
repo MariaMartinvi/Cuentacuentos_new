@@ -44,7 +44,9 @@
     "loading": "Chargement...",
     "error": "Une erreur s'est produite",
     "premiumInfo": "Abonnez-vous au plan Premium pour générer jusqu'à 30 histoires par mois",
-    "learnMore": "En savoir plus"
+    "learnMore": "En savoir plus",
+    "freeLimitReached": "Vous avez atteint la limite de 3 histoires gratuites. Abonnez-vous pour générer plus d'histoires.",
+    "cancelInfo": "Votre abonnement restera actif jusqu'à la fin de la période de facturation en cours"
   },
   "storyExamples": {
     "title": "Explorez nos histoires",
@@ -321,5 +323,8 @@
     "accept": "Tout Accepter",
     "reject": "Tout Refuser",
     "moreInfo": "Plus d'Informations"
-  }
+  },
+  "introduccionTexto": "Bienvenue sur AudioGretel. En utilisant notre service, vous acceptez ces conditions générales. Ces conditions régissent l'utilisation de notre plateforme de contes personnalisés.",
+  "propiedadTexto": "Les contes créés appartiennent à l'utilisateur qui les a créés. AudioGretel se réserve le droit d'utiliser les contes de manière anonyme pour améliorer le service. La plateforme et sa technologie sont la propriété exclusive d'AudioGretel. Il est interdit de copier, modifier ou distribuer le code ou l'interface sans autorisation.",
+  "introduccionTexto": "Chez AudioGretel, nous prenons très au sérieux la vie privée de nos utilisateurs. Cette politique explique comment nous gérons vos données personnelles et comment nous protégeons votre vie privée pendant que vous utilisez notre service."
 } 

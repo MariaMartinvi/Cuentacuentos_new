@@ -149,7 +149,7 @@ function StoryDisplay({ story }) {
       if (navigator.share) {
         await navigator.share({
           title: story.title,
-          text: `${story.title}\n\nEscucha este cuento en Mi Cuentacuentos`,
+          text: `${story.title}\n\nEscucha este cuento en AudioGretel`,
           files: [file]
         });
       } else {
@@ -172,7 +172,7 @@ function StoryDisplay({ story }) {
     if (navigator.share) {
       navigator.share({
         title: story.title,
-        text: `${story.title}\n\n${story.content}\n\nLee más cuentos en Mi Cuentacuentos`,
+        text: `${story.title}\n\n${story.content}\n\nLee más cuentos en AudioGretel`,
         url: window.location.href
       }).catch(console.error);
     } else {
