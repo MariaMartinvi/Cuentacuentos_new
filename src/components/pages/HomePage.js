@@ -57,11 +57,11 @@ function HomePage() {
     <div className="app">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Mi Cuentacuentos - Audiocuentos personalizados para niños' : 
-          'My Storyteller - Personalized audio stories for children'}
+          'AudioGretel - Audiocuentos personalizados para niños' : 
+          'AudioGretel - Personalized audio stories for children'}
         description={i18n.language === 'es' ? 
-          'Genera cuentos personalizados para niños con inteligencia artificial. Convierte historias en audio con diferentes voces y acentos para aprender idiomas.' : 
-          'Generate personalized stories for children with artificial intelligence. Convert stories to audio with different voices and accents to learn languages.'}
+          'Genera audiocuentos personalizados para niños con inteligencia artificial. Convierte historias en audio con diferentes voces y acentos para aprender idiomas.' : 
+          'Generate personalized audio stories for children with artificial intelligence. Convert stories to audio with different voices and accents to learn languages.'}
         keywords={keywords}
         lang={i18n.language}
         pageType="WebSite"

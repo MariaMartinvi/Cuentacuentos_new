@@ -11,12 +11,12 @@ const AboutPage = () => {
     <div className="about-page">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Sobre Nosotros - Mi Cuentacuentos' : 
-          'About Us - My Storyteller'}
+          'Sobre Nosotros - AudioGretel' : 
+          'About Us - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Conoce más sobre Mi Cuentacuentos, nuestra misión, visión y el equipo detrás de esta plataforma de cuentos personalizados.' : 
-          'Learn more about My Storyteller, our mission, vision and the team behind this personalized storytelling platform.'}
-        keywords={['sobre nosotros', 'equipo creativo', 'misión', 'visión', 'valores', 'cuentos personalizados']}
+          'Conoce más sobre AudioGretel, nuestra misión, visión y el equipo detrás de esta plataforma de audiocuentos personalizados.' : 
+          'Learn more about AudioGretel, our mission, vision and the team behind this personalized audio storytelling platform.'}
+        keywords={['sobre nosotros', 'equipo creativo', 'misión', 'visión', 'valores', 'audiocuentos personalizados']}
         lang={i18n.language}
       />
       
