@@ -45,7 +45,7 @@ function Footer() {
           <div className="footer-section">
             <h3>{t('footer.followUs')}</h3>
             <div className="social-links">
-              <a href="https://tiktok.com/@audiogretel" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://tiktok.com/@micuentacuentos" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <i className="fab fa-tiktok"></i>
               </a>
               <span style={{ margin: '0 12px' }}></span>
