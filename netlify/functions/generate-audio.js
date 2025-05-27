@@ -188,20 +188,6 @@ function getGoogleVoiceDetails(voiceId) {
         gender: 'MALE'
       };
     
-    // Portugués
-    case 'female-portuguese':
-      return {
-        name: 'pt-PT-Neural2-A',
-        languageCode: 'pt-PT',
-        gender: 'FEMALE'
-      };
-    case 'male-portuguese':
-      return {
-        name: 'pt-PT-Neural2-B',
-        languageCode: 'pt-PT',
-        gender: 'MALE'
-      };
-    
     // Portugués de Portugal
     case 'female-portuguese-pt':
       return {
