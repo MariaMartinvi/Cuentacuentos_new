@@ -1,0 +1,443 @@
+{
+  "subscription": {
+    "title": "Premium Harpidetza",
+    "planTitle": "Premium Plana",
+    "premium": {
+      "title": "Premium Plana",
+      "features": {
+        "0": "30 ipuin hilero",
+        "1": "Ipuin mugagabeak",
+        "2": "Edozein unetan bertan behera utzi",
+        "3": "Funtzio guztietara sarbidea",
+        "4": "Laguntza lehentasunezkoa"
+      }
+    },
+    "planDescription": "Desblokeatu funtzio guztiak gure premium planarekin",
+    "features": {
+      "stories": "30 ipuin hilero",
+      "unlimited": "Ipuin mugagabeak",
+      "cancel": "Edozein unetan bertan behera utzi"
+    },
+    "subscribe": "Harpidetu 5€/hilabete",
+    "processing": "Prozesatzen...",
+    "alreadySubscribed": "Dagoeneko harpidetza duzu!",
+    "redirecting": "Berbideratzen...",
+    "cancelNote": "Zure harpidetza edozein unetan bertan behera utzi dezakezu zure profiletik, goiko menutik sartuz.",
+    "cancelInfo": "Zure harpidetza aktibo egongo da fakturazio epearen amaiera arte",
+    "subscribeButton": "Premium Plana"
+  },
+  "profile": {
+    "title": "Nire Profila",
+    "name": "Izena",
+    "email": "Posta elektronikoa",
+    "subscriptionStatus": "Harpidetzaren Egoera",
+    "subscriptionFree": "Doako Plana",
+    "subscriptionActive": "Premium Plana Aktibo",
+    "subscriptionCancelled": "Harpidetza Bertan Behera Utzita",
+    "cancelSubscription": "Harpidetza Bertan Behera Utzi",
+    "cancelling": "Bertan behera utzitzen...",
+    "subscriptionCancelled": "Harpidetza arrakastaz bertan behera utzita",
+    "cancelError": "Errorea harpidetza bertan behera utzitzerakoan",
+    "noActiveSubscription": "Ez duzu harpidetza aktiborik",
+    "storiesRemaining": "Eskuragarri dauden ipuinak",
+    "storiesRemainingOf": "tik",
+    "loading": "Kargatzen...",
+    "error": "Errorea gertatu da",
+    "premiumInfo": "Harpidetu Premium planera hilero 30 ipuin arte sortzeko",
+    "learnMore": "Gehiago jakin"
+  },
+  "storyExamples": {
+    "title": "Ipuin Pertsonalizatuen Adibideak",
+    "description": "Esploratu Mi Cuentacuentos-ek sortutako adibide ipuinen bilduma, adin eta hizkuntza maila guztietarako.",
+    "viewStory": "Ipuina Ikusi",
+    "noResults": "Ez da ipuinik aurkitu hautatutako iragazkiekin.",
+    "filters": {
+      "title": "Iragazkiak:",
+      "age": "Adina",
+      "language": "Hizkuntza",
+      "level": "Maila"
+    },
+    "ageGroups": {
+      "all": "Adin guztiak",
+      "3to5": "3-5 urte",
+      "6to8": "6-8 urte",
+      "9to12": "9-12 urte"
+    },
+    "languages": {
+      "all": "Hizkuntza guztiak",
+      "spanish": "Gaztelania",
+      "english": "Ingelesa",
+      "catalan": "Katalana",
+      "german": "Alemana",
+      "italian": "Italiera",
+      "french": "Frantsesa",
+      "galician": "Galiziera",
+      "basque": "Euskara",
+      "pt": "Portugesa"
+    },
+    "levels": {
+      "all": "Maila guztiak",
+      "beginner": "Hasiberria",
+      "intermediate": "Ertaina",
+      "advanced": "Aurreratua"
+    },
+    "storyCard": {
+      "recommendedAge": "Gomendatutako adina:",
+      "language": "Hizkuntza:",
+      "level": "Maila:",
+      "readStory": "Ipuina irakurri",
+      "listenAudio": "Audioa entzun",
+      "usingMockContent": "Adibide edukia erabiltzen",
+      "protagonist": "Protagonista"
+    },
+    "mockContent": {
+      "badge": "Adibidea",
+      "explanation": "Hau adibide edukia da. Benetako edukia Firebase-tik kargatuko da eskuragarri dagoenean."
+    },
+    "audioNotAvailable": "Audioa ez dago eskuragarri ipuin honentzat.",
+    "stories": {
+      "vainCaterpillar": "Harren Harroa",
+      "definitiveMatch": "Partida Erabakigarria",
+      "friendlyGhost": "Mamua Lagunkoia",
+      "snowWhite": "Edurnezuri",
+      "enchantedForest": "Baso Sorgindua",
+      "amaral": "Amaral"
+    }
+  },
+  "homepage": {
+    "heroTitle": "Sortu Ipuin Magikoak Zure Haurrentzat",
+    "heroDescription": "Bihurtu zure ideiak ipuin bakarretan gure IA bidezko ipuin sortzailearekin",
+    "featuresTitle": "Zergatik aukeratu gaituk?",
+    "uniqueStoriesTitle": "Ipuin Bakarrak",
+    "uniqueStoriesDescription": "Ipuin bakoitza bakarra da eta zure haurrerako pertsonalizatua",
+    "multipleGenresTitle": "Genero Anitzak",
+    "multipleGenresDescription": "Aukeratu zure haurraren interesekin bat datozen hainbat genero",
+    "audioConversionTitle": "Audio Bihurtzea",
+    "audioConversionDescription": "Bihurtu zure ipuinak kalitate handiko audioan",
+    "languageLevelsTitle": "Hizkuntza Maila Egokituak",
+    "languageLevelsDescription": "Ipuinak hizkuntzaren maila desberdinetara egokituta, hasiberritik aurreratura",
+    "storyExamples": {
+      "title": "Esploratu Gure Ipuinak",
+      "description": "Aurkitu gure adin guztietarako adibide ipuinen bilduma"
+    }
+  },
+  "common": {
+    "learnMore": "Gehiago jakin",
+    "viewAllStories": "Ipuin guztiak ikusi",
+    "seeAllStories": "Ipuin guztiak ikusi",
+    "errorLoading": "Errorea ipuinak kargatzerakoan",
+    "retryLoading": "Saiatu berriro",
+    "share": "Partekatu",
+    "shareNotSupported": "Partekatzea ez da onartzen nabigatzaile honetan"
+  },
+  "footer": {
+    "title": "IA Ipuin Sortzailea",
+    "description": "Sortu ipuin erakargarriak euskaraz inteligenzia artifizialarekin. Pertsonalizatu, sortu eta entzun zure ipuinak gure doako tresnarekin.",
+    "quickLinks": "Lotura Azkarrak",
+    "howItWorks": "Nola Funtzionatzen Duen",
+    "aboutUs": "Guri Buruz",
+    "terms": "Terminoak eta Baldintzak",
+    "privacy": "Pribatutasun Politika",
+    "copyright": "IA Ipuin Sortzailea. Eskubide guztiak erreserbatuta.",
+    "madeWith": "Egina",
+    "inBarcelona": "Bartzelonan",
+    "storyExamples": "Ipuin Adibideak",
+    "blog": "Bloga"
+  },
+  "audioPlayer": {
+    "title": "Ipuinaren Audioa",
+    "play": "Erreproduzitu",
+    "pause": "Pausatu",
+    "progress": "Audioaren aurrerapena",
+    "download": "Deskargatu",
+    "downloadFileName": "ipuin-audioa",
+    "loading": "Audioa kargatzen..."
+  },
+  "storyDisplay": {
+    "title": "Zure Ipuina",
+    "copyText": "Testua kopiatu",
+    "downloadText": "Testua deskargatu",
+    "shareText": "Testua partekatu",
+    "shareAudio": "Audioa partekatu",
+    "shareNotSupported": "Partekatzea ez da onartzen nabigatzaile honetan",
+    "copySuccess": "Testua arbelera kopiatuta",
+    "shareError": "Errorea partekatzerakoan",
+    "textOptions": "Testu aukerak",
+    "audioOptions": "Audio aukerak",
+    "generateAudio": "Audioa sortu",
+    "generatingAudio": "Audioa sortzen...",
+    "audioError": "Errorea audioa sortzerakoan",
+    "audioLimitReached": "4 audio sortze muga gainditu duzu",
+    "voiceType": "Ahots mota",
+    "voiceFemale": "Emakumezkoa (Espainia)",
+    "voiceMale": "Gizonezkoa (Espainia)",
+    "voiceFemaleLatam": "Emakumezkoa (Latinoamerika)",
+    "voiceMaleLatam": "Gizonezkoa (Latinoamerika)",
+    "voiceFemaleEnglish": "Emakumezkoa (Ingelesa)",
+    "voiceMaleEnglish": "Gizonezkoa (Ingelesa)",
+    "voiceFemaleCatalan": "Emakumezkoa (Katalana)",
+    "voiceMaleCatalan": "Gizonezkoa (Katalana)",
+    "voiceFemaleGalician": "Emakumezkoa (Galiziera)",
+    "voiceMaleGalician": "Gizonezkoa (Galiziera)",
+    "voiceFemaleBasque": "Emakumezkoa (Euskara)",
+    "voiceMaleBasque": "Gizonezkoa (Euskara)",
+    "voiceFemaleGerman": "Emakumezkoa (Alemana)",
+    "voiceMaleGerman": "Gizonezkoa (Alemana)",
+    "voiceFemaleItalian": "Emakumezkoa (Italiera)",
+    "voiceMaleItalian": "Gizonezkoa (Italiera)",
+    "voiceFemaleFrench": "Emakumezkoa (Frantsesa)",
+    "voiceMaleFrench": "Gizonezkoa (Frantsesa)",
+    "speechRate": "Hitz egiteko abiadura",
+    "speedVerySlow": "Oso motela",
+    "speedSlow": "Motela",
+    "speedNormal": "Normala",
+    "speedFast": "Azkarra",
+    "speedVeryFast": "Oso azkarra",
+    "backgroundMusic": "Atzeko musika",
+    "noMusic": "Musikarik gabe",
+    "randomMusic": "Musika ausazkoa",
+    "relaxingMusic": "Lasaitzailea",
+    "magicalMusic": "Magikoa",
+    "adventureMusic": "Abentura",
+    "bedtimeMusic": "Loa hartzeko",
+    "pianoMusic": "Pianoa",
+    "forestMusic": "Basoa",
+    "musicBoxMusic": "Musika kutxa",
+    "journeyMusic": "Bidaia"
+  },
+  "storyForm": {
+    "title": "Sortu Zure Ipuina",
+    "topicLabel": "Ipuinaren Gaia",
+    "topic": "Ipuinaren Gaia",
+    "topicPlaceholder": "Sartu zure ipuinaren gaia...",
+    "childNamesLabel": "Haurren Izenak (aukerazkoa)",
+    "childNames": "Haurren Izenak (aukerazkoa)",
+    "childNamesPlaceholder": "Sartu izenak koma batez bereizita...",
+    "englishLevelLabel": "Ingeles Maila",
+    "englishLevel": "Ingeles Maila",
+    "loginRequired": "Mesedez, saioa hasi ipuinak sortzeko",
+    "clickToLogin": "Egin klik hemen saioa hasteko",
+    "englishLevels": {
+      "beginner": "Hasiberria",
+      "intermediate": "Ertaina",
+      "advanced": "Aurreratua",
+      "native": "Jatorrizkoa"
+    },
+    "englishLevelBeginner": "Hasiberria",
+    "englishLevelIntermediate": "Ertaina",
+    "englishLevelAdvanced": "Aurreratua",
+    "lengthLabel": "Ipuinaren Iraupena",
+    "storyLength": "Ipuinaren Iraupena",
+    "lengths": {
+      "short": "Laburra",
+      "medium": "Ertaina",
+      "long": "Luzea"
+    },
+    "lengthShort": "Laburra",
+    "lengthMedium": "Ertaina",
+    "lengthLong": "Luzea",
+    "typeLabel": "Ipuin Mota",
+    "storyType": "Ipuin Mota",
+    "types": {
+      "original": "Jatorrizkoa",
+      "fairyTale": "Ipuin Magikoa",
+      "adventure": "Abentura",
+      "educational": "Hezigarria",
+      "classic": "Klasikoa",
+      "humor": "Umorea",
+      "sciFi": "Zientzia-fikzioa",
+      "horror": "Beldurra",
+      "fantasy": "Fantasia"
+    },
+    "typeOriginal": "Jatorrizkoa",
+    "typeClassic": "Klasikoa",
+    "typeHumor": "Umorea",
+    "typeSciFi": "Zientzia-fikzioa",
+    "typeHorror": "Beldurra",
+    "typeAdventure": "Abentura",
+    "typeFantasy": "Fantasia",
+    "ageGroupLabel": "Adin Taldea",
+    "ageGroup": "Adin Taldea",
+    "ageGroups": {
+      "default": "Lehenetsia",
+      "3to5": "3-5 urte",
+      "6to8": "6-8 urte",
+      "9to12": "9-12 urte"
+    },
+    "ageGroupDefault": "Lehenetsia",
+    "ageGroup3to5": "3-5 urte",
+    "ageGroup6to8": "6-8 urte",
+    "ageGroup9to12": "9-12 urte",
+    "creativityLevelLabel": "Sormen Maila",
+    "creativityLevel": "Sormen Maila",
+    "creativityLevels": {
+      "conservative": "Kontserbadorea",
+      "balanced": "Orekatua",
+      "innovative": "Berritzailea",
+      "standard": "Estándarra",
+      "creative": "Oso Sortzailea"
+    },
+    "creativityStandard": "Estándarra",
+    "creativityInnovative": "Berritzailea",
+    "creativityCreative": "Oso Sortzailea",
+    "generateButton": "Ipuina Sortu"
+  },
+  "login": {
+    "title": "Saioa hasi",
+    "subtitle": "Ongi etorri berriro",
+    "emailLabel": "Posta elektronikoa",
+    "emailPlaceholder": "Sartu zure posta elektronikoa",
+    "passwordLabel": "Pasahitza",
+    "passwordPlaceholder": "Sartu zure pasahitza",
+    "forgotPassword": "Pasahitza ahaztu duzu?",
+    "loginButton": "Saioa hasi",
+    "noAccount": "Ez duzu konturik?",
+    "register": "Erregistratu",
+    "signInWithGoogle": "Google-rekin saioa hasi",
+    "or": "edo",
+    "loading": "Prozesatzen..."
+  },
+  "register": {
+    "title": "Kontu bat sortu",
+    "subtitle": "Batu gure ipuin kontatzaileen komunitatera",
+    "freeStories": "🎁 3 ipuin doan erregistratzean",
+    "subscribeLater": "Geroago harpidetu zaitezke",
+    "or": "edo",
+    "emailLabel": "Posta elektronikoa",
+    "emailPlaceholder": "Sartu zure posta elektronikoa",
+    "passwordLabel": "Pasahitza",
+    "passwordPlaceholder": "Sartu zure pasahitza",
+    "confirmPasswordLabel": "Pasahitza berretsi",
+    "confirmPasswordPlaceholder": "Sartu zure pasahitza berriro",
+    "createAccount": "Kontua sortu",
+    "alreadyAccount": "Dagoeneko kontua duzu?",
+    "login": "Saioa hasi",
+    "signInWithGoogle": "Google-rekin erregistratu"
+  },
+  "terminos": {
+    "title": "Terminoak eta Baldintzak",
+    "introduccion": "Sarrera",
+    "introduccionTexto": "Ongi etorri Mi Cuentacuentos-era. Gure zerbitzua erabiltzean, termino eta baldintza hauek onartzen dituzu. Termino hauek gure ipuin pertsonalizatuen plataformaren erabilera arautzen dute.",
+    "uso": "Zerbitzuaren Erabilera",
+    "usoTexto": "Gure zerbitzua ipuin pertsonalizatuak sortzeko da. Zerbitzua erantzukizunez eta egile-eskubideak errespetatuz erabili behar duzu. Ez da baimenduta: 1) Eduki ilegal, iraingarri edo desegokiak sortzea. 2) Sistemaaren eremu mugatuei sartzen saiatzea. 3) Zure kontua besteekin partekatzea. 4) Zerbitzua komertzial helburuetarako erabiltzea baimenik gabe.",
+    "suscripcion": "Harpidetza eta Ordainketak",
+    "suscripcionTexto": "Doako eta ordaindutako planak eskaintzen ditugu. Harpidetzak automatikoki berritzen dira eta edozein unetan bertan behera utzi daitezke. Ordainketak modu seguruan prozesatzen dira Stripe bidez. Ez dugu kreditu-txartelen informazioa gordetzen. Doako planeko erabiltzaileek funtzio batzuetara sarbide mugatua dute. Premium planak funtzio guztietara sarbide mugagabea eskaintzen du.",
+    "propiedad": "Jabetza Intelektuala",
+    "propiedadTexto": "Sortutako ipuinak sortzen dituen erabiltzailearen jabetza dira. Mi Cuentacuentos-ek zerbitzua hobetzeko ipuinak modu anonimoan erabiltzeko eskubidea gordetzen du. Plataforma eta bere teknologia Mi Cuentacuentos-en jabetza esklusiboa dira. Ez da baimenduta kodea edo interfazea kopiatzea, aldatzeya edo banatzea baimenik gabe.",
+    "limitacion": "Erantzukizunaren Mugaketa",
+    "limitacionTexto": "Ez gara erabiltzaileek sortutako edukiaren edo zerbitzuaren erabileratik sortutako edozein kalteren erantzule. Zerbitzua 'dagoen bezala' ematen da, inolako bermerik gabe. Ez dugu zerbitzuaren jarraitasuna edo sortutako ipuinen zehaztasuna bermatzen.",
+    "contacto": "Kontaktua eta Laguntza",
+    "contactoTexto": "Termino hauei buruzko edozein galderarako, jarri gurekin harremanetan gure kontaktatzeko formularioaren bidez. Posta elektroniko bidezko laguntza eskaintzen dugu astelehenetik ostiralera 9:00etatik 18:00etara. Arazo tekniko premiazkoetarako, premium erabiltzaileek laguntza lehentasunezkoa dute."
+  },
+  "politica": {
+    "title": "Pribatutasun Politika",
+    "introduccion": "Sarrera",
+    "introduccionTexto": "Mi Cuentacuentos-en, gure erabiltzaileen pribatutasuna serio hartzen dugu. Politika honek zure datu pertsonalak nola kudeatzen ditugun eta gure ipuin sortzeko zerbitzua erabiltzen duzun bitartean zure pribatutasuna nola babesten dugun azaltzen du.",
+    "datos": "Biltzen Ditugun Datuak",
+    "datosTexto": "Honako informazioa biltzen dugu: 1) Erregistro datuak: izena, posta elektronikoa eta pasahitza (enkriptatuta). 2) Erabilera datuak: ipuin hobespenak, sortze historiala eta konfigurazioa. 3) Ordainketa datuak: modu seguruan prozesatuak Stripe bidez, txartel informazioa gordetzen gabe. 4) Cookie-ak: esperientzia hobetzeko eta gunearen erabilera analizatzeko.",
+    "usoDatos": "Datuen Erabilera",
+    "usoDatosTexto": "Zure datuak honetarako erabiltzen ditugu: 1) Zerbitzua emateko eta hobetzeko. 2) Zure esperientzia pertsonalizatzeko. 3) Ordainketak modu seguruan prozesatzeko. 4) Eguneratze garrantzitsuak bidaltzeko. 5) Laguntza kontsultak erantzuteko. Ez dugu zure datuak hirugarrekin partekatzen ordainketen prozesamendua edo legeak eskatzen duenean izan ezik.",
+    "seguridad": "Segurtasuna eta Babesa",
+    "seguridadTexto": "Segurtasun neurri sendoak inplementatzen ditugu: 1) Datu sentikorren enkriptazioa. 2) Autentifikazio segurua. 3) Sarbide ez baimenduaren aurkako babesa. 4) Segurtasun kopia erregularrak. 5) Segurtasun monitorizazio jarraitua. Ordainketa datuak soilik Stripe bidez prozesatzen dira, segurtasun estandarrik altuenak betez.",
+    "cookies": "Cookie-ak",
+    "cookiesTexto": "Cookie-ak honetarako erabiltzen ditugu: 1) Zure saioa aktibo mantentzeko. 2) Zure hobespenak gogoratzeko. 3) Gunearen erabilera analizatzeko. 4) Errendimendua hobetzeko. Zure cookie hobespenak edozein unetan kudeatu ditzakezu. Funtzio batzuk ez daude eskuragarri cookie ezinbestekoak desaktibatzen badituzu.",
+    "derechos": "Zure Eskubideak",
+    "derechosTexto": "Eskubidea duzu: 1) Zure datu pertsonaletara sartzeko. 2) Informazio okerra zuzentzeko. 3) Zure datuen ezabatzea eskatzeko. 4) Zure datuak formatu estandar batean esportatzeko. 5) Zure baimena edozein unetan kentzeko. Eskubide hauek gauzatzeko, jarri gurekin harremanetan gure kontaktatzeko formularioaren bidez."
+  },
+  "comFunciona": {
+    "title": "Nola Funtzionatzen Duen",
+    "paso1": {
+      "title": "1. Sortu zure ipuina",
+      "description": "Aukeratu gaia, adina, hizkuntza maila eta beste hobespen batzuk zure ipuina pertsonalizatzeko."
+    },
+    "paso2": {
+      "title": "2. Sortu istorioa",
+      "description": "Gure IA-k zure zehaztapenetan oinarritutako istorio bakarra eta pertsonalizatua sortzen du."
+    },
+    "paso3": {
+      "title": "3. Pertsonalizatu eta partekatu",
+      "description": "Gehitu izenak, egokitu edukia eta partekatu istorioa zure familiarekin."
+    },
+    "paso4": {
+      "title": "4. Gozatu audioaz",
+      "description": "Bihurtu zure istorioa audioan ahots eta atzeko musika desberdinekin."
+    }
+  },
+  "sobreNosaltres": {
+    "title": "Guri Buruz",
+    "mision": {
+      "title": "Gure Misioa",
+      "description": "Plataforma berritzailea sortzea gurasoei haien seme-alabentzat ipuin pertsonalizatu eta hezigarriak sortzen laguntzeko."
+    },
+    "vision": {
+      "title": "Gure Ikuspegia",
+      "description": "IA bidezko ipuin pertsonalizatuen sorreran plataforma liderra izatea, ikaskuntza eta entretenimendua haur guztientzat eskuragarri eginez."
+    },
+    "valors": {
+      "title": "Gure Baloreak",
+      "educacio": "Kalitatezko hezkuntza",
+      "innovacio": "Etengabeko berrikuntza",
+      "inclusio": "Inklusioa eta aniztasuna",
+      "seguretat": "Segurtasuna eta pribatutasuna"
+    },
+    "equip": {
+      "title": "Gure Taldea",
+      "description": "Teknologia eta hezkuntzaz apasionatutako talde bat gara, esperientzia bakarra sortzeko konprometituta familia bakoitzarentzat."
+    }
+  },
+  "contact": {
+    "title": "Kontaktua",
+    "form": {
+      "title": "Kontaktatzeko Formularioa",
+      "name": "Izena",
+      "namePlaceholder": "Sartu zure izena",
+      "email": "Posta elektronikoa",
+      "emailPlaceholder": "Sartu zure posta elektronikoa",
+      "subject": "Gaia",
+      "subjectPlaceholder": "Sartu gaia",
+      "message": "Mezua",
+      "messagePlaceholder": "Idatzi zure mezua hemen...",
+      "submit": "Bidali",
+      "sending": "Bidaltzen...",
+      "success": "Mezua arrakastaz bidalita",
+      "error": "Errorea mezua bidaltzerakoan"
+    },
+    "info": {
+      "title": "Kontaktu Informazioa",
+      "email": "Posta elektronikoa",
+      "emailValue": "hola@micuentacuentos.com",
+      "phone": "Telefonoa",
+      "phoneValue": "+34 900 000 000",
+      "address": "Helbidea",
+      "addressValue": "Carrer de l'Exemple, 123, 08001 Barcelona",
+      "hours": "Arreta orduak",
+      "hoursValue": "Astelehenetik Ostiralera: 9:00 - 18:00"
+    },
+    "social": {
+      "title": "Jarraitzaiguzu",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "navbar": {
+    "home": "Hasiera",
+    "contact": "Kontaktua",
+    "login": "Saioa Hasi",
+    "register": "Erregistratu",
+    "logout": "Saioa Itxi",
+    "languages": {
+      "en": "Ingelesa",
+      "es": "Gaztelania",
+      "ca": "Katalana",
+      "fr": "Frantsesa",
+      "it": "Italiera",
+      "de": "Alemana",
+      "gl": "Galiziera",
+      "eu": "Euskara",
+      "pt": "Portugesa"
+    }
+  },
+  "alertTopicRequired": "Idatzi hemen zure ipuinaren gaia"
+} 

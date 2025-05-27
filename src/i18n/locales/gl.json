@@ -1,0 +1,442 @@
+{
+  "subscription": {
+    "title": "Subscrición Premium",
+    "planTitle": "Plan Premium",
+    "premium": {
+      "title": "Plan Premium",
+      "features": {
+        "0": "30 contos ao mes",
+        "1": "Contos ilimitados",
+        "2": "Cancela cando queiras",
+        "3": "Acceso a todas as funcionalidades",
+        "4": "Soporte prioritario"
+      }
+    },
+    "planDescription": "Desbloquea todas as funcionalidades co noso plan premium",
+    "features": {
+      "stories": "30 contos ao mes",
+      "unlimited": "Contos ilimitados",
+      "cancel": "Cancela cando queiras"
+    },
+    "subscribe": "Subscríbete por 5€/mes",
+    "processing": "Procesando...",
+    "alreadySubscribed": "Xa estás subscrito!",
+    "redirecting": "Redirixindo...",
+    "cancelNote": "Podes cancelar a túa subscrición en calquera momento desde o teu perfil, accesible a través do menú superior.",
+    "cancelInfo": "A túa subscrición permanecerá activa ata o final do período de facturación actual",
+    "subscribeButton": "Plan Premium"
+  },
+  "profile": {
+    "title": "O Meu Perfil",
+    "name": "Nome",
+    "email": "Correo electrónico",
+    "subscriptionStatus": "Estado da Subscrición",
+    "subscriptionFree": "Plan Gratuíto",
+    "subscriptionActive": "Plan Premium Activo",
+    "subscriptionCancelled": "Subscrición Cancelada",
+    "cancelSubscription": "Cancelar Subscrición",
+    "cancelling": "Cancelando...",
+    "subscriptionCancelled": "Subscrición cancelada con éxito",
+    "cancelError": "Erro ao cancelar a subscrición",
+    "noActiveSubscription": "Non tes unha subscrición activa",
+    "storiesRemaining": "Contos Disponibles",
+    "storiesRemainingOf": "de",
+    "loading": "Cargando...",
+    "error": "Produciuse un erro",
+    "premiumInfo": "Subscríbete ao plan Premium para xerar ata 30 contos ao mes",
+    "learnMore": "Máis información"
+  },
+  "storyExamples": {
+    "title": "Exemplos de Contos Personalizados",
+    "description": "Explora a nosa colección de contos de exemplo xerados por Mi Cuentacuentos para todas as idades e niveis de idioma.",
+    "viewStory": "Ver Conto",
+    "noResults": "Non se atoparon contos cos filtros seleccionados.",
+    "filters": {
+      "title": "Filtrar por:",
+      "age": "Idade",
+      "language": "Idioma",
+      "level": "Nivel"
+    },
+    "ageGroups": {
+      "all": "Todas as idades",
+      "3to5": "3-5 anos",
+      "6to8": "6-8 anos",
+      "9to12": "9-12 anos"
+    },
+    "languages": {
+      "all": "Todos os idiomas",
+      "spanish": "Español",
+      "english": "Inglés",
+      "catalan": "Catalán",
+      "german": "Alemán",
+      "italian": "Italiano",
+      "french": "Francés",
+      "galician": "Galego",
+      "basque": "Euskera"
+    },
+    "levels": {
+      "all": "Todos os niveis",
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "storyCard": {
+      "recommendedAge": "Idade recomendada:",
+      "language": "Idioma:",
+      "level": "Nivel:",
+      "readStory": "Ler conto",
+      "listenAudio": "Escoitar audio",
+      "usingMockContent": "Usando contido de exemplo",
+      "protagonist": "Protagonista"
+    },
+    "mockContent": {
+      "badge": "Exemplo",
+      "explanation": "Este é un contido de exemplo. O contido real cargarase desde Firebase cando estea dispoñible."
+    },
+    "audioNotAvailable": "O audio non está dispoñible para este conto.",
+    "stories": {
+      "vainCaterpillar": "A Eiruga Vaidosa",
+      "definitiveMatch": "O Partido Decisivo",
+      "friendlyGhost": "O Pantasma Amigable",
+      "snowWhite": "Brancaneves",
+      "enchantedForest": "O Bosque Encantado",
+      "amaral": "Amaral"
+    }
+  },
+  "homepage": {
+    "heroTitle": "Crea Contos Máxicos para os teus Nenos",
+    "heroDescription": "Transforma as túas ideas en contos únicos co noso xerador de contos impulsado por IA",
+    "featuresTitle": "Por que escollernos?",
+    "uniqueStoriesTitle": "Contos Únicos",
+    "uniqueStoriesDescription": "Cada conto é único e personalizado para o teu fillo",
+    "multipleGenresTitle": "Múltiples Xéneros",
+    "multipleGenresDescription": "Escolle entre varios xéneros que coincidan cos intereses do teu fillo",
+    "audioConversionTitle": "Conversión a Audio",
+    "audioConversionDescription": "Converte os teus contos en audio de alta calidade",
+    "languageLevelsTitle": "Niveis de Idioma Adaptados",
+    "languageLevelsDescription": "Contos adaptados a diferentes niveis de dominio do idioma, desde principiante ata avanzado",
+    "storyExamples": {
+      "title": "Explora os Nosos Contos",
+      "description": "Descobre a nosa colección de contos de exemplo para todas as idades"
+    }
+  },
+  "common": {
+    "learnMore": "Máis información",
+    "viewAllStories": "Ver todos os contos",
+    "seeAllStories": "Ver todos os contos",
+    "errorLoading": "Erro ao cargar os contos",
+    "retryLoading": "Tentar de novo",
+    "share": "Compartir",
+    "shareNotSupported": "A compartición non está soportada neste navegador"
+  },
+  "footer": {
+    "title": "Xerador de Contos con IA",
+    "description": "Crea contos atractivos en galego con intelixencia artificial. Personaliza, xera e escoita os teus contos coa nosa ferramenta gratuíta.",
+    "quickLinks": "Ligazóns Rápidas",
+    "howItWorks": "Como Funciona",
+    "aboutUs": "Sobre Nós",
+    "terms": "Termos e Condicións",
+    "privacy": "Política de Privacidade",
+    "copyright": "Xerador de Contos con IA. Todos os dereitos reservados.",
+    "madeWith": "Feito con",
+    "inBarcelona": "en Barcelona",
+    "storyExamples": "Exemplos de Contos",
+    "blog": "Blog"
+  },
+  "audioPlayer": {
+    "title": "Audio do Conto",
+    "play": "Reproducir",
+    "pause": "Pausa",
+    "progress": "Progreso do audio",
+    "download": "Descargar",
+    "downloadFileName": "conto-audio",
+    "loading": "Cargando audio..."
+  },
+  "storyDisplay": {
+    "title": "O teu Conto",
+    "copyText": "Copiar texto",
+    "downloadText": "Descargar texto",
+    "shareText": "Compartir texto",
+    "shareAudio": "Compartir audio",
+    "shareNotSupported": "A compartición non está soportada neste navegador",
+    "copySuccess": "Texto copiado ao portapapeis",
+    "shareError": "Erro ao compartir",
+    "textOptions": "Opcións de texto",
+    "audioOptions": "Opcións de audio",
+    "generateAudio": "Xerar audio",
+    "generatingAudio": "Xerando audio...",
+    "audioError": "Erro ao xerar o audio",
+    "audioLimitReached": "Alcanzaches o límite de 4 xeracións de audio",
+    "voiceType": "Tipo de voz",
+    "voiceFemale": "Feminina (España)",
+    "voiceMale": "Masculina (España)",
+    "voiceFemaleLatam": "Feminina (América Latina)",
+    "voiceMaleLatam": "Masculina (América Latina)",
+    "voiceFemaleEnglish": "Feminina (Inglés)",
+    "voiceMaleEnglish": "Masculina (Inglés)",
+    "voiceFemaleCatalan": "Feminina (Catalán)",
+    "voiceMaleCatalan": "Masculina (Catalán)",
+    "voiceFemaleGalician": "Feminina (Galego)",
+    "voiceMaleGalician": "Masculina (Galego)",
+    "voiceFemaleBasque": "Feminina (Euskera)",
+    "voiceMaleBasque": "Masculina (Euskera)",
+    "voiceFemaleGerman": "Feminina (Alemán)",
+    "voiceMaleGerman": "Masculina (Alemán)",
+    "voiceFemaleItalian": "Feminina (Italiano)",
+    "voiceMaleItalian": "Masculina (Italiano)",
+    "voiceFemaleFrench": "Feminina (Francés)",
+    "voiceMaleFrench": "Masculina (Francés)",
+    "speechRate": "Velocidade da fala",
+    "speedVerySlow": "Moi lenta",
+    "speedSlow": "Lenta",
+    "speedNormal": "Normal",
+    "speedFast": "Rápida",
+    "speedVeryFast": "Moi rápida",
+    "backgroundMusic": "Música de fondo",
+    "noMusic": "Sen música",
+    "randomMusic": "Música aleatoria",
+    "relaxingMusic": "Relaxante",
+    "magicalMusic": "Máxica",
+    "adventureMusic": "Aventura",
+    "bedtimeMusic": "Para durmir",
+    "pianoMusic": "Piano",
+    "forestMusic": "Bosque",
+    "musicBoxMusic": "Caixa de música",
+    "journeyMusic": "Viaxe"
+  },
+  "storyForm": {
+    "title": "Crea o Teu Conto",
+    "topicLabel": "Tema do Conto",
+    "topic": "Tema do Conto",
+    "topicPlaceholder": "Introduce un tema para o teu conto...",
+    "childNamesLabel": "Nomes dos Nenos (opcional)",
+    "childNames": "Nomes dos Nenos (opcional)",
+    "childNamesPlaceholder": "Introduce nomes separados por comas...",
+    "englishLevelLabel": "Nivel de Inglés",
+    "englishLevel": "Nivel de Inglés",
+    "loginRequired": "Por favor, inicia sesión para xerar contos",
+    "clickToLogin": "Fai clic aquí para iniciar sesión",
+    "englishLevels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "native": "Nativo"
+    },
+    "englishLevelBeginner": "Principiante",
+    "englishLevelIntermediate": "Intermedio",
+    "englishLevelAdvanced": "Avanzado",
+    "lengthLabel": "Duración do Conto",
+    "storyLength": "Duración do Conto",
+    "lengths": {
+      "short": "Curto",
+      "medium": "Medio",
+      "long": "Longo"
+    },
+    "lengthShort": "Curto",
+    "lengthMedium": "Medio",
+    "lengthLong": "Longo",
+    "typeLabel": "Tipo de Conto",
+    "storyType": "Tipo de Conto",
+    "types": {
+      "original": "Orixinal",
+      "fairyTale": "Conto de Fadas",
+      "adventure": "Aventura",
+      "educational": "Educativo",
+      "classic": "Clásico",
+      "humor": "Humor",
+      "sciFi": "Ciencia-ficción",
+      "horror": "Terror",
+      "fantasy": "Fantasia"
+    },
+    "typeOriginal": "Orixinal",
+    "typeClassic": "Clásico",
+    "typeHumor": "Humor",
+    "typeSciFi": "Ciencia-ficción",
+    "typeHorror": "Terror",
+    "typeAdventure": "Aventura",
+    "typeFantasy": "Fantasia",
+    "ageGroupLabel": "Grupo de Idade",
+    "ageGroup": "Grupo de Idade",
+    "ageGroups": {
+      "default": "Por Defecto",
+      "3to5": "3-5 anos",
+      "6to8": "6-8 anos",
+      "9to12": "9-12 anos"
+    },
+    "ageGroupDefault": "Por Defecto",
+    "ageGroup3to5": "3-5 anos",
+    "ageGroup6to8": "6-8 anos",
+    "ageGroup9to12": "9-12 anos",
+    "creativityLevelLabel": "Nivel de Creatividade",
+    "creativityLevel": "Nivel de Creatividade",
+    "creativityLevels": {
+      "conservative": "Conservador",
+      "balanced": "Equilibrado",
+      "innovative": "Innovador",
+      "standard": "Estándar",
+      "creative": "Moi Creativo"
+    },
+    "creativityStandard": "Estándar",
+    "creativityInnovative": "Innovador",
+    "creativityCreative": "Moi Creativo",
+    "generateButton": "Xerar Conto"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Benvido de novo",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "Introduce o teu correo electrónico",
+    "passwordLabel": "Contrasinal",
+    "passwordPlaceholder": "Introduce o teu contrasinal",
+    "forgotPassword": "Esqueceches o contrasinal?",
+    "loginButton": "Iniciar sesión",
+    "noAccount": "Non tes conta?",
+    "register": "Rexistrarse",
+    "signInWithGoogle": "Iniciar sesión con Google",
+    "or": "ou",
+    "loading": "Procesando..."
+  },
+  "register": {
+    "title": "Crear unha conta",
+    "subtitle": "Únete á nosa comunidade de contacontos",
+    "freeStories": "🎁 3 contos gratuítos ao rexistrarte",
+    "subscribeLater": "Podes subscríbete máis tarde",
+    "or": "ou",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "Introduce o teu correo electrónico",
+    "passwordLabel": "Contrasinal",
+    "passwordPlaceholder": "Introduce o teu contrasinal",
+    "confirmPasswordLabel": "Confirmar contrasinal",
+    "confirmPasswordPlaceholder": "Volve a introducir o teu contrasinal",
+    "createAccount": "Crear conta",
+    "alreadyAccount": "Xa tes conta?",
+    "login": "Iniciar sesión",
+    "signInWithGoogle": "Rexistrarse con Google"
+  },
+  "terminos": {
+    "title": "Termos e Condicións",
+    "introduccion": "Introdución",
+    "introduccionTexto": "Benvido a Mi Cuentacuentos. Ao acceder e utilizar o noso servizo, aceptas estes termos e condicións. Estes termos rexen o teu uso da nosa plataforma de xeración de contos personalizados.",
+    "uso": "Uso do Servizo",
+    "usoTexto": "O noso servizo está destinado a xerar contos personalizados. Debes utilizar o servizo de maneira responsable e respectando os dereitos de autor. Non está permitido: 1) Xerar contido ilegal, ofensivo ou inadecuado. 2) Intentar acceder a áreas restrinxidas do sistema. 3) Compartir a túa conta con terceiros. 4) Utilizar o servizo para fins comerciais sen autorización.",
+    "suscripcion": "Subscrición e Pagamentos",
+    "suscripcionTexto": "Ofrecemos plans gratuítos e de pago. As subscricións renóvanse automaticamente e poden cancelarse en calquera momento. Os pagamentos procésanse de forma segura a través de Stripe. Non almacenamos información de tarxetas de crédito. Os usuarios do plan gratuíto teñen acceso limitado a certas funcións. O plan premium ofrece acceso ilimitado a todas as funcións.",
+    "propiedad": "Propiedade Intelectual",
+    "propiedadTexto": "Os contos xerados son propiedade do usuario que os crea. Mi Cuentacuentos resérvase o dereito de utilizar os contos de forma anónima para mellorar o servizo. A plataforma e a súa tecnoloxía son propiedade exclusiva de Mi Cuentacuentos. Non está permitido copiar, modificar ou distribuir o código ou a interface sen autorización.",
+    "limitacion": "Limitación de Responsabilidade",
+    "limitacionTexto": "Non somos responsables do contido xerado polos usuarios nin de calquera dano resultante do uso do servizo. O servizo proporcionase 'tal cal' sen garantías de ningún tipo. Non garantimos a dispoñibilidade continua do servizo nin a precisión dos contos xerados.",
+    "contacto": "Contacto e Soporte",
+    "contactoTexto": "Para calquera pregunta sobre estes termos, contáctanos a través do noso formulario de contacto. Ofrecemos soporte por correo electrónico de luns a venres de 9:00 a 18:00. Para problemas técnicos urxentes, os usuarios premium teñen acceso a soporte prioritario."
+  },
+  "politica": {
+    "title": "Política de Privacidade",
+    "introduccion": "Introdución",
+    "introduccionTexto": "En Mi Cuentacuentos, tomamos moi en serio a privacidade dos nosos usuarios. Esta política explica como xestionamos os teus datos persoais e como protexemos a túa privacidade mentres utilizas o noso servizo de xeración de contos.",
+    "datos": "Datos que Recopilamos",
+    "datosTexto": "Recopilamos a seguinte información: 1) Datos de rexistro: nome, correo electrónico e contrasinal (encriptado). 2) Datos de uso: preferencias de contos, historial de xeración e configuración. 3) Datos de pagamento: procesados de forma segura por Stripe, sen almacenar información de tarxetas. 4) Cookies: para mellorar a experiencia e analizar o uso do sitio.",
+    "usoDatos": "Uso de Datos",
+    "usoDatosTexto": "Utilizamos os teus datos para: 1) Proporcionar e mellorar o servizo. 2) Personalizar a túa experiencia. 3) Procesar pagamentos de forma segura. 4) Enviar actualizacións importantes. 5) Responder a consultas de soporte. Non compartimos os teus datos con terceiros excepto para o procesamento de pagamentos ou cando o requira a lei.",
+    "seguridad": "Seguridade e Protección",
+    "seguridadTexto": "Implementamos medidas de seguridade robustas: 1) Encriptación de datos sensibles. 2) Autenticación segura. 3) Protección contra acceso non autorizado. 4) Copias de seguridade regulares. 5) Monitoraxe continua de seguridade. Os datos de pagamento procésanse exclusivamente a través de Stripe, cumprindo cos máis altos estándares de seguridade.",
+    "cookies": "Cookies",
+    "cookiesTexto": "Utilizamos cookies para: 1) Manter a túa sesión activa. 2) Recordar as túas preferencias. 3) Analizar o uso do sitio. 4) Mellorar o rendemento. Podes xestionar as túas preferencias de cookies en calquera momento. Algunhas funcións poden non estar dispoñibles se desactivas as cookies esenciais.",
+    "derechos": "Os Teus Dereitos",
+    "derechosTexto": "Tes dereito a: 1) Acceder aos teus datos persoais. 2) Corrixir información inexacta. 3) Solicitar a eliminación dos teus datos. 4) Exportar os teus datos nun formato estándar. 5) Retirar o teu consentimento en calquera momento. Para exercer estes dereitos, contáctanos a través do noso formulario de contacto."
+  },
+  "comFunciona": {
+    "title": "Como Funciona",
+    "paso1": {
+      "title": "1. Crea o teu conto",
+      "description": "Selecciona o tema, a idade, o nivel de idioma e outras preferencias para personalizar o teu conto."
+    },
+    "paso2": {
+      "title": "2. Xera a historia",
+      "description": "A nosa IA crea unha historia única e personalizada baseada nas túas especificacións."
+    },
+    "paso3": {
+      "title": "3. Personaliza e comparte",
+      "description": "Engade nomes, axusta o contido e comparte a historia coa túa familia."
+    },
+    "paso4": {
+      "title": "4. Goza do audio",
+      "description": "Converte a túa historia en audio con diferentes voces e música de fondo."
+    }
+  },
+  "sobreNosaltres": {
+    "title": "Sobre Nós",
+    "mision": {
+      "title": "A Nosa Misión",
+      "description": "Crear unha plataforma innovadora que axude aos pais a crear contos personalizados e educativos para os seus fillos."
+    },
+    "vision": {
+      "title": "A Nosa Visión",
+      "description": "Ser a plataforma líder na creación de contos personalizados con IA, facendo a aprendizaxe e a diversión accesibles para todos os nenos."
+    },
+    "valors": {
+      "title": "Os Nosos Valores",
+      "educacio": "Educación de calidade",
+      "innovacio": "Innovación constante",
+      "inclusio": "Inclusión e diversidade",
+      "seguretat": "Seguridade e privacidade"
+    },
+    "equip": {
+      "title": "O Noso Equipo",
+      "description": "Somos un equipo de apaixonados pola tecnoloxía e a educación, comprometidos a crear unha experiencia única para cada familia."
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "form": {
+      "title": "Formulario de Contacto",
+      "name": "Nome",
+      "namePlaceholder": "Introduce o teu nome",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Introduce o teu correo electrónico",
+      "subject": "Asunto",
+      "subjectPlaceholder": "Introduce o asunto",
+      "message": "Mensaxe",
+      "messagePlaceholder": "Escribe a túa mensaxe aquí...",
+      "submit": "Enviar",
+      "sending": "Enviando...",
+      "success": "Mensaxe enviada con éxito",
+      "error": "Erro ao enviar a mensaxe"
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Correo electrónico",
+      "emailValue": "hola@micuentacuentos.com",
+      "phone": "Teléfono",
+      "phoneValue": "+34 900 000 000",
+      "address": "Enderezo",
+      "addressValue": "Carrer de l'Exemple, 123, 08001 Barcelona",
+      "hours": "Horario de atención",
+      "hoursValue": "Luns a Venres: 9:00 - 18:00"
+    },
+    "social": {
+      "title": "Síguenos",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "register": "Rexistrarse",
+    "logout": "Pechar Sesión",
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "ca": "Catalán",
+      "fr": "Francés",
+      "it": "Italiano",
+      "de": "Alemán",
+      "gl": "Galego",
+      "eu": "Euskera",
+      "pt": "Portugués"
+    }
+  },
+  "alertTopicRequired": "Escribe aquí o tema do teu conto"
+} 

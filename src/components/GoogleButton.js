@@ -4,7 +4,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import './GoogleButton.css';
 
 const GoogleButton = ({ onSuccess, onError, useOneTap = false, type = 'login' }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="google-button-container">
@@ -15,7 +15,8 @@ const GoogleButton = ({ onSuccess, onError, useOneTap = false, type = 'login' })
         text={t(`${type}.signInWithGoogle`)}
         shape="rectangular"
         theme="filled_blue"
-        locale={t('common.language')}
+        locale={i18n.language}
+        ux_mode="popup"
       />
     </div>
   );

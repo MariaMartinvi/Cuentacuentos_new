@@ -2,6 +2,17 @@
   "subscription": {
     "title": "Abbonamento Premium",
     "planTitle": "Piano Premium",
+    "premium": {
+      "title": "Piano Premium",
+      "features": {
+        "0": "30 storie al mese",
+        "1": "Storie illimitate",
+        "2": "Annulla quando vuoi",
+        "3": "Accesso a tutte le funzionalità",
+        "4": "Supporto prioritario"
+      }
+    },
+    "planDescription": "Sblocca tutte le funzionalità con il nostro piano premium",
     "features": {
       "stories": "30 storie al mese",
       "unlimited": "Storie illimitate",
@@ -12,6 +23,7 @@
     "alreadySubscribed": "Sei già abbonato!",
     "redirecting": "Reindirizzamento in corso...",
     "cancelNote": "Puoi annullare il tuo abbonamento in qualsiasi momento dal tuo profilo, accessibile attraverso il menu in alto.",
+    "cancelInfo": "Il tuo abbonamento rimarrà attivo fino alla fine del periodo di fatturazione corrente",
     "subscribeButton": "Piano Premium"
   },
   "profile": {
@@ -31,7 +43,6 @@
     "storiesRemainingOf": "di",
     "loading": "Caricamento...",
     "error": "Si è verificato un errore",
-    "cancelInfo": "Il tuo abbonamento rimarrà attivo fino alla fine del periodo di fatturazione corrente",
     "premiumInfo": "Abbonati al piano Premium per generare fino a 30 storie al mese",
     "learnMore": "Scopri di più"
   },
@@ -161,6 +172,18 @@
     "voiceMaleLatam": "Maschile (America Latina)",
     "voiceFemaleEnglish": "Femminile (Inglese)",
     "voiceMaleEnglish": "Maschile (Inglese)",
+    "voiceFemaleCatalan": "Femminile (Catalano)",
+    "voiceMaleCatalan": "Maschile (Catalano)",
+    "voiceFemaleGalician": "Femminile (Galiziano)",
+    "voiceMaleGalician": "Maschile (Galiziano)",
+    "voiceFemaleBasque": "Femminile (Basco)",
+    "voiceMaleBasque": "Maschile (Basco)",
+    "voiceFemaleGerman": "Femminile (Tedesco)",
+    "voiceMaleGerman": "Maschile (Tedesco)",
+    "voiceFemaleItalian": "Femminile (Italiano)",
+    "voiceMaleItalian": "Maschile (Italiano)",
+    "voiceFemaleFrench": "Femminile (Francese)",
+    "voiceMaleFrench": "Maschile (Francese)",
     "speechRate": "Velocità del parlato",
     "speedVerySlow": "Molto lenta",
     "speedSlow": "Lenta",
@@ -186,9 +209,11 @@
     "topicPlaceholder": "Inserisci un tema per la tua storia...",
     "childNamesLabel": "Nomi dei Bambini (opzionale)",
     "childNames": "Nomi dei Bambini (opzionale)",
-    "childNamesPlaceholder": "Inserisci i nomi separati da virgole...",
+    "childNamesPlaceholder": "Inserisci nomi separati da virgole...",
     "englishLevelLabel": "Livello di Inglese",
     "englishLevel": "Livello di Inglese",
+    "loginRequired": "Per favore, accedi per generare storie",
+    "clickToLogin": "Clicca qui per accedere",
     "englishLevels": {
       "beginner": "Principiante",
       "intermediate": "Intermedio",
@@ -252,7 +277,8 @@
     "creativityStandard": "Standard",
     "creativityInnovative": "Innovativo",
     "creativityCreative": "Molto Creativo",
-    "generateButton": "Genera Storia"
+    "generateButton": "Genera Storia",
+    "alertTopicRequired": "Scrivi qui il tema della tua storia"
   },
   "login": {
     "title": "Accedi",
@@ -266,7 +292,8 @@
     "noAccount": "Non hai un account?",
     "register": "Registrati",
     "signInWithGoogle": "Accedi con Google",
-    "or": "oppure"
+    "or": "o",
+    "loading": "Elaborazione in corso..."
   },
   "register": {
     "title": "Crea un account",
@@ -284,5 +311,112 @@
     "alreadyAccount": "Hai già un account?",
     "login": "Accedi",
     "signInWithGoogle": "Registrati con Google"
+  },
+  "terminos": {
+    "title": "Termini e Condizioni",
+    "introduccion": "Introduzione",
+    "introduccionTexto": "Benvenuto su Mi Cuentacuentos. Accedendo e utilizzando il nostro servizio, accetti questi termini e condizioni. Questi termini regolano il tuo utilizzo della nostra piattaforma di generazione di storie personalizzate.",
+    "uso": "Utilizzo del Servizio",
+    "usoTexto": "Il nostro servizio è destinato a generare storie personalizzate. Devi utilizzare il servizio in modo responsabile e rispettando i diritti d'autore. Non è consentito: 1) Generare contenuti illegali, offensivi o inappropriati. 2) Tentare di accedere ad aree riservate del sistema. 3) Condividere il tuo account con terzi. 4) Utilizzare il servizio per scopi commerciali senza autorizzazione.",
+    "suscripcion": "Abbonamento e Pagamenti",
+    "suscripcionTexto": "Offriamo piani gratuiti e a pagamento. Gli abbonamenti si rinnovano automaticamente e possono essere cancellati in qualsiasi momento. I pagamenti vengono elaborati in modo sicuro tramite Stripe. Non memorizziamo informazioni sulle carte di credito. Gli utenti del piano gratuito hanno accesso limitato a determinate funzioni. Il piano premium offre accesso illimitato a tutte le funzioni.",
+    "propiedad": "Proprietà Intellettuale",
+    "propiedadTexto": "Le storie generate sono di proprietà dell'utente che le crea. Mi Cuentacuentos si riserva il diritto di utilizzare le storie in forma anonima per migliorare il servizio. La piattaforma e la sua tecnologia sono di esclusiva proprietà di Mi Cuentacuentos. Non è consentito copiare, modificare o distribuire il codice o l'interfaccia senza autorizzazione.",
+    "limitacion": "Limitazione di Responsabilità",
+    "limitacionTexto": "Non siamo responsabili dei contenuti generati dagli utenti né di eventuali danni derivanti dall'utilizzo del servizio. Il servizio viene fornito 'così com'è' senza garanzie di alcun tipo. Non garantiamo la disponibilità continua del servizio né l'accuratezza delle storie generate.",
+    "contacto": "Contatto e Supporto",
+    "contactoTexto": "Per qualsiasi domanda su questi termini, contattaci tramite il nostro modulo di contatto. Offriamo supporto via email dal lunedì al venerdì dalle 9:00 alle 18:00. Per problemi tecnici urgenti, gli utenti premium hanno accesso al supporto prioritario."
+  },
+  "politica": {
+    "title": "Politica sulla Privacy",
+    "introduccion": "Introduzione",
+    "introduccionTexto": "In Mi Cuentacuentos, prendiamo molto sul serio la privacy dei nostri utenti. Questa politica spiega come gestiamo i tuoi dati personali e come proteggiamo la tua privacy mentre utilizzi il nostro servizio di generazione di storie.",
+    "datos": "Dati che Raccogliamo",
+    "datosTexto": "Raccogliamo le seguenti informazioni: 1) Dati di registrazione: nome, email e password (crittografata). 2) Dati di utilizzo: preferenze delle storie, cronologia di generazione e impostazioni. 3) Dati di pagamento: elaborati in modo sicuro tramite Stripe, senza memorizzare informazioni sulle carte. 4) Cookie: per migliorare l'esperienza e analizzare l'utilizzo del sito.",
+    "usoDatos": "Utilizzo dei Dati",
+    "usoDatosTexto": "Utilizziamo i tuoi dati per: 1) Fornire e migliorare il servizio. 2) Personalizzare la tua esperienza. 3) Elaborare i pagamenti in modo sicuro. 4) Inviare aggiornamenti importanti. 5) Rispondere alle richieste di supporto. Non condividiamo i tuoi dati con terzi, tranne che per l'elaborazione dei pagamenti o quando richiesto dalla legge.",
+    "seguridad": "Sicurezza e Protezione",
+    "seguridadTexto": "Implementiamo misure di sicurezza robuste: 1) Crittografia dei dati sensibili. 2) Autenticazione sicura. 3) Protezione contro accessi non autorizzati. 4) Backup regolari. 5) Monitoraggio continuo della sicurezza. I dati di pagamento vengono elaborati esclusivamente tramite Stripe, rispettando i più alti standard di sicurezza.",
+    "cookies": "Cookie",
+    "cookiesTexto": "Utilizziamo i cookie per: 1) Mantenere attiva la tua sessione. 2) Ricordare le tue preferenze. 3) Analizzare l'utilizzo del sito. 4) Migliorare le prestazioni. Puoi gestire le tue preferenze sui cookie in qualsiasi momento. Alcune funzioni potrebbero non essere disponibili se disattivi i cookie essenziali.",
+    "derechos": "I Tuoi Diritti",
+    "derechosTexto": "Hai il diritto di: 1) Accedere ai tuoi dati personali. 2) Correggere informazioni inaccurate. 3) Richiedere la cancellazione dei tuoi dati. 4) Esportare i tuoi dati in un formato standard. 5) Ritirare il tuo consenso in qualsiasi momento. Per esercitare questi diritti, contattaci tramite il nostro modulo di contatto."
+  },
+  "comFunciona": {
+    "title": "Come Funziona",
+    "paso1": {
+      "title": "1. Crea la tua storia",
+      "description": "Seleziona il tema, l'età, il livello linguistico e altre preferenze per personalizzare la tua storia."
+    },
+    "paso2": {
+      "title": "2. Genera la storia",
+      "description": "La nostra IA crea una storia unica e personalizzata basata sulle tue specifiche."
+    },
+    "paso3": {
+      "title": "3. Personalizza e condividi",
+      "description": "Aggiungi nomi, modifica il contenuto e condividi la storia con la tua famiglia."
+    },
+    "paso4": {
+      "title": "4. Goditi l'audio",
+      "description": "Converti la tua storia in audio con diverse voci e musica di sottofondo."
+    }
+  },
+  "sobreNosaltres": {
+    "title": "Chi Siamo",
+    "mision": {
+      "title": "La Nostra Missione",
+      "description": "Creare una piattaforma innovativa che aiuti i genitori a creare storie personalizzate ed educative per i loro bambini."
+    },
+    "vision": {
+      "title": "La Nostra Visione",
+      "description": "Essere la piattaforma leader nella creazione di storie personalizzate con IA, rendendo l'apprendimento e il divertimento accessibili a tutti i bambini."
+    },
+    "valors": {
+      "title": "I Nostri Valori",
+      "educacio": "Educazione di qualità",
+      "innovacio": "Innovazione costante",
+      "inclusio": "Inclusione e diversità",
+      "seguretat": "Sicurezza e privacy"
+    },
+    "equip": {
+      "title": "Il Nostro Team",
+      "description": "Siamo un team di appassionati di tecnologia ed educazione, impegnati a creare un'esperienza unica per ogni famiglia."
+    }
+  },
+  "contact": {
+    "title": "Contatti",
+    "form": {
+      "title": "Modulo di Contatto",
+      "name": "Nome",
+      "namePlaceholder": "Inserisci il tuo nome",
+      "email": "Email",
+      "emailPlaceholder": "Inserisci la tua email",
+      "subject": "Oggetto",
+      "subjectPlaceholder": "Inserisci l'oggetto",
+      "message": "Messaggio",
+      "messagePlaceholder": "Scrivi il tuo messaggio qui...",
+      "submit": "Invia",
+      "sending": "Invio in corso...",
+      "success": "Messaggio inviato con successo",
+      "error": "Errore nell'invio del messaggio"
+    },
+    "info": {
+      "title": "Informazioni di Contatto",
+      "email": "Email",
+      "emailValue": "hola@micuentacuentos.com",
+      "phone": "Telefono",
+      "phoneValue": "+34 900 000 000",
+      "address": "Indirizzo",
+      "addressValue": "Carrer de l'Exemple, 123, 08001 Barcelona",
+      "hours": "Orari di Apertura",
+      "hoursValue": "Lunedì - Venerdì: 9:00 - 18:00"
+    },
+    "social": {
+      "title": "Seguici",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
   }
 } 

@@ -2,6 +2,17 @@
   "subscription": {
     "title": "Abonnement Premium",
     "planTitle": "Plan Premium",
+    "premium": {
+      "title": "Plan Premium",
+      "features": {
+        "0": "30 histoires par mois",
+        "1": "Histoires illimitées",
+        "2": "Annulez à tout moment",
+        "3": "Accès à toutes les fonctionnalités",
+        "4": "Support prioritaire"
+      }
+    },
+    "planDescription": "Débloquez toutes les fonctionnalités avec notre plan premium",
     "features": {
       "stories": "30 histoires par mois",
       "unlimited": "Histoires illimitées",
@@ -12,6 +23,7 @@
     "alreadySubscribed": "Vous êtes déjà abonné !",
     "redirecting": "Redirection en cours...",
     "cancelNote": "Vous pouvez annuler votre abonnement à tout moment depuis votre profil, accessible via le menu supérieur.",
+    "cancelInfo": "Votre abonnement restera actif jusqu'à la fin de la période de facturation en cours",
     "subscribeButton": "Plan Premium"
   },
   "profile": {
@@ -31,7 +43,6 @@
     "storiesRemainingOf": "sur",
     "loading": "Chargement...",
     "error": "Une erreur s'est produite",
-    "cancelInfo": "Votre abonnement restera actif jusqu'à la fin de la période de facturation en cours",
     "premiumInfo": "Abonnez-vous au plan Premium pour générer jusqu'à 30 histoires par mois",
     "learnMore": "En savoir plus"
   },
@@ -161,6 +172,18 @@
     "voiceMaleLatam": "Masculine (Amérique Latine)",
     "voiceFemaleEnglish": "Féminine (Anglais)",
     "voiceMaleEnglish": "Masculine (Anglais)",
+    "voiceFemaleCatalan": "Féminine (Catalan)",
+    "voiceMaleCatalan": "Masculine (Catalan)",
+    "voiceFemaleGalician": "Féminine (Galicien)",
+    "voiceMaleGalician": "Masculine (Galicien)",
+    "voiceFemaleBasque": "Féminine (Basque)",
+    "voiceMaleBasque": "Masculine (Basque)",
+    "voiceFemaleGerman": "Féminine (Allemand)",
+    "voiceMaleGerman": "Masculine (Allemand)",
+    "voiceFemaleItalian": "Féminine (Italien)",
+    "voiceMaleItalian": "Masculine (Italien)",
+    "voiceFemaleFrench": "Féminine (Français)",
+    "voiceMaleFrench": "Masculine (Français)",
     "speechRate": "Vitesse de parole",
     "speedVerySlow": "Très lente",
     "speedSlow": "Lente",
@@ -180,15 +203,17 @@
     "journeyMusic": "Voyage"
   },
   "storyForm": {
-    "title": "Crée ton Histoire",
-    "topicLabel": "Sujet de l'Histoire",
-    "topic": "Sujet de l'Histoire",
-    "topicPlaceholder": "Saisis un sujet pour ton histoire...",
+    "title": "Créez Votre Histoire",
+    "topicLabel": "Thème de l'Histoire",
+    "topic": "Thème de l'Histoire",
+    "topicPlaceholder": "Entrez un thème pour votre histoire...",
     "childNamesLabel": "Noms des Enfants (optionnel)",
     "childNames": "Noms des Enfants (optionnel)",
-    "childNamesPlaceholder": "Saisis les noms séparés par des virgules...",
+    "childNamesPlaceholder": "Entrez les noms séparés par des virgules...",
     "englishLevelLabel": "Niveau d'Anglais",
     "englishLevel": "Niveau d'Anglais",
+    "loginRequired": "Veuillez vous connecter pour générer des histoires",
+    "clickToLogin": "Cliquez ici pour vous connecter",
     "englishLevels": {
       "beginner": "Débutant",
       "intermediate": "Intermédiaire",
@@ -252,7 +277,8 @@
     "creativityStandard": "Standard",
     "creativityInnovative": "Innovant",
     "creativityCreative": "Très Créatif",
-    "generateButton": "Générer l'Histoire"
+    "generateButton": "Générer l'Histoire",
+    "alertTopicRequired": "Écrivez ici le thème de votre histoire"
   },
   "login": {
     "title": "Se connecter",
@@ -266,7 +292,8 @@
     "noAccount": "Pas de compte ?",
     "register": "S'inscrire",
     "signInWithGoogle": "Se connecter avec Google",
-    "or": "ou"
+    "or": "ou",
+    "loading": "Traitement en cours..."
   },
   "register": {
     "title": "Créer un compte",

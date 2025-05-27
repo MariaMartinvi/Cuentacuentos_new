@@ -6,6 +6,9 @@ import caTranslations from './i18n/locales/ca.json';
 import frTranslations from './i18n/locales/fr.json';
 import itTranslations from './i18n/locales/it.json';
 import deTranslations from './i18n/locales/de.json';
+import glTranslations from './i18n/locales/gl.json';
+import euTranslations from './i18n/locales/eu.json';
+import ptTranslations from './i18n/locales/pt.json';
 
 i18n
   .use(initReactI18next)
@@ -28,6 +31,15 @@ i18n
       },
       de: {
         translation: deTranslations
+      },
+      gl: {
+        translation: glTranslations
+      },
+      eu: {
+        translation: euTranslations
+      },
+      pt: {
+        translation: ptTranslations
       }
     },
     lng: 'es', // idioma por defecto

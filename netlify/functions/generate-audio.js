@@ -64,6 +64,7 @@ exports.handler = async function(event, context) {
 // Helper function
 function getGoogleVoiceDetails(voiceId) {
   switch (voiceId) {
+    // Español
     case 'female':
       return {
         name: 'es-ES-Neural2-H',
@@ -72,7 +73,7 @@ function getGoogleVoiceDetails(voiceId) {
       };
     case 'male':
       return {
-        name: 'es-ES-Standard-B',
+        name: 'es-ES-Neural2-B',
         languageCode: 'es-ES',
         gender: 'MALE'
       };
@@ -82,6 +83,14 @@ function getGoogleVoiceDetails(voiceId) {
         languageCode: 'es-US',
         gender: 'FEMALE'
       };
+    case 'male-latam':
+      return {
+        name: 'es-US-Neural2-B',
+        languageCode: 'es-US',
+        gender: 'MALE'
+      };
+    
+    // Inglés
     case 'female-english':
       return {
         name: 'en-US-Neural2-F',
@@ -90,16 +99,95 @@ function getGoogleVoiceDetails(voiceId) {
       };
     case 'male-english':
       return {
-        name: 'en-US-Standard-B',
+        name: 'en-US-Neural2-D',
         languageCode: 'en-US',
         gender: 'MALE'
       };
-    case 'male-latam':
+    
+    // Catalán
+    case 'female-catalan':
       return {
-        name: 'es-US-Standard-B',
-        languageCode: 'es-US',
+        name: 'ca-ES-Neural2-A',
+        languageCode: 'ca-ES',
+        gender: 'FEMALE'
+      };
+    case 'male-catalan':
+      return {
+        name: 'ca-ES-Neural2-B',
+        languageCode: 'ca-ES',
         gender: 'MALE'
       };
+    
+    // Gallego
+    case 'female-galician':
+      return {
+        name: 'gl-ES-Neural2-A',
+        languageCode: 'gl-ES',
+        gender: 'FEMALE'
+      };
+    case 'male-galician':
+      return {
+        name: 'gl-ES-Neural2-B',
+        languageCode: 'gl-ES',
+        gender: 'MALE'
+      };
+    
+    // Euskera
+    case 'female-basque':
+      return {
+        name: 'eu-ES-Neural2-A',
+        languageCode: 'eu-ES',
+        gender: 'FEMALE'
+      };
+    case 'male-basque':
+      return {
+        name: 'eu-ES-Neural2-B',
+        languageCode: 'eu-ES',
+        gender: 'MALE'
+      };
+    
+    // Alemán
+    case 'female-german':
+      return {
+        name: 'de-DE-Neural2-A',
+        languageCode: 'de-DE',
+        gender: 'FEMALE'
+      };
+    case 'male-german':
+      return {
+        name: 'de-DE-Neural2-B',
+        languageCode: 'de-DE',
+        gender: 'MALE'
+      };
+    
+    // Italiano
+    case 'female-italian':
+      return {
+        name: 'it-IT-Neural2-A',
+        languageCode: 'it-IT',
+        gender: 'FEMALE'
+      };
+    case 'male-italian':
+      return {
+        name: 'it-IT-Neural2-B',
+        languageCode: 'it-IT',
+        gender: 'MALE'
+      };
+    
+    // Francés
+    case 'female-french':
+      return {
+        name: 'fr-FR-Neural2-A',
+        languageCode: 'fr-FR',
+        gender: 'FEMALE'
+      };
+    case 'male-french':
+      return {
+        name: 'fr-FR-Neural2-B',
+        languageCode: 'fr-FR',
+        gender: 'MALE'
+      };
+    
     default:
       return {
         name: 'es-ES-Neural2-A',

@@ -2,6 +2,17 @@
   "subscription": {
     "title": "Subscripció Premium",
     "planTitle": "Pla Premium",
+    "premium": {
+      "title": "Pla Premium",
+      "features": {
+        "0": "30 contes al mes",
+        "1": "Contes il·limitats",
+        "2": "Cancel·la quan vulguis",
+        "3": "Accés a totes les funcionalitats",
+        "4": "Suport prioritari"
+      }
+    },
+    "planDescription": "Desbloqueja totes les funcionalitats amb el nostre pla premium",
     "features": {
       "stories": "30 contes al mes",
       "unlimited": "Contes il·limitats",
@@ -12,6 +23,7 @@
     "alreadySubscribed": "Ja estàs subscrit!",
     "redirecting": "Redirigint...",
     "cancelNote": "Pots cancel·lar la teva subscripció en qualsevol moment des del teu perfil, accessible a través del menú superior.",
+    "cancelInfo": "La teva subscripció romandrà activa fins al final del període de facturació actual",
     "subscribeButton": "Pla Premium"
   },
   "profile": {
@@ -31,7 +43,6 @@
     "storiesRemainingOf": "de",
     "loading": "Carregant...",
     "error": "S'ha produït un error",
-    "cancelInfo": "La teva subscripció romandrà activa fins al final del període de facturació actual",
     "premiumInfo": "Subscriu-te al pla Premium per generar fins a 30 contes al mes",
     "learnMore": "Més informació"
   },
@@ -59,7 +70,10 @@
       "catalan": "Català",
       "german": "Alemany",
       "italian": "Italià",
-      "french": "Francès"
+      "french": "Francès",
+      "galician": "Gallec",
+      "basque": "Euskera",
+      "portuguese": "Portuguès"
     },
     "levels": {
       "all": "Tots els nivells",
@@ -161,6 +175,18 @@
     "voiceMaleLatam": "Masculí (Amèrica Llatina)",
     "voiceFemaleEnglish": "Femení (Anglès)",
     "voiceMaleEnglish": "Masculí (Anglès)",
+    "voiceFemaleCatalan": "Femení (Català)",
+    "voiceMaleCatalan": "Masculí (Català)",
+    "voiceFemaleGalician": "Femení (Gallec)",
+    "voiceMaleGalician": "Masculí (Gallec)",
+    "voiceFemaleBasque": "Femení (Basc)",
+    "voiceMaleBasque": "Masculí (Basc)",
+    "voiceFemaleGerman": "Femení (Alemany)",
+    "voiceMaleGerman": "Masculí (Alemany)",
+    "voiceFemaleItalian": "Femení (Italià)",
+    "voiceMaleItalian": "Masculí (Italià)",
+    "voiceFemaleFrench": "Femení (Francès)",
+    "voiceMaleFrench": "Masculí (Francès)",
     "speechRate": "Velocitat de la parla",
     "speedVerySlow": "Molt lent",
     "speedSlow": "Lent",
@@ -189,6 +215,8 @@
     "childNamesPlaceholder": "Introdueix noms separats per comes...",
     "englishLevelLabel": "Nivell d'Anglès",
     "englishLevel": "Nivell d'Anglès",
+    "loginRequired": "Si us plau, inicia sessió per generar contes",
+    "clickToLogin": "Fes clic aquí per iniciar sessió",
     "englishLevels": {
       "beginner": "Principiant",
       "intermediate": "Intermedi",
@@ -252,7 +280,8 @@
     "creativityStandard": "Estàndard",
     "creativityInnovative": "Innovador",
     "creativityCreative": "Molt Creatiu",
-    "generateButton": "Generar Conte"
+    "generateButton": "Generar Conte",
+    "alertTopicRequired": "Escriu aquí el tema del teu conte"
   },
   "login": {
     "title": "Iniciar sessió",
@@ -265,7 +294,9 @@
     "loginButton": "Iniciar sessió",
     "noAccount": "No tens compte?",
     "register": "Registrar-se",
-    "signInWithGoogle": "Iniciar sessió amb Google"
+    "signInWithGoogle": "Iniciar sessió amb Google",
+    "or": "o",
+    "loading": "Processant..."
   },
   "register": {
     "title": "Crear un compte",
@@ -283,5 +314,130 @@
     "alreadyAccount": "Ja tens compte?",
     "login": "Iniciar sessió",
     "signInWithGoogle": "Registrar-se amb Google"
+  },
+  "terminos": {
+    "title": "Termes i Condicions",
+    "introduccion": "Introducció",
+    "introduccionTexto": "Benvingut a Mi Cuentacuentos. En accedir i utilitzar el nostre servei, acceptes aquests termes i condicions. Aquests termes regeixen el teu ús de la nostra plataforma de generació de contes personalitzats.",
+    "uso": "Ús del Servei",
+    "usoTexto": "El nostre servei està destinat a generar contes personalitzats. Has d'utilitzar el servei de manera responsable i respectant els drets d'autor. No està permès: 1) Generar contingut il·legal, ofensiu o inadequat. 2) Intentar accedir a àrees restringides del sistema. 3) Compartir el teu compte amb tercers. 4) Utilitzar el servei per a finalitats comercials sense autorització.",
+    "suscripcion": "Subscripció i Pagaments",
+    "suscripcionTexto": "Oferim plans gratuïts i de pagament. Les subscripcions es renova automàticament i es poden cancel·lar en qualsevol moment. Els pagaments es processen de forma segura a través de Stripe. No emmagatzemem informació de targetes de crèdit. Els usuaris del pla gratuït tenen accés limitat a certes funcions. El pla premium ofereix accés il·limitat a totes les funcions.",
+    "propiedad": "Propietat Intel·lectual",
+    "propiedadTexto": "Els contes generats són propietat de l'usuari que els crea. Mi Cuentacuentos es reserva el dret d'utilitzar els contes de forma anònima per millorar el servei. La plataforma i la seva tecnologia són propietat exclusiva de Mi Cuentacuentos. No està permès copiar, modificar o distribuir el codi o la interfície sense autorització.",
+    "limitacion": "Limitació de Responsabilitat",
+    "limitacionTexto": "No som responsables del contingut generat pels usuaris ni de cap dany resultant de l'ús del servei. El servei es proporciona 'tal qual' sense garanties de cap tipus. No garantim la disponibilitat contínua del servei ni la precisió dels contes generats.",
+    "contacto": "Contacte i Suport",
+    "contactoTexto": "Per a qualsevol pregunta sobre aquests termes, contacta'ns a través del nostre formulari de contacte. Oferim suport per correu electrònic de dilluns a divendres de 9:00 a 18:00. Per a problemes tècnics urgents, els usuaris premium tenen accés a suport prioritari."
+  },
+  "politica": {
+    "title": "Política de Privacitat",
+    "introduccion": "Introducció",
+    "introduccionTexto": "A Mi Cuentacuentos, ens prenem molt seriosament la privacitat dels nostres usuaris. Aquesta política explica com gestionem les teves dades personals i com protegim la teva privacitat mentre utilitzes el nostre servei de generació de contes.",
+    "datos": "Dades que Recopilem",
+    "datosTexto": "Recopilem la següent informació: 1) Dades de registre: nom, correu electrònic i contrasenya (encriptada). 2) Dades d'ús: preferències de contes, historial de generació i configuració. 3) Dades de pagament: processades de forma segura per Stripe, sense emmagatzemar informació de targetes. 4) Cookies: per millorar l'experiència i analitzar l'ús del lloc.",
+    "usoDatos": "Ús de Dades",
+    "usoDatosTexto": "Utilitzem les teves dades per: 1) Proporcionar i millorar el servei. 2) Personalitzar la teva experiència. 3) Processar pagaments de forma segura. 4) Enviar actualitzacions importants. 5) Respondre a consultes de suport. No compartim les teves dades amb tercers excepte per al processament de pagaments o quan ho requereix la llei.",
+    "seguridad": "Seguretat i Protecció",
+    "seguridadTexto": "Implementem mesures de seguretat robustes: 1) Encriptació de dades sensibles. 2) Autenticació segura. 3) Protecció contra accés no autoritzat. 4) Còpies de seguretat regulars. 5) Monitoratge continu de seguretat. Les dades de pagament es processen exclusivament a través de Stripe, complint amb els més alts estàndards de seguretat.",
+    "cookies": "Cookies",
+    "cookiesTexto": "Utilitzem cookies per: 1) Mantenir la teva sessió activa. 2) Recordar les teves preferències. 3) Analitzar l'ús del lloc. 4) Millorar el rendiment. Pots gestionar les teves preferències de cookies en qualsevol moment. Algunes funcions poden no estar disponibles si desactives les cookies essencials.",
+    "derechos": "Els Teus Drets",
+    "derechosTexto": "Tens dret a: 1) Accedir a les teves dades personals. 2) Corregir informació inexacta. 3) Sol·licitar l'eliminació de les teves dades. 4) Exportar les teves dades en un format estàndard. 5) Retirar el teu consentiment en qualsevol moment. Per exercir aquests drets, contacta'ns a través del nostre formulari de contacte."
+  },
+  "comFunciona": {
+    "title": "Com Funciona",
+    "paso1": {
+      "title": "1. Crea el teu conte",
+      "description": "Selecciona el tema, l'edat, el nivell d'idioma i altres preferències per personalitzar el teu conte."
+    },
+    "paso2": {
+      "title": "2. Genera la història",
+      "description": "La nostra IA crea una història única i personalitzada basada en les teves especificacions."
+    },
+    "paso3": {
+      "title": "3. Personalitza i comparteix",
+      "description": "Afegeix noms, ajusta el contingut i comparteix la història amb la teva família."
+    },
+    "paso4": {
+      "title": "4. Gaudi de l'àudio",
+      "description": "Converteix la teva història en àudio amb diferents veus i música de fons."
+    }
+  },
+  "sobreNosaltres": {
+    "title": "Sobre Nosaltres",
+    "mision": {
+      "title": "La Nostra Missió",
+      "description": "Crear una plataforma innovadora que ajudi els pares a crear contes personalitzats i educatius per als seus fills."
+    },
+    "vision": {
+      "title": "La Nostra Visió",
+      "description": "Ser la plataforma líder en la creació de contes personalitzats amb IA, fent l'aprenentatge i la diversió accessibles per a tots els nens."
+    },
+    "valors": {
+      "title": "Els Nostres Valors",
+      "educacio": "Educació de qualitat",
+      "innovacio": "Innovació constant",
+      "inclusio": "Inclusió i diversitat",
+      "seguretat": "Seguretat i privacitat"
+    },
+    "equip": {
+      "title": "El Nostre Equip",
+      "description": "Som un equip d'apassionats per la tecnologia i l'educació, compromesos a crear una experiència única per a cada família."
+    }
+  },
+  "contact": {
+    "title": "Contacte",
+    "form": {
+      "title": "Formulari de Contacte",
+      "name": "Nom",
+      "namePlaceholder": "Introdueix el teu nom",
+      "email": "Correu electrònic",
+      "emailPlaceholder": "Introdueix el teu correu electrònic",
+      "subject": "Assumpte",
+      "subjectPlaceholder": "Introdueix l'assumpte",
+      "message": "Missatge",
+      "messagePlaceholder": "Escriu el teu missatge aquí...",
+      "submit": "Enviar",
+      "sending": "Enviant...",
+      "success": "Missatge enviat amb èxit",
+      "error": "Error en enviar el missatge"
+    },
+    "info": {
+      "title": "Informació de Contacte",
+      "email": "Correu electrònic",
+      "emailValue": "hola@micuentacuentos.com",
+      "phone": "Telèfon",
+      "phoneValue": "+34 900 000 000",
+      "address": "Adreça",
+      "addressValue": "Carrer de l'Exemple, 123, 08001 Barcelona",
+      "hours": "Horari d'atenció",
+      "hoursValue": "Dilluns a Divendres: 9:00 - 18:00"
+    },
+    "social": {
+      "title": "Segueix-nos",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "navbar": {
+    "home": "Inici",
+    "contact": "Contacte",
+    "login": "Iniciar Sessió",
+    "register": "Registrar-se",
+    "logout": "Tancar Sessió",
+    "languages": {
+      "en": "Anglès",
+      "es": "Espanyol",
+      "ca": "Català",
+      "fr": "Francès",
+      "it": "Italià",
+      "de": "Alemany",
+      "gl": "Gallec",
+      "eu": "Euskera",
+      "pt": "Portuguès"
+    }
   }
 } 

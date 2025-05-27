@@ -7,7 +7,7 @@ function StoryDisplay({ story }) {
   const { t, i18n } = useTranslation();
   const [audioUrl, setAudioUrl] = useState(null);
   const [voiceType, setVoiceType] = useState(i18n.language === 'en' ? 'female-english' : 'female');
-  const [speechRate, setSpeechRate] = useState(0.7); // Default to slow speed
+  const [speechRate, setSpeechRate] = useState(0.8); // Default to normal speed
   const [musicTrack, setMusicTrack] = useState('random'); // Default to random music
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioCount, setAudioCount] = useState(0);
@@ -21,7 +21,31 @@ function StoryDisplay({ story }) {
 
   // Update voice type when language changes
   useEffect(() => {
-    setVoiceType(i18n.language === 'en' ? 'female-english' : 'female');
+    switch (i18n.language) {
+      case 'en':
+        setVoiceType('female-english');
+        break;
+      case 'ca':
+        setVoiceType('female-catalan');
+        break;
+      case 'gl':
+        setVoiceType('female-galician');
+        break;
+      case 'eu':
+        setVoiceType('female-basque');
+        break;
+      case 'de':
+        setVoiceType('female-german');
+        break;
+      case 'it':
+        setVoiceType('female-italian');
+        break;
+      case 'fr':
+        setVoiceType('female-french');
+        break;
+      default:
+        setVoiceType('female');
+    }
   }, [i18n.language]);
 
   if (!story) return null;
@@ -216,6 +240,18 @@ function StoryDisplay({ story }) {
               <option value="male-latam">{t('storyDisplay.voiceMaleLatam')}</option>
               <option value="female-english">{t('storyDisplay.voiceFemaleEnglish')}</option>
               <option value="male-english">{t('storyDisplay.voiceMaleEnglish')}</option>
+              <option value="female-catalan">{t('storyDisplay.voiceFemaleCatalan')}</option>
+              <option value="male-catalan">{t('storyDisplay.voiceMaleCatalan')}</option>
+              <option value="female-galician">{t('storyDisplay.voiceFemaleGalician')}</option>
+              <option value="male-galician">{t('storyDisplay.voiceMaleGalician')}</option>
+              <option value="female-basque">{t('storyDisplay.voiceFemaleBasque')}</option>
+              <option value="male-basque">{t('storyDisplay.voiceMaleBasque')}</option>
+              <option value="female-german">{t('storyDisplay.voiceFemaleGerman')}</option>
+              <option value="male-german">{t('storyDisplay.voiceMaleGerman')}</option>
+              <option value="female-italian">{t('storyDisplay.voiceFemaleItalian')}</option>
+              <option value="male-italian">{t('storyDisplay.voiceMaleItalian')}</option>
+              <option value="female-french">{t('storyDisplay.voiceFemaleFrench')}</option>
+              <option value="male-french">{t('storyDisplay.voiceMaleFrench')}</option>
             </select>
           </div>
 

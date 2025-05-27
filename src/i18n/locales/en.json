@@ -11,7 +11,10 @@
       "ca": "Catalan",
       "fr": "French",
       "it": "Italian",
-      "de": "German"
+      "de": "German",
+      "gl": "Galician",
+      "eu": "Basque",
+      "pt": "Portuguese"
     }
   },
   "auth": {
@@ -262,7 +265,10 @@
     "catalan": "Catalan",
     "german": "German",
     "italian": "Italian",
-    "french": "French"
+    "french": "French",
+    "galician": "Galician",
+    "basque": "Basque",
+    "portuguese": "Portuguese"
   },
   "footer": {
     "title": "AI Story Generator",
@@ -320,6 +326,18 @@
     "voiceMaleLatam": "Male (Latin America)",
     "voiceFemaleEnglish": "Female (English)",
     "voiceMaleEnglish": "Male (English)",
+    "voiceFemaleCatalan": "Female (Catalan)",
+    "voiceMaleCatalan": "Male (Catalan)",
+    "voiceFemaleGalician": "Female (Galician)",
+    "voiceMaleGalician": "Male (Galician)",
+    "voiceFemaleBasque": "Female (Basque)",
+    "voiceMaleBasque": "Male (Basque)",
+    "voiceFemaleGerman": "Female (German)",
+    "voiceMaleGerman": "Male (German)",
+    "voiceFemaleItalian": "Female (Italian)",
+    "voiceMaleItalian": "Male (Italian)",
+    "voiceFemaleFrench": "Female (French)",
+    "voiceMaleFrench": "Male (French)",
     "speechRate": "Speech rate",
     "speedVerySlow": "Very slow",
     "speedSlow": "Slow",
@@ -343,8 +361,8 @@
     "topicLabel": "Story Topic",
     "topic": "Story Topic",
     "topicPlaceholder": "Enter a topic for your story...",
-    "childNamesLabel": "Child Names (optional)",
-    "childNames": "Child Names (optional)",
+    "childNamesLabel": "Children's Names (optional)",
+    "childNames": "Children's Names (optional)",
     "childNamesPlaceholder": "Enter names separated by commas...",
     "englishLevelLabel": "English Level",
     "englishLevel": "English Level",
@@ -414,6 +432,7 @@
     "generateButton": "Generate Story",
     "generating": "Generating...",
     "loginRequired": "Please log in to generate stories",
+    "clickToLogin": "Click here to log in",
     "error": "Error generating story",
     "rateLimit": "Rate limit reached. Please try again in",
     "serverError": "Server Error",
@@ -425,12 +444,11 @@
     "resetButton": "Reset",
     "storyLimitReached": "You have reached your free story limit. Please subscribe to generate more stories.",
     "generalError": "An error occurred while generating the story. Please try again.",
-    "alertTopicRequired": "Write here the topic of your story",
+    "alertTopicRequired": "Write your story topic here",
     "alertError": "An error occurred while generating the story",
     "emailLabel": "Email",
     "emailPlaceholder": "Enter your email",
-    "alertEmailRequired": "Please enter your email",
-    "clickToLogin": "Click here to log in"
+    "alertEmailRequired": "Please enter your email"
   },
   "contact": {
     "title": "Contact Us",

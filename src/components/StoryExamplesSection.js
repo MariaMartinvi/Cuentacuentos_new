@@ -384,6 +384,9 @@ const StoryExamplesSection = () => {
               <option value="german">{t('storyExamples.languages.german')}</option>
               <option value="italian">{t('storyExamples.languages.italian')}</option>
               <option value="french">{t('storyExamples.languages.french')}</option>
+              <option value="galician">{t('storyExamples.languages.galician')}</option>
+              <option value="basque">{t('storyExamples.languages.basque')}</option>
+              <option value="portuguese">{t('storyExamples.languages.portuguese')}</option>
             </select>
           </div>
 

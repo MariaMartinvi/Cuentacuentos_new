@@ -28,7 +28,10 @@ function Navbar() {
     { code: 'ca', name: t('navbar.languages.ca') },
     { code: 'fr', name: t('navbar.languages.fr') },
     { code: 'it', name: t('navbar.languages.it') },
-    { code: 'de', name: t('navbar.languages.de') }
+    { code: 'de', name: t('navbar.languages.de') },
+    { code: 'gl', name: t('navbar.languages.gl') },
+    { code: 'eu', name: t('navbar.languages.eu') },
+    { code: 'pt', name: t('navbar.languages.pt') }
   ];
 
   return (

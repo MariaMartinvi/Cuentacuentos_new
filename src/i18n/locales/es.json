@@ -2,6 +2,17 @@
   "subscription": {
     "title": "Suscripción Premium",
     "planTitle": "Plan Premium",
+    "premium": {
+      "title": "Plan Premium",
+      "features": {
+        "0": "30 historias al mes",
+        "1": "Historias ilimitadas",
+        "2": "Cancelación en cualquier momento",
+        "3": "Acceso a todas las funcionalidades",
+        "4": "Soporte prioritario"
+      }
+    },
+    "planDescription": "Desbloquea todas las funcionalidades con nuestro plan premium",
     "features": {
       "stories": "30 historias al mes",
       "unlimited": "Historias ilimitadas",
@@ -12,6 +23,7 @@
     "alreadySubscribed": "¡Ya estás suscrito!",
     "redirecting": "Redirigiendo...",
     "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior.",
+    "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
     "subscribeButton": "Plan Premium"
   },
   "profile": {
@@ -31,7 +43,6 @@
     "storiesRemainingOf": "de",
     "loading": "Cargando...",
     "error": "Ha ocurrido un error",
-    "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
     "premiumInfo": "Suscríbete al plan Premium para generar hasta 30 cuentos al mes",
     "learnMore": "Más información"
   },
@@ -59,7 +70,10 @@
       "catalan": "Catalán",
       "german": "Alemán",
       "italian": "Italiano",
-      "french": "Francés"
+      "french": "Francés",
+      "galician": "Gallego",
+      "basque": "Euskera",
+      "portuguese": "Portugués"
     },
     "levels": {
       "all": "Todos los niveles",
@@ -167,12 +181,24 @@
     "audioError": "Error al generar el audio",
     "audioLimitReached": "Has alcanzado el límite de 4 generaciones de audio",
     "voiceType": "Tipo de voz",
-    "voiceFemale": "Mujer (España)",
-    "voiceMale": "Hombre (España)",
-    "voiceFemaleLatam": "Mujer (Latinoamérica)",
-    "voiceMaleLatam": "Hombre (Latinoamérica)",
-    "voiceFemaleEnglish": "Mujer (Inglés)",
-    "voiceMaleEnglish": "Hombre (Inglés)",
+    "voiceFemale": "Femenina (España)",
+    "voiceMale": "Masculina (España)",
+    "voiceFemaleLatam": "Femenina (Latinoamérica)",
+    "voiceMaleLatam": "Masculina (Latinoamérica)",
+    "voiceFemaleEnglish": "Femenina (Inglés)",
+    "voiceMaleEnglish": "Masculina (Inglés)",
+    "voiceFemaleCatalan": "Femenina (Catalán)",
+    "voiceMaleCatalan": "Masculina (Catalán)",
+    "voiceFemaleGalician": "Femenina (Gallego)",
+    "voiceMaleGalician": "Masculina (Gallego)",
+    "voiceFemaleBasque": "Femenina (Euskera)",
+    "voiceMaleBasque": "Masculina (Euskera)",
+    "voiceFemaleGerman": "Femenina (Alemán)",
+    "voiceMaleGerman": "Masculina (Alemán)",
+    "voiceFemaleItalian": "Femenina (Italiano)",
+    "voiceMaleItalian": "Masculina (Italiano)",
+    "voiceFemaleFrench": "Femenina (Francés)",
+    "voiceMaleFrench": "Masculina (Francés)",
     "speechRate": "Velocidad de habla",
     "speedVerySlow": "Muy lenta",
     "speedSlow": "Lenta",
@@ -203,7 +229,10 @@
       "ca": "Catalán",
       "fr": "Francés",
       "it": "Italiano",
-      "de": "Alemán"
+      "de": "Alemán",
+      "gl": "Gallego",
+      "eu": "Euskera",
+      "pt": "Portugués"
     }
   },
   "storyForm": {
@@ -543,7 +572,8 @@
     "noAccount": "¿No tienes cuenta?",
     "register": "Regístrate",
     "signInWithGoogle": "Iniciar sesión con Google",
-    "or": "o"
+    "or": "o",
+    "loading": "Procesando..."
   },
   "register": {
     "title": "Crear una cuenta",

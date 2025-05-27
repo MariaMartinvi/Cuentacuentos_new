@@ -2,6 +2,17 @@
   "subscription": {
     "title": "Premium-Abonnement",
     "planTitle": "Premium-Plan",
+    "premium": {
+      "title": "Premium-Plan",
+      "features": {
+        "0": "30 Geschichten pro Monat",
+        "1": "Unbegrenzte Geschichten",
+        "2": "Jederzeit kündbar",
+        "3": "Zugang zu allen Funktionen",
+        "4": "Prioritäts-Support"
+      }
+    },
+    "planDescription": "Schalten Sie alle Funktionen mit unserem Premium-Plan frei",
     "features": {
       "stories": "30 Geschichten pro Monat",
       "unlimited": "Unbegrenzte Geschichten",
@@ -12,6 +23,7 @@
     "alreadySubscribed": "Sie sind bereits Abonnent!",
     "redirecting": "Weiterleitung läuft...",
     "cancelNote": "Sie können Ihr Abonnement jederzeit über Ihr Profil kündigen, das über das Menü oben zugänglich ist.",
+    "cancelInfo": "Ihr Abonnement bleibt bis zum Ende der aktuellen Abrechnungsperiode aktiv",
     "subscribeButton": "Premium-Plan"
   },
   "profile": {
@@ -31,7 +43,6 @@
     "storiesRemainingOf": "von",
     "loading": "Lädt...",
     "error": "Ein Fehler ist aufgetreten",
-    "cancelInfo": "Ihr Abonnement bleibt bis zum Ende der aktuellen Abrechnungsperiode aktiv",
     "premiumInfo": "Abonnieren Sie den Premium-Plan, um bis zu 30 Geschichten pro Monat zu generieren",
     "learnMore": "Mehr erfahren"
   },
@@ -162,6 +173,18 @@
     "voiceMaleLatam": "Männlich (Lateinamerika)",
     "voiceFemaleEnglish": "Weiblich (Englisch)",
     "voiceMaleEnglish": "Männlich (Englisch)",
+    "voiceFemaleCatalan": "Weiblich (Katalanisch)",
+    "voiceMaleCatalan": "Männlich (Katalanisch)",
+    "voiceFemaleGalician": "Weiblich (Galizisch)",
+    "voiceMaleGalician": "Männlich (Galizisch)",
+    "voiceFemaleBasque": "Weiblich (Baskisch)",
+    "voiceMaleBasque": "Männlich (Baskisch)",
+    "voiceFemaleGerman": "Weiblich (Deutsch)",
+    "voiceMaleGerman": "Männlich (Deutsch)",
+    "voiceFemaleItalian": "Weiblich (Italienisch)",
+    "voiceMaleItalian": "Männlich (Italienisch)",
+    "voiceFemaleFrench": "Weiblich (Französisch)",
+    "voiceMaleFrench": "Männlich (Französisch)",
     "speechRate": "Sprechgeschwindigkeit",
     "speedVerySlow": "Sehr langsam",
     "speedSlow": "Langsam",
@@ -182,14 +205,16 @@
   },
   "storyForm": {
     "title": "Erstelle Deine Geschichte",
-    "topicLabel": "Thema der Geschichte",
-    "topic": "Thema der Geschichte",
+    "topicLabel": "Geschichtenthema",
+    "topic": "Geschichtenthema",
     "topicPlaceholder": "Gib ein Thema für deine Geschichte ein...",
-    "childNamesLabel": "Namen der Kinder (optional)",
-    "childNames": "Namen der Kinder (optional)",
+    "childNamesLabel": "Kindernamen (optional)",
+    "childNames": "Kindernamen (optional)",
     "childNamesPlaceholder": "Gib Namen durch Kommas getrennt ein...",
-    "englishLevelLabel": "Englisch-Niveau",
-    "englishLevel": "Englisch-Niveau",
+    "englishLevelLabel": "Englischniveau",
+    "englishLevel": "Englischniveau",
+    "loginRequired": "Bitte melde dich an, um Geschichten zu erstellen",
+    "clickToLogin": "Klicke hier, um dich anzumelden",
     "englishLevels": {
       "beginner": "Anfänger",
       "intermediate": "Mittelstufe",
@@ -253,7 +278,8 @@
     "creativityStandard": "Standard",
     "creativityInnovative": "Innovativ",
     "creativityCreative": "Sehr Kreativ",
-    "generateButton": "Geschichte generieren"
+    "generateButton": "Geschichte generieren",
+    "alertTopicRequired": "Schreiben Sie hier das Thema Ihrer Geschichte"
   },
   "login": {
     "title": "Anmelden",
@@ -267,7 +293,8 @@
     "noAccount": "Noch kein Konto?",
     "register": "Registrieren",
     "signInWithGoogle": "Mit Google anmelden",
-    "or": "oder"
+    "or": "oder",
+    "loading": "Verarbeitung..."
   },
   "register": {
     "title": "Konto erstellen",
@@ -285,5 +312,130 @@
     "alreadyAccount": "Haben Sie bereits ein Konto?",
     "login": "Anmelden",
     "signInWithGoogle": "Mit Google registrieren"
+  },
+  "terminos": {
+    "title": "Nutzungsbedingungen",
+    "introduccion": "Einführung",
+    "introduccionTexto": "Willkommen bei Mi Cuentacuentos. Durch die Nutzung unseres Dienstes akzeptieren Sie diese Nutzungsbedingungen. Diese Bedingungen regeln Ihre Nutzung unserer Plattform zur Generierung personalisierter Geschichten.",
+    "uso": "Nutzung des Dienstes",
+    "usoTexto": "Unser Dienst dient der Generierung personalisierter Geschichten. Sie müssen den Dienst verantwortungsvoll und unter Achtung der Urheberrechte nutzen. Folgendes ist nicht gestattet: 1) Generierung illegaler, beleidigender oder unangemessener Inhalte. 2) Versuch, auf eingeschränkte Bereiche des Systems zuzugreifen. 3) Weitergabe Ihres Kontos an Dritte. 4) Nutzung des Dienstes für kommerzielle Zwecke ohne Genehmigung.",
+    "suscripcion": "Abonnement und Zahlungen",
+    "suscripcionTexto": "Wir bieten kostenlose und kostenpflichtige Pläne an. Abonnements verlängern sich automatisch und können jederzeit gekündigt werden. Zahlungen werden sicher über Stripe abgewickelt. Wir speichern keine Kreditkarteninformationen. Nutzer des kostenlosen Plans haben eingeschränkten Zugang zu bestimmten Funktionen. Der Premium-Plan bietet unbegrenzten Zugang zu allen Funktionen.",
+    "propiedad": "Geistiges Eigentum",
+    "propiedadTexto": "Die generierten Geschichten gehören dem Benutzer, der sie erstellt. Mi Cuentacuentos behält sich das Recht vor, die Geschichten anonym zur Verbesserung des Dienstes zu nutzen. Die Plattform und ihre Technologie sind ausschließliches Eigentum von Mi Cuentacuentos. Es ist nicht gestattet, den Code oder die Benutzeroberfläche ohne Genehmigung zu kopieren, zu modifizieren oder zu verteilen.",
+    "limitacion": "Haftungsbeschränkung",
+    "limitacionTexto": "Wir sind nicht verantwortlich für von Benutzern generierte Inhalte oder für Schäden, die durch die Nutzung des Dienstes entstehen. Der Dienst wird 'wie er ist' ohne jegliche Garantien bereitgestellt. Wir garantieren weder die kontinuierliche Verfügbarkeit des Dienstes noch die Genauigkeit der generierten Geschichten.",
+    "contacto": "Kontakt und Support",
+    "contactoTexto": "Bei Fragen zu diesen Bedingungen kontaktieren Sie uns über unser Kontaktformular. Wir bieten E-Mail-Support von Montag bis Freitag von 9:00 bis 18:00 Uhr. Für dringende technische Probleme haben Premium-Nutzer Zugang zum Prioritäts-Support."
+  },
+  "politica": {
+    "title": "Datenschutzerklärung",
+    "introduccion": "Einführung",
+    "introduccionTexto": "Bei Mi Cuentacuentos nehmen wir die Privatsphäre unserer Nutzer sehr ernst. Diese Richtlinie erklärt, wie wir Ihre persönlichen Daten verwalten und Ihre Privatsphäre schützen, während Sie unseren Dienst zur Generierung von Geschichten nutzen.",
+    "datos": "Daten, die wir sammeln",
+    "datosTexto": "Wir sammeln folgende Informationen: 1) Registrierungsdaten: Name, E-Mail und Passwort (verschlüsselt). 2) Nutzungsdaten: Geschichtenpräferenzen, Generierungshistorie und Einstellungen. 3) Zahlungsdaten: sicher über Stripe verarbeitet, ohne Speicherung von Karteninformationen. 4) Cookies: zur Verbesserung der Erfahrung und Analyse der Nutzung der Website.",
+    "usoDatos": "Nutzung der Daten",
+    "usoDatosTexto": "Wir verwenden Ihre Daten für: 1) Bereitstellung und Verbesserung des Dienstes. 2) Personalisierung Ihrer Erfahrung. 3) Sichere Verarbeitung von Zahlungen. 4) Versand wichtiger Updates. 5) Beantwortung von Support-Anfragen. Wir teilen Ihre Daten nicht mit Dritten, außer für die Zahlungsabwicklung oder wenn es gesetzlich erforderlich ist.",
+    "seguridad": "Sicherheit und Schutz",
+    "seguridadTexto": "Wir implementieren robuste Sicherheitsmaßnahmen: 1) Verschlüsselung sensibler Daten. 2) Sichere Authentifizierung. 3) Schutz vor unbefugtem Zugriff. 4) Regelmäßige Backups. 5) Kontinuierliche Sicherheitsüberwachung. Zahlungsdaten werden ausschließlich über Stripe verarbeitet, unter Einhaltung höchster Sicherheitsstandards.",
+    "cookies": "Cookies",
+    "cookiesTexto": "Wir verwenden Cookies für: 1) Aufrechterhaltung Ihrer aktiven Sitzung. 2) Speicherung Ihrer Präferenzen. 3) Analyse der Nutzung der Website. 4) Verbesserung der Leistung. Sie können Ihre Cookie-Präferenzen jederzeit verwalten. Einige Funktionen sind möglicherweise nicht verfügbar, wenn Sie essentielle Cookies deaktivieren.",
+    "derechos": "Ihre Rechte",
+    "derechosTexto": "Sie haben das Recht: 1) Auf Ihre persönlichen Daten zuzugreifen. 2) Ungenaue Informationen zu korrigieren. 3) Die Löschung Ihrer Daten zu beantragen. 4) Ihre Daten in einem Standardformat zu exportieren. 5) Ihre Einwilligung jederzeit zurückzuziehen. Um diese Rechte auszuüben, kontaktieren Sie uns über unser Kontaktformular."
+  },
+  "comFunciona": {
+    "title": "So funktioniert's",
+    "paso1": {
+      "title": "1. Erstellen Sie Ihre Geschichte",
+      "description": "Wählen Sie Thema, Alter, Sprachniveau und andere Präferenzen, um Ihre Geschichte zu personalisieren."
+    },
+    "paso2": {
+      "title": "2. Geschichte generieren",
+      "description": "Unsere KI erstellt eine einzigartige, personalisierte Geschichte basierend auf Ihren Vorgaben."
+    },
+    "paso3": {
+      "title": "3. Personalisieren und teilen",
+      "description": "Fügen Sie Namen hinzu, passen Sie den Inhalt an und teilen Sie die Geschichte mit Ihrer Familie."
+    },
+    "paso4": {
+      "title": "4. Audio genießen",
+      "description": "Konvertieren Sie Ihre Geschichte in Audio mit verschiedenen Stimmen und Hintergrundmusik."
+    }
+  },
+  "sobreNosaltres": {
+    "title": "Über Uns",
+    "mision": {
+      "title": "Unsere Mission",
+      "description": "Eine innovative Plattform zu schaffen, die Eltern dabei hilft, personalisierte und lehrreiche Geschichten für ihre Kinder zu erstellen."
+    },
+    "vision": {
+      "title": "Unsere Vision",
+      "description": "Die führende Plattform für die Erstellung personalisierter Geschichten mit KI zu sein und Lernen und Spaß für alle Kinder zugänglich zu machen."
+    },
+    "valors": {
+      "title": "Unsere Werte",
+      "educacio": "Qualitativ hochwertige Bildung",
+      "innovacio": "Kontinuierliche Innovation",
+      "inclusio": "Inklusion und Vielfalt",
+      "seguretat": "Sicherheit und Datenschutz"
+    },
+    "equip": {
+      "title": "Unser Team",
+      "description": "Wir sind ein Team von Technologie- und Bildungsbegeisterten, die sich dafür einsetzen, ein einzigartiges Erlebnis für jede Familie zu schaffen."
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "form": {
+      "title": "Kontaktformular",
+      "name": "Name",
+      "namePlaceholder": "Geben Sie Ihren Namen ein",
+      "email": "E-Mail",
+      "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+      "subject": "Betreff",
+      "subjectPlaceholder": "Geben Sie den Betreff ein",
+      "message": "Nachricht",
+      "messagePlaceholder": "Schreiben Sie Ihre Nachricht hier...",
+      "submit": "Senden",
+      "sending": "Wird gesendet...",
+      "success": "Nachricht erfolgreich gesendet",
+      "error": "Fehler beim Senden der Nachricht"
+    },
+    "info": {
+      "title": "Kontaktinformationen",
+      "email": "E-Mail",
+      "emailValue": "hola@micuentacuentos.com",
+      "phone": "Telefon",
+      "phoneValue": "+34 900 000 000",
+      "address": "Adresse",
+      "addressValue": "Carrer de l'Exemple, 123, 08001 Barcelona",
+      "hours": "Öffnungszeiten",
+      "hoursValue": "Montag - Freitag: 9:00 - 18:00"
+    },
+    "social": {
+      "title": "Folgen Sie uns",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "navbar": {
+    "home": "Startseite",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "languages": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "ca": "Katalanisch",
+      "fr": "Französisch",
+      "it": "Italienisch",
+      "de": "Deutsch",
+      "gl": "Galizisch",
+      "eu": "Baskisch",
+      "pt": "Portugiesisch"
+    }
   }
 } 
