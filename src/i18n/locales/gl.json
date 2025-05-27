@@ -280,7 +280,11 @@
     "creativityStandard": "Estándar",
     "creativityInnovative": "Innovador",
     "creativityCreative": "Moi Creativo",
-    "generateButton": "Xerar Conto"
+    "generateButton": "Xerar Conto",
+    "storyLimitReached": "Alcanzaches o teu límite de 3 contos gratuítos. Subscríbete para xerar máis contos.",
+    "premiumStoryLimitReached": "Alcanzaches o teu límite de 30 contos premium. Agarda ata o día {{day}} para xerar máis contos.",
+    "updatePlan": "Actualiza o teu plan",
+    "subscribe": "Subscríbete"
   },
   "login": {
     "title": "Iniciar sesión",

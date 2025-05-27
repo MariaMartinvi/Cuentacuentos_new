@@ -277,7 +277,11 @@
     "creativityStandard": "Estándarra",
     "creativityInnovative": "Berritzailea",
     "creativityCreative": "Oso Sortzailea",
-    "generateButton": "Ipuina Sortu"
+    "generateButton": "Ipuina Sortu",
+    "storyLimitReached": "3 ipuin doako muga gainditu duzu. Harpidetu zaitez ipuin gehiago sortzeko.",
+    "premiumStoryLimitReached": "30 ipuin premium-eko muga gainditu duzu. Itxaron {{day}} egunera arte ipuin gehiago sortzeko.",
+    "updatePlan": "Eguneratu zure plana",
+    "subscribe": "Harpidetu"
   },
   "login": {
     "title": "Saioa hasi",

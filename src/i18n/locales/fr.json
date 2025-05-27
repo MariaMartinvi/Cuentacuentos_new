@@ -275,7 +275,11 @@
     "creativityInnovative": "Innovant",
     "creativityCreative": "Très Créatif",
     "generateButton": "Générer l'Histoire",
-    "alertTopicRequired": "Écrivez ici le thème de votre histoire"
+    "alertTopicRequired": "Écrivez ici le thème de votre histoire",
+    "storyLimitReached": "Vous avez atteint votre limite de 3 histoires gratuites. Abonnez-vous pour générer plus d'histoires.",
+    "premiumStoryLimitReached": "Vous avez atteint votre limite de 30 histoires premium. Attendez jusqu'au jour {{day}} pour générer plus d'histoires.",
+    "updatePlan": "Mettre à jour votre plan",
+    "subscribe": "S'abonner"
   },
   "login": {
     "title": "Se connecter",

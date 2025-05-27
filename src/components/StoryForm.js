@@ -350,8 +350,16 @@ function StoryForm({ onStoryGenerated }) {
       console.error('Error generating story:', error);
       
       if (error.response?.data?.error === 'Story limit reached') {
-        setError(t('storyForm.storyLimitReached'));
+        console.log('Error message from backend:', error.response.data.message);
+        const errorData = error.response.data.message;
+        if (typeof errorData === 'object' && errorData.key) {
+          // Handle translated error message
+          setError(t(errorData.key, errorData.params) + ' [[subscribe]]');
+        } else {
+          setError(t('storyForm.storyLimitReached') + ' [[subscribe]]');
+        }
       } else if (error.response?.data?.message) {
+        console.log('Error message from backend:', error.response.data.message);
         setError(error.response.data.message);
       } else {
         setError(t('storyForm.generalError'));
@@ -363,6 +371,12 @@ function StoryForm({ onStoryGenerated }) {
 
   // Función para manejar el clic en el enlace de inicio de sesión
   const handleLoginClick = (e) => {
+    // Scroll hacia arriba antes de navegar
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Función para manejar el clic en el enlace de suscripción
+  const handleSubscribeClick = (e) => {
     // Scroll hacia arriba antes de navegar
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -382,6 +396,12 @@ function StoryForm({ onStoryGenerated }) {
     } else {
       input.setCustomValidity('');
     }
+  };
+
+  // Función para manejar el clic en el enlace de contacto
+  const handleContactClick = (e) => {
+    // Scroll hacia arriba antes de navegar
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -514,6 +534,34 @@ function StoryForm({ onStoryGenerated }) {
                 <Link to="/login" className="error-login-link" onClick={handleLoginClick}>
                   {t('storyForm.clickToLogin')}
                 </Link>
+              </p>
+            ) : error.includes('[[subscribe]]') ? (
+              <p>
+                {error.split('[[subscribe]]').map((part, index, array) => {
+                  if (index === array.length - 1) return part;
+                  return (
+                    <React.Fragment key={index}>
+                      {part}
+                      <Link to="/subscribe" className="error-login-link" onClick={handleSubscribeClick}>
+                        {error.includes('actualizar tu plan') ? t('storyForm.updatePlan') : t('storyForm.subscribe')}
+                      </Link>
+                    </React.Fragment>
+                  );
+                })}
+              </p>
+            ) : error.includes('[[contact]]') ? (
+              <p>
+                {error.split('[[contact]]').map((part, index, array) => {
+                  if (index === array.length - 1) return part;
+                  return (
+                    <React.Fragment key={index}>
+                      {part}
+                      <Link to="/contact" className="error-login-link" onClick={handleContactClick}>
+                        {t('storyForm.contactUs')}
+                      </Link>
+                    </React.Fragment>
+                  );
+                })}
               </p>
             ) : (
               <p>{error}</p>

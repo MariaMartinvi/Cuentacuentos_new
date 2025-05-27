@@ -265,7 +265,11 @@
     "creativityStandard": "Padrão",
     "creativityInnovative": "Inovador",
     "creativityCreative": "Muito Criativo",
-    "generateButton": "Gerar História"
+    "generateButton": "Gerar História",
+    "storyLimitReached": "Você atingiu seu limite de 3 histórias gratuitas. Inscreva-se para gerar mais histórias.",
+    "premiumStoryLimitReached": "Você atingiu seu limite de 30 histórias premium. Aguarde até o dia {{day}} para gerar mais histórias.",
+    "updatePlan": "Atualizar seu plano",
+    "subscribe": "Assinar"
   },
   "login": {
     "title": "Entrar",
