@@ -38,7 +38,10 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <Link to="/" onClick={scrollToTop}>🦉 AudioGretel</Link>
+          <Link to="/" onClick={scrollToTop}>
+            <span className="emoji">🌙</span>
+            <span>AudioGretel</span>
+          </Link>
         </div>
         <div className="nav-links">
           <Link to="/" onClick={scrollToTop}>{t('navbar.home')}</Link>

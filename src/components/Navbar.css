@@ -15,22 +15,46 @@
     padding: 0.8rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    gap: 2rem;
   }
   
   .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #4361ee, #3a0ca3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
   }
   
   .logo a {
-    color: #333;
+    color: transparent;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    padding: 0.5rem 0;
+  }
+  
+  .logo a:hover {
+    transform: scale(1.02);
+  }
+  
+  .logo .emoji {
+    font-size: 2rem;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
   }
   
   .nav-links {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    height: 100%;
   }
   
   .nav-links a {
@@ -38,6 +62,10 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
   
   .nav-links a.user-name {
@@ -236,108 +264,76 @@
   @media (max-width: 768px) {
     .navbar-container {
       padding: 0.8rem 1rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
     }
     
-    .navbar-icons {
-      display: flex;
-    }
-    
-    .navbar-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background-color: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      display: block;
-    }
-    
-    .navbar-menu.open {
-      max-height: 500px;
-    }
-    
-    .navbar-list {
-      flex-direction: column;
-      padding: 0.5rem 0;
-    }
-    
-    .navbar-item {
+    .logo {
+      font-size: 1.8rem;
+      text-align: left;
       margin: 0;
-      width: 100%;
     }
-    
-    .navbar-link {
-      display: block;
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid #f0f0f0;
-      width: 100%;
+
+    .logo a {
+      justify-content: flex-start;
     }
-    
-    .navbar-link:last-child {
-      border-bottom: none;
+
+    .logo .emoji {
+      font-size: 1.6rem;
     }
-    /* Estilo para el email del usuario */
-    .user-email {
-    display: flex;
-    align-items: center;
-     }
-  
-    .navbar-email {
-    color: #555;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background-color: #f5f5f5;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    max-width: 180px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-     }
+
+    .nav-links {
+      position: static;
+      gap: 0.8rem;
+    }
+
+    .nav-links:first-of-type {
+      display: none;
+    }
+
+    .language-selector {
+      margin-left: 0.5rem;
+    }
+
+    .language-button {
+      min-width: 100px;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .user-name:not(.premium-user) {
+      max-width: 100px;
+    }
+
+    .subscribe-link {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar-container {
+      padding: 0.6rem 0.8rem;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+    }
+
+    .logo .emoji {
+      font-size: 1.4rem;
+    }
 
     .nav-links {
       gap: 0.5rem;
     }
 
-    /* Aplicar max-width solo para usuarios no premium */
-    .user-name {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-    }
-    
-    /* Los usuarios no premium tienen un ancho máximo limitado */
-    .user-name:not(.premium-user) {
-      max-width: 120px;
-    }
-    
-    /* Los usuarios premium no tienen límite de ancho */
-    .user-name.premium-user {
-      max-width: none;
+    .login-nav-button {
+      padding: 0.4rem 0.8rem !important;
+      font-size: 0.9rem !important;
     }
 
-    .subscribe-link {
-      white-space: nowrap;
-    }
-  }
-
-  /* iPhone SE and similar small devices */
-  @media (max-width: 375px) {
-    .nav-links {
-      gap: 0.3rem;
-    }
-
-    /* Los usuarios no premium tienen un ancho máximo más limitado en pantallas pequeñas */
-    .user-name:not(.premium-user) {
-      max-width: 100px;
-    }
-
-    .language-button {
-      padding: 0.3rem 0.6rem;
+    .register-nav-link {
       font-size: 0.9rem;
     }
   }

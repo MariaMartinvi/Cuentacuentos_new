@@ -407,7 +407,7 @@ function StoryForm({ onStoryGenerated }) {
   return (
     <div className="story-form-container">
       <h2>
-        <span className="icon-title">🦉</span>
+        <span className="icon-title">🌙</span>
         {t('storyForm.title')}
       </h2>
 
