@@ -11,7 +11,8 @@
     "processing": "Processant...",
     "alreadySubscribed": "Ja estàs subscrit!",
     "redirecting": "Redirigint...",
-    "cancelNote": "Pots cancel·lar la teva subscripció en qualsevol moment des del teu perfil, accessible a través del menú superior."
+    "cancelNote": "Pots cancel·lar la teva subscripció en qualsevol moment des del teu perfil, accessible a través del menú superior.",
+    "subscribeButton": "Pla Premium"
   },
   "profile": {
     "title": "El meu Perfil",
@@ -90,17 +91,19 @@
     }
   },
   "homepage": {
-    "heroTitle": "Contes personalitzats per a nens",
-    "heroDescription": "Genera contes infantils personalitzats amb intel·ligència artificial i converteix-los en àudio per aprendre idiomes",
-    "featuresTitle": "Característiques Principals",
+    "heroTitle": "Crea Contes Màgics per als teus Nens",
+    "heroDescription": "Transforma les teves idees en contes únics amb el nostre generador de contes impulsat per IA",
+    "featuresTitle": "Per què triar-nos?",
     "uniqueStoriesTitle": "Contes Únics",
-    "uniqueStoriesDescription": "Cada conte és únic i personalitzat segons les teves preferències",
+    "uniqueStoriesDescription": "Cada conte és únic i personalitzat per al teu fill",
     "multipleGenresTitle": "Múltiples Gèneres",
-    "multipleGenresDescription": "Tria entre aventura, fantasia, ciència-ficció i més",
-    "audioConversionTitle": "Conversió d'Àudio",
-    "audioConversionDescription": "Converteix els teus contes en àudio amb diferents veus i accents",
+    "multipleGenresDescription": "Tria entre diversos gèneres que coincideixin amb els interessos del teu fill",
+    "audioConversionTitle": "Conversió a Àudio",
+    "audioConversionDescription": "Converteix els teus contes en àudio d'alta qualitat",
+    "languageLevelsTitle": "Nivells d'Idioma Adaptats",
+    "languageLevelsDescription": "Contes adaptats a diferents nivells de domini de l'idioma, des de principiant fins a avançat",
     "storyExamples": {
-      "title": "Explora Els Nostres Contes",
+      "title": "Explora els Nostres Contes",
       "description": "Descobreix la nostra col·lecció de contes d'exemple per a totes les edats"
     }
   },
@@ -250,5 +253,35 @@
     "creativityInnovative": "Innovador",
     "creativityCreative": "Molt Creatiu",
     "generateButton": "Generar Conte"
+  },
+  "login": {
+    "title": "Iniciar sessió",
+    "subtitle": "Benvingut de nou",
+    "emailLabel": "Correu electrònic",
+    "emailPlaceholder": "Introdueix el teu correu electrònic",
+    "passwordLabel": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la teva contrasenya",
+    "forgotPassword": "Has oblidat la contrasenya?",
+    "loginButton": "Iniciar sessió",
+    "noAccount": "No tens compte?",
+    "register": "Registrar-se",
+    "signInWithGoogle": "Iniciar sessió amb Google"
+  },
+  "register": {
+    "title": "Crear un compte",
+    "subtitle": "Uneix-te a la nostra comunitat de contacontes",
+    "freeStories": "🎁 3 contes gratuïts en registrar-te",
+    "subscribeLater": "Pots subscriure't més tard",
+    "or": "o",
+    "emailLabel": "Correu electrònic",
+    "emailPlaceholder": "Introdueix el teu correu electrònic",
+    "passwordLabel": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la teva contrasenya",
+    "confirmPasswordLabel": "Confirmar contrasenya",
+    "confirmPasswordPlaceholder": "Torna a introduir la teva contrasenya",
+    "createAccount": "Crear compte",
+    "alreadyAccount": "Ja tens compte?",
+    "login": "Iniciar sessió",
+    "signInWithGoogle": "Registrar-se amb Google"
   }
 } 

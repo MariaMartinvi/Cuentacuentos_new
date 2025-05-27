@@ -11,7 +11,8 @@
     "processing": "Traitement en cours...",
     "alreadySubscribed": "Vous êtes déjà abonné !",
     "redirecting": "Redirection en cours...",
-    "cancelNote": "Vous pouvez annuler votre abonnement à tout moment depuis votre profil, accessible via le menu supérieur."
+    "cancelNote": "Vous pouvez annuler votre abonnement à tout moment depuis votre profil, accessible via le menu supérieur.",
+    "subscribeButton": "Plan Premium"
   },
   "profile": {
     "title": "Mon Profil",
@@ -90,17 +91,19 @@
     }
   },
   "homepage": {
-    "heroTitle": "Histoires personnalisées pour les enfants",
-    "heroDescription": "Générez des histoires pour enfants personnalisées avec l'intelligence artificielle et convertissez-les en audio pour apprendre les langues",
-    "featuresTitle": "Fonctionnalités Principales",
+    "heroTitle": "Créez des Histoires Magiques pour vos Enfants",
+    "heroDescription": "Transformez vos idées en histoires uniques avec notre générateur d'histoires alimenté par l'IA",
+    "featuresTitle": "Pourquoi nous choisir ?",
     "uniqueStoriesTitle": "Histoires Uniques",
-    "uniqueStoriesDescription": "Chaque histoire est unique et personnalisée selon vos préférences",
+    "uniqueStoriesDescription": "Chaque histoire est unique et personnalisée pour votre enfant",
     "multipleGenresTitle": "Genres Multiples",
-    "multipleGenresDescription": "Choisissez parmi l'aventure, la fantasy, la science-fiction et plus encore",
+    "multipleGenresDescription": "Choisissez parmi divers genres qui correspondent aux intérêts de votre enfant",
     "audioConversionTitle": "Conversion Audio",
-    "audioConversionDescription": "Convertissez vos histoires en audio avec différentes voix et accents",
+    "audioConversionDescription": "Convertissez vos histoires en audio de haute qualité",
+    "languageLevelsTitle": "Niveaux de Langue Adaptés",
+    "languageLevelsDescription": "Histoires adaptées à différents niveaux de maîtrise de la langue, du débutant au avancé",
     "storyExamples": {
-      "title": "Explorez Nos Histoires",
+      "title": "Explorez nos Histoires",
       "description": "Découvrez notre collection d'histoires d'exemple pour tous les âges"
     }
   },
@@ -250,5 +253,36 @@
     "creativityInnovative": "Innovant",
     "creativityCreative": "Très Créatif",
     "generateButton": "Générer l'Histoire"
+  },
+  "login": {
+    "title": "Se connecter",
+    "subtitle": "Bienvenue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "loginButton": "Se connecter",
+    "noAccount": "Pas de compte ?",
+    "register": "S'inscrire",
+    "signInWithGoogle": "Se connecter avec Google",
+    "or": "ou"
+  },
+  "register": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoignez notre communauté de conteurs",
+    "freeStories": "🎁 3 histoires gratuites à l'inscription",
+    "subscribeLater": "Vous pouvez vous abonner plus tard",
+    "or": "ou",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Entrez à nouveau votre mot de passe",
+    "createAccount": "Créer un compte",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+    "signInWithGoogle": "S'inscrire avec Google"
   }
 } 

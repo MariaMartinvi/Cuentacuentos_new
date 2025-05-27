@@ -5,10 +5,10 @@ import { login } from '../services/authService';
 import { useAuth } from '../contexts/AuthContext';
 import './Login.css';
 import SEO from './SEO';
-import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import config from '../config';
+import GoogleButton from './GoogleButton';
 
 // Use API URL from config
 const API_URL = config.apiUrl;
@@ -133,11 +133,12 @@ const Login = () => {
           </div>
         )}
         
-        <div className="google-login-section" style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-          <GoogleLogin
+        <div className="google-login-section">
+          <GoogleButton
             onSuccess={handleGoogleLoginSuccess}
             onError={handleGoogleLoginError}
             useOneTap
+            type="login"
           />
         </div>
 

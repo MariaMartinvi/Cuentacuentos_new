@@ -11,7 +11,8 @@
     "processing": "Verarbeitung läuft...",
     "alreadySubscribed": "Sie sind bereits Abonnent!",
     "redirecting": "Weiterleitung läuft...",
-    "cancelNote": "Sie können Ihr Abonnement jederzeit über Ihr Profil kündigen, das über das Menü oben zugänglich ist."
+    "cancelNote": "Sie können Ihr Abonnement jederzeit über Ihr Profil kündigen, das über das Menü oben zugänglich ist.",
+    "subscribeButton": "Premium-Plan"
   },
   "profile": {
     "title": "Mein Profil",
@@ -90,18 +91,20 @@
     }
   },
   "homepage": {
-    "heroTitle": "Personalisiertes Geschichtenerzählen für Kinder",
-    "heroDescription": "Generieren Sie personalisierte Kindergeschichten mit KI und wandeln Sie sie in Audio um, um Sprachen zu lernen",
-    "featuresTitle": "Hauptfunktionen",
+    "heroTitle": "Erstelle magische Geschichten für deine Kinder",
+    "heroDescription": "Verwandle deine Ideen in einzigartige Geschichten mit unserem KI-gestützten Geschichtengenerator",
+    "featuresTitle": "Warum uns wählen?",
     "uniqueStoriesTitle": "Einzigartige Geschichten",
-    "uniqueStoriesDescription": "Jede Geschichte ist einzigartig und nach Ihren Vorlieben personalisiert",
-    "multipleGenresTitle": "Verschiedene Genres",
-    "multipleGenresDescription": "Wählen Sie zwischen Abenteuer, Fantasy, Science-Fiction und mehr",
+    "uniqueStoriesDescription": "Jede Geschichte ist einzigartig und für dein Kind personalisiert",
+    "multipleGenresTitle": "Mehrere Genres",
+    "multipleGenresDescription": "Wähle aus verschiedenen Genres, die den Interessen deines Kindes entsprechen",
     "audioConversionTitle": "Audio-Konvertierung",
-    "audioConversionDescription": "Wandeln Sie Ihre Geschichten in Audio mit verschiedenen Stimmen und Akzenten um",
+    "audioConversionDescription": "Konvertiere deine Geschichten in hochwertiges Audio",
+    "languageLevelsTitle": "Angepasste Sprachniveaus",
+    "languageLevelsDescription": "Geschichten, die an verschiedene Sprachniveaus angepasst sind, von Anfänger bis Fortgeschritten",
     "storyExamples": {
-      "title": "Entdecken Sie unsere Geschichten",
-      "description": "Entdecken Sie unsere Sammlung von Beispielgeschichten für alle Altersgruppen"
+      "title": "Entdecke unsere Geschichten",
+      "description": "Entdecke unsere Sammlung von Beispielgeschichten für alle Altersgruppen"
     }
   },
   "common": {
@@ -251,5 +254,36 @@
     "creativityInnovative": "Innovativ",
     "creativityCreative": "Sehr Kreativ",
     "generateButton": "Geschichte generieren"
+  },
+  "login": {
+    "title": "Anmelden",
+    "subtitle": "Willkommen zurück",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+    "forgotPassword": "Passwort vergessen?",
+    "loginButton": "Anmelden",
+    "noAccount": "Noch kein Konto?",
+    "register": "Registrieren",
+    "signInWithGoogle": "Mit Google anmelden",
+    "or": "oder"
+  },
+  "register": {
+    "title": "Konto erstellen",
+    "subtitle": "Werden Sie Teil unserer Geschichtenerzähler-Community",
+    "freeStories": "🎁 3 kostenlose Geschichten bei der Registrierung",
+    "subscribeLater": "Sie können sich später abonnieren",
+    "or": "oder",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Geben Sie Ihr Passwort erneut ein",
+    "createAccount": "Konto erstellen",
+    "alreadyAccount": "Haben Sie bereits ein Konto?",
+    "login": "Anmelden",
+    "signInWithGoogle": "Mit Google registrieren"
   }
 } 

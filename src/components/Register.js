@@ -5,8 +5,8 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import './Register.css';
 import SEO from './SEO';
-import { GoogleLogin } from '@react-oauth/google';
 import config from '../config';
+import GoogleButton from './GoogleButton';
 
 // Use API URL from config
 const API_URL = config.apiUrl;
@@ -134,11 +134,12 @@ const Register = () => {
         {error && <div className="error-message">{error}</div>}
         {success && <div className="success-message">{success}</div>}
         
-        <div className="google-register-section" style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-          <GoogleLogin
+        <div className="google-login-section">
+          <GoogleButton
             onSuccess={handleGoogleRegisterSuccess}
             onError={handleGoogleRegisterError}
             useOneTap
+            type="register"
           />
         </div>
 

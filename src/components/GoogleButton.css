@@ -1,0 +1,20 @@
+.google-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Override Google's default button styles */
+.google-button-container button {
+  font-family: inherit !important;
+  font-size: 14px !important;
+  padding: 0 16px !important;
+  height: 40px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.google-button-container button:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2) !important;
+} 

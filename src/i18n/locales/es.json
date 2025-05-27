@@ -11,7 +11,8 @@
     "processing": "Procesando...",
     "alreadySubscribed": "¡Ya estás suscrito!",
     "redirecting": "Redirigiendo...",
-    "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior."
+    "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior.",
+    "subscribeButton": "Plan Premium"
   },
   "profile": {
     "title": "Mi Perfil",
@@ -529,5 +530,36 @@
     },
     "share": "Compartir este artículo",
     "relatedPosts": "Artículos Relacionados"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Bienvenido de nuevo",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Introduce tu email",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "loginButton": "Iniciar sesión",
+    "noAccount": "¿No tienes cuenta?",
+    "register": "Regístrate",
+    "signInWithGoogle": "Iniciar sesión con Google",
+    "or": "o"
+  },
+  "register": {
+    "title": "Crear una cuenta",
+    "subtitle": "Únete a nuestra comunidad de cuentacuentos",
+    "freeStories": "🎁 3 cuentos gratuitos al registrarte",
+    "subscribeLater": "Puedes suscribirte más tarde",
+    "or": "o",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Introduce tu email",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Vuelve a introducir tu contraseña",
+    "createAccount": "Crear cuenta",
+    "alreadyAccount": "¿Ya tienes cuenta?",
+    "login": "Iniciar sesión",
+    "signInWithGoogle": "Registrarse con Google"
   }
 } 
