@@ -2,5 +2,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://micuentacuentos.com/sitemap.xml
-Sitemap: https://micuentacuentos.com/dynamic-sitemap.xml
+Sitemap: https://audiogretel.com/sitemap.xml
+Sitemap: https://audiogretel.com/dynamic-sitemap.xml

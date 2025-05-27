@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
  * @param {string} props.currentPageName Name of the current page (last item in breadcrumb)
  */
 const BreadcrumbSchema = ({ items = [], currentPageName }) => {
-  const siteUrl = 'https://micuentacuentos.com';
+  const siteUrl = 'https://audiogretel.com';
   
   // Create the breadcrumb list with proper formatting
   const breadcrumbList = items.map((item, index) => {

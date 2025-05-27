@@ -10,7 +10,7 @@ import { useEffect } from 'react';
  * @returns {String} XML content
  */
 export function generateSitemapXml(urls = []) {
-  const baseUrl = 'https://micuentacuentos.com';
+  const baseUrl = 'https://audiogretel.com';
   
   // Start XML sitemap format
   let xml = `<?xml version="1.0" encoding="UTF-8"?>

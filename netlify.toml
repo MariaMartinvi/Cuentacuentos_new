@@ -19,4 +19,4 @@
   status = 200
 
 [build.environment]
-  REACT_APP_API_URL = "https://api.micuentacuentos.com" 
+  REACT_APP_API_URL = "https://api.audiogretel.com" 

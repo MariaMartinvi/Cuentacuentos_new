@@ -424,7 +424,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
       if (navigator.share) {
         await navigator.share({
           title: title || 'Audio',
-          text: `${title || 'Audio'}\n\nEscucha más cuentos en Mi Cuentacuentos https://www.micuentacuentos.com/`,
+          text: `${title || 'Audio'}\n\nEscucha más cuentos en AudioGretel https://www.audiogretel.com/`,
           files: [file]
         });
       } else {

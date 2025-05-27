@@ -17,10 +17,10 @@ const SEO = ({
   children
 }) => {
   // Valores por defecto para SEO
-  const defaultTitle = 'Mi Cuentacuentos - Audiocuentos personalizados para niños';
+  const defaultTitle = 'AudioGretel - Audiocuentos personalizados para niños';
   const defaultDescription = 'Genera cuentos personalizados para niños con inteligencia artificial. Convierte historias en audio con diferentes voces y acentos.';
   const defaultKeywords = ['cuentos para niños', 'audiocuentos', 'historias personalizadas', 'cuentos en audio', 'aprender idiomas', 'cuentos en inglés', 'cuentos en español'];
-  const siteUrl = 'https://micuentacuentos.com';
+  const siteUrl = 'https://audiogretel.com';
 
   // Usar valores proporcionados o valores por defecto
   const seoTitle = title || defaultTitle;
@@ -37,12 +37,12 @@ const SEO = ({
     url: seoUrl,
     author: {
       '@type': 'Organization',
-      name: 'Mi Cuentacuentos',
+      name: 'AudioGretel',
       url: siteUrl,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Mi Cuentacuentos',
+      name: 'AudioGretel',
       url: siteUrl,
       logo: {
         '@type': 'ImageObject',
@@ -80,7 +80,7 @@ const SEO = ({
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
       <meta property="og:image" content={`${siteUrl}${ogImage}`} />
-      <meta property="og:site_name" content="Mi Cuentacuentos" />
+      <meta property="og:site_name" content="AudioGretel" />
       <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
       
       {/* Article specific tags */}
@@ -97,7 +97,7 @@ const SEO = ({
       {/* Metadatos adicionales */}
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow" />
-      <meta name="author" content="Mi Cuentacuentos" />
+      <meta name="author" content="AudioGretel" />
       
       {/* Mobile SEO */}
       <meta name="format-detection" content="telephone=no" />

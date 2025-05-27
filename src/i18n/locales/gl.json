@@ -411,7 +411,7 @@
     "info": {
       "title": "Información de Contacto",
       "email": "Correo electrónico",
-      "emailValue": "hola@micuentacuentos.com",
+      "emailValue": "hola@audiogretel.com",
       "phone": "Teléfono",
       "phoneValue": "+34 900 000 000",
       "address": "Enderezo",
@@ -445,5 +445,12 @@
       "pt": "Portugués"
     }
   },
-  "alertTopicRequired": "Escribe aquí o tema do teu conto"
+  "alertTopicRequired": "Escribe aquí o tema do teu conto",
+  "cookies": {
+    "title": "Configuración de Cookies",
+    "description": "Utilizamos cookies para: 1) Manter a túa sesión activa. 2) Recordar as túas preferencias. 3) Analizar o uso do sitio. 4) Mellorar o rendemento. Podes xestionar as túas preferencias de cookies en calquera momento. Algunhas funcións poden non estar dispoñibles se desactivas as cookies esenciais.",
+    "accept": "Aceptar Todo",
+    "reject": "Rexeitar Todo",
+    "moreInfo": "Máis Información"
+  }
 } 

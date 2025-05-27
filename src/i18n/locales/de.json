@@ -407,7 +407,7 @@
     "info": {
       "title": "Kontaktinformationen",
       "email": "E-Mail",
-      "emailValue": "hola@micuentacuentos.com",
+      "emailValue": "hola@audiogretel.com",
       "phone": "Telefon",
       "phoneValue": "+34 900 000 000",
       "address": "Adresse",
@@ -440,5 +440,12 @@
       "eu": "Baskisch",
       "pt": "Portugiesisch"
     }
+  },
+  "cookies": {
+    "title": "Cookie-Einstellungen",
+    "description": "Wir verwenden Cookies für: 1) Aufrechterhaltung Ihrer aktiven Sitzung. 2) Speicherung Ihrer Präferenzen. 3) Analyse der Nutzung der Website. 4) Verbesserung der Leistung. Sie können Ihre Cookie-Präferenzen jederzeit verwalten. Einige Funktionen sind möglicherweise nicht verfügbar, wenn Sie essentielle Cookies deaktivieren.",
+    "accept": "Alle Akzeptieren",
+    "reject": "Alle Ablehnen",
+    "moreInfo": "Weitere Informationen"
   }
 } 

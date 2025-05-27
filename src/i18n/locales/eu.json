@@ -408,7 +408,7 @@
     "info": {
       "title": "Kontaktu Informazioa",
       "email": "Posta elektronikoa",
-      "emailValue": "hola@micuentacuentos.com",
+      "emailValue": "hola@audiogretel.com",
       "phone": "Telefonoa",
       "phoneValue": "+34 900 000 000",
       "address": "Helbidea",
@@ -442,5 +442,12 @@
       "pt": "Portugesa"
     }
   },
-  "alertTopicRequired": "Idatzi hemen zure ipuinaren gaia"
+  "alertTopicRequired": "Idatzi hemen zure ipuinaren gaia",
+  "cookies": {
+    "title": "Cookie Ezarpenak",
+    "description": "Cookie-ak honetarako erabiltzen ditugu: 1) Zure saioa aktibo mantentzeko. 2) Zure hobespenak gogoratzeko. 3) Gunearen erabilera analizatzeko. 4) Errendimendua hobetzeko. Zure cookie hobespenak edozein unetan kudeatu ditzakezu. Funtzio batzuk ez daude eskuragarri cookie ezinbestekoak desaktibatzen badituzu.",
+    "accept": "Denak Onartu",
+    "reject": "Denak Ukatu",
+    "moreInfo": "Informazio Gehiago"
+  }
 } 

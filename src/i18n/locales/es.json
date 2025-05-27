@@ -129,14 +129,14 @@
     "loading": "Cargando..."
   },
   "footer": {
-    "title": "Generador de Cuentos con IA",
+    "title": "AudioGretel",
     "description": "Crea cuentos atractivos en inglés con inteligencia artificial. Personaliza, genera y escucha tus cuentos con nuestra herramienta gratuita.",
     "quickLinks": "Enlaces Rápidos",
     "howItWorks": "Cómo Funciona",
     "aboutUs": "Sobre Nosotros",
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
-    "copyright": "© 2025 Generador de Cuentos con IA. Todos los derechos reservados.",
+    "copyright": "© 2025 AudioGretel. Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "inBarcelona": "en Barcelona",
     "storyExamples": "Ejemplos de Cuentos",
@@ -347,7 +347,7 @@
     "info": {
       "title": "Información de Contacto",
       "email": "Correo electrónico",
-      "emailText": "info@micuentacuentos.com",
+      "emailText": "info@audiogretel.com",
       "location": "Ubicación",
       "locationText": "Barcelona, España",
       "hours": "Horario de Atención",
@@ -357,13 +357,13 @@
   "terminos": {
     "title": "Términos y Condiciones",
     "introduccion": "Introducción",
-    "introduccionTexto": "Bienvenido a Mi Cuentacuentos. Al acceder y utilizar nuestro servicio, aceptas estos términos y condiciones. Estos términos rigen tu uso de nuestra plataforma de generación de cuentos personalizados.",
+    "introduccionTexto": "Bienvenido a AudioGretel. Al acceder y utilizar nuestro servicio, aceptas estos términos y condiciones. Estos términos rigen tu uso de nuestra plataforma de generación de cuentos personalizados.",
     "uso": "Uso del Servicio",
     "usoTexto": "Nuestro servicio está destinado a generar cuentos personalizados. Debes usar el servicio de manera responsable y respetando los derechos de autor. No está permitido: 1) Generar contenido ilegal, ofensivo o inapropiado. 2) Intentar acceder a áreas restringidas del sistema. 3) Compartir tu cuenta con terceros. 4) Usar el servicio para fines comerciales sin autorización.",
     "suscripcion": "Suscripción y Pagos",
     "suscripcionTexto": "Ofrecemos planes gratuitos y de pago. Las suscripciones se renuevan automáticamente y pueden cancelarse en cualquier momento. Los pagos se procesan de forma segura a través de Stripe. No almacenamos información de tarjetas de crédito. Los usuarios del plan gratuito tienen acceso limitado a ciertas funciones. El plan premium ofrece acceso ilimitado a todas las funciones.",
     "propiedad": "Propiedad Intelectual",
-    "propiedadTexto": "Los cuentos generados son propiedad del usuario que los crea. Mi Cuentacuentos se reserva el derecho de usar los cuentos de forma anónima para mejorar el servicio. La plataforma y su tecnología son propiedad exclusiva de Mi Cuentacuentos. No está permitido copiar, modificar o distribuir el código o la interfaz sin autorización.",
+    "propiedadTexto": "Los cuentos generados son propiedad del usuario que los crea. AudioGretel se reserva el derecho de usar los cuentos de forma anónima para mejorar el servicio. La plataforma y su tecnología son propiedad exclusiva de AudioGretel. No está permitido copiar, modificar o distribuir el código o la interfaz sin autorización.",
     "limitacion": "Limitación de Responsabilidad",
     "limitacionTexto": "No somos responsables del contenido generado por los usuarios ni de ningún daño resultante del uso del servicio. El servicio se proporciona 'tal cual' sin garantías de ningún tipo. No garantizamos la disponibilidad continua del servicio ni la precisión de los cuentos generados.",
     "contacto": "Contacto y Soporte",
@@ -372,7 +372,7 @@
   "politica": {
     "title": "Política de Privacidad",
     "introduccion": "Introducción",
-    "introduccionTexto": "En Mi Cuentacuentos, nos tomamos muy en serio la privacidad de nuestros usuarios. Esta política explica cómo manejamos tus datos personales y cómo protegemos tu privacidad mientras utilizas nuestro servicio de generación de cuentos.",
+    "introduccionTexto": "En AudioGretel, nos tomamos muy en serio la privacidad de nuestros usuarios. Esta política explica cómo manejamos tus datos personales y cómo protegemos tu privacidad mientras utilizas nuestro servicio de generación de cuentos.",
     "datos": "Datos que Recopilamos",
     "datosTexto": "Recopilamos la siguiente información: 1) Datos de registro: nombre, correo electrónico y contraseña (encriptada). 2) Datos de uso: preferencias de cuentos, historial de generación y configuración. 3) Datos de pago: procesados de forma segura por Stripe, sin almacenar información de tarjetas. 4) Cookies: para mejorar la experiencia y analizar el uso del sitio.",
     "usoDatos": "Uso de Datos",
@@ -593,5 +593,12 @@
     "signInWithGoogle": "Registrarse con Google",
     "passwordsDontMatch": "Las contraseñas no coinciden",
     "loading": "Procesando..."
+  },
+  "cookies": {
+    "title": "Configuración de Cookies",
+    "description": "Usamos cookies para: 1) Mantener tu sesión activa. 2) Recordar tus preferencias. 3) Analizar el uso del sitio. 4) Mejorar el rendimiento. Puedes gestionar tus preferencias de cookies en cualquier momento. Algunas funciones pueden no estar disponibles si desactivas las cookies esenciales.",
+    "accept": "Aceptar Todo",
+    "reject": "Rechazar Todo",
+    "moreInfo": "Más Información"
   }
 } 

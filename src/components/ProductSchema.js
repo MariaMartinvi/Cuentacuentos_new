@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
  * @param {string} props.availability Product availability (default: InStock)
  * @param {string} props.url Product URL
  * @param {string} props.sku Product SKU/ID
- * @param {string} props.brand Product brand (default: Mi Cuentacuentos)
+ * @param {string} props.brand Product brand (default: AudioGretel)
  * @param {string} props.priceValidUntil Date price is valid until (YYYY-MM-DD)
  */
 const ProductSchema = ({
@@ -24,10 +24,10 @@ const ProductSchema = ({
   availability = 'InStock',
   url,
   sku,
-  brand = 'Mi Cuentacuentos',
+  brand = 'AudioGretel',
   priceValidUntil
 }) => {
-  const siteUrl = 'https://micuentacuentos.com';
+  const siteUrl = 'https://audiogretel.com';
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
   const fullUrl = url ? (url.startsWith('http') ? url : `${siteUrl}${url}`) : siteUrl;
 

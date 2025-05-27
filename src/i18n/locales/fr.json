@@ -314,5 +314,12 @@
     "signInWithGoogle": "S'inscrire avec Google",
     "passwordsDontMatch": "Les mots de passe ne correspondent pas",
     "loading": "Traitement en cours..."
+  },
+  "cookies": {
+    "title": "Paramètres des Cookies",
+    "description": "Nous utilisons des cookies pour : 1) Maintenir votre session active. 2) Mémoriser vos préférences. 3) Analyser l'utilisation du site. 4) Améliorer les performances. Vous pouvez gérer vos préférences de cookies à tout moment. Certaines fonctionnalités peuvent ne pas être disponibles si vous désactivez les cookies essentiels.",
+    "accept": "Tout Accepter",
+    "reject": "Tout Refuser",
+    "moreInfo": "Plus d'Informations"
   }
 } 

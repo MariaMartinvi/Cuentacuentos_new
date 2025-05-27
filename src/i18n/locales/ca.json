@@ -411,7 +411,7 @@
     "info": {
       "title": "Informació de Contacte",
       "email": "Correu electrònic",
-      "emailValue": "hola@micuentacuentos.com",
+      "emailValue": "hola@audiogretel.com",
       "phone": "Telèfon",
       "phoneValue": "+34 900 000 000",
       "address": "Adreça",
@@ -444,5 +444,12 @@
       "eu": "Euskera",
       "pt": "Portuguès"
     }
+  },
+  "cookies": {
+    "title": "Configuració de Cookies",
+    "description": "Utilitzem cookies per: 1) Mantenir la teva sessió activa. 2) Recordar les teves preferències. 3) Analitzar l'ús del lloc. 4) Millorar el rendiment. Pots gestionar les teves preferències de cookies en qualsevol moment. Algunes funcions poden no estar disponibles si desactives les cookies essencials.",
+    "accept": "Acceptar Tot",
+    "reject": "Rebutjar Tot",
+    "moreInfo": "Més Informació"
   }
 } 
