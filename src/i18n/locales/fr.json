@@ -207,8 +207,8 @@
     "childNamesLabel": "Noms des Enfants (optionnel)",
     "childNames": "Noms des Enfants (optionnel)",
     "childNamesPlaceholder": "Entrez les noms séparés par des virgules...",
-    "englishLevelLabel": "Niveau d'Anglais",
-    "englishLevel": "Niveau d'Anglais",
+    "englishLevelLabel": "Niveau de Français",
+    "englishLevel": "Niveau de Français",
     "loginRequired": "Veuillez vous connecter pour générer des histoires",
     "clickToLogin": "Cliquez ici pour vous connecter",
     "englishLevels": {

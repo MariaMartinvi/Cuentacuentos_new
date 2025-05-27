@@ -240,8 +240,8 @@
     "childNamesLabel": "Nombres de los Niños (opcional)",
     "childNames": "Nombres de los Niños (opcional)",
     "childNamesPlaceholder": "Ingresa nombres separados por comas...",
-    "englishLevelLabel": "Nivel de Inglés",
-    "englishLevel": "Nivel de Inglés",
+    "englishLevelLabel": "Nivel de Español",
+    "englishLevel": "Nivel de Español",
     "englishLevels": {
       "beginner": "Principiante",
       "intermediate": "Intermedio",
