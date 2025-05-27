@@ -47,16 +47,28 @@
     "learnMore": "Gehiago jakin"
   },
   "storyExamples": {
-    "title": "Ipuin Pertsonalizatuen Adibideak",
-    "description": "Esploratu Mi Cuentacuentos-ek sortutako adibide ipuinen bilduma, adin eta hizkuntza maila guztietarako.",
+    "title": "Esploratu gure ipuinak",
+    "description": "Aurkitu adin guztietarako ipuin adibideen bilduma",
+    "storyCard": {
+      "protagonist": "Protagonista",
+      "ageRange": "urte",
+      "readStory": "Ipuina irakurri",
+      "listenAudio": "Audioa entzun"
+    },
+    "filters": {
+      "title": "Iragazi honen arabera:",
+      "level": "Maila",
+      "language": "Hizkuntza",
+      "age": "Adina"
+    },
+    "levels": {
+      "all": "Maila guztiak",
+      "beginner": "Hasiberria",
+      "intermediate": "Ertaina",
+      "advanced": "Aurreratua"
+    },
     "viewStory": "Ipuina Ikusi",
     "noResults": "Ez da ipuinik aurkitu hautatutako iragazkiekin.",
-    "filters": {
-      "title": "Iragazkiak:",
-      "age": "Adina",
-      "language": "Hizkuntza",
-      "level": "Maila"
-    },
     "ageGroups": {
       "all": "Adin guztiak",
       "3to5": "3-5 urte",
@@ -74,21 +86,6 @@
       "galician": "Galiziera",
       "basque": "Euskara",
       "pt": "Portugesa"
-    },
-    "levels": {
-      "all": "Maila guztiak",
-      "beginner": "Hasiberria",
-      "intermediate": "Ertaina",
-      "advanced": "Aurreratua"
-    },
-    "storyCard": {
-      "recommendedAge": "Gomendatutako adina:",
-      "language": "Hizkuntza:",
-      "level": "Maila:",
-      "readStory": "Ipuina irakurri",
-      "listenAudio": "Audioa entzun",
-      "usingMockContent": "Adibide edukia erabiltzen",
-      "protagonist": "Protagonista"
     },
     "mockContent": {
       "badge": "Adibidea",

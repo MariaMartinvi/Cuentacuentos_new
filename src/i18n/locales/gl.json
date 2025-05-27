@@ -47,8 +47,8 @@
     "learnMore": "Máis información"
   },
   "storyExamples": {
-    "title": "Exemplos de Contos Personalizados",
-    "description": "Explora a nosa colección de contos de exemplo xerados por Mi Cuentacuentos para todas as idades e niveis de idioma.",
+    "title": "Explora os nosos contos",
+    "description": "Descubre a nosa colección de contos de exemplo para todas as idades",
     "viewStory": "Ver Conto",
     "noResults": "Non se atoparon contos cos filtros seleccionados.",
     "filters": {
@@ -87,7 +87,8 @@
       "readStory": "Ler conto",
       "listenAudio": "Escoitar audio",
       "usingMockContent": "Usando contido de exemplo",
-      "protagonist": "Protagonista"
+      "protagonist": "Protagonista",
+      "ageRange": "anos"
     },
     "mockContent": {
       "badge": "Exemplo",

@@ -47,15 +47,15 @@
     "learnMore": "Saiba mais"
   },
   "storyExamples": {
-    "title": "Exemplos de Histórias Personalizadas",
-    "description": "Explore nossa coleção de histórias de exemplo geradas pelo Mi Cuentacuentos para todas as idades e níveis de idioma.",
+    "title": "Explore nossas histórias",
+    "description": "Descubra nossa coleção de histórias de exemplo para todas as idades",
     "viewStory": "Ver História",
     "noResults": "Nenhuma história encontrada com os filtros selecionados.",
     "filters": {
       "title": "Filtrar por:",
-      "age": "Idade",
+      "level": "Nível",
       "language": "Idioma",
-      "level": "Nível"
+      "age": "Idade"
     },
     "ageGroups": {
       "all": "Todas as idades",
@@ -82,13 +82,10 @@
       "advanced": "Avançado"
     },
     "storyCard": {
-      "recommendedAge": "Idade recomendada:",
-      "language": "Idioma:",
-      "level": "Nível:",
+      "protagonist": "Protagonista",
+      "ageRange": "anos",
       "readStory": "Ler história",
-      "listenAudio": "Ouvir áudio",
-      "usingMockContent": "Usando conteúdo de exemplo",
-      "protagonist": "Protagonista"
+      "listenAudio": "Ouvir áudio"
     },
     "mockContent": {
       "badge": "Exemplo",

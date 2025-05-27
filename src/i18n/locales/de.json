@@ -47,16 +47,28 @@
     "learnMore": "Mehr erfahren"
   },
   "storyExamples": {
-    "title": "Beispielgeschichten",
-    "description": "Entdecken Sie unsere Sammlung von Beispielgeschichten, die von Mi Cuentacuentos für alle Altersgruppen und Sprachniveaus generiert wurden.",
-    "viewStory": "Geschichte ansehen",
-    "noResults": "Keine Geschichten mit den ausgewählten Filtern gefunden.",
+    "title": "Entdecke unsere Geschichten",
+    "description": "Entdecke unsere Sammlung von Beispielgeschichten für alle Altersgruppen",
+    "storyCard": {
+      "protagonist": "Protagonist",
+      "ageRange": "Jahre",
+      "readStory": "Geschichte lesen",
+      "listenAudio": "Audio hören"
+    },
     "filters": {
       "title": "Filtern nach:",
-      "age": "Alter",
+      "level": "Niveau",
       "language": "Sprache",
-      "level": "Niveau"
+      "age": "Alter"
     },
+    "levels": {
+      "all": "Alle Niveaus",
+      "beginner": "Anfänger",
+      "intermediate": "Mittelstufe",
+      "advanced": "Fortgeschritten"
+    },
+    "viewStory": "Geschichte ansehen",
+    "noResults": "Keine Geschichten mit den ausgewählten Filtern gefunden.",
     "ageGroups": {
       "all": "Alle Altersgruppen",
       "3to5": "3-5 Jahre",
@@ -71,21 +83,6 @@
       "german": "Deutsch",
       "italian": "Italienisch",
       "french": "Französisch"
-    },
-    "levels": {
-      "all": "Alle Niveaus",
-      "beginner": "Anfänger",
-      "intermediate": "Mittelstufe",
-      "advanced": "Fortgeschritten"
-    },
-    "storyCard": {
-      "recommendedAge": "Empfohlenes Alter:",
-      "language": "Sprache:",
-      "level": "Niveau:",
-      "readStory": "Geschichte lesen",
-      "listenAudio": "Audio anhören",
-      "usingMockContent": "Verwendet Beispielinhalt",
-      "protagonist": "Protagonist"
     },
     "mockContent": {
       "badge": "Beispiel",

@@ -47,16 +47,28 @@
     "learnMore": "En savoir plus"
   },
   "storyExamples": {
-    "title": "Exemples d'Histoires Personnalisées",
-    "description": "Explorez notre collection d'histoires d'exemple générées par Mi Cuentacuentos pour tous les âges et niveaux de langue.",
-    "viewStory": "Voir l'Histoire",
-    "noResults": "Aucune histoire trouvée avec les filtres sélectionnés.",
+    "title": "Explorez nos histoires",
+    "description": "Découvrez notre collection d'histoires d'exemple pour tous les âges",
+    "storyCard": {
+      "protagonist": "Protagoniste",
+      "ageRange": "ans",
+      "readStory": "Lire l'histoire",
+      "listenAudio": "Écouter l'audio"
+    },
     "filters": {
       "title": "Filtrer par :",
-      "age": "Âge",
+      "level": "Niveau",
       "language": "Langue",
-      "level": "Niveau"
+      "age": "Âge"
     },
+    "levels": {
+      "all": "Tous les niveaux",
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé"
+    },
+    "viewStory": "Voir l'Histoire",
+    "noResults": "Aucune histoire trouvée avec les filtres sélectionnés.",
     "ageGroups": {
       "all": "Tous les âges",
       "3to5": "3-5 ans",
@@ -71,21 +83,6 @@
       "german": "Allemand",
       "italian": "Italien",
       "french": "Français"
-    },
-    "levels": {
-      "all": "Tous les niveaux",
-      "beginner": "Débutant",
-      "intermediate": "Intermédiaire",
-      "advanced": "Avancé"
-    },
-    "storyCard": {
-      "recommendedAge": "Âge recommandé :",
-      "language": "Langue :",
-      "level": "Niveau :",
-      "readStory": "Lire l'histoire",
-      "listenAudio": "Écouter l'audio",
-      "usingMockContent": "Utilisation de contenu d'exemple",
-      "protagonist": "Protagoniste"
     },
     "mockContent": {
       "badge": "Exemple",

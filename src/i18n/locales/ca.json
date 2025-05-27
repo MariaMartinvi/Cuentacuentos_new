@@ -47,15 +47,15 @@
     "learnMore": "Més informació"
   },
   "storyExamples": {
-    "title": "Exemples de Contes Personalitzats",
-    "description": "Explora la nostra col·lecció de contes d'exemple generats per Mi Cuentacuentos per a totes les edats i nivells d'idioma.",
+    "title": "Explora els nostres contes",
+    "description": "Descobreix la nostra col·lecció de contes d'exemple per a totes les edats",
     "viewStory": "Veure Conte",
     "noResults": "No s'han trobat contes amb els filtres seleccionats.",
     "filters": {
       "title": "Filtrar per:",
-      "age": "Edat",
+      "level": "Nivell",
       "language": "Idioma",
-      "level": "Nivell"
+      "age": "Edat"
     },
     "ageGroups": {
       "all": "Totes les edats",
@@ -82,13 +82,10 @@
       "advanced": "Avançat"
     },
     "storyCard": {
-      "recommendedAge": "Edat recomanada:",
-      "language": "Idioma:",
-      "level": "Nivell:",
+      "protagonist": "Protagonista",
+      "ageRange": "anys",
       "readStory": "Llegir conte",
-      "listenAudio": "Escoltar àudio",
-      "usingMockContent": "Utilitzant contingut d'exemple",
-      "protagonist": "Protagonista"
+      "listenAudio": "Escoltar àudio"
     },
     "mockContent": {
       "badge": "Exemple",

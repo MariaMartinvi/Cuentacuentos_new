@@ -47,15 +47,15 @@
     "learnMore": "Más información"
   },
   "storyExamples": {
-    "title": "Ejemplos de Cuentos Personalizados",
-    "description": "Explora nuestra colección de cuentos de ejemplo generados por Mi Cuentacuentos para todas las edades y niveles de idioma.",
+    "title": "Explora nuestros cuentos",
+    "description": "Descubre nuestra colección de cuentos de ejemplo para todas las edades",
     "viewStory": "Ver Cuento",
     "noResults": "No se encontraron cuentos con los filtros seleccionados.",
     "filters": {
       "title": "Filtrar por:",
-      "age": "Edad",
+      "level": "Nivel",
       "language": "Idioma",
-      "level": "Nivel"
+      "age": "Edad"
     },
     "ageGroups": {
       "all": "Todas las edades",
@@ -71,7 +71,7 @@
       "german": "Alemán",
       "italian": "Italiano",
       "french": "Francés",
-      "galician": "Gallego",
+      "galician": "Galego",
       "basque": "Euskera",
       "portuguese": "Portugués"
     },
@@ -82,13 +82,10 @@
       "advanced": "Avanzado"
     },
     "storyCard": {
-      "recommendedAge": "Edad recomendada:",
-      "language": "Idioma:",
-      "level": "Nivel:",
+      "protagonist": "Protagonista",
+      "ageRange": "años",
       "readStory": "Leer cuento",
-      "listenAudio": "Escuchar audio",
-      "usingMockContent": "Usando contenido de ejemplo",
-      "protagonist": "Protagonista"
+      "listenAudio": "Escuchar audio"
     },
     "mockContent": {
       "badge": "Ejemplo",
@@ -189,8 +186,8 @@
     "voiceMaleEnglish": "Masculina (Inglés)",
     "voiceFemaleCatalan": "Femenina (Catalán)",
     "voiceMaleCatalan": "Masculina (Catalán)",
-    "voiceFemaleGalician": "Femenina (Gallego)",
-    "voiceMaleGalician": "Masculina (Gallego)",
+    "voiceFemaleGalician": "Femenina (Galego)",
+    "voiceMaleGalician": "Masculina (Galego)",
     "voiceFemaleBasque": "Femenina (Euskera)",
     "voiceMaleBasque": "Masculina (Euskera)",
     "voiceFemaleGerman": "Femenina (Alemán)",
@@ -230,7 +227,7 @@
       "fr": "Francés",
       "it": "Italiano",
       "de": "Alemán",
-      "gl": "Gallego",
+      "gl": "Galego",
       "eu": "Euskera",
       "pt": "Portugués"
     }
