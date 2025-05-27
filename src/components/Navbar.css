@@ -21,9 +21,14 @@
   .logo {
     font-size: 2.2rem;
     font-weight: 800;
+    background: linear-gradient(45deg, #4361ee, #3a0ca3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    transition: all 0.3s ease;
   }
   
   .logo a {
@@ -31,12 +36,18 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    gap: 10px;
     height: 100%;
     padding: 0.5rem 0;
   }
   
   .logo a:hover {
     transform: scale(1.02);
+  }
+  
+  .logo .emoji {
+    font-size: 2rem;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
   }
   
   .logo img {
@@ -266,6 +277,7 @@
     }
     
     .logo {
+      font-size: 3.5rem;
       text-align: center;
       margin: 0;
       justify-content: center;
@@ -274,6 +286,10 @@
     .logo a {
       justify-content: center;
       width: 100%;
+    }
+
+    .logo .emoji {
+      font-size: 3.3rem;
     }
 
     .logo img {
@@ -324,11 +340,16 @@
     }
 
     .logo {
+      font-size: 3.2rem;
       text-align: center;
     }
 
     .logo a {
       justify-content: center;
+    }
+
+    .logo .emoji {
+      font-size: 3rem;
     }
 
     .logo img {
