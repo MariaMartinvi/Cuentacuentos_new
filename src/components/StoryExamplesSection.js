@@ -130,6 +130,10 @@ const StoryModal = ({ isOpen, onClose, title, content, audioUrl, showAudio, usin
     }
   }, [audioUrl]);
 
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -144,11 +148,7 @@ const StoryModal = ({ isOpen, onClose, title, content, audioUrl, showAudio, usin
                 src={imageUrl} 
                 alt={title} 
                 className="story-modal-image" 
-                onError={(e) => {
-                  console.error("[MODAL] Error loading image");
-                  e.target.src = '/images/default-story.jpg';
-                  e.target.onerror = null;
-                }} 
+                onError={handleImageError} 
               />
             </div>
           )}

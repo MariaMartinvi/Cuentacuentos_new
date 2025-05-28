@@ -798,16 +798,16 @@ export const createStoryImages = async () => {
     const results = [];
     
     // List of stories that need images
-    const storiesToCreate = [
-      { id: 'dragon-no-volar', title: 'El dragón que no podía volar', color: '#4361ee' },
-      { id: 'dragon-share', title: 'The Dragon Learning to Share', color: '#e63946' },
-      { id: 'princesa-valiente', title: 'La princesa valiente', color: '#2a9d8f' },
-      { id: 'magic-forest', title: 'The Magic Forest', color: '#588157' },
-      { id: 'default-story', title: 'Default Story', color: '#6c757d' }
+    const storyExamples = [
+      { id: 'basket', title: 'Basket', color: '#ff6b6b' },
+      { id: 'bladimir', title: 'Bladimir', color: '#4ecdc4' },
+      { id: 'blancanieves', title: 'Blancanieves', color: '#ffd93d' },
+      { id: 'bosque', title: 'Bosque', color: '#95e1d3' },
+      { id: 'camaral', title: 'Camaral', color: '#fce38a' }
     ];
     
     // Create images for each story
-    for (const story of storiesToCreate) {
+    for (const story of storyExamples) {
       try {
         console.log(`[IMAGES] Creating image for story: ${story.id}`);
         

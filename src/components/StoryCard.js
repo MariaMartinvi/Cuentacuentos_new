@@ -58,6 +58,10 @@ const StoryCard = ({ story, onStoryClick }) => {
     setImageLoaded(true);
   };
 
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+  };
+
   const handleTextClick = async () => {
     try {
       setIsLoadingContent(true);
@@ -125,6 +129,7 @@ const StoryCard = ({ story, onStoryClick }) => {
             src="/images/default-story.jpg" 
             alt={story.title} 
             className="story-card-image"
+            onError={handleImageError}
           />
         </div>
         <div className="story-card-content">
@@ -152,6 +157,7 @@ const StoryCard = ({ story, onStoryClick }) => {
             alt={story.title}
             className={`story-card-image ${imageLoaded ? 'loaded' : 'loading'}`}
             onLoad={handleImageLoad}
+            onError={handleImageError}
           />
         )}
       </div>
