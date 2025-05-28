@@ -6,6 +6,7 @@
     top: 0;
     z-index: 1000;
     padding: 0.8rem 0 !important;
+    width: 100%;
   }
   
   .navbar-container {
@@ -15,38 +16,45 @@
     padding: 0.8rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
     gap: 2rem;
+    margin-left: auto;
   }
   
   .logo {
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(45deg, #4361ee, #3a0ca3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #4361ee;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
+    letter-spacing: -0.5px;
+    line-height: 1;
   }
   
   .logo a {
-    color: transparent;
+    color: #4361ee;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     height: 100%;
     padding: 0.5rem 0;
   }
   
   .logo a:hover {
     transform: scale(1.02);
+    color: #3a0ca3;
   }
   
   .logo .emoji {
-    font-size: 2rem;
+    font-size: 3.2rem;
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
   }
   
@@ -56,10 +64,19 @@
     object-fit: contain;
   }
   
+  .logo-text {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #4361ee;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    display: inline-block;
+  }
+  
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
     height: 100%;
   }
   
@@ -72,17 +89,18 @@
     height: 100%;
     display: flex;
     align-items: center;
+    white-space: nowrap;
   }
   
   .nav-links a.user-name {
-    color: #4361ee !important; /* Azul para indicar que es clickable */
+    color: #4361ee !important;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
   }
   
   .nav-links a.user-name:hover {
-    color: #3a56e3 !important; /* Azul más oscuro al pasar el cursor */
+    color: #3a56e3 !important;
     text-decoration: underline;
   }
   
@@ -99,8 +117,8 @@
     font-size: 1rem !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     border: none !important;
-    margin-left: 8px !important;
     letter-spacing: 0.5px !important;
+    white-space: nowrap;
   }
   
   .navbar .nav-links .login-nav-button:hover {
@@ -115,6 +133,7 @@
     color: #333 !important;
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
   }
   
   .nav-links .register-nav-link:hover {
@@ -159,72 +178,68 @@
   }
   
   .language-button {
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 0.4rem 0.8rem;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #333;
+    font-weight: 500;
     cursor: pointer;
-    font-weight: 600;
-    color: #555;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 4px;
     transition: all 0.3s ease;
-    min-width: 120px;
-    text-align: left;
+    white-space: nowrap;
     position: relative;
+    min-width: 140px;
   }
-  
+
   .language-button::after {
     content: '▼';
-    font-size: 0.8em;
-    margin-left: 8px;
+    font-size: 0.7em;
     position: absolute;
-    right: 8px;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
+    color: #666;
   }
   
   .language-button:hover {
-    background-color: #f0f4ff;
-    border-color: #4361ee;
-    color: #2d3748;
+    background-color: #e9ecef;
+    border-color: #ced4da;
   }
   
   .language-dropdown {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.5rem);
     right: 0;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    min-width: 150px;
     z-index: 1000;
-    min-width: 120px;
-    margin-top: 0.25rem;
   }
   
   .language-dropdown button {
     display: block;
     width: 100%;
+    padding: 0.5rem 1rem;
     text-align: left;
-    padding: 0.5rem 0.75rem;
     background: none;
     border: none;
+    color: #333;
     cursor: pointer;
-    transition: background-color 0.2s;
-    color: #555;
+    transition: all 0.2s ease;
   }
   
   .language-dropdown button:hover {
-    background-color: #f0f4ff;
-    color: #4361ee;
+    background-color: #f8f9fa;
+    border-radius: 4px;
   }
   
   .language-dropdown button.active-language {
-    background-color: #4361ee;
-    color: white;
-  }
-  
-  .language-dropdown button.active-language:hover {
-    background-color: #3a56e3;
+    color: #4361ee;
+    font-weight: 600;
+    background-color: #f0f4ff;
   }
   
   /* Menú hamburguesa para móvil */
@@ -269,15 +284,13 @@
   /* Responsive */
   @media (max-width: 768px) {
     .navbar-container {
-      padding: 0.8rem 1rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
+      flex-direction: column;
       gap: 1rem;
+      padding: 1rem;
     }
     
     .logo {
-      font-size: 3.5rem;
+      font-size: 4rem;
       text-align: center;
       margin: 0;
       justify-content: center;
@@ -289,29 +302,45 @@
     }
 
     .logo .emoji {
-      font-size: 3.3rem;
+      font-size: 3.8rem;
     }
 
     .logo img {
       height: 75px;
     }
 
-    .nav-links {
-      position: static;
-      gap: 0.8rem;
+    .nav-right {
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
+      margin-left: 0;
     }
 
-    .nav-links:first-of-type {
-      display: none;
+    .nav-links {
+      flex-direction: row;
+      width: 100%;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .language-selector {
-      margin-left: 0.5rem;
+      width: 100%;
+      margin-left: 0;
     }
 
     .language-button {
-      min-width: 100px;
-      padding: 0.3rem 0.6rem;
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+
+    .language-button::after {
+      right: 1rem;
+    }
+
+    .language-dropdown {
+      right: 1rem;
+      left: 1rem;
     }
 
     .user-name {
@@ -331,6 +360,10 @@
 
     .subscribe-link {
       font-size: 0.9rem;
+    }
+
+    .logo-text {
+      font-size: 2.7rem;
     }
   }
 
