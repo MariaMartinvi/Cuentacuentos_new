@@ -24,7 +24,8 @@
     "redirecting": "Redirecionando...",
     "cancelNote": "Você pode cancelar sua assinatura a qualquer momento através do seu perfil, acessível pelo menu superior.",
     "cancelInfo": "Sua assinatura permanecerá ativa até o final do período de faturamento atual",
-    "subscribeButton": "Plano Premium"
+    "subscribeButton": "Plano Premium",
+    "paymentInfo": "Pagamento seguro processado pelo Stripe. Não armazenamos as informações do seu cartão."
   },
   "profile": {
     "title": "Meu Perfil",
@@ -176,10 +177,10 @@
     "voiceMaleEnglish": "Masculina (Inglês)",
     "voiceFemaleItalian": "Feminina (Italiano)",
     "voiceMaleItalian": "Masculina (Italiano)",
-    "voiceFemalePortuguesePT": "Feminina (Português de Portugal)",
-    "voiceMalePortuguesePT": "Masculina (Português de Portugal)",
-    "voiceFemalePortugueseBR": "Feminina (Português do Brasil)",
-    "voiceMalePortugueseBR": "Masculina (Português do Brasil)",
+    "voiceFemalePortuguesePT": "Português (Portugal) masculino",
+    "voiceMalePortuguesePT": "Português (Portugal) masculino",
+    "voiceFemalePortugueseBR": "Português (Brasil) feminino",
+    "voiceMalePortugueseBR": "Português (Brasil) masculino",
     "voiceFemaleFrench": "Feminina (Francês)",
     "voiceMaleFrench": "Masculina (Francês)",
     "speechRate": "Velocidade da fala",

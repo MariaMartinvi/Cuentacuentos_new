@@ -10,11 +10,11 @@ const PoliticaPage = () => {
     <div className="politica-page">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Política de Privacidad - Mi Cuentacuentos' : 
-          'Privacy Policy - My Storyteller'}
+          'Política de Privacidad - AudioGretel' : 
+          'Privacy Policy - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Política de privacidad de Mi Cuentacuentos. Información sobre cómo recopilamos, usamos y protegemos tus datos personales.' : 
-          'Privacy policy of My Storyteller. Information about how we collect, use and protect your personal data.'}
+          'Política de privacidad de AudioGretel. Información sobre cómo recopilamos, usamos y protegemos tus datos personales.' : 
+          'Privacy policy of AudioGretel. Information about how we collect, use and protect your personal data.'}
         keywords={['política de privacidad', 'protección de datos', 'cookies', 'seguridad', 'derechos de usuario']}
         lang={i18n.language}
       />

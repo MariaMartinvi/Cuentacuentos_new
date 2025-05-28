@@ -44,10 +44,7 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1em;
+  background-image: none;
 }
 
 .voice-selector select:focus {
@@ -335,4 +332,56 @@
     padding: 14px 20px;
     font-size: 16px;
   }
+}
+
+/* Estilo para select-wrapper, igual que en StoryForm */
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-height: 44px;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  width: 100%;
+}
+
+.select-wrapper::after {
+  content: '▼';
+  font-size: 0.9em;
+  color: #666;
+  position: absolute;
+  right: 1.2rem;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.select-wrapper select:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.15);
+  outline: none;
+  background-color: #f0f4ff;
+}
+
+.select-wrapper select:hover {
+  border-color: #bfc8e6;
+  background-color: #f0f4ff;
+}
+
+.select-wrapper select::-ms-expand {
+  display: none;
 } 

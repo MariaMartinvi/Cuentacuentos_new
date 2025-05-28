@@ -93,11 +93,11 @@ const Login = () => {
       <div className="login-container">
         <SEO 
           title={i18n.language === 'es' ? 
-            'Iniciar Sesión - Mi Cuentacuentos' : 
-            'Login - My Storyteller'}
+            'Iniciar Sesión - AudioGretel' : 
+            'Login - AudioGretel'}
           description={i18n.language === 'es' ? 
-            'Inicia sesión en Mi Cuentacuentos para acceder a todas las funciones de generación de cuentos personalizados.' : 
-            'Log in to My Storyteller to access all the personalized story generation features.'}
+            'Inicia sesión en AudioGretel para acceder a todas las funciones de generación de cuentos personalizados.' : 
+            'Log in to AudioGretel to access all the personalized story generation features.'}
           keywords={['iniciar sesión', 'login', 'acceso', 'cuenta de usuario']}
           lang={i18n.language}
         />
@@ -115,11 +115,11 @@ const Login = () => {
     <div className="login-container">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Iniciar Sesión - Mi Cuentacuentos' : 
-          'Login - My Storyteller'}
+          'Iniciar Sesión - AudioGretel' : 
+          'Login - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Inicia sesión en Mi Cuentacuentos para acceder a todas las funciones de generación de cuentos personalizados.' : 
-          'Log in to My Storyteller to access all the personalized story generation features.'}
+          'Inicia sesión en AudioGretel para acceder a todas las funciones de generación de cuentos personalizados.' : 
+          'Log in to AudioGretel to access all the personalized story generation features.'}
         keywords={['iniciar sesión', 'login', 'acceso', 'cuenta de usuario']}
         lang={i18n.language}
       />

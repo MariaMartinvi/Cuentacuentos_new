@@ -74,7 +74,7 @@ function HomePage() {
             'mainEntity': [
               {
                 '@type': 'Question',
-                'name': i18n.language === 'es' ? '¿Cómo funciona Mi Cuentacuentos?' : 'How does My Storyteller work?',
+                'name': i18n.language === 'es' ? '¿Cómo funciona AudioGretel?' : 'How does AudioGretel work?',
                 'acceptedAnswer': {
                   '@type': 'Answer',
                   'text': i18n.language === 'es' ? 
@@ -84,7 +84,7 @@ function HomePage() {
               },
               {
                 '@type': 'Question',
-                'name': i18n.language === 'es' ? '¿Puedo usar Mi Cuentacuentos para aprender idiomas?' : 'Can I use My Storyteller to learn languages?',
+                'name': i18n.language === 'es' ? '¿Puedo usar AudioGretel para aprender idiomas?' : 'Can I use AudioGretel to learn languages?',
                 'acceptedAnswer': {
                   '@type': 'Answer',
                   'text': i18n.language === 'es' ? 

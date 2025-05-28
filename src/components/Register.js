@@ -110,11 +110,11 @@ const Register = () => {
     <div className="register-container">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Registro - Mi Cuentacuentos' : 
-          'Register - My Storyteller'}
+          'Registro - AudioGretel' : 
+          'Register - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Crea una cuenta en Mi Cuentacuentos y comienza a generar cuentos personalizados para niños. Regístrate gratis y obtén cuentos de prueba.' : 
-          'Create an account on My Storyteller and start generating personalized stories for children. Register for free and get trial stories.'}
+          'Crea una cuenta en AudioGretel y comienza a generar cuentos personalizados para niños. Regístrate gratis y obtén cuentos de prueba.' : 
+          'Create an account on AudioGretel and start generating personalized stories for children. Register for free and get trial stories.'}
         keywords={['registro', 'crear cuenta', 'sign up', 'cuenta gratis', 'cuentos personalizados']}
         lang={i18n.language}
       />

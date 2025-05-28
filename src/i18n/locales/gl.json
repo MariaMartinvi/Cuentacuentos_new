@@ -24,7 +24,8 @@
     "redirecting": "Redirixindo...",
     "cancelNote": "Podes cancelar a túa subscrición en calquera momento desde o teu perfil, accesible a través do menú superior.",
     "cancelInfo": "A túa subscrición permanecerá activa ata o final do período de facturación actual",
-    "subscribeButton": "Plan Premium"
+    "subscribeButton": "Plan Premium",
+    "paymentInfo": "Pago seguro procesado por Stripe. Non almacenamos a información da túa tarxeta."
   },
   "profile": {
     "title": "O Meu Perfil",
@@ -205,7 +206,10 @@
     "pianoMusic": "Piano",
     "forestMusic": "Bosque",
     "musicBoxMusic": "Caixa de música",
-    "journeyMusic": "Viaxe"
+    "journeyMusic": "Viaxe",
+    "voiceMalePortuguesePT": "Portugués (Portugal) masculino",
+    "voiceFemalePortugueseBR": "Portugués (Brasil) feminino",
+    "voiceMalePortugueseBR": "Portugués (Brasil) masculino"
   },
   "storyForm": {
     "title": "Crea o Teu Conto",

@@ -24,7 +24,8 @@
     "redirecting": "Redirigint...",
     "cancelNote": "Pots cancel·lar la teva subscripció en qualsevol moment des del teu perfil, accessible a través del menú superior.",
     "cancelInfo": "La teva subscripció romandrà activa fins al final del període de facturació actual",
-    "subscribeButton": "Pla Premium"
+    "subscribeButton": "Pla Premium",
+    "paymentInfo": "Pagament segur processat per Stripe. No emmagatzemem la informació de la teva targeta."
   },
   "profile": {
     "title": "El meu Perfil",
@@ -202,7 +203,10 @@
     "pianoMusic": "Piano",
     "forestMusic": "Bosc",
     "musicBoxMusic": "Caixa de música",
-    "journeyMusic": "Viatge"
+    "journeyMusic": "Viatge",
+    "voiceMalePortuguesePT": "Portuguès (Portugal) masculí",
+    "voiceFemalePortugueseBR": "Portuguès (Brasil) femení",
+    "voiceMalePortugueseBR": "Portuguès (Brasil) masculí"
   },
   "storyForm": {
     "title": "Crea el Teu Conte",

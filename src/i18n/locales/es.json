@@ -24,7 +24,8 @@
     "redirecting": "Redirigiendo...",
     "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior.",
     "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
-    "subscribeButton": "Plan Premium"
+    "subscribeButton": "Plan Premium",
+    "paymentInfo": "Pago seguro procesado por Stripe. No almacenamos la información de tu tarjeta."
   },
   "profile": {
     "title": "Mi Perfil",
@@ -214,7 +215,10 @@
     "pianoMusic": "Piano",
     "forestMusic": "Bosque",
     "musicBoxMusic": "Caja musical",
-    "journeyMusic": "Viaje"
+    "journeyMusic": "Viaje",
+    "voiceMalePortuguesePT": "Portugués (Portugal) masculino",
+    "voiceFemalePortugueseBR": "Portugués (Brasil) femenino",
+    "voiceMalePortugueseBR": "Portugués (Brasil) masculino"
   },
   "navbar": {
     "home": "Inicio",

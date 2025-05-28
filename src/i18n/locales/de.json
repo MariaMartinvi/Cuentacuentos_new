@@ -24,7 +24,8 @@
     "redirecting": "Weiterleitung läuft...",
     "cancelNote": "Sie können Ihr Abonnement jederzeit über Ihr Profil kündigen, das über das Menü oben zugänglich ist.",
     "cancelInfo": "Ihr Abonnement bleibt bis zum Ende der aktuellen Abrechnungsperiode aktiv",
-    "subscribeButton": "Premium-Plan"
+    "subscribeButton": "Premium-Plan",
+    "paymentInfo": "Sichere Zahlung über Stripe. Wir speichern keine Karteninformationen."
   },
   "profile": {
     "title": "Mein Profil",
@@ -184,6 +185,9 @@
     "voiceMaleItalian": "Männlich (Italienisch)",
     "voiceFemaleFrench": "Weiblich (Französisch)",
     "voiceMaleFrench": "Männlich (Französisch)",
+    "voiceMalePortuguesePT": "Portugiesisch (Portugal) männlich",
+    "voiceFemalePortugueseBR": "Portugiesisch (Brasilien) weiblich",
+    "voiceMalePortugueseBR": "Portugiesisch (Brasilien) männlich",
     "speechRate": "Sprechgeschwindigkeit",
     "speedVerySlow": "Sehr langsam",
     "speedSlow": "Langsam",

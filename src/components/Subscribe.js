@@ -59,11 +59,11 @@ const Subscribe = () => {
     <div className="subscribe-container">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Suscripción Premium - Mi Cuentacuentos' : 
-          'Premium Subscription - My Storyteller'}
+          'Suscripción Premium - AudioGretel' : 
+          'Premium Subscription - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Suscríbete a Mi Cuentacuentos Premium y disfruta de generación ilimitada de cuentos, más idiomas y voces, y sin anuncios.' :
-          'Subscribe to My Storyteller Premium and enjoy unlimited story generation, more languages and voices, and no ads.'}
+          'Suscríbete a AudioGretel Premium y disfruta de generación ilimitada de cuentos, más idiomas y voces, y sin anuncios.' :
+          'Subscribe to AudioGretel Premium and enjoy unlimited story generation, more languages and voices, and no ads.'}
         keywords={['suscripción premium', 'cuentos ilimitados', 'audiocuentos premium', 'generador de cuentos']}
         pageType="Product"
         ogType="product"
@@ -71,7 +71,7 @@ const Subscribe = () => {
       />
       
       <ProductSchema 
-        name={i18n.language === 'es' ? "Mi Cuentacuentos Premium" : "My Storyteller Premium"}
+        name={i18n.language === 'es' ? "AudioGretel Premium" : "AudioGretel Premium"}
         description={i18n.language === 'es' ? 
           "Suscripción premium para generación ilimitada de cuentos personalizados" : 
           "Premium subscription for unlimited personalized story generation"}

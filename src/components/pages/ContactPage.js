@@ -37,11 +37,11 @@ const ContactPage = () => {
     <div className="contact-page">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Contacto - Mi Cuentacuentos' : 
-          'Contact - My Storyteller'}
+          'Contacto - AudioGretel' : 
+          'Contact - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Contacta con el equipo de Mi Cuentacuentos. Estamos aquí para responder tus preguntas y escuchar tus sugerencias.' : 
-          'Contact the My Storyteller team. We are here to answer your questions and listen to your suggestions.'}
+          'Contacta con el equipo de AudioGretel. Estamos aquí para responder tus preguntas y escuchar tus sugerencias.' : 
+          'Contact the AudioGretel team. We are here to answer your questions and listen to your suggestions.'}
         keywords={['contacto', 'soporte', 'ayuda', 'preguntas', 'sugerencias', 'formulario de contacto']}
         lang={i18n.language}
       />

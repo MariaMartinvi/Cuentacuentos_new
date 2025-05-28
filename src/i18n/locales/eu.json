@@ -24,7 +24,8 @@
     "redirecting": "Berbideratzen...",
     "cancelNote": "Zure harpidetza edozein unetan bertan behera utzi dezakezu zure profiletik, goiko menutik sartuz.",
     "cancelInfo": "Zure harpidetza aktibo egongo da fakturazio epearen amaiera arte",
-    "subscribeButton": "Premium Plana"
+    "subscribeButton": "Premium Plana",
+    "paymentInfo": "Ordainketa segurua Stripe-k prozesatzen du. Ez dugu zure txartelaren informazioa gordetzen."
   },
   "profile": {
     "title": "Nire Profila",
@@ -202,7 +203,10 @@
     "pianoMusic": "Pianoa",
     "forestMusic": "Basoa",
     "musicBoxMusic": "Musika kutxa",
-    "journeyMusic": "Bidaia"
+    "journeyMusic": "Bidaia",
+    "voiceMalePortuguesePT": "Portugesa (Portugal) maskulinoa",
+    "voiceFemalePortugueseBR": "Portugesa (Brasil) femeninoa",
+    "voiceMalePortugueseBR": "Portugesa (Brasil) maskulinoa"
   },
   "storyForm": {
     "title": "Sortu Zure Ipuina",

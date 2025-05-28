@@ -25,11 +25,11 @@ const ComoFuncionaPage = () => {
     <div className="como-funciona-page">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Cómo Funciona - Mi Cuentacuentos' : 
-          'How It Works - My Storyteller'}
+          'Cómo Funciona - AudioGretel' : 
+          'How It Works - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Descubre cómo funciona Mi Cuentacuentos. Aprende a crear cuentos personalizados y convertirlos en audio en simples pasos.' : 
-          'Discover how My Storyteller works. Learn to create personalized stories and convert them to audio in simple steps.'}
+          'Descubre cómo funciona AudioGretel. Aprende a crear cuentos personalizados y convertirlos en audio en simples pasos.' : 
+          'Discover how AudioGretel works. Learn to create personalized stories and convert them to audio in simple steps.'}
         keywords={['cómo funciona', 'tutorial', 'guía de uso', 'crear cuentos', 'convertir a audio', 'pasos', 'instrucciones']}
         lang={i18n.language}
       />

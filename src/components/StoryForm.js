@@ -8,6 +8,9 @@ import AudioPlayer from './AudioPlayer';
 import './StoryForm.css';
 import axios from 'axios';
 
+// Clave para localStorage
+const FORM_STORAGE_KEY = 'storyFormData';
+
 function StoryForm({ onStoryGenerated }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -266,6 +269,21 @@ function StoryForm({ onStoryGenerated }) {
     }
   }, [serverStatus]);
 
+  // Cargar datos guardados al montar
+  useEffect(() => {
+    const saved = localStorage.getItem(FORM_STORAGE_KEY);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.topic) setTopic(data.topic);
+        if (data.storyLength) setStoryLength(data.storyLength);
+        if (data.storyType) setStoryType(data.storyType);
+        if (data.childNames) setChildNames(data.childNames);
+        if (data.englishLevel) setEnglishLevel(data.englishLevel);
+      } catch {}
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted');
@@ -284,6 +302,14 @@ function StoryForm({ onStoryGenerated }) {
     }
     
     if (!user) {
+      // Guardar datos en localStorage
+      localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify({
+        topic,
+        storyLength,
+        storyType,
+        childNames,
+        englishLevel
+      }));
       console.log('No user found');
       setError(t('storyForm.loginRequired'));
       return;
@@ -342,6 +368,8 @@ function StoryForm({ onStoryGenerated }) {
         setAgeGroup('default');
         setChildNames('');
         setEnglishLevel('intermediate');
+        // Borrar datos guardados
+        localStorage.removeItem(FORM_STORAGE_KEY);
       } else {
         console.log('No story received from server');
         throw new Error('No story received from the server');

@@ -231,72 +231,77 @@ function StoryDisplay({ story }) {
         <div className="audio-actions">
           <div className="voice-selector">
             <label htmlFor="voiceType">{t('storyDisplay.voiceType')}</label>
-            <select
-              id="voiceType"
-              value={voiceType}
-              onChange={(e) => setVoiceType(e.target.value)}
-              disabled={isGeneratingAudio || audioCount >= 4}
-            >
-              <option value="female">{t('storyDisplay.voiceFemale')}</option>
-              <option value="male">{t('storyDisplay.voiceMale')}</option>
-              <option value="female-latam">{t('storyDisplay.voiceFemaleLatam')}</option>
-              <option value="male-latam">{t('storyDisplay.voiceMaleLatam')}</option>
-              <option value="female-english">{t('storyDisplay.voiceFemaleEnglish')}</option>
-              <option value="male-english">{t('storyDisplay.voiceMaleEnglish')}</option>
-              <option value="female-catalan">{t('storyDisplay.voiceFemaleCatalan')}</option>
-              <option value="male-catalan">{t('storyDisplay.voiceMaleCatalan')}</option>
-              <option value="female-galician">{t('storyDisplay.voiceFemaleGalician')}</option>
-              <option value="male-galician">{t('storyDisplay.voiceMaleGalician')}</option>
-              <option value="female-basque">{t('storyDisplay.voiceFemaleBasque')}</option>
-              <option value="male-basque">{t('storyDisplay.voiceMaleBasque')}</option>
-              <option value="female-german">{t('storyDisplay.voiceFemaleGerman')}</option>
-              <option value="male-german">{t('storyDisplay.voiceMaleGerman')}</option>
-              <option value="female-italian">{t('storyDisplay.voiceFemaleItalian')}</option>
-              <option value="male-italian">{t('storyDisplay.voiceMaleItalian')}</option>
-              <option value="female-portuguese-pt">{t('storyDisplay.voiceFemalePortuguesePT')}</option>
-              <option value="male-portuguese-pt">{t('storyDisplay.voiceMalePortuguesePT')}</option>
-              <option value="female-portuguese-br">{t('storyDisplay.voiceFemalePortugueseBR')}</option>
-              <option value="male-portuguese-br">{t('storyDisplay.voiceMalePortugueseBR')}</option>
-              <option value="female-french">{t('storyDisplay.voiceFemaleFrench')}</option>
-              <option value="male-french">{t('storyDisplay.voiceMaleFrench')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="voiceType"
+                value={voiceType}
+                onChange={(e) => setVoiceType(e.target.value)}
+                disabled={isGeneratingAudio || audioCount >= 4}
+              >
+                <option value="female">{t('storyDisplay.voiceFemale')}</option>
+                <option value="male">{t('storyDisplay.voiceMale')}</option>
+                <option value="female-latam">{t('storyDisplay.voiceFemaleLatam')}</option>
+                <option value="male-latam">{t('storyDisplay.voiceMaleLatam')}</option>
+                <option value="female-english">{t('storyDisplay.voiceFemaleEnglish')}</option>
+                <option value="male-english">{t('storyDisplay.voiceMaleEnglish')}</option>
+                <option value="female-catalan">{t('storyDisplay.voiceFemaleCatalan')}</option>
+                <option value="male-catalan">{t('storyDisplay.voiceMaleCatalan')}</option>
+                <option value="female-galician">{t('storyDisplay.voiceFemaleGalician')}</option>
+                <option value="male-galician">{t('storyDisplay.voiceMaleGalician')}</option>
+                <option value="female-basque">{t('storyDisplay.voiceFemaleBasque')}</option>
+                <option value="male-basque">{t('storyDisplay.voiceMaleBasque')}</option>
+                <option value="female-german">{t('storyDisplay.voiceFemaleGerman')}</option>
+                <option value="male-german">{t('storyDisplay.voiceMaleGerman')}</option>
+                <option value="female-italian">{t('storyDisplay.voiceFemaleItalian')}</option>
+                <option value="male-italian">{t('storyDisplay.voiceMaleItalian')}</option>
+                <option value="male-portuguese-pt">{t('storyDisplay.voiceMalePortuguesePT')}</option>
+                <option value="female-portuguese-br">{t('storyDisplay.voiceFemalePortugueseBR')}</option>
+                <option value="male-portuguese-br">{t('storyDisplay.voiceMalePortugueseBR')}</option>
+                <option value="female-french">{t('storyDisplay.voiceFemaleFrench')}</option>
+                <option value="male-french">{t('storyDisplay.voiceMaleFrench')}</option>
+              </select>
+            </div>
           </div>
 
           <div className="voice-selector">
             <label htmlFor="speechRate">{t('storyDisplay.speechRate')}</label>
-            <select
-              id="speechRate"
-              value={speechRate}
-              onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
-              disabled={isGeneratingAudio || audioCount >= 4}
-            >
-              <option value="0.5">{t('storyDisplay.speedVerySlow')}</option>
-              <option value="0.7">{t('storyDisplay.speedSlow')}</option>
-              <option value="0.8">{t('storyDisplay.speedNormal')}</option>
-              <option value="1.0">{t('storyDisplay.speedFast')}</option>
-              <option value="1.2">{t('storyDisplay.speedVeryFast')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="speechRate"
+                value={speechRate}
+                onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
+                disabled={isGeneratingAudio || audioCount >= 4}
+              >
+                <option value="0.5">{t('storyDisplay.speedVerySlow')}</option>
+                <option value="0.7">{t('storyDisplay.speedSlow')}</option>
+                <option value="0.8">{t('storyDisplay.speedNormal')}</option>
+                <option value="1.0">{t('storyDisplay.speedFast')}</option>
+                <option value="1.2">{t('storyDisplay.speedVeryFast')}</option>
+              </select>
+            </div>
           </div>
           
           <div className="voice-selector">
             <label htmlFor="musicTrack">{t('storyDisplay.backgroundMusic')}</label>
-            <select
-              id="musicTrack"
-              value={musicTrack}
-              onChange={handleMusicTrackChange}
-              disabled={isGeneratingAudio || audioCount >= 4}
-            >
-              <option value="none">{t('storyDisplay.noMusic')}</option>
-              <option value="random">{t('storyDisplay.randomMusic')}</option>
-              <option value="relaxing">{t('storyDisplay.relaxingMusic')}</option>
-              <option value="magical">{t('storyDisplay.magicalMusic')}</option>
-              <option value="adventure">{t('storyDisplay.adventureMusic')}</option>
-              <option value="bedtime">{t('storyDisplay.bedtimeMusic')}</option>
-              <option value="piano">{t('storyDisplay.pianoMusic')}</option>
-              <option value="forest">{t('storyDisplay.forestMusic')}</option>
-              <option value="magic-box">{t('storyDisplay.musicBoxMusic')}</option>
-              <option value="journey">{t('storyDisplay.journeyMusic')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="musicTrack"
+                value={musicTrack}
+                onChange={handleMusicTrackChange}
+                disabled={isGeneratingAudio || audioCount >= 4}
+              >
+                <option value="none">{t('storyDisplay.noMusic')}</option>
+                <option value="random">{t('storyDisplay.randomMusic')}</option>
+                <option value="relaxing">{t('storyDisplay.relaxingMusic')}</option>
+                <option value="magical">{t('storyDisplay.magicalMusic')}</option>
+                <option value="adventure">{t('storyDisplay.adventureMusic')}</option>
+                <option value="bedtime">{t('storyDisplay.bedtimeMusic')}</option>
+                <option value="piano">{t('storyDisplay.pianoMusic')}</option>
+                <option value="forest">{t('storyDisplay.forestMusic')}</option>
+                <option value="magic-box">{t('storyDisplay.musicBoxMusic')}</option>
+                <option value="journey">{t('storyDisplay.journeyMusic')}</option>
+              </select>
+            </div>
           </div>
 
           <button

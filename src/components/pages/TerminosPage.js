@@ -11,11 +11,11 @@ const TerminosPage = () => {
     <div className="terminos-page">
       <SEO 
         title={i18n.language === 'es' ? 
-          'Términos y Condiciones - Mi Cuentacuentos' : 
-          'Terms and Conditions - My Storyteller'}
+          'Términos y Condiciones - AudioGretel' : 
+          'Terms and Conditions - AudioGretel'}
         description={i18n.language === 'es' ? 
-          'Términos y condiciones de uso de Mi Cuentacuentos. Información sobre suscripciones, propiedad intelectual y limitaciones de responsabilidad.' : 
-          'Terms and conditions of use for My Storyteller. Information about subscriptions, intellectual property and liability limitations.'}
+          'Términos y condiciones de uso de AudioGretel. Información sobre suscripciones, propiedad intelectual y limitaciones de responsabilidad.' : 
+          'Terms and conditions of use for AudioGretel. Information about subscriptions, intellectual property and liability limitations.'}
         keywords={['términos y condiciones', 'condiciones de uso', 'suscripción', 'propiedad intelectual', 'limitación de responsabilidad']}
         lang={i18n.language}
       />

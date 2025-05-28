@@ -362,7 +362,10 @@
     "pianoMusic": "Piano",
     "forestMusic": "Forest",
     "musicBoxMusic": "Music box",
-    "journeyMusic": "Journey"
+    "journeyMusic": "Journey",
+    "voiceMalePortuguesePT": "Portuguese (Portugal) Male",
+    "voiceFemalePortugueseBR": "Portuguese (Brazil) Female",
+    "voiceMalePortugueseBR": "Portuguese (Brazil) Male"
   },
   "storyForm": {
     "title": "Create Your Story",
