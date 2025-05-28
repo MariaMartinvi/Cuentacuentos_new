@@ -8,6 +8,7 @@ import { CookieConsentProvider } from './contexts/CookieConsentContext';
 import AppRoutes from './routes';
 import CookieConsent from './components/CookieConsent';
 import { initProxy, cleanupProxy } from './services/proxyService';
+import GoogleTagManager from './components/GoogleTagManager';
 
 // Use production server URL
 const API_URL = 'https://generadorcuentos.onrender.com';
@@ -41,6 +42,7 @@ function App() {
       />
       <HelmetProvider>
         <I18nextProvider i18n={i18n}>
+          <GoogleTagManager />
           <AuthProvider>
             <CookieConsentProvider>
               <Router>
