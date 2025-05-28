@@ -372,36 +372,40 @@ const StoryExamplesSection = () => {
         <div className="filters">
           <div className="filter-group">
             <label htmlFor="home-language-filter">{t('storyExamples.filters.language')}</label>
-            <select 
-              id="home-language-filter" 
-              value={filters.language}
-              onChange={(e) => handleFilterChange('language', e.target.value)}
-            >
-              <option value="all">{t('storyExamples.languages.all')}</option>
-              <option value="spanish">{t('storyExamples.languages.spanish')}</option>
-              <option value="english">{t('storyExamples.languages.english')}</option>
-              <option value="catalan">{t('storyExamples.languages.catalan')}</option>
-              <option value="german">{t('storyExamples.languages.german')}</option>
-              <option value="italian">{t('storyExamples.languages.italian')}</option>
-              <option value="french">{t('storyExamples.languages.french')}</option>
-              <option value="galician">{t('storyExamples.languages.galician')}</option>
-              <option value="basque">{t('storyExamples.languages.basque')}</option>
-              <option value="portuguese">{t('storyExamples.languages.portuguese')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select 
+                id="home-language-filter" 
+                value={filters.language}
+                onChange={(e) => handleFilterChange('language', e.target.value)}
+              >
+                <option value="all">{t('storyExamples.languages.all')}</option>
+                <option value="spanish">{t('storyExamples.languages.spanish')}</option>
+                <option value="english">{t('storyExamples.languages.english')}</option>
+                <option value="catalan">{t('storyExamples.languages.catalan')}</option>
+                <option value="german">{t('storyExamples.languages.german')}</option>
+                <option value="italian">{t('storyExamples.languages.italian')}</option>
+                <option value="french">{t('storyExamples.languages.french')}</option>
+                <option value="galician">{t('storyExamples.languages.galician')}</option>
+                <option value="basque">{t('storyExamples.languages.basque')}</option>
+                <option value="portuguese">{t('storyExamples.languages.portuguese')}</option>
+              </select>
+            </div>
           </div>
 
           <div className="filter-group">
             <label htmlFor="home-level-filter">{t('storyExamples.filters.level')}</label>
-            <select 
-              id="home-level-filter" 
-              value={filters.level}
-              onChange={(e) => handleFilterChange('level', e.target.value)}
-            >
-              <option value="all">{t('storyExamples.levels.all')}</option>
-              <option value="beginner">{t('storyExamples.levels.beginner')}</option>
-              <option value="intermediate">{t('storyExamples.levels.intermediate')}</option>
-              <option value="advanced">{t('storyExamples.levels.advanced')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select 
+                id="home-level-filter" 
+                value={filters.level}
+                onChange={(e) => handleFilterChange('level', e.target.value)}
+              >
+                <option value="all">{t('storyExamples.levels.all')}</option>
+                <option value="beginner">{t('storyExamples.levels.beginner')}</option>
+                <option value="intermediate">{t('storyExamples.levels.intermediate')}</option>
+                <option value="advanced">{t('storyExamples.levels.advanced')}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

@@ -414,7 +414,7 @@ function StoryForm({ onStoryGenerated }) {
       <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="topic">
-            <span className="form-icon">📝</span> {t('storyForm.topicLabel')}
+            <span className="form-icon">💡</span> {t('storyForm.topicLabel')}
           </label>
           <input
             type="text"
@@ -430,7 +430,7 @@ function StoryForm({ onStoryGenerated }) {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="childNames">
-              <span className="form-icon">👶</span> {t('storyForm.childNamesLabel')}
+              <span className="form-icon">🧑‍🤝‍🧑</span> {t('storyForm.childNamesLabel')}
             </label>
             <input
               type="text"
@@ -445,84 +445,57 @@ function StoryForm({ onStoryGenerated }) {
             <label htmlFor="englishLevel">
               <span className="form-icon">🌍</span> {t('storyForm.englishLevelLabel')}
             </label>
-            <select
-              id="englishLevel"
-              value={englishLevel}
-              onChange={(e) => setEnglishLevel(e.target.value)}
-            >
-              <option value="basic">{t('storyForm.englishLevelBeginner')}</option>
-              <option value="intermediate">{t('storyForm.englishLevelIntermediate')}</option>
-              <option value="advanced">{t('storyForm.englishLevelAdvanced')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="englishLevel"
+                value={englishLevel}
+                onChange={(e) => setEnglishLevel(e.target.value)}
+              >
+                <option value="basic">{t('storyForm.englishLevelBeginner')}</option>
+                <option value="intermediate">{t('storyForm.englishLevelIntermediate')}</option>
+                <option value="advanced">{t('storyForm.englishLevelAdvanced')}</option>
+              </select>
+            </div>
           </div>
         </div>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="storyLength">
-              <span className="form-icon">📏</span> {t('storyForm.lengthLabel')}
+              <span className="form-icon">⏳</span> {t('storyForm.lengthLabel')}
             </label>
-            <select
-              id="storyLength"
-              value={storyLength}
-              onChange={(e) => setStoryLength(e.target.value)}
-            >
-              <option value="short">{t('storyForm.lengthShort')}</option>
-              <option value="medium">{t('storyForm.lengthMedium')}</option>
-              <option value="long">{t('storyForm.lengthLong')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="storyLength"
+                value={storyLength}
+                onChange={(e) => setStoryLength(e.target.value)}
+              >
+                <option value="short">{t('storyForm.lengthShort')}</option>
+                <option value="medium">{t('storyForm.lengthMedium')}</option>
+                <option value="long">{t('storyForm.lengthLong')}</option>
+              </select>
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="storyType">
-              <span className="form-icon">📚</span> {t('storyForm.typeLabel')}
+              <span className="form-icon">🌈</span> {t('storyForm.typeLabel')}
             </label>
-            <select
-              id="storyType"
-              value={storyType}
-              onChange={(e) => setStoryType(e.target.value)}
-            >
-              <option value="original">{t('storyForm.typeOriginal')}</option>
-              <option value="classic">{t('storyForm.typeClassic')}</option>
-              <option value="humor">{t('storyForm.typeHumor')}</option>
-              <option value="sci-fi">{t('storyForm.typeSciFi')}</option>
-              <option value="horror">{t('storyForm.typeHorror')}</option>
-              <option value="adventure">{t('storyForm.typeAdventure')}</option>
-              <option value="fantasy">{t('storyForm.typeFantasy')}</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="ageGroup">
-              <span className="form-icon">🎯</span> {t('storyForm.ageGroupLabel')}
-            </label>
-            <select
-              id="ageGroup"
-              value={ageGroup}
-              onChange={(e) => setAgeGroup(e.target.value)}
-            >
-              <option value="default">{t('storyForm.ageGroupDefault')}</option>
-              <option value="3-5">{t('storyForm.ageGroup3to5')}</option>
-              <option value="6-8">{t('storyForm.ageGroup6to8')}</option>
-              <option value="9-12">{t('storyForm.ageGroup9to12')}</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="creativityLevel">
-              <span className="form-icon">🎨</span> {t('storyForm.creativityLevelLabel')}
-            </label>
-            <select
-              id="creativityLevel"
-              value={creativityLevel}
-              onChange={(e) => setCreativityLevel(e.target.value)}
-            >
-              <option value="standard">{t('storyForm.creativityStandard')}</option>
-              <option value="innovative">{t('storyForm.creativityInnovative')}</option>
-              <option value="creative">{t('storyForm.creativityCreative')}</option>
-            </select>
+            <div className="select-wrapper">
+              <select
+                id="storyType"
+                value={storyType}
+                onChange={(e) => setStoryType(e.target.value)}
+              >
+                <option value="original">{t('storyForm.typeOriginal')}</option>
+                <option value="classic">{t('storyForm.typeClassic')}</option>
+                <option value="humor">{t('storyForm.typeHumor')}</option>
+                <option value="sci-fi">{t('storyForm.typeSciFi')}</option>
+                <option value="horror">{t('storyForm.typeHorror')}</option>
+                <option value="adventure">{t('storyForm.typeAdventure')}</option>
+                <option value="fantasy">{t('storyForm.typeFantasy')}</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -585,7 +558,7 @@ function StoryForm({ onStoryGenerated }) {
               </>
             ) : (
               <>
-                <span className="btn-icon">✨</span>
+                <span className="btn-icon">⭐</span>
                 {t('storyForm.generateButton')}
               </>
             )}
