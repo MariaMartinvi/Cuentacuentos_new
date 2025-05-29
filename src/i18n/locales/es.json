@@ -336,7 +336,7 @@
     "clickToLogin": "Haz clic aquí para iniciar sesión",
     "loginRequiredWarning": "Necesitas iniciar sesión para configurar y generar cuentos. ¡Es gratis y solo toma unos segundos!",
     "freeLimitWarning": "Has alcanzado tu límite de 3 cuentos gratuitos. Suscríbete al plan premium para generar hasta 30 cuentos al mes.",
-    "premiumLimitWarning": "Has alcanzado tu límite de 30 cuentos premium este mes. Espera hasta el próximo mes para generar más cuentos.",
+    "premiumLimitWarning": "Has alcanzado tu límite de 30 cuentos premium este mes. Espera hasta el día {{day}} para generar más cuentos.",
     "warningTitle": "Acción Requerida",
     "loginButton": "Iniciar Sesión",
     "subscribeButton": "Suscribirse",

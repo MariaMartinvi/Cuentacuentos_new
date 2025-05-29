@@ -283,7 +283,7 @@
     "subscribe": "Assinar",
     "loginRequiredWarning": "Você precisa fazer login para configurar e gerar histórias. É gratuito e leva apenas alguns segundos!",
     "freeLimitWarning": "Você atingiu seu limite de 3 histórias gratuitas. Assine o plano premium para gerar até 30 histórias por mês.",
-    "premiumLimitWarning": "Você atingiu seu limite de 30 histórias premium este mês. Aguarde até o próximo mês para gerar mais histórias.",
+    "premiumLimitWarning": "Você atingiu seu limite de 30 histórias premium este mês. Aguarde até o dia {{day}} para gerar mais histórias.",
     "warningTitle": "Ação Necessária",
     "loginButton": "Fazer Login",
     "subscribeButton": "Assinar",

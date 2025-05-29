@@ -289,7 +289,7 @@
     "subscribe": "Abonnieren",
     "loginRequiredWarning": "Du musst dich anmelden, um Geschichten zu konfigurieren und zu generieren. Es ist kostenlos und dauert nur wenige Sekunden!",
     "freeLimitWarning": "Du hast dein Limit von 3 kostenlosen Geschichten erreicht. Abonniere den Premium-Plan, um bis zu 30 Geschichten pro Monat zu generieren.",
-    "premiumLimitWarning": "Du hast dein Limit von 30 Premium-Geschichten diesen Monat erreicht. Warte bis zum nächsten Monat, um mehr Geschichten zu generieren.",
+    "premiumLimitWarning": "Du hast dein Limit von 30 Premium-Geschichten diesen Monat erreicht. Warte bis zum Tag {{day}}, um mehr Geschichten zu generieren.",
     "warningTitle": "Aktion Erforderlich",
     "loginButton": "Anmelden",
     "subscribeButton": "Abonnieren",

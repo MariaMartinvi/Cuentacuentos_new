@@ -292,7 +292,7 @@
     "subscribe": "Subscriu-te",
     "loginRequiredWarning": "Necessites iniciar sessió per configurar i generar contes. És gratuït i només pren uns segons!",
     "freeLimitWarning": "Has arribat al teu límit de 3 contes gratuïts. Subscriu-te al pla premium per generar fins a 30 contes al mes.",
-    "premiumLimitWarning": "Has arribat al teu límit de 30 contes premium aquest mes. Espera fins al mes vinent per generar més contes.",
+    "premiumLimitWarning": "Has arribat al teu límit de 30 contes premium aquest mes. Espera fins al dia {{day}} per generar més contes.",
     "warningTitle": "Acció Requerida",
     "loginButton": "Iniciar Sessió",
     "subscribeButton": "Subscriu-te",
