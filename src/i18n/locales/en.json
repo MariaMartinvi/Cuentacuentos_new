@@ -461,7 +461,15 @@
     "alertError": "An error occurred while generating the story",
     "emailLabel": "Email",
     "emailPlaceholder": "Enter your email",
-    "alertEmailRequired": "Please enter your email"
+    "alertEmailRequired": "Please enter your email",
+    "loginRequiredWarning": "You need to log in to configure and generate stories. It's free and only takes a few seconds!",
+    "freeLimitWarning": "You have reached your limit of 3 free stories. Subscribe to the premium plan to generate up to 30 stories per month.",
+    "premiumLimitWarning": "You have reached your limit of 30 premium stories this month. Wait until next month to generate more stories.",
+    "warningTitle": "Action Required",
+    "loginButton": "Log In",
+    "subscribeButton": "Subscribe",
+    "waitButton": "Understood",
+    "cancelButton": "Cancel"
   },
   "contact": {
     "title": "Contact Us",

@@ -287,10 +287,18 @@
     "creativityInnovative": "Innovador",
     "creativityCreative": "Moi Creativo",
     "generateButton": "Xerar Conto",
-    "storyLimitReached": "Alcanzaches o teu límite de 3 contos gratuítos. Subscríbete para xerar máis contos.",
-    "premiumStoryLimitReached": "Alcanzaches o teu límite de 30 contos premium. Agarda ata o día {{day}} para xerar máis contos.",
+    "storyLimitReached": "Alcanzaches o límite de 3 contos gratuítos. Subscríbete para xerar máis contos.",
+    "premiumStoryLimitReached": "Alcanzaches o límite de 30 contos premium. Espera ata o día {{day}} para xerar máis contos.",
     "updatePlan": "Actualiza o teu plan",
-    "subscribe": "Subscríbete"
+    "subscribe": "Subscríbete",
+    "loginRequiredWarning": "Necesitas iniciar sesión para configurar e xerar contos. É gratuíto e só leva uns segundos!",
+    "freeLimitWarning": "Alcanzaches o teu límite de 3 contos gratuítos. Subscríbete ao plan premium para xerar ata 30 contos ao mes.",
+    "premiumLimitWarning": "Alcanzaches o teu límite de 30 contos premium este mes. Espera ata o próximo mes para xerar máis contos.",
+    "warningTitle": "Acción Requirida",
+    "loginButton": "Iniciar Sesión",
+    "subscribeButton": "Subscríbete",
+    "waitButton": "Entendido",
+    "cancelButton": "Cancelar"
   },
   "login": {
     "title": "Iniciar sesión",

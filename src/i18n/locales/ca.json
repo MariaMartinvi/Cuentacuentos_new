@@ -285,11 +285,19 @@
     "creativityCreative": "Molt Creatiu",
     "generateButton": "Generar Conte",
     "alertTopicRequired": "Escriu aquí el tema del teu conte",
-    "storyLimitReached": "Has arribat al límit de 3 contes gratuïts. Subscriu-te per generar més contes.",
-    "premiumStoryLimitReached": "Has arribat al límit de 30 contes premium. Espera fins al proper dia {{day}} per generar més contes.",
+    "storyLimitReached": "Has arribat al teu límit de 3 contes gratuïts. Subscriu-te per generar més contes.",
+    "premiumStoryLimitReached": "Has arribat al teu límit de 30 contes premium. Espera fins al dia {{day}} per generar més contes.",
     "contactUs": "contacta'ns",
     "updatePlan": "Actualitza el teu pla",
-    "subscribe": "Subscriu-te"
+    "subscribe": "Subscriu-te",
+    "loginRequiredWarning": "Necessites iniciar sessió per configurar i generar contes. És gratuït i només pren uns segons!",
+    "freeLimitWarning": "Has arribat al teu límit de 3 contes gratuïts. Subscriu-te al pla premium per generar fins a 30 contes al mes.",
+    "premiumLimitWarning": "Has arribat al teu límit de 30 contes premium aquest mes. Espera fins al mes vinent per generar més contes.",
+    "warningTitle": "Acció Requerida",
+    "loginButton": "Iniciar Sessió",
+    "subscribeButton": "Subscriu-te",
+    "waitButton": "Entès",
+    "cancelButton": "Cancel·lar"
   },
   "login": {
     "title": "Iniciar sessió",

@@ -287,9 +287,17 @@
     "generateButton": "Genera Storia",
     "alertTopicRequired": "Scrivi qui il tema della tua storia",
     "storyLimitReached": "Hai raggiunto il tuo limite di 3 storie gratuite. Iscriviti per generare più storie.",
-    "premiumStoryLimitReached": "Hai raggiunto il tuo limite di 30 storie premium. Attendi fino al giorno {{day}} per generare più storie.",
+    "premiumStoryLimitReached": "Hai raggiunto il tuo limite di 30 storie premium. Aspetta fino al giorno {{day}} per generare più storie.",
     "updatePlan": "Aggiorna il tuo piano",
-    "subscribe": "Abbonati"
+    "subscribe": "Iscriviti",
+    "loginRequiredWarning": "Devi accedere per configurare e generare storie. È gratuito e richiede solo pochi secondi!",
+    "freeLimitWarning": "Hai raggiunto il tuo limite di 3 storie gratuite. Iscriviti al piano premium per generare fino a 30 storie al mese.",
+    "premiumLimitWarning": "Hai raggiunto il tuo limite di 30 storie premium questo mese. Aspetta fino al mese prossimo per generare più storie.",
+    "warningTitle": "Azione Richiesta",
+    "loginButton": "Accedi",
+    "subscribeButton": "Iscriviti",
+    "waitButton": "Capito",
+    "cancelButton": "Annulla"
   },
   "login": {
     "title": "Accedi",

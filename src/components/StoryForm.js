@@ -17,6 +17,9 @@ function StoryForm({ onStoryGenerated }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [storiesRemaining, setStoriesRemaining] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
   
   const [topic, setTopic] = useState('');
   const [storyLength, setStoryLength] = useState('medium');
@@ -39,6 +42,90 @@ function StoryForm({ onStoryGenerated }) {
   
   const [rateLimitCountdown, setRateLimitCountdown] = useState(null);
   const countdownIntervalRef = useRef(null);
+
+  // Function to fetch stories remaining
+  const fetchStoriesRemaining = async (currentUser) => {
+    try {
+      const isProduction = window.location.hostname !== 'localhost';
+      const API_URL = isProduction 
+        ? 'https://generadorcuentos.onrender.com'
+        : 'http://localhost:5001';
+      
+      const token = localStorage.getItem('token');
+      const response = await axios.get(
+        `${API_URL}/api/stories/remaining`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      
+      setStoriesRemaining(response.data.storiesRemaining);
+      return response.data.storiesRemaining;
+    } catch (error) {
+      console.error('Error fetching stories remaining:', error);
+      // Calculate locally as fallback
+      if (currentUser?.subscriptionStatus === 'active') {
+        const remaining = 30 - (currentUser.monthlyStoriesGenerated || 0);
+        setStoriesRemaining(remaining);
+        return remaining;
+      } else {
+        const remaining = 3 - (currentUser?.storiesGenerated || 0);
+        setStoriesRemaining(remaining);
+        return remaining;
+      }
+    }
+  };
+
+  // Function to check if user can create stories
+  const canCreateStory = () => {
+    if (!user) return false;
+    if (storiesRemaining === null) return true; // Allow if we haven't loaded the count yet
+    return storiesRemaining > 0;
+  };
+
+  // Function to handle form field interaction
+  const handleFieldInteraction = (e) => {
+    if (!user) {
+      e.preventDefault();
+      setWarningMessage(t('storyForm.loginRequiredWarning'));
+      setShowWarning(true);
+      return false;
+    }
+    
+    if (storiesRemaining !== null && storiesRemaining <= 0) {
+      e.preventDefault();
+      if (user.subscriptionStatus === 'active') {
+        setWarningMessage(t('storyForm.premiumLimitWarning'));
+      } else {
+        setWarningMessage(t('storyForm.freeLimitWarning'));
+      }
+      setShowWarning(true);
+      return false;
+    }
+    
+    return true;
+  };
+
+  // Enhanced change handlers that check user status
+  const handleTopicChangeWithCheck = (e) => {
+    if (handleFieldInteraction(e)) {
+      handleTopicChange(e);
+    }
+  };
+
+  const handleSelectChangeWithCheck = (setter) => (e) => {
+    if (handleFieldInteraction(e)) {
+      setter(e.target.value);
+    }
+  };
+
+  const handleInputChangeWithCheck = (setter) => (e) => {
+    if (handleFieldInteraction(e)) {
+      setter(e.target.value);
+    }
+  };
   
   // Clear interval on component unmount
   useEffect(() => {
@@ -93,6 +180,11 @@ function StoryForm({ onStoryGenerated }) {
         if (isMounted) {
           console.log('User data loaded:', currentUser);
           setUser(currentUser);
+          
+          // Fetch stories remaining if user is logged in
+          if (currentUser) {
+            await fetchStoriesRemaining(currentUser);
+          }
         }
       } catch (error) {
         console.error('Error loading user:', error);
@@ -432,6 +524,46 @@ function StoryForm({ onStoryGenerated }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Warning modal component
+  const renderWarningModal = () => {
+    if (!showWarning) return null;
+
+    return (
+      <div className="warning-overlay" onClick={() => setShowWarning(false)}>
+        <div className="warning-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="warning-header">
+            <span className="warning-icon">⚠️</span>
+            <h3>{t('storyForm.warningTitle')}</h3>
+          </div>
+          <div className="warning-content">
+            <p>{warningMessage}</p>
+          </div>
+          <div className="warning-actions">
+            {!user ? (
+              <>
+                <Link to="/login" className="warning-btn primary" onClick={() => setShowWarning(false)}>
+                  {t('storyForm.loginButton')}
+                </Link>
+                <button className="warning-btn secondary" onClick={() => setShowWarning(false)}>
+                  {t('storyForm.cancelButton')}
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/subscribe" className="warning-btn primary" onClick={() => setShowWarning(false)}>
+                  {user.subscriptionStatus === 'active' ? t('storyForm.waitButton') : t('storyForm.subscribeButton')}
+                </Link>
+                <button className="warning-btn secondary" onClick={() => setShowWarning(false)}>
+                  {t('storyForm.cancelButton')}
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="story-form-container">
       <h2>
@@ -448,7 +580,7 @@ function StoryForm({ onStoryGenerated }) {
             type="text"
             id="topic"
             value={topic}
-            onChange={handleTopicChange}
+            onChange={handleTopicChangeWithCheck}
             onBlur={handleTopicBlur}
             placeholder={t('storyForm.topicPlaceholder')}
             required
@@ -464,7 +596,7 @@ function StoryForm({ onStoryGenerated }) {
               type="text"
               id="childNames"
               value={childNames}
-              onChange={(e) => setChildNames(e.target.value)}
+              onChange={handleInputChangeWithCheck(setChildNames)}
               placeholder={t('storyForm.childNamesPlaceholder')}
             />
           </div>
@@ -477,7 +609,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="englishLevel"
                 value={englishLevel}
-                onChange={(e) => setEnglishLevel(e.target.value)}
+                onChange={handleSelectChangeWithCheck(setEnglishLevel)}
               >
                 <option value="basic">{t('storyForm.englishLevelBeginner')}</option>
                 <option value="intermediate">{t('storyForm.englishLevelIntermediate')}</option>
@@ -496,7 +628,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="storyLength"
                 value={storyLength}
-                onChange={(e) => setStoryLength(e.target.value)}
+                onChange={handleSelectChangeWithCheck(setStoryLength)}
               >
                 <option value="short">{t('storyForm.lengthShort')}</option>
                 <option value="medium">{t('storyForm.lengthMedium')}</option>
@@ -513,7 +645,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="storyType"
                 value={storyType}
-                onChange={(e) => setStoryType(e.target.value)}
+                onChange={handleSelectChangeWithCheck(setStoryType)}
               >
                 <option value="original">{t('storyForm.typeOriginal')}</option>
                 <option value="classic">{t('storyForm.typeClassic')}</option>
@@ -599,6 +731,9 @@ function StoryForm({ onStoryGenerated }) {
           <AudioPlayer audioUrl={audioUrl} title={topic} />
         </div>
       )}
+
+      {/* Warning Modal */}
+      {renderWarningModal()}
     </div>
   );
 }
