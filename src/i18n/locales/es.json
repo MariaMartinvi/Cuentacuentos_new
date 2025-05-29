@@ -24,7 +24,7 @@
     "redirecting": "Redirigiendo...",
     "cancelNote": "Puedes cancelar tu suscripción en cualquier momento desde tu perfil, accediendo a través del menú superior.",
     "cancelInfo": "Tu suscripción seguirá activa hasta el final del período de facturación actual",
-    "subscribeButton": "Plan Premium",
+    "subscribeButton": "Hazte Premium",
     "paymentInfo": "Pago seguro procesado por Stripe. No almacenamos la información de tu tarjeta."
   },
   "profile": {
@@ -226,6 +226,7 @@
     "login": "Iniciar Sesión",
     "register": "Registrarse",
     "logout": "Cerrar Sesión",
+    "profile": "Mi Perfil",
     "languages": {
       "en": "Inglés",
       "es": "Español",

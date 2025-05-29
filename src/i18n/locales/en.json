@@ -5,6 +5,7 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
+    "profile": "My Profile",
     "languages": {
       "en": "English",
       "es": "Spanish",
@@ -103,7 +104,7 @@
       "3": "Priority support",
       "4": "Access to all premium features"
     },
-    "subscribeButton": "Premium Plan",
+    "subscribeButton": "Upgrade to Premium",
     "paymentInfo": "Secure payment",
     "error": "Error processing subscription",
     "success": "Subscription successful!",
