@@ -288,7 +288,7 @@
     "subscribe": "S'abonner",
     "loginRequiredWarning": "Vous devez vous connecter pour configurer et générer des histoires. C'est gratuit et ne prend que quelques secondes !",
     "freeLimitWarning": "Vous avez atteint votre limite de 3 histoires gratuites. Abonnez-vous au plan premium pour générer jusqu'à 30 histoires par mois.",
-    "premiumLimitWarning": "Vous avez atteint votre limite de 30 histoires premium ce mois-ci. Attendez jusqu'au jour {{day}} pour générer plus d'histoires.",
+    "premiumLimitWarning": "Vous avez atteint votre limite de 30 histoires premium ce mois-ci. Votre abonnement se renouvelle le {{day}} du mois prochain.",
     "warningTitle": "Action Requise",
     "loginButton": "Se Connecter",
     "subscribeButton": "S'abonner",

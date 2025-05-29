@@ -464,7 +464,7 @@
     "alertEmailRequired": "Please enter your email",
     "loginRequiredWarning": "You need to log in to configure and generate stories. It's free and only takes a few seconds!",
     "freeLimitWarning": "You have reached your limit of 3 free stories. Subscribe to the premium plan to generate up to 30 stories per month.",
-    "premiumLimitWarning": "You have reached your limit of 30 premium stories this month. Wait until day {{day}} to generate more stories.",
+    "premiumLimitWarning": "You have reached your limit of 30 premium stories this month. Your subscription renews on day {{day}} of next month.",
     "warningTitle": "Action Required",
     "loginButton": "Log In",
     "subscribeButton": "Subscribe",

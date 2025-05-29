@@ -293,7 +293,7 @@
     "subscribe": "Subscríbete",
     "loginRequiredWarning": "Necesitas iniciar sesión para configurar e xerar contos. É gratuíto e só leva uns segundos!",
     "freeLimitWarning": "Alcanzaches o teu límite de 3 contos gratuítos. Subscríbete ao plan premium para xerar ata 30 contos ao mes.",
-    "premiumLimitWarning": "Alcanzaches o teu límite de 30 contos premium este mes. Espera ata o día {{day}} para xerar máis contos.",
+    "premiumLimitWarning": "Alcanzaches o teu límite de 30 contos premium este mes. A túa subscrición renóvase o día {{day}} do próximo mes.",
     "warningTitle": "Acción Requirida",
     "loginButton": "Iniciar Sesión",
     "subscribeButton": "Subscríbete",

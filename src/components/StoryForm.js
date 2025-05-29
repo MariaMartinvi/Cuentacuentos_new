@@ -20,6 +20,7 @@ function StoryForm({ onStoryGenerated }) {
   const [storiesRemaining, setStoriesRemaining] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+  const [warningType, setWarningType] = useState('');
   
   const [topic, setTopic] = useState('');
   const [storyLength, setStoryLength] = useState('medium');
@@ -110,9 +111,8 @@ function StoryForm({ onStoryGenerated }) {
 
   // Enhanced change handlers that check user status
   const handleTopicChangeWithCheck = (e) => {
-    if (handleFieldInteraction(e)) {
-      handleTopicChange(e);
-    }
+    if (!canGenerateStory()) return;
+    setTopic(e.target.value);
   };
 
   const handleSelectChangeWithCheck = (setter) => (e) => {
@@ -524,44 +524,179 @@ function StoryForm({ onStoryGenerated }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Function to get the next renewal day based on subscription date
+  const getNextRenewalDay = () => {
+    if (!user) {
+      return 1;
+    }
+
+    try {
+      let subscriptionDay = 1; // Default fallback
+      
+      // Try to get subscription day from different possible fields
+      if (user.subscriptionDate) {
+        const subscriptionDate = new Date(user.subscriptionDate);
+        subscriptionDay = subscriptionDate.getDate();
+      } else if (user.subscription?.currentPeriodStart) {
+        const subscriptionDate = new Date(user.subscription.currentPeriodStart);
+        subscriptionDay = subscriptionDate.getDate();
+      } else if (user.subscription?.created) {
+        const subscriptionDate = new Date(user.subscription.created);
+        subscriptionDay = subscriptionDate.getDate();
+      }
+      
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      
+      // Calculate next renewal date
+      let nextRenewal = new Date(currentYear, currentMonth, subscriptionDay);
+      
+      // If the renewal day for this month has already passed, move to next month
+      if (nextRenewal <= now) {
+        nextRenewal = new Date(currentYear, currentMonth + 1, subscriptionDay);
+      }
+      
+      // Handle edge case where subscription day doesn't exist in the target month
+      // (e.g., subscribed on Jan 31, but February only has 28/29 days)
+      const targetMonth = nextRenewal.getMonth();
+      const lastDayOfTargetMonth = new Date(currentYear, targetMonth + 1, 0).getDate();
+      
+      if (subscriptionDay > lastDayOfTargetMonth) {
+        // Use the last day of the month instead
+        nextRenewal = new Date(currentYear, targetMonth, lastDayOfTargetMonth);
+      }
+      
+      return nextRenewal.getDate();
+    } catch (error) {
+      console.error('Error calculating renewal day:', error);
+      return 1; // Fallback to first day of next month
+    }
+  };
+
   // Warning modal component
-  const renderWarningModal = () => {
+  const WarningModal = () => {
     if (!showWarning) return null;
+
+    const nextDay = getNextRenewalDay();
 
     return (
       <div className="warning-overlay" onClick={() => setShowWarning(false)}>
         <div className="warning-modal" onClick={(e) => e.stopPropagation()}>
-          <div className="warning-header">
-            <span className="warning-icon">⚠️</span>
-            <h3>{t('storyForm.warningTitle')}</h3>
-          </div>
           <div className="warning-content">
-            <p>{warningMessage}</p>
+            <p>
+              {warningType === 'login' && t('storyForm.loginRequiredWarning')}
+              {warningType === 'freeLimit' && t('storyForm.freeLimitWarning')}
+              {warningType === 'premiumLimit' && t('storyForm.premiumLimitWarning', { day: nextDay })}
+            </p>
           </div>
           <div className="warning-actions">
-            {!user ? (
+            {warningType === 'login' && (
               <>
-                <Link to="/login" className="warning-btn primary" onClick={() => setShowWarning(false)}>
+                <button 
+                  className="warning-btn warning-btn-primary"
+                  onClick={() => {
+                    setShowWarning(false);
+                    navigate('/login');
+                  }}
+                >
                   {t('storyForm.loginButton')}
-                </Link>
-                <button className="warning-btn secondary" onClick={() => setShowWarning(false)}>
+                </button>
+                <button 
+                  className="warning-btn warning-btn-secondary"
+                  onClick={() => setShowWarning(false)}
+                >
                   {t('storyForm.cancelButton')}
                 </button>
               </>
-            ) : (
+            )}
+            {warningType === 'freeLimit' && (
               <>
-                <Link to="/subscribe" className="warning-btn primary" onClick={() => setShowWarning(false)}>
-                  {user.subscriptionStatus === 'active' ? t('storyForm.waitButton') : t('storyForm.subscribeButton')}
-                </Link>
-                <button className="warning-btn secondary" onClick={() => setShowWarning(false)}>
+                <button 
+                  className="warning-btn warning-btn-primary"
+                  onClick={() => {
+                    setShowWarning(false);
+                    navigate('/subscription');
+                  }}
+                >
+                  {t('storyForm.subscribeButton')}
+                </button>
+                <button 
+                  className="warning-btn warning-btn-secondary"
+                  onClick={() => setShowWarning(false)}
+                >
                   {t('storyForm.cancelButton')}
                 </button>
               </>
+            )}
+            {warningType === 'premiumLimit' && (
+              <button 
+                className="warning-btn warning-btn-primary"
+                onClick={() => setShowWarning(false)}
+              >
+                {t('storyForm.waitButton')}
+              </button>
             )}
           </div>
         </div>
       </div>
     );
+  };
+
+  // Function to show warning modal
+  const showWarningModal = (type) => {
+    setWarningType(type);
+    setShowWarning(true);
+  };
+
+  // Check if user can generate stories
+  const canGenerateStory = () => {
+    if (!user) {
+      showWarningModal('login');
+      return false;
+    }
+
+    if (storiesRemaining <= 0) {
+      if (user.subscriptionStatus === 'active') {
+        showWarningModal('premiumLimit');
+      } else {
+        showWarningModal('freeLimit');
+      }
+      return false;
+    }
+
+    return true;
+  };
+
+  // Event handlers for form fields with warning check
+  const handleChildNamesChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setChildNames(e.target.value);
+  };
+
+  const handleEnglishLevelChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setEnglishLevel(e.target.value);
+  };
+
+  const handleLengthChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setStoryLength(e.target.value);
+  };
+
+  const handleTypeChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setStoryType(e.target.value);
+  };
+
+  const handleAgeGroupChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setAgeGroup(e.target.value);
+  };
+
+  const handleCreativityLevelChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setCreativityLevel(e.target.value);
   };
 
   return (
@@ -596,7 +731,7 @@ function StoryForm({ onStoryGenerated }) {
               type="text"
               id="childNames"
               value={childNames}
-              onChange={handleInputChangeWithCheck(setChildNames)}
+              onChange={handleChildNamesChangeWithCheck}
               placeholder={t('storyForm.childNamesPlaceholder')}
             />
           </div>
@@ -609,7 +744,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="englishLevel"
                 value={englishLevel}
-                onChange={handleSelectChangeWithCheck(setEnglishLevel)}
+                onChange={handleEnglishLevelChangeWithCheck}
               >
                 <option value="basic">{t('storyForm.englishLevelBeginner')}</option>
                 <option value="intermediate">{t('storyForm.englishLevelIntermediate')}</option>
@@ -628,7 +763,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="storyLength"
                 value={storyLength}
-                onChange={handleSelectChangeWithCheck(setStoryLength)}
+                onChange={handleLengthChangeWithCheck}
               >
                 <option value="short">{t('storyForm.lengthShort')}</option>
                 <option value="medium">{t('storyForm.lengthMedium')}</option>
@@ -645,7 +780,7 @@ function StoryForm({ onStoryGenerated }) {
               <select
                 id="storyType"
                 value={storyType}
-                onChange={handleSelectChangeWithCheck(setStoryType)}
+                onChange={handleTypeChangeWithCheck}
               >
                 <option value="original">{t('storyForm.typeOriginal')}</option>
                 <option value="classic">{t('storyForm.typeClassic')}</option>
@@ -733,7 +868,7 @@ function StoryForm({ onStoryGenerated }) {
       )}
 
       {/* Warning Modal */}
-      {renderWarningModal()}
+      <WarningModal />
     </div>
   );
 }
