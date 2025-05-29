@@ -702,7 +702,7 @@ function StoryForm({ onStoryGenerated }) {
   return (
     <div className="story-form-container">
       <h2>
-        <span className="icon-title">🌙</span>
+        <img src="/logo192.png" alt="AudioGretel Logo" className="icon-title-logo" />
         {t('storyForm.title')}
       </h2>
 

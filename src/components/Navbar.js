@@ -39,7 +39,7 @@ function Navbar() {
       <div className="navbar-container">
         <div className="logo">
           <Link to="/" onClick={scrollToTop}>
-            <span className="emoji">🌙</span>
+            <img src="/logo192.png" alt="AudioGretel Logo" className="logo-image" />
             <span className="logo-text">AudioGretel</span>
           </Link>
         </div>

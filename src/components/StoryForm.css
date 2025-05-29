@@ -34,7 +34,7 @@
   color: #2c3e50;
   margin-bottom: 2rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -45,6 +45,15 @@
   margin-right: 12px;
   font-size: 1.8rem;
   animation: bounce 2s infinite;
+}
+
+.icon-title-logo {
+  height: 22px;
+  width: 22px;
+  margin-right: 12px;
+  object-fit: contain;
+  animation: bounce 2s infinite;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
 }
 
 @keyframes bounce {
@@ -106,7 +115,7 @@ label {
 
 input, select {
   width: 100%;
-  padding: 1rem 1.2rem;
+  padding: 0.8rem 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
   font-size: 1rem;
@@ -168,19 +177,26 @@ select {
 }
 
 .generate-btn {
-  background: linear-gradient(90deg, #4361ee, #3a56e3);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   flex: 2;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.8rem;
-  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
   position: relative;
   overflow: hidden;
+  border-radius: 15px;
+  padding: 1.2rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.generate-btn:before {
+.generate-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -193,29 +209,54 @@ select {
     rgba(255, 255, 255, 0.2) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  transition: all 0.6s ease;
+  transition: left 0.6s ease;
 }
 
-.generate-btn:hover:before {
+.generate-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.generate-btn:hover::before {
   left: 100%;
 }
 
+.generate-btn:hover::after {
+  opacity: 1;
+}
+
 .generate-btn:hover {
-  background: linear-gradient(90deg, #3a56e3, #2a46d3);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+  letter-spacing: 1.2px;
 }
 
 .generate-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(67, 97, 238, 0.3);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 .generate-btn:disabled {
-  background: #a0aec0;
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
   cursor: not-allowed;
   transform: none;
-  box-shadow: none;
+  box-shadow: 0 4px 15px rgba(160, 174, 192, 0.3);
+  letter-spacing: 1px;
+  animation: pulse-loading 2s ease-in-out infinite;
+}
+
+.generate-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(160, 174, 192, 0.3);
 }
 
 .reset-btn {
@@ -238,23 +279,33 @@ select {
 /* Spinner Animation */
 .spinner {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: white;
   animation: spin 1s ease-in-out infinite;
-  margin-right: 10px;
+  margin-right: 12px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to { 
+    transform: rotate(360deg); 
+  }
 }
 
 .btn-icon {
-  font-size: 1.2rem;
-  margin-right: 8px;
+  font-size: 1.3rem;
+  margin-right: 10px;
   display: inline-block;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.generate-btn:hover .btn-icon {
+  transform: scale(1.2) rotate(10deg);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Error message styling */
@@ -346,6 +397,20 @@ select {
   
   .generate-btn, .reset-btn {
     width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.8px;
+  }
+  
+  .generate-btn .btn-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+  }
+  
+  .spinner {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
   }
   
   .story-form-container h2 {
@@ -610,5 +675,15 @@ select {
     width: 100%;
     padding: 16px 20px;
     font-size: 16px;
+  }
+}
+
+/* Pulse animation for loading state */
+@keyframes pulse-loading {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(160, 174, 192, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(160, 174, 192, 0.5);
   }
 } 

@@ -115,6 +115,24 @@
     text-decoration: underline;
   }
   
+  .logo-image {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    transition: all 0.3s ease;
+    animation: logo-glow 4s ease-in-out infinite;
+  }
+  
+  @keyframes logo-glow {
+    0%, 100% {
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    }
+    50% {
+      filter: drop-shadow(2px 2px 8px rgba(102, 126, 234, 0.3)) drop-shadow(0 0 15px rgba(102, 126, 234, 0.2));
+    }
+  }
+  
   /* Login button styling */
   .navbar .nav-links .login-nav-button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -499,4 +517,13 @@
 .user-name:hover {
   color: #3a56e3;
   text-decoration: underline;
+}
+
+.logo-image {
+  height: 40px;
+  width: 40px;
+}
+
+.logo-text {
+  font-size: 2.7rem;
 }
