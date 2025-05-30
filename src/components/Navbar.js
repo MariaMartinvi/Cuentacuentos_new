@@ -15,6 +15,16 @@ function Navbar() {
   const languageDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
+  // Debug user data
+  useEffect(() => {
+    if (user) {
+      console.log('🔍 User data in Navbar:', user);
+      console.log('📸 User photoURL:', user.photoURL);
+      console.log('👤 User name:', user.name);
+      console.log('📧 User email:', user.email);
+    }
+  }, [user]);
+
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
     setIsLanguageDropdownOpen(false);
@@ -139,16 +149,16 @@ function Navbar() {
                     )}
                     <Link 
                       to="/profile" 
-                      className="mobile-menu-item"
+                      className="mobile-menu-item profile-item"
                       onClick={() => handleMobileMenuClick()}
                     >
-                      👤 {t('navbar.profile')}
+                      {t('navbar.profile')}
                     </Link>
                     <button 
                       className="mobile-menu-item mobile-logout"
                       onClick={handleLogout}
                     >
-                      🚪 {t('navbar.logout')}
+                      {t('navbar.logout')}
                     </button>
                   </div>
                 ) : (
@@ -221,19 +231,19 @@ function Navbar() {
                       <hr className="dropdown-divider" />
                       <Link 
                         to="/profile" 
-                        className="dropdown-item"
+                        className="dropdown-item profile-item"
                         onClick={() => {
                           setIsUserDropdownOpen(false);
                           scrollToTop();
                         }}
                       >
-                        👤 {t('navbar.profile')}
+                        {t('navbar.profile')}
                       </Link>
                       <button 
                         className="dropdown-item logout-item"
                         onClick={handleLogout}
                       >
-                        🚪 {t('navbar.logout')}
+                        {t('navbar.logout')}
                       </button>
                     </div>
                   )}

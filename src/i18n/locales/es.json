@@ -593,7 +593,7 @@
   "register": {
     "title": "Crear una cuenta",
     "subtitle": "Únete a nuestra comunidad de cuentacuentos",
-    "freeStories": "🎁 3 cuentos gratuitos al registrarte",
+    "freeStoriesBanner": "🎁 3 cuentos gratuitos al registrarte",
     "subscribeLater": "Puedes suscribirte más tarde",
     "or": "o",
     "emailLabel": "Email",

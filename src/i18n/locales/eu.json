@@ -307,7 +307,7 @@
   "register": {
     "title": "Kontu bat sortu",
     "subtitle": "Batu gure ipuin kontatzaileen komunitatera",
-    "freeStories": "🎁 3 ipuin doan erregistratzean",
+    "freeStoriesBanner": "🎁 3 ipuin doan erregistratzean",
     "subscribeLater": "Geroago harpidetu zaitezke",
     "or": "edo",
     "emailLabel": "Posta elektronikoa",
