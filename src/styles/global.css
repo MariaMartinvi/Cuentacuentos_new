@@ -151,7 +151,7 @@ a {
 /* Hero Section */
 .hero-section {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  padding: 5rem 1.5rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   color: white;
   position: relative;
@@ -198,18 +198,18 @@ a {
   padding: 2.5rem;
   margin-bottom: 3rem;
   border: 1px solid #f1f3f5;
-  transform: translateY(-30px);
+  transform: translateY(-100px);
 }
 
 .story-form-container h2 {
   color: var(--primary);
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   text-align: center;
   font-size: 1.8rem;
 }
 
 .form-group {
-  margin-bottom: 1.75rem; /* Increased form group spacing */
+  margin-bottom: 0.1rem; /* Minimal form group spacing */
   transition: transform 0.3s ease;
 }
 
@@ -220,7 +220,7 @@ a {
 .form-row {
   display: flex;
   gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .form-row .form-group {
@@ -303,7 +303,7 @@ input::placeholder {
 .button-group {
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0.25rem;
 }
 
 button {
