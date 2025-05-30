@@ -12,7 +12,7 @@ function StoryDisplay({ story }) {
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioCount, setAudioCount] = useState(0);
   const [alertMessage, setAlertMessage] = useState(null);
-
+  
   // Reset audio count when story changes
   useEffect(() => {
     setAudioCount(0);
@@ -92,6 +92,7 @@ function StoryDisplay({ story }) {
         musicTrack
       });
 
+      // Las pausas inteligentes ahora se aplican automáticamente en el backend
       const audioData = await generateAudio({
         text: story.content,
         voiceId: voiceType,

@@ -39,7 +39,7 @@ const fetchWithTimeout = async (url, options, timeout) => {
 export const generateAudio = async (options) => {
   try {
     // Extract properties from options object
-    const { text, voiceId, speechRate, musicTrack } = options;
+    const { text, voiceId, speechRate, musicTrack, pauseSettings } = options;
     
     // Verify that text is a valid string
     if (typeof text !== 'string') {
@@ -52,6 +52,10 @@ export const generateAudio = async (options) => {
     console.log('🎙️ Voz:', voiceId);
     console.log('⏩ Velocidad:', speechRate || 'normal');
     console.log('🎵 Música de fondo:', musicTrack === 'none' ? 'Sin música' : (musicTrack || 'random'));
+    console.log('⏸️ Pausas personalizadas:', pauseSettings ? 'Habilitadas' : 'Deshabilitadas');
+    if (pauseSettings) {
+      console.log('⏸️ Configuración de pausas:', pauseSettings);
+    }
     
     // Determine the correct URL based on environment
     const isProduction = window.location.hostname !== 'localhost';
@@ -66,7 +70,8 @@ export const generateAudio = async (options) => {
       text, 
       voiceId, 
       speechRate,
-      musicTrack: musicTrack // Asegurarnos de enviar el valor exacto, incluyendo 'none'
+      musicTrack: musicTrack, // Asegurarnos de enviar el valor exacto, incluyendo 'none'
+      pauseSettings: pauseSettings // Incluir configuraciones de pausas
     };
 
     console.log('📦 Datos de la solicitud:', JSON.stringify({
@@ -154,5 +159,42 @@ export const generateAudio = async (options) => {
     }
     
     throw new Error(userFriendlyMessage);
+  }
+};
+
+export const testPauses = async (text, pauseSettings) => {
+  try {
+    console.log('🧪 Iniciando test de pausas...', { text: text.substring(0, 50) + '...', pauseSettings });
+    
+    // Determine the correct URL based on environment
+    const isProduction = window.location.hostname !== 'localhost';
+    const testPausesUrl = isProduction 
+      ? 'https://generadorcuentos.onrender.com/api/audio/test-pauses'
+      : 'http://localhost:5001/api/audio/test-pauses';
+
+    console.log('🌐 URL del test de pausas:', testPausesUrl);
+    
+    const response = await fetch(testPausesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text,
+        pauseSettings
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('✅ Test de pausas completado:', result);
+    return result;
+  } catch (error) {
+    console.error('❌ Error en test de pausas:', error);
+    throw new Error(`Error testing pauses: ${error.message}`);
   }
 };
