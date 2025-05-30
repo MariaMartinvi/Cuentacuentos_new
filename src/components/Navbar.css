@@ -643,9 +643,8 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid transparent;
+  border: 2px solid #667eea;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2px;
   transition: all 0.3s ease;
   z-index: 1;
 }
@@ -659,11 +658,14 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  background: white;
-  position: relative;
-  z-index: 1;
   display: block;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f7fafc;
+  border: none;
+  outline: none;
+}
+
+.avatar-image:not([src]) {
+  display: none;
 }
 
 .avatar-placeholder {
@@ -933,9 +935,8 @@
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid transparent;
+  border: 2px solid #667eea;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2px;
   z-index: 1;
 }
 
@@ -944,11 +945,14 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  background: white;
-  position: relative;
-  z-index: 1;
   display: block;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f7fafc;
+  border: none;
+  outline: none;
+}
+
+.mobile-avatar-image:not([src]) {
+  display: none;
 }
 
 .mobile-avatar-placeholder {

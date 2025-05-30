@@ -15,13 +15,31 @@ function Navbar() {
   const languageDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
-  // Debug user data
+  // Debug: log user data
+  console.log('Navbar - User data:', user);
+  if (user) {
+    console.log('User photoURL:', user.photoURL);
+    console.log('User name:', user.name);
+    console.log('User email:', user.email);
+  }
+
+  // Function to handle Google photo URLs properly
+  const getImageSrc = (photoURL) => {
+    if (!photoURL) return null;
+    
+    // Add cache busting parameter for Google photos
+    const separator = photoURL.includes('?') ? '&' : '?';
+    return `${photoURL}${separator}sz=150&cache=${Date.now()}`;
+  };
+
+  // Preload user image to avoid service worker issues
   useEffect(() => {
-    if (user) {
-      console.log('🔍 User data in Navbar:', user);
-      console.log('📸 User photoURL:', user.photoURL);
-      console.log('👤 User name:', user.name);
-      console.log('📧 User email:', user.email);
+    if (user && user.photoURL) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = getImageSrc(user.photoURL);
+      img.onload = () => console.log('User image preloaded successfully');
+      img.onerror = () => console.log('Failed to preload user image');
     }
   }, [user]);
 
@@ -114,9 +132,15 @@ function Navbar() {
                       <div className="mobile-avatar">
                         {user.photoURL ? (
                           <img 
-                            src={user.photoURL} 
+                            src={getImageSrc(user.photoURL)} 
                             alt={user.name || user.email}
                             className="mobile-avatar-image"
+                            crossOrigin="anonymous"
+                            onLoad={() => console.log('Mobile avatar image loaded successfully')}
+                            onError={(e) => {
+                              console.log('Mobile avatar image failed to load:', e);
+                              console.log('Photo URL:', user.photoURL);
+                            }}
                           />
                         ) : (
                           <div className="mobile-avatar-placeholder">
@@ -202,9 +226,15 @@ function Navbar() {
                     <div className="user-avatar">
                       {user.photoURL ? (
                         <img 
-                          src={user.photoURL} 
+                          src={getImageSrc(user.photoURL)} 
                           alt={user.name || user.email}
                           className="avatar-image"
+                          crossOrigin="anonymous"
+                          onLoad={() => console.log('Avatar image loaded successfully')}
+                          onError={(e) => {
+                            console.log('Avatar image failed to load:', e);
+                            console.log('Photo URL:', user.photoURL);
+                          }}
                         />
                       ) : (
                         <div className="avatar-placeholder">
