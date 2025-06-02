@@ -39,7 +39,7 @@ const fetchWithTimeout = async (url, options, timeout) => {
 export const generateAudio = async (options) => {
   try {
     // Extract properties from options object
-    const { text, voiceId, speechRate, musicTrack, pauseSettings } = options;
+    const { text, voiceId, speechRate, musicTrack, pauseSettings, title } = options;
     
     // Verify that text is a valid string
     if (typeof text !== 'string') {
@@ -52,6 +52,7 @@ export const generateAudio = async (options) => {
     console.log('🎙️ Voz:', voiceId);
     console.log('⏩ Velocidad:', speechRate || 'normal');
     console.log('🎵 Música de fondo:', musicTrack === 'none' ? 'Sin música' : (musicTrack || 'random'));
+    console.log('📖 Título:', title || 'No title provided');
     console.log('⏸️ Pausas personalizadas:', pauseSettings ? 'Habilitadas' : 'Deshabilitadas');
     if (pauseSettings) {
       console.log('⏸️ Configuración de pausas:', pauseSettings);
@@ -71,7 +72,8 @@ export const generateAudio = async (options) => {
       voiceId, 
       speechRate,
       musicTrack: musicTrack, // Asegurarnos de enviar el valor exacto, incluyendo 'none'
-      pauseSettings: pauseSettings // Incluir configuraciones de pausas
+      pauseSettings: pauseSettings, // Incluir configuraciones de pausas
+      title: title // Incluir el título para detección automática de pausas
     };
 
     console.log('📦 Datos de la solicitud:', JSON.stringify({

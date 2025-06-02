@@ -92,12 +92,21 @@ function StoryDisplay({ story }) {
         musicTrack
       });
 
+      // Separar título del contenido (igual que hace el backend en storyController)
+      const contentLines = story.content.split('\n');
+      const titleFromContent = contentLines[0] || story.title;
+      const contentWithoutTitle = contentLines.slice(2).join('\n'); // Skip title and empty line
+      
+      console.log("Título extraído:", titleFromContent);
+      console.log("Contenido sin título:", contentWithoutTitle.substring(0, 50) + "...");
+
       // Las pausas inteligentes ahora se aplican automáticamente en el backend
       const audioData = await generateAudio({
-        text: story.content,
+        text: contentWithoutTitle, // Enviar solo el contenido sin título
         voiceId: voiceType,
         speechRate: speechRate,
-        musicTrack: musicTrack
+        musicTrack: musicTrack,
+        title: titleFromContent // Pasar el título extraído para detección automática de pausas
       });
 
       if (!audioData) {
