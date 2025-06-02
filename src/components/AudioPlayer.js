@@ -232,9 +232,11 @@ const AudioPlayer = ({ audioUrl, title }) => {
         };
         
         audioRef.current.ontimeupdate = () => {
-          setCurrentTime(audioRef.current.currentTime);
-          if (error) {
-            setShowError(false);
+          if (audioRef.current) {
+            setCurrentTime(audioRef.current.currentTime);
+            if (error) {
+              setShowError(false);
+            }
           }
         };
         
