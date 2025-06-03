@@ -18,48 +18,29 @@ const API_URL = 'https://generadorcuentos.onrender.com';
 const GOOGLE_CLIENT_ID = '83367976748-itlu4htdt85qq5j1rrf58mo724dt629p.apps.googleusercontent.com';
 
 function App() {
-  // Inicializar el proxy para Firebase Storage
   useEffect(() => {
-    console.log('Inicializando proxy para Firebase Storage...');
-    initProxy().then(() => {
-      console.log('Proxy para Firebase Storage inicializado correctamente');
-    }).catch(error => {
-      console.error('Error inicializando proxy para Firebase Storage:', error);
-    });
-    
+    initProxy();
     return () => {
-      console.log('Limpiando proxy para Firebase Storage...');
       cleanupProxy();
     };
   }, []);
 
   return (
-    <div className="App">
-      {/* Add the proxy iframe with proper attributes */}
-      <iframe
-        id="proxy-frame"
-        src="/proxy.html"
-        style={{ display: 'none' }}
-        title="Proxy Service"
-        sandbox="allow-same-origin allow-scripts"
-        referrerPolicy="no-referrer"
-      />
+    <I18nextProvider i18n={i18n}>
       <HelmetProvider>
-        <I18nextProvider i18n={i18n}>
-          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-            <GoogleTagManager />
-            <AuthProvider>
-              <CookieConsentProvider>
-                <Router>
-                  <AppRoutes />
-                  <CookieConsent />
-                </Router>
-              </CookieConsentProvider>
-            </AuthProvider>
-          </GoogleOAuthProvider>
-        </I18nextProvider>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <AuthProvider>
+            <CookieConsentProvider>
+              <Router>
+                <GoogleTagManager />
+                <AppRoutes />
+                <CookieConsent />
+              </Router>
+            </CookieConsentProvider>
+          </AuthProvider>
+        </GoogleOAuthProvider>
       </HelmetProvider>
-    </div>
+    </I18nextProvider>
   );
 }
 

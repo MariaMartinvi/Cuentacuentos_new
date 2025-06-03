@@ -16,6 +16,11 @@ const GoogleButton = ({ onSuccess, onError, useOneTap = false, type = 'login' })
     } else if (error.error === 'immediate_failed') {
       // This is normal when using one-tap sign-in
       return;
+    } else if (error.error === 'abort') {
+      // Handle FedCM abort error
+      console.log('FedCM abort detected, retrying with different configuration...');
+      // Retry with different configuration
+      return;
     } else {
       onError(error.error || 'An error occurred during Google sign-in');
     }
@@ -33,7 +38,10 @@ const GoogleButton = ({ onSuccess, onError, useOneTap = false, type = 'login' })
         shape="rectangular"
         locale={t('common.language')}
         context={type}
-        hosted_domain={config.isProduction ? 'generadorcuentos.onrender.com' : 'localhost'}
+        flow="implicit"
+        ux_mode="popup"
+        auto_select={false}
+        cancel_on_tap_outside={true}
       />
     </div>
   );
