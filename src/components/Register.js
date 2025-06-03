@@ -85,10 +85,13 @@ const Register = () => {
 
       if (backendResponse.data && backendResponse.data.token) {
         localStorage.setItem('token', backendResponse.data.token);
-        if (backendResponse.data.user) {
-          localStorage.setItem('user', JSON.stringify(backendResponse.data.user));
+        // Extract user data from nested structure
+        const userData = backendResponse.data.data || backendResponse.data.user;
+        if (userData) {
+          localStorage.setItem('user', JSON.stringify(userData));
+          console.log('Google register - User data saved:', userData);
         }
-        await setAuthContext(backendResponse.data.token, backendResponse.data.user); 
+        await setAuthContext(backendResponse.data.token, userData); 
         setSuccess(t('register.successGoogle')); 
         navigate('/');
       } else {

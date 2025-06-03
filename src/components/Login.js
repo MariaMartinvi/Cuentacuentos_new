@@ -67,8 +67,11 @@ const Login = () => {
 
       if (backendResponse.data && backendResponse.data.token) {
         localStorage.setItem('token', backendResponse.data.token);
-        if (backendResponse.data.user) {
-          localStorage.setItem('user', JSON.stringify(backendResponse.data.user));
+        // Extract user data from nested structure
+        const userData = backendResponse.data.data || backendResponse.data.user;
+        if (userData) {
+          localStorage.setItem('user', JSON.stringify(userData));
+          console.log('Google login - User data saved:', userData);
         }
         await refreshUser();
         navigate('/');

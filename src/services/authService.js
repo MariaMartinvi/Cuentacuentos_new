@@ -146,11 +146,19 @@ export const login = async (email, password) => {
     
     console.log('Login response:', response.data);
     
-    if (!response.data || !response.data.token || !response.data.data) {
+    if (!response.data || !response.data.token) {
       throw new Error('Invalid response format from server');
     }
 
-    const { token, data: user } = response.data;
+    const { token } = response.data;
+    // Extract user data from nested structure
+    const user = response.data.data || response.data.user;
+    
+    if (!user) {
+      throw new Error('No user data received from server');
+    }
+    
+    console.log('Extracted user data:', user);
     
     // Guardar token y usuario en localStorage
     localStorage.setItem('token', token);
@@ -227,13 +235,18 @@ export const getCurrentUser = async () => {
 
     console.log('Response from /api/auth/me:', response.data);
     
+    // Extract user data from the nested response structure
+    const userData = response.data.data || response.data;
+    
+    console.log('Extracted user data:', userData);
+    
     // Actualizar caché
     userCache = {
-      data: response.data,
+      data: userData,
       timestamp: now
     };
     
-    return response.data;
+    return userData;
   } catch (error) {
     console.error('Error in getCurrentUser:', error);
     // En caso de error, limpiar caché
