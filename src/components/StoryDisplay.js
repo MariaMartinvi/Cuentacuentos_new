@@ -183,78 +183,85 @@ function StoryDisplay({ story }) {
     if (isSharing) return;
     setIsSharing(true);
 
-    const productionUrl = 'https://www.audiogretel.com';
-    const shareText = `📖 ${story.title || t('storyDisplay.title')}
-
-${story.content}
-
-🎧 Crea más cuentos en AudioGretel: ${productionUrl}`;
-
     try {
-      // Check if we're on a mobile device
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (isMobile && navigator.share) {
-        // Use Web Share API on mobile devices
+      const shareText = `${story.title}\n\n${story.content}\n\n🎧 Create more stories at AudioGretel: https://www.audiogretel.com`;
+
+      // Check if we're on mobile and Web Share API is available
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && navigator.share) {
         await navigator.share({
-          title: story.title || t('storyDisplay.title'),
-          text: `${story.content}\n\n🎧 Crea más cuentos en AudioGretel: ${productionUrl}`,
-          url: productionUrl
+          title: story.title,
+          text: shareText,
+          url: 'https://www.audiogretel.com'
         });
-        showSuccessMessage();
       } else {
-        // On desktop or when Web Share API is not available, open a popup with sharing options
+        // For desktop or when Web Share API is not available
         const shareWindow = window.open('', '_blank', 'width=600,height=400');
         if (shareWindow) {
+          // Get translations before creating the popup
+          const translations = {
+            shareTitle: t('common.share'),
+            twitterShare: t('common.shareOnTwitter'),
+            facebookShare: t('common.shareOnFacebook'),
+            whatsappShare: t('common.shareOnWhatsApp'),
+            telegramShare: t('common.shareOnTelegram'),
+            copyToClipboard: t('common.copyToClipboard'),
+            copiedToClipboard: t('common.copiedToClipboard')
+          };
+
           shareWindow.document.write(`
             <html>
               <head>
-                <title>${t('common.share')}</title>
+                <title>${translations.shareTitle}</title>
                 <style>
                   body { font-family: Arial, sans-serif; padding: 20px; }
-                  .share-button { 
+                  .share-button {
                     display: block;
                     width: 100%;
-                    padding: 10px;
+                    padding: 12px;
                     margin: 10px 0;
                     border: none;
-                    border-radius: 5px;
+                    border-radius: 8px;
+                    background-color: #4361ee;
                     color: white;
                     cursor: pointer;
-                    text-align: center;
                     text-decoration: none;
+                    text-align: center;
+                    font-size: 16px;
                   }
-                  .twitter { background: #1DA1F2; }
-                  .facebook { background: #4267B2; }
-                  .whatsapp { background: #25D366; }
-                  .telegram { background: #0088cc; }
-                  .copy { background: #666; }
+                  .share-button:hover {
+                    background-color: #3a56d4;
+                  }
+                  .copy-button {
+                    background-color: #6c757d;
+                  }
+                  .copy-button:hover {
+                    background-color: #5a6268;
+                  }
                 </style>
               </head>
               <body>
-                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}" 
-                   class="share-button twitter" target="_blank">Twitter</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productionUrl)}&quote=${encodeURIComponent(shareText)}" 
-                   class="share-button facebook" target="_blank">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(story.title + '\n\n' + story.content.substring(0, 200) + '...\n\n🎧 Create more stories at AudioGretel: https://www.audiogretel.com')}" 
+                   class="share-button" target="_blank">${translations.twitterShare}</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://www.audiogretel.com')}&quote=${encodeURIComponent(shareText)}" 
+                   class="share-button" target="_blank">${translations.facebookShare}</a>
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" 
-                   class="share-button whatsapp" target="_blank">WhatsApp</a>
-                <a href="https://t.me/share/url?url=${encodeURIComponent(productionUrl)}&text=${encodeURIComponent(shareText)}" 
-                   class="share-button telegram" target="_blank">Telegram</a>
-                <button onclick="navigator.clipboard.writeText('${shareText.replace(/'/g, "\\'")}')" 
-                        class="share-button copy">${t('common.copyToClipboard')}</button>
+                   class="share-button" target="_blank">${translations.whatsappShare}</a>
+                <a href="https://t.me/share/url?url=${encodeURIComponent('https://www.audiogretel.com')}&text=${encodeURIComponent(shareText)}" 
+                   class="share-button" target="_blank">${translations.telegramShare}</a>
               </body>
             </html>
           `);
         } else {
           // If popup is blocked, fall back to clipboard
-          copyToClipboard(shareText);
+          await navigator.clipboard.writeText(shareText);
+          setAlertMessage(t('common.copiedToClipboard'));
+          setTimeout(() => setAlertMessage(null), 4000);
         }
       }
     } catch (error) {
       console.error('Error sharing:', error);
-      if (error.name !== 'AbortError') {
-        showErrorMessage();
-      }
+      setAlertMessage(t('common.copyError'));
+      setTimeout(() => setAlertMessage(null), 4000);
     } finally {
       setIsSharing(false);
     }
@@ -287,7 +294,8 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
       console.log('Using modern clipboard API');
       navigator.clipboard.writeText(text).then(() => {
         console.log('Modern clipboard API success');
-        showSuccessMessage();
+        setAlertMessage('✅ Texto copiado al portapapeles - Ya puedes pegarlo en WhatsApp, Telegram o cualquier app');
+        setTimeout(() => setAlertMessage(null), 4000);
       }).catch((error) => {
         console.log('Modern clipboard API failed:', error);
         // Si falla, usar método legacy
@@ -331,30 +339,21 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
       
       if (successful) {
         console.log('Legacy copy success');
-        showSuccessMessage();
+        setAlertMessage('✅ Texto copiado al portapapeles - Ya puedes pegarlo en WhatsApp, Telegram o cualquier app');
+        setTimeout(() => setAlertMessage(null), 4000);
       } else {
         console.log('Legacy copy failed');
-        showErrorMessage();
+        setAlertMessage('❌ No se pudo copiar automáticamente. Selecciona y copia el texto manualmente.');
+        setTimeout(() => setAlertMessage(null), 4000);
       }
     } catch (err) {
       console.error('Copy failed:', err);
-      showErrorMessage();
+      setAlertMessage('❌ No se pudo copiar automáticamente. Selecciona y copia el texto manualmente.');
+      setTimeout(() => setAlertMessage(null), 4000);
     } finally {
       console.log('Setting isSharing to false (legacy)');
       setIsSharing(false);
     }
-  };
-
-  const showSuccessMessage = () => {
-    console.log('showSuccessMessage called');
-    setAlertMessage('✅ Texto copiado al portapapeles - Ya puedes pegarlo en WhatsApp, Telegram o cualquier app');
-    setTimeout(() => setAlertMessage(null), 4000);
-  };
-
-  const showErrorMessage = () => {
-    console.log('showErrorMessage called');
-    setAlertMessage('❌ No se pudo copiar automáticamente. Selecciona y copia el texto manualmente.');
-    setTimeout(() => setAlertMessage(null), 4000);
   };
 
   return (
@@ -395,7 +394,8 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
           </button>
           <button 
             onClick={handleShareText}
-            title={t('common.share')}
+            className="share-button"
+            disabled={isSharing}
           >
             <span className="btn-icon">📤</span> {t('common.share')}
           </button>

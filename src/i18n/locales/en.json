@@ -266,7 +266,14 @@
     "retryLoading": "Retry",
     "share": "Share",
     "shareNotSupported": "Sharing is not supported in this browser",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "shareOnTwitter": "Share on Twitter",
+    "shareOnFacebook": "Share on Facebook",
+    "shareOnWhatsApp": "Share on WhatsApp",
+    "shareOnTelegram": "Share on Telegram",
+    "copyToClipboard": "Copy to Clipboard",
+    "copiedToClipboard": "Text copied to clipboard!",
+    "copyError": "Could not copy automatically. Please select and copy the text manually."
   },
   "languageFilter": {
     "title": "Language",

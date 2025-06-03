@@ -129,7 +129,14 @@
     "retryLoading": "Reintentar",
     "share": "Compartir",
     "shareNotSupported": "Compartir no está soportado en este navegador",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "shareOnTwitter": "Compartir en Twitter",
+    "shareOnFacebook": "Compartir en Facebook",
+    "shareOnWhatsApp": "Compartir en WhatsApp",
+    "shareOnTelegram": "Compartir en Telegram",
+    "copyToClipboard": "Copiar al Portapapeles",
+    "copiedToClipboard": "¡Texto copiado al portapapeles!",
+    "copyError": "No se pudo copiar automáticamente. Por favor, selecciona y copia el texto manualmente."
   },
   "footer": {
     "title": "AudioGretel",
