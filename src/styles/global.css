@@ -675,149 +675,15 @@ button {
 }
 
 .title-icon {
-  margin-right: 8px;
+  color: var(--accent);
+  margin-right: 0.7rem;
   font-size: 1.5rem;
-}
-
-/* Footer */
-.footer {
-  background-color: #212529;
-  color: white;
-  padding: 4rem 0 2rem;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-}
-
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-}
-
-.footer-section h3 {
-  margin-bottom: 1.5rem;
-  font-size: 1.3rem;
-  color: white;
-  position: relative;
-}
-
-.footer-section h3::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background-color: var(--accent);
-  border-radius: 1.5px;
-}
-
-.footer-section p {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.footer-links {
-  list-style: none;
-}
-
-.footer-links li {
-  margin-bottom: 0.7rem;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: color 0.2s, transform 0.2s;
-  display: inline-block;
-}
-
-.footer-links a:hover {
-  color: white;
-  transform: translateX(5px);
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* Footer logo and made-with styles */
-.footer-logo {
-  margin-top: 1.5rem;
-}
-
-.made-with {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.heart {
-  color: #ff6b6b;
-  display: inline-block;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
 }
 
 /* Additional subtle hover effects */
 .story-form-container:hover, .story-display:hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   transition: box-shadow 0.3s ease;
-}
-
-/* Add back the player button styles */
-.play-pause-btn {
-  background-color: var(--accent);
-  color: white;
-  padding: 0.75rem 1.25rem;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.play-pause-btn:hover {
-  background-color: #e5147a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);
-}
-
-.download-audio-btn {
-  background-color: var(--primary);
-  color: white;
-  white-space: nowrap;
-  margin-left: auto;
-}
-
-.download-audio-btn:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.2);
 }
 
 /* Features Preview Section */
