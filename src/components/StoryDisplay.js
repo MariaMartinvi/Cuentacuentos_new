@@ -12,6 +12,7 @@ function StoryDisplay({ story }) {
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioCount, setAudioCount] = useState(0);
   const [alertMessage, setAlertMessage] = useState(null);
+  const [isSharing, setIsSharing] = useState(false); // New state to prevent multiple share operations
   
   // Reset audio count when story changes
   useEffect(() => {
@@ -178,17 +179,182 @@ function StoryDisplay({ story }) {
     }
   };
 
-  const handleShareAudio = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: story.title,
-        text: `${story.title}\n\n${story.content}\n\nLee más cuentos en AudioGretel`,
-        url: window.location.href
-      }).catch(console.error);
-    } else {
-      setAlertMessage(t('common.shareNotSupported'));
-      setTimeout(() => setAlertMessage(null), 3000);
+  const handleShareText = async () => {
+    if (isSharing) return;
+    setIsSharing(true);
+
+    const productionUrl = 'https://www.audiogretel.com';
+    const shareText = `📖 ${story.title || t('storyDisplay.title')}
+
+${story.content}
+
+🎧 Crea más cuentos en AudioGretel: ${productionUrl}`;
+
+    try {
+      // Check if we're on a mobile device
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile && navigator.share) {
+        // Use Web Share API on mobile devices
+        await navigator.share({
+          title: story.title || t('storyDisplay.title'),
+          text: `${story.content}\n\n🎧 Crea más cuentos en AudioGretel: ${productionUrl}`,
+          url: productionUrl
+        });
+        showSuccessMessage();
+      } else {
+        // On desktop or when Web Share API is not available, open a popup with sharing options
+        const shareWindow = window.open('', '_blank', 'width=600,height=400');
+        if (shareWindow) {
+          shareWindow.document.write(`
+            <html>
+              <head>
+                <title>${t('common.share')}</title>
+                <style>
+                  body { font-family: Arial, sans-serif; padding: 20px; }
+                  .share-button { 
+                    display: block;
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    border: none;
+                    border-radius: 5px;
+                    color: white;
+                    cursor: pointer;
+                    text-align: center;
+                    text-decoration: none;
+                  }
+                  .twitter { background: #1DA1F2; }
+                  .facebook { background: #4267B2; }
+                  .whatsapp { background: #25D366; }
+                  .telegram { background: #0088cc; }
+                  .copy { background: #666; }
+                </style>
+              </head>
+              <body>
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}" 
+                   class="share-button twitter" target="_blank">Twitter</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productionUrl)}&quote=${encodeURIComponent(shareText)}" 
+                   class="share-button facebook" target="_blank">Facebook</a>
+                <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" 
+                   class="share-button whatsapp" target="_blank">WhatsApp</a>
+                <a href="https://t.me/share/url?url=${encodeURIComponent(productionUrl)}&text=${encodeURIComponent(shareText)}" 
+                   class="share-button telegram" target="_blank">Telegram</a>
+                <button onclick="navigator.clipboard.writeText('${shareText.replace(/'/g, "\\'")}')" 
+                        class="share-button copy">${t('common.copyToClipboard')}</button>
+              </body>
+            </html>
+          `);
+        } else {
+          // If popup is blocked, fall back to clipboard
+          copyToClipboard(shareText);
+        }
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+      if (error.name !== 'AbortError') {
+        showErrorMessage();
+      }
+    } finally {
+      setIsSharing(false);
     }
+  };
+
+  const handleShareAudio = () => {
+    // Prevent multiple simultaneous share operations
+    if (isSharing) {
+      return;
+    }
+
+    const productionUrl = 'https://www.audiogretel.com';
+    const textToShare = `🎧 ${story.title || t('storyDisplay.title')}
+
+Escucha este cuento en AudioGretel: ${productionUrl}`;
+    
+    setIsSharing(true);
+    
+    // Ir directamente a copiar al portapapeles - es más confiable
+    copyToClipboard(textToShare);
+  };
+
+  const copyToClipboard = (text) => {
+    console.log('copyToClipboard called with text length:', text.length);
+    console.log('navigator.clipboard available:', !!navigator.clipboard);
+    console.log('window.isSecureContext:', window.isSecureContext);
+    
+    // Método 1: Clipboard API moderno
+    if (navigator.clipboard && window.isSecureContext) {
+      console.log('Using modern clipboard API');
+      navigator.clipboard.writeText(text).then(() => {
+        console.log('Modern clipboard API success');
+        showSuccessMessage();
+      }).catch((error) => {
+        console.log('Modern clipboard API failed:', error);
+        // Si falla, usar método legacy
+        legacyCopyMethod(text);
+      }).finally(() => {
+        console.log('Setting isSharing to false');
+        setIsSharing(false);
+      });
+    } else {
+      console.log('Using legacy copy method');
+      // Método 2: Usar método legacy directamente
+      legacyCopyMethod(text);
+    }
+  };
+
+  const legacyCopyMethod = (text) => {
+    console.log('legacyCopyMethod called');
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      
+      // Estilos para hacerlo invisible pero seleccionable
+      textArea.style.position = 'fixed';
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.width = '2em';
+      textArea.style.height = '2em';
+      textArea.style.padding = '0';
+      textArea.style.border = 'none';
+      textArea.style.outline = 'none';
+      textArea.style.boxShadow = 'none';
+      textArea.style.background = 'transparent';
+      
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      const successful = document.execCommand('copy');
+      console.log('execCommand copy result:', successful);
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        console.log('Legacy copy success');
+        showSuccessMessage();
+      } else {
+        console.log('Legacy copy failed');
+        showErrorMessage();
+      }
+    } catch (err) {
+      console.error('Copy failed:', err);
+      showErrorMessage();
+    } finally {
+      console.log('Setting isSharing to false (legacy)');
+      setIsSharing(false);
+    }
+  };
+
+  const showSuccessMessage = () => {
+    console.log('showSuccessMessage called');
+    setAlertMessage('✅ Texto copiado al portapapeles - Ya puedes pegarlo en WhatsApp, Telegram o cualquier app');
+    setTimeout(() => setAlertMessage(null), 4000);
+  };
+
+  const showErrorMessage = () => {
+    console.log('showErrorMessage called');
+    setAlertMessage('❌ No se pudo copiar automáticamente. Selecciona y copia el texto manualmente.');
+    setTimeout(() => setAlertMessage(null), 4000);
   };
 
   return (
@@ -228,7 +394,7 @@ function StoryDisplay({ story }) {
             <span className="btn-icon">💾</span> {t('storyDisplay.downloadText')}
           </button>
           <button 
-            onClick={handleShareAudio}
+            onClick={handleShareText}
             title={t('common.share')}
           >
             <span className="btn-icon">📤</span> {t('common.share')}

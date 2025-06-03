@@ -369,6 +369,7 @@
     "voiceMalePortuguesePT": "Portuguese (Portugal) male",
     "voiceFemalePortugueseBR": "Portuguese (Brazil) female",
     "voiceMalePortugueseBR": "Portuguese (Brazil) male",
+    "shareManually": "Would you like to copy the text to clipboard to share it manually?",
     "pauseSettings": "Pause settings",
     "enableCustomPauses": "Enable custom pauses",
     "sentencePause": "Pause between sentences",

@@ -220,6 +220,7 @@
     "voiceMalePortuguesePT": "Portugués (Portugal) masculino",
     "voiceFemalePortugueseBR": "Portugués (Brasil) femenino",
     "voiceMalePortugueseBR": "Portugués (Brasil) masculino",
+    "shareManually": "¿Quieres copiar el texto al portapapeles para compartirlo manualmente?",
     "pauseSettings": "Configuración de pausas",
     "enableCustomPauses": "Activar pausas personalizadas",
     "sentencePause": "Pausa entre oraciones",
