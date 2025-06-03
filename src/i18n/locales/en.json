@@ -486,7 +486,16 @@
     "loginButton": "Log In",
     "subscribeButton": "Subscribe",
     "waitButton": "Understood",
-    "cancelButton": "Cancel"
+    "cancelButton": "Cancel",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "nameRequired": "Name is required",
+    "ageRequired": "Age is required",
+    "ageInvalid": "Please enter a valid age",
+    "languageRequired": "Language is required",
+    "levelRequired": "Level is required",
+    "themeRequired": "Theme is required",
+    "success": "Story generated successfully"
   },
   "contact": {
     "title": "Contact Us",

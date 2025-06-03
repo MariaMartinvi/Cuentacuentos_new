@@ -357,7 +357,16 @@
     "loginButton": "Iniciar Sesión",
     "subscribeButton": "Suscribirse",
     "waitButton": "Entendido",
-    "cancelButton": "Cancelar"
+    "cancelButton": "Cancelar",
+    "emailRequired": "El correo electrónico es obligatorio",
+    "emailInvalid": "Por favor, introduce un correo electrónico válido",
+    "nameRequired": "El nombre es obligatorio",
+    "ageRequired": "La edad es obligatoria",
+    "ageInvalid": "Por favor, introduce una edad válida",
+    "languageRequired": "El idioma es obligatorio",
+    "levelRequired": "El nivel es obligatorio",
+    "themeRequired": "El tema es obligatorio",
+    "success": "Cuento generado con éxito"
   },
   "contact": {
     "title": "Contáctanos",
