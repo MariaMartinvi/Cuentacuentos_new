@@ -29,21 +29,19 @@ axiosInstance.interceptors.request.use(config => {
 // Create a checkout session
 export const createCheckoutSession = async (email) => {
   try {
-    console.log('Creating checkout session for:', email);
-    console.log('Using API URL:', API_URL);
-
-    const response = await axiosInstance.post('/api/stripe/create-checkout-session', {
+    const requestData = {
       email,
       successUrl: `${window.location.origin}/success`,
       cancelUrl: `${window.location.origin}/subscribe`
-    });
+    };
 
-    console.log('Checkout session created:', response.data);
+    const response = await axiosInstance.post('/api/stripe/create-checkout-session', requestData);
     
     if (!response.data?.url) {
-      throw new Error('No checkout URL received');
+      console.error('Invalid response format:', response.data);
+      throw new Error('No checkout URL received from server');
     }
-
+    
     // Redirect to the checkout URL
     window.location.href = response.data.url;
     
@@ -53,9 +51,7 @@ export const createCheckoutSession = async (email) => {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
-      url: `${API_URL}/api/stripe/create-checkout-session`,
-      email: email,
-      error: error
+      statusText: error.response?.statusText
     });
     throw error;
   }

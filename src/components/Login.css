@@ -476,4 +476,59 @@ html {
 ::selection {
   background: rgba(102, 126, 234, 0.2);
   color: #2d3748;
+}
+
+/* Forgot password link */
+.forgot-password-link {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-link {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Auth links section */
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-link {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .forgot-password-link {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .forgot-link {
+    font-size: 13px;
+  }
 } 

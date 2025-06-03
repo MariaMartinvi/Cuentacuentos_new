@@ -1,0 +1,342 @@
+.verify-email-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.verify-email-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.verify-email-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.logo-section h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.verification-content {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.verification-content h2 {
+  margin: 20px 0 15px 0;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.verification-content p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Spinner para el estado de verificación */
+.verification-spinner {
+  margin-bottom: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Iconos de estado */
+.success-icon, .error-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.verification-content.success h2 {
+  color: #22c55e;
+}
+
+.verification-content.error h2 {
+  color: #ef4444;
+}
+
+/* Información de redirección */
+.redirect-info {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.redirect-info p {
+  margin-bottom: 15px;
+  color: #6b7280;
+}
+
+/* Formulario de reenvío */
+.resend-form {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.resend-form h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Botones */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  min-width: 120px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.action-buttons .btn {
+  width: 100%;
+}
+
+/* Sección de ayuda */
+.help-section {
+  padding: 20px 30px;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.help-section p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.help-section a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.help-section a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .verify-email-page {
+    padding: 10px;
+  }
+  
+  .verification-content {
+    padding: 30px 20px;
+  }
+  
+  .logo-section {
+    padding: 25px 15px;
+  }
+  
+  .logo-section h1 {
+    font-size: 24px;
+  }
+  
+  .verification-content h2 {
+    font-size: 20px;
+  }
+  
+  .resend-form {
+    padding: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .verify-email-card {
+    border-radius: 15px;
+  }
+  
+  .verification-content {
+    padding: 25px 15px;
+  }
+  
+  .form-group input {
+    font-size: 14px;
+  }
+}
+
+/* Auto-login section */
+.auto-login-info {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+  border: 2px solid #0284c7;
+}
+
+.auto-login-info .loading-spinner {
+  margin-bottom: 15px;
+}
+
+.auto-login-info .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e0f2fe;
+  border-top: 3px solid #0284c7;
+}
+
+.auto-login-info p {
+  color: #0c4a6e;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.auto-login-info .btn {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: white;
+}
+
+.auto-login-info .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(2, 132, 199, 0.3);
+} 

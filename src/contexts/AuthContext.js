@@ -8,17 +8,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const login = async (token) => {
+  const login = async (token, userData) => {
     try {
       // Configurar el token en axios para futuras peticiones
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
-      // Obtener la información del usuario
-      const currentUser = await getCurrentUser();
+      // Use provided user data or fetch it
+      const currentUser = userData || await getCurrentUser();
       if (currentUser) {
         // Ensure isPremium is set based on subscription status
         currentUser.isPremium = currentUser.subscriptionStatus === 'active';
         setUser(currentUser);
+        // Store in localStorage for persistence
+        localStorage.setItem('user', JSON.stringify(currentUser));
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -33,32 +35,47 @@ export const AuthProvider = ({ children }) => {
         // Ensure isPremium is set based on subscription status
         currentUser.isPremium = currentUser.subscriptionStatus === 'active';
         setUser(currentUser);
+        // Update localStorage
+        localStorage.setItem('user', JSON.stringify(currentUser));
       } else {
         setUser(null);
+        localStorage.removeItem('user');
       }
     } catch (error) {
       console.error('Error refreshing user:', error);
       setUser(null);
+      localStorage.removeItem('user');
     }
   };
 
   const initializeAuth = async () => {
     try {
       const token = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+      
       if (token) {
         // Configurar el token en axios para futuras peticiones
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
-        // Obtener la información del usuario
+        if (storedUser) {
+          // Use stored user data initially
+          const parsedUser = JSON.parse(storedUser);
+          parsedUser.isPremium = parsedUser.subscriptionStatus === 'active';
+          setUser(parsedUser);
+        }
+        
+        // Then fetch fresh data
         const currentUser = await getCurrentUser();
         if (currentUser) {
-          // Ensure isPremium is set based on subscription status
           currentUser.isPremium = currentUser.subscriptionStatus === 'active';
           setUser(currentUser);
+          localStorage.setItem('user', JSON.stringify(currentUser));
         }
       }
     } catch (error) {
       console.error('Error initializing auth:', error);
+      setUser(null);
+      localStorage.removeItem('user');
     } finally {
       setLoading(false);
     }
@@ -75,10 +92,14 @@ export const AuthProvider = ({ children }) => {
         try {
           const newUserData = JSON.parse(e.newValue);
           if (newUserData) {
+            newUserData.isPremium = newUserData.subscriptionStatus === 'active';
             setUser(newUserData);
+          } else {
+            setUser(null);
           }
         } catch (error) {
           console.error('Error parsing user data:', error);
+          setUser(null);
         }
       }
     };

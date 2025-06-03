@@ -469,4 +469,156 @@ html {
 ::selection {
   background: rgba(102, 126, 234, 0.2);
   color: #2d3748;
+}
+
+/* Password hint */
+.password-hint {
+  margin-top: 5px;
+}
+
+.password-hint small {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* Success content for registration complete */
+.success-content {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.success-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-content h2 {
+  margin: 0 0 15px 0;
+  color: #22c55e;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.success-content .success-message {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+/* Info box */
+.info-box {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.info-box h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+}
+
+.info-box ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.info-box li {
+  padding: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .info-box {
+    padding: 15px;
+  }
+  
+  .success-content h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    gap: 8px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .password-hint small {
+    font-size: 11px;
+  }
 } 

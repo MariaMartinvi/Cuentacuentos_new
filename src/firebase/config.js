@@ -27,36 +27,53 @@ const checkEnvVariables = () => {
   const missingVars = requiredVars.filter(varName => !process.env[varName]);
   
   if (missingVars.length > 0) {
-    console.error(`Error: Missing required environment variables: ${missingVars.join(', ')}`);
-    console.error('Please check your .env file and ensure all required variables are defined.');
+    console.warn(`Firebase disabled: Missing environment variables: ${missingVars.join(', ')}`);
+    return false;
   }
+  return true;
 };
 
 // Verificar variables de entorno
-checkEnvVariables();
+const isFirebaseConfigured = checkEnvVariables();
 
-// Inicializar Firebase con configuración personalizada
-const app = initializeApp(firebaseConfig);
+// Inicializar Firebase solo si está configurado
+let app, db, auth, storage;
 
-// Configurar Firestore con opciones personalizadas
-const db = getFirestore(app);
-
-// Habilitar persistencia offline para Firestore
-enableIndexedDbPersistence(db).catch((err) => {
-  if (err.code === 'failed-precondition') {
-    console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
-  } else if (err.code === 'unimplemented') {
-    console.warn('The current browser does not support persistence.');
+if (isFirebaseConfigured) {
+  try {
+    app = initializeApp(firebaseConfig);
+    
+    // Configurar Firestore con opciones personalizadas
+    db = getFirestore(app);
+    
+    // Habilitar persistencia offline para Firestore
+    enableIndexedDbPersistence(db).catch((err) => {
+      if (err.code === 'failed-precondition') {
+        console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+      } else if (err.code === 'unimplemented') {
+        console.warn('The current browser does not support persistence.');
+      }
+    });
+    
+    // Configurar Auth con opciones personalizadas
+    auth = getAuth(app);
+    auth.useDeviceLanguage();
+    auth.settings.appVerificationDisabledForTesting = false;
+    
+    // Configurar Storage con opciones personalizadas
+    storage = getStorage(app);
+    
+    console.log("Firebase configurado correctamente");
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
   }
-});
-
-// Configurar Auth con opciones personalizadas
-const auth = getAuth(app);
-auth.useDeviceLanguage();
-auth.settings.appVerificationDisabledForTesting = false;
-
-// Configurar Storage con opciones personalizadas
-const storage = getStorage(app);
+} else {
+  console.log("Firebase not initialized - missing configuration");
+  // Crear objetos mock para evitar errores
+  db = null;
+  auth = null;
+  storage = null;
+}
 
 // Configurar timeouts y reintentos
 const MAX_RETRIES = 2;
@@ -64,6 +81,10 @@ const TIMEOUT_DURATION = 10000; // 10 segundos
 
 // Función para manejar reintentos
 const withRetry = async (operation, retries = MAX_RETRIES) => {
+  if (!isFirebaseConfigured) {
+    throw new Error('Firebase not configured');
+  }
+  
   try {
     return await operation();
   } catch (error) {
@@ -80,6 +101,10 @@ const withRetry = async (operation, retries = MAX_RETRIES) => {
 
 // Función para manejar timeouts
 const withTimeout = (promise, duration = TIMEOUT_DURATION) => {
+  if (!isFirebaseConfigured) {
+    return Promise.reject(new Error('Firebase not configured'));
+  }
+  
   let timeoutId;
   const timeoutPromise = new Promise((_, reject) => {
     timeoutId = setTimeout(() => {
@@ -97,6 +122,10 @@ const withTimeout = (promise, duration = TIMEOUT_DURATION) => {
 
 // Función para obtener una URL pública de Storage con manejo de errores mejorado
 const getPublicUrl = async (path) => {
+  if (!isFirebaseConfigured || !storage) {
+    throw new Error('Firebase Storage not configured');
+  }
+  
   try {
     // Decodificar la ruta si está codificada
     let decodedPath;
@@ -125,6 +154,11 @@ const getPublicUrl = async (path) => {
 
 // Verificar la conexión con Firebase
 const checkFirebaseConnection = async () => {
+  if (!isFirebaseConfigured || !db) {
+    console.log('Firebase not configured, skipping connection check');
+    return false;
+  }
+  
   try {
     // Intentar una operación simple de Firestore usando la sintaxis modular
     const storyExamplesRef = collection(db, 'storyExamples');
@@ -138,11 +172,10 @@ const checkFirebaseConnection = async () => {
   }
 };
 
-console.log("Firebase configurado correctamente");
-console.log("StorageBucket:", process.env.REACT_APP_FIREBASE_STORAGE_BUCKET);
-
-// Verificar la conexión al iniciar
-checkFirebaseConnection();
+// Verificar la conexión al iniciar solo si Firebase está configurado
+if (isFirebaseConfigured) {
+  checkFirebaseConnection();
+}
 
 export { 
   db, 
@@ -151,5 +184,6 @@ export {
   withRetry, 
   withTimeout,
   getPublicUrl,
-  checkFirebaseConnection
+  checkFirebaseConnection,
+  isFirebaseConfigured
 }; 

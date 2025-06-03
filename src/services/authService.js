@@ -97,21 +97,9 @@ export const register = async (email, password) => {
   try {
     console.log('Registering user:', email);
     
-    // Use API_URL constant instead of hardcoded URL
-    const registerUrl = `${API_URL}/api/auth/register`;
-    
-    console.log('Making register request to:', registerUrl);
-
-    const response = await axios.post(registerUrl, {
+    const response = await axiosInstance.post('/api/auth/register', {
       email,
       password
-    }, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      timeout: 10000
     });
 
     console.log('Registration successful:', response.data);
@@ -138,14 +126,11 @@ export const register = async (email, password) => {
 
 export const login = async (email, password) => {
   try {
-    // Use API_URL constant instead of hardcoded URL
     const loginUrl = `${API_URL}/api/auth/login`;
     
     console.log('Making login request to:', loginUrl);
     
-    // Use the retrying mechanism for login requests
     const response = await retryRequest(async () => {
-      // Usar axios directamente con la URL completa en lugar de la instancia configurada
       return await axios.post(loginUrl, {
         email,
         password
@@ -161,11 +146,11 @@ export const login = async (email, password) => {
     
     console.log('Login response:', response.data);
     
-    if (!response.data || !response.data.token || !response.data.user) {
+    if (!response.data || !response.data.token || !response.data.data) {
       throw new Error('Invalid response format from server');
     }
 
-    const { token, user } = response.data;
+    const { token, data: user } = response.data;
     
     // Guardar token y usuario en localStorage
     localStorage.setItem('token', token);
@@ -184,11 +169,11 @@ export const login = async (email, password) => {
     console.log('Token saved in localStorage:', savedToken ? 'Yes' : 'No');
     console.log('User saved in localStorage:', savedUser ? 'Yes' : 'No');
     
-    return response.data;
+    return { token, user };
   } catch (error) {
     console.error('Login error:', error);
     if (error.response?.status === 401) {
-      throw new Error(i18next.t('login.error'));
+      throw new Error(error.response.data.details || i18next.t('login.error'));
     } else if (error.response?.status === 429) {
       throw new Error(i18next.t('login.rateLimitError') || 'Too many login attempts. Please try again later.');
     }
@@ -344,5 +329,172 @@ export const loginWithGoogle = async () => {
       throw new Error('Login request timed out. Please try again.');
     }
     throw error;
+  }
+};
+
+// Email verification function
+export const verifyEmail = async (token) => {
+  try {
+    console.log('🔍 [AuthService] Starting email verification with token:', token);
+    
+    const verifyUrl = `${API_URL}/api/auth/verify-email?token=${token}`;
+    console.log('🌐 [AuthService] Making request to:', verifyUrl);
+
+    const response = await axios.get(verifyUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 20000 // Increased timeout to 20 seconds for email verification
+    });
+
+    console.log('✅ [AuthService] Verification response status:', response.status);
+    console.log('📦 [AuthService] Verification response data:', response.data);
+    
+    return response.data;
+  } catch (error) {
+    console.error('💥 [AuthService] Email verification error:', error);
+    console.error('🔍 [AuthService] Error breakdown:', {
+      message: error.message,
+      code: error.code,
+      response_status: error.response?.status,
+      response_data: error.response?.data,
+      response_headers: error.response?.headers
+    });
+    
+    // If it's a timeout error, try once more with a longer timeout
+    if (error.code === 'ECONNABORTED' && error.message.includes('timeout')) {
+      console.log('⏰ [AuthService] Timeout detected, retrying with longer timeout...');
+      try {
+        const response = await axios.get(`${API_URL}/api/auth/verify-email?token=${token}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          timeout: 30000 // 30 seconds retry
+        });
+        console.log('✅ [AuthService] Retry successful:', response.data);
+        return response.data;
+      } catch (retryError) {
+        console.error('💥 [AuthService] Retry failed:', retryError);
+        throw new Error('Timeout al verificar el email. La verificación puede haberse completado, prueba a iniciar sesión.');
+      }
+    }
+    
+    if (error.response?.data?.details) {
+      throw new Error(error.response.data.details);
+    } else if (error.response?.data?.error) {
+      throw new Error(error.response.data.error);
+    } else if (!error.response) {
+      throw new Error('Network error - Unable to connect to the server');
+    } else {
+      throw new Error(error.message || 'Email verification failed');
+    }
+  }
+};
+
+// Resend email verification
+export const resendVerificationEmail = async (email) => {
+  try {
+    console.log('Resending verification email to:', email);
+    
+    const resendUrl = `${API_URL}/api/auth/resend-verification`;
+    console.log('Making resend verification request to:', resendUrl);
+
+    const response = await axios.post(resendUrl, {
+      email
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 10000
+    });
+
+    console.log('Resend verification response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    
+    if (error.response?.data?.details) {
+      throw new Error(error.response.data.details);
+    } else if (error.response?.data?.error) {
+      throw new Error(error.response.data.error);
+    } else if (!error.response) {
+      throw new Error('Network error - Unable to connect to the server');
+    } else {
+      throw new Error(error.message || 'Failed to resend verification email');
+    }
+  }
+};
+
+// Forgot password function
+export const forgotPassword = async (email) => {
+  try {
+    console.log('Requesting password reset for:', email);
+    
+    const forgotUrl = `${API_URL}/api/auth/forgot-password`;
+    console.log('Making forgot password request to:', forgotUrl);
+
+    const response = await axios.post(forgotUrl, {
+      email
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 10000
+    });
+
+    console.log('Forgot password response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    
+    if (error.response?.data?.details) {
+      throw new Error(error.response.data.details);
+    } else if (error.response?.data?.error) {
+      throw new Error(error.response.data.error);
+    } else if (!error.response) {
+      throw new Error('Network error - Unable to connect to the server');
+    } else {
+      throw new Error(error.message || 'Failed to process password reset request');
+    }
+  }
+};
+
+// Reset password function
+export const resetPassword = async (token, newPassword) => {
+  try {
+    console.log('Resetting password with token');
+    
+    const resetUrl = `${API_URL}/api/auth/reset-password`;
+    console.log('Making reset password request to:', resetUrl);
+
+    const response = await axios.post(resetUrl, {
+      token,
+      newPassword
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: 10000
+    });
+
+    console.log('Reset password response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Reset password error:', error);
+    
+    if (error.response?.data?.details) {
+      throw new Error(error.response.data.details);
+    } else if (error.response?.data?.error) {
+      throw new Error(error.response.data.error);
+    } else if (!error.response) {
+      throw new Error('Network error - Unable to connect to the server');
+    } else {
+      throw new Error(error.message || 'Failed to reset password');
+    }
   }
 }; 

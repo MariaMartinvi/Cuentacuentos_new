@@ -6,6 +6,9 @@ import Footer from './components/Footer';
 import HomePage from './components/pages/HomePage';
 import Login from './components/Login';
 import Register from './components/Register';
+import VerifyEmail from './components/VerifyEmail';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import Subscribe from './components/Subscribe';
 import Profile from './components/Profile';
 import AboutPage from './components/pages/AboutPage';
@@ -68,6 +71,8 @@ const AppRoutes = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/post/:id" element={<BlogPost />} />
           <Route path="/auth/google/callback" element={<GoogleCallback />} />
+          
+          {/* Authentication Routes */}
           <Route path="/login" element={
             <PublicRoute>
               <Login />
@@ -78,6 +83,19 @@ const AppRoutes = () => {
               <Register />
             </PublicRoute>
           } />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          } />
+          <Route path="/reset-password" element={
+            <PublicRoute>
+              <ResetPassword />
+            </PublicRoute>
+          } />
+          
+          {/* Protected Routes */}
           <Route path="/subscribe" element={
             <PrivateRoute>
               <Subscribe />
@@ -88,6 +106,7 @@ const AppRoutes = () => {
               <Profile />
             </PrivateRoute>
           } />
+          
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

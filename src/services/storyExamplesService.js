@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where, limit, doc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, getBlob, getBytes, getMetadata, uploadString } from "firebase/storage";
-import { db, storage, withRetry, withTimeout, getPublicUrl } from "../firebase/config";
+import { db, storage, withRetry, withTimeout, getPublicUrl, isFirebaseConfigured } from "../firebase/config";
 import { fetchThroughProxy } from "./proxyService";
 import { getStoryTextWithCache, getStoryAudioWithCache, getStoryImageWithCache } from "./resourceCacheService";
 
@@ -50,10 +50,43 @@ Fin`
 };
 
 /**
+ * Mock story examples for when Firebase is not configured
+ */
+const MOCK_STORY_EXAMPLES = [
+  {
+    id: 'dragon-no-volar',
+    title: 'El dragón que no podía volar',
+    age: 'kids',
+    language: 'spanish',
+    level: 'beginner',
+    textPath: 'texts/dragon-no-volar.txt',
+    audioPath: null,
+    imagePath: 'images/dragon-no-volar.jpg',
+    protagonista: 'Puff'
+  },
+  {
+    id: 'dragon-share',
+    title: 'El dragón que aprendió a compartir',
+    age: 'kids',
+    language: 'spanish',
+    level: 'beginner',
+    textPath: 'texts/dragon-share.txt',
+    audioPath: null,
+    imagePath: 'images/dragon-share.jpg',
+    protagonista: 'Draco'
+  }
+];
+
+/**
  * Fetch all story examples from Firestore
  */
 export const fetchStoryExamples = async () => {
   try {
+    if (!isFirebaseConfigured || !db) {
+      console.log("Firebase not configured, returning mock story examples");
+      return MOCK_STORY_EXAMPLES;
+    }
+
     console.log("Iniciando fetchStoryExamples...");
     const storyExamplesRef = collection(db, "storyExamples");
     const storyExamplesSnapshot = await getDocs(storyExamplesRef);
@@ -91,7 +124,9 @@ export const fetchStoryExamples = async () => {
     return storyExamplesList;
   } catch (error) {
     console.error("Error fetching story examples:", error);
-    throw error;
+    // Fallback to mock data if Firebase fails
+    console.log("Falling back to mock story examples");
+    return MOCK_STORY_EXAMPLES;
   }
 };
 

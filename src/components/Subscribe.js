@@ -1,46 +1,83 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { createCheckoutSession, loadStripe } from '../services/subscriptionService';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../contexts/AuthContext';
-import { createCheckoutSession } from '../services/subscriptionService';
-import './Subscribe.css';
 import SEO from './SEO';
 import ProductSchema from './ProductSchema';
+import './Subscribe.css';
 
 const Subscribe = () => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Ensure user data is loaded
     if (!user) {
-      navigate('/login');
+      refreshUser();
     }
-  }, [user, navigate]);
+  }, [user, refreshUser]);
 
   const handleSubscribe = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      if (!user?.email) {
-        throw new Error('User email is required');
+      
+      const userEmail = user?.data?.email || user?.email;
+      
+      if (!user || !userEmail) {
+        throw new Error('User email is required. Please log in again.');
       }
 
-      await createCheckoutSession(user.email);
+      const response = await createCheckoutSession(userEmail);
       
+      if (response.url) {
+        window.location.href = response.url;
+      } else {
+        throw new Error('Invalid response from subscription service');
+      }
     } catch (error) {
-      console.error('Subscribe error:', error);
-      setError(error.message || 'Something went wrong');
+      console.error('Subscription error:', error);
+      setError(error.message || 'An error occurred during subscription');
+      
+      // If the error is related to authentication, redirect to login
+      if (error.message.includes('log in')) {
+        navigate('/login');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   if (!user) {
-    return null;
+    return (
+      <div className="text-center p-4">
+        <p>Please log in to subscribe.</p>
+        <button 
+          onClick={() => navigate('/login')}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Go to Login
+        </button>
+      </div>
+    );
+  }
+
+  if (user?.isPremium || user?.data?.isPremium || user?.data?.subscriptionStatus === 'active') {
+    return (
+      <div className="text-center p-4">
+        <p>You are already a premium subscriber!</p>
+        <button 
+          onClick={() => navigate('/dashboard')}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Go to Dashboard
+        </button>
+      </div>
+    );
   }
 
   const features = [

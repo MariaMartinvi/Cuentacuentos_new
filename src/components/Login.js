@@ -175,6 +175,12 @@ const Login = () => {
             />
           </div>
 
+          <div className="forgot-password-link">
+            <Link to="/forgot-password" className="forgot-link">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </div>
+
           <button 
             type="submit" 
             className="login-button"
@@ -191,9 +197,11 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="register-link">
-          {t('login.noAccount')} <Link to="/register">{t('login.register')}</Link>
-        </p>
+        <div className="auth-links">
+          <p className="register-link">
+            {t('login.noAccount')} <Link to="/register">{t('login.register')}</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

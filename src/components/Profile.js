@@ -57,10 +57,11 @@ const Profile = () => {
     } catch (error) {
       console.error('Error fetching stories remaining:', error);
       // Calcular localmente como fallback
-      if (currentUser.subscriptionStatus === 'active') {
-        setStoriesRemaining(30 - (currentUser.monthlyStoriesGenerated || 0));
+      const userData = currentUser.data || currentUser;
+      if (userData.subscriptionStatus === 'active') {
+        setStoriesRemaining(30 - (userData.monthlyStoriesGenerated || 0));
       } else {
-        setStoriesRemaining(3 - (currentUser.storiesGenerated || 0));
+        setStoriesRemaining(3 - (userData.storiesGenerated || 0));
       }
     }
   };
@@ -89,7 +90,8 @@ const Profile = () => {
       if (response.data.success) {
         setSuccess(t('profile.subscriptionCancelled'));
         // Update user state
-        const updatedUser = { ...user, subscriptionStatus: 'cancelled', isPremium: false };
+        const userData = user.data || user;
+        const updatedUser = { ...user, data: { ...userData, subscriptionStatus: 'cancelled', isPremium: false } };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
       }
@@ -104,10 +106,13 @@ const Profile = () => {
     return <div className="profile-container">{t('profile.loading')}</div>;
   }
 
+  // Get user data from the correct location (handle both nested and flat structures)
+  const userData = user.data || user;
+
   // Textos para el contador de cuentos
   const storiesRemainingLabel = i18n.language === 'es' ? 'Cuentos Disponibles' : 'Available Stories';
   const storiesOfText = i18n.language === 'es' ? 'de' : 'of';
-  const totalStories = user.subscriptionStatus === 'active' ? '30' : '3';
+  const totalStories = userData.subscriptionStatus === 'active' ? '30' : '3';
 
   return (
     <div className="profile-container">
@@ -128,14 +133,14 @@ const Profile = () => {
         <div className="profile-info">
           <div className="info-group">
             <label>{t('profile.email')}</label>
-            <p>{user.email}</p>
+            <p>{userData.email}</p>
           </div>
           
           <div className="info-group">
             <label>{t('profile.subscriptionStatus')}</label>
-            <p className={`status ${user.subscriptionStatus}`}>
-              {t(`profile.subscription${user.subscriptionStatus.charAt(0).toUpperCase() + user.subscriptionStatus.slice(1)}`)}
-              {user.isPremium && ' (Premium)'}
+            <p className={`status ${userData.subscriptionStatus || 'free'}`}>
+              {userData.subscriptionStatus && t(`profile.subscription${userData.subscriptionStatus.charAt(0).toUpperCase() + userData.subscriptionStatus.slice(1)}`)}
+              {userData.isPremium && ' (Premium)'}
             </p>
           </div>
           
@@ -153,7 +158,7 @@ const Profile = () => {
           </div>
         </div>
 
-        {user.subscriptionStatus === 'active' && (
+        {userData.subscriptionStatus === 'active' && (
           <div className="subscription-actions">
             <button
               className="cancel-button"
@@ -166,7 +171,7 @@ const Profile = () => {
           </div>
         )}
 
-        {!user.isPremium && (
+        {!userData.isPremium && (
           <div className="subscription-actions">
             <Link to="/subscribe" className="premium-button">
               {t('subscription.subscribeButton')}

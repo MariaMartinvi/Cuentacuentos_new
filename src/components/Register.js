@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { register } from '../services/authService';
 import './Register.css';
 import SEO from './SEO';
 import config from '../config';
@@ -25,6 +26,7 @@ const Register = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registrationComplete, setRegistrationComplete] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -45,26 +47,25 @@ const Register = () => {
       return;
     }
 
-    try {
-      const response = await axios.post(`${API_URL}/api/auth/register`, {
-        email: formData.email,
-        password: formData.password
-      });
+    // Basic password validation
+    if (formData.password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres');
+      setLoading(false);
+      return;
+    }
 
-      if (response.data && response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        if(response.data.user) {
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-        }
-        await setAuthContext(response.data.token, response.data.user);
-        setSuccess(t('register.success'));
-        navigate('/');
+    try {
+      const response = await register(formData.email, formData.password);
+
+      if (response.success) {
+        setRegistrationComplete(true);
+        setSuccess(response.message || '¡Registro exitoso! Por favor verifica tu email antes de iniciar sesión.');
       } else {
-        throw new Error ('Invalid response from registration server');
+        throw new Error(response.message || 'Error en el registro');
       }
     } catch (err) {
       console.error('Registration error:', err);
-      setError(err.response?.data?.details || err.response?.data?.message || t('register.error'));
+      setError(err.message || t('register.error'));
     } finally {
       setLoading(false);
     }
@@ -106,6 +107,39 @@ const Register = () => {
     setError(t('register.googleError'));
   };
 
+  if (registrationComplete) {
+    return (
+      <div className="register-container">
+        <div className="register-card">
+          <div className="success-content">
+            <div className="success-icon">📧</div>
+            <h2>¡Registro exitoso!</h2>
+            <p className="success-message">{success}</p>
+            
+            <div className="info-box">
+              <h3>Siguiente paso: Verifica tu email</h3>
+              <ul>
+                <li>📬 Revisa tu bandeja de entrada</li>
+                <li>📱 También verifica la carpeta de spam</li>
+                <li>🔗 Haz clic en el enlace de verificación</li>
+                <li>✅ Luego podrás iniciar sesión</li>
+              </ul>
+            </div>
+
+            <div className="action-buttons">
+              <Link to="/login" className="btn btn-primary">
+                Ir al Login
+              </Link>
+              <Link to="/forgot-password" className="btn btn-outline">
+                ¿No recibiste el email?
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="register-container">
       <SEO 
@@ -132,7 +166,7 @@ const Register = () => {
         </div>
 
         {error && <div className="error-message">{error}</div>}
-        {success && <div className="success-message">{success}</div>}
+        {success && !registrationComplete && <div className="success-message">{success}</div>}
         
         <div className="google-login-section">
           <GoogleButton
@@ -174,6 +208,9 @@ const Register = () => {
               required
               className="form-input"
             />
+            <div className="password-hint">
+              <small>La contraseña debe tener al menos 6 caracteres</small>
+            </div>
           </div>
 
           <div className="form-group">
@@ -207,7 +244,7 @@ const Register = () => {
         </form>
 
         <p className="login-link">
-          {t('register.alreadyAccount')} <a href="/login">{t('register.login')}</a>
+          {t('register.alreadyAccount')} <Link to="/login">{t('register.login')}</Link>
         </p>
       </div>
     </div>
