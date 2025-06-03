@@ -327,8 +327,9 @@
     "alreadyAccount": "Hast du bereits ein Konto?",
     "login": "Anmelden",
     "signInWithGoogle": "Mit Google registrieren",
-    "passwordsDontMatch": "Passwörter stimmen nicht überein",
-    "loading": "Wird verarbeitet..."
+    "passwordsDontMatch": "Die Passwörter stimmen nicht überein",
+    "loading": "Verarbeitung...",
+    "passwordValidation": "Das Passwort muss mindestens 6 Zeichen lang sein"
   },
   "terminos": {
     "title": "Nutzungsbedingungen",
@@ -461,5 +462,31 @@
     "accept": "Alle Akzeptieren",
     "reject": "Alle Ablehnen",
     "moreInfo": "Weitere Informationen"
+  },
+  "languages": {
+    "title": "Sprache",
+    "all": "Alle Sprachen",
+    "en": "Englisch",
+    "es": "Spanisch",
+    "ca": "Katalanisch",
+    "fr": "Französisch",
+    "it": "Italienisch",
+    "de": "Deutsch",
+    "gl": "Galizisch",
+    "eu": "Baskisch",
+    "pt": "Portugiesisch"
+  },
+  "languageFilter": {
+    "title": "Sprache",
+    "all": "Alle Sprachen",
+    "spanish": "Spanisch",
+    "english": "Englisch",
+    "catalan": "Katalanisch",
+    "german": "Deutsch",
+    "italian": "Italienisch",
+    "french": "Französisch",
+    "galician": "Galizisch",
+    "basque": "Baskisch",
+    "portuguese": "Portugiesisch"
   }
 } 

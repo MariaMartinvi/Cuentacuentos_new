@@ -456,5 +456,31 @@
     "accept": "Denak Onartu",
     "reject": "Denak Ukatu",
     "moreInfo": "Informazio Gehiago"
+  },
+  "languages": {
+    "title": "Hizkuntza",
+    "all": "Hizkuntza guztiak",
+    "en": "Ingelesa",
+    "es": "Gaztelania",
+    "ca": "Katalana",
+    "fr": "Frantsesa",
+    "it": "Italiera",
+    "de": "Alemana",
+    "gl": "Galiziera",
+    "eu": "Euskara",
+    "pt": "Portugesa"
+  },
+  "languageFilter": {
+    "title": "Hizkuntza",
+    "all": "Hizkuntza guztiak",
+    "spanish": "Gaztelania",
+    "english": "Ingelesa",
+    "catalan": "Katalana",
+    "german": "Alemana",
+    "italian": "Italiera",
+    "french": "Frantsesa",
+    "galician": "Galiziera",
+    "basque": "Euskara",
+    "portuguese": "Portugesa"
   }
 } 

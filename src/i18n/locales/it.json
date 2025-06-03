@@ -67,13 +67,17 @@
       "9to12": "9-12 anni"
     },
     "languages": {
+      "title": "Lingua",
       "all": "Tutte le lingue",
-      "spanish": "Spagnolo",
-      "english": "Inglese",
-      "catalan": "Catalano",
-      "german": "Tedesco",
-      "italian": "Italiano",
-      "french": "Francese"
+      "en": "Inglese",
+      "es": "Spagnolo",
+      "ca": "Catalano",
+      "fr": "Francese",
+      "it": "Italiano",
+      "de": "Tedesco",
+      "gl": "Galiziano",
+      "eu": "Basco",
+      "pt": "Portoghese"
     },
     "levels": {
       "all": "Tutti i livelli",
@@ -331,7 +335,8 @@
     "login": "Accedi",
     "signInWithGoogle": "Registrati con Google",
     "passwordsDontMatch": "Le password non coincidono",
-    "loading": "Elaborazione in corso..."
+    "loading": "Elaborazione in corso...",
+    "passwordValidation": "La password deve contenere almeno 6 caratteri"
   },
   "terminos": {
     "title": "Termini e Condizioni",
@@ -446,5 +451,31 @@
     "accept": "Accetta Tutto",
     "reject": "Rifiuta Tutto",
     "moreInfo": "Maggiori Informazioni"
+  },
+  "languageFilter": {
+    "title": "Lingua",
+    "all": "Tutte le lingue",
+    "spanish": "Spagnolo",
+    "english": "Inglese",
+    "catalan": "Catalano",
+    "german": "Tedesco",
+    "italian": "Italiano",
+    "french": "Francese",
+    "galician": "Galiziano",
+    "basque": "Basco",
+    "portuguese": "Portoghese"
+  },
+  "navbar": {
+    "languages": {
+      "en": "Inglese",
+      "es": "Spagnolo",
+      "ca": "Catalano",
+      "fr": "Francese",
+      "it": "Italiano",
+      "de": "Tedesco",
+      "gl": "Galiziano",
+      "eu": "Basco",
+      "pt": "Portoghese"
+    }
   }
 } 

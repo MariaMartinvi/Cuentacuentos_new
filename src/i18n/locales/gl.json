@@ -333,7 +333,8 @@
     "login": "Iniciar sesión",
     "signInWithGoogle": "Rexistrarse con Google",
     "passwordsDontMatch": "As contrasinais non coinciden",
-    "loading": "Procesando..."
+    "loading": "Procesando...",
+    "passwordValidation": "A contrasinal debe ter polo menos 6 caracteres"
   },
   "terminos": {
     "title": "Termos e Condicións",
@@ -467,5 +468,31 @@
     "accept": "Aceptar Todo",
     "reject": "Rexeitar Todo",
     "moreInfo": "Máis Información"
+  },
+  "languages": {
+    "title": "Idioma",
+    "all": "Todos os idiomas",
+    "en": "Inglés",
+    "es": "Español",
+    "ca": "Catalán",
+    "fr": "Francés",
+    "it": "Italiano",
+    "de": "Alemán",
+    "gl": "Galego",
+    "eu": "Euskera",
+    "pt": "Portugués"
+  },
+  "languageFilter": {
+    "title": "Idioma",
+    "all": "Todos os idiomas",
+    "spanish": "Español",
+    "english": "Inglés",
+    "catalan": "Catalán",
+    "german": "Alemán",
+    "italian": "Italiano",
+    "french": "Francés",
+    "galician": "Galego",
+    "basque": "Euskera",
+    "portuguese": "Portugués"
   }
 } 

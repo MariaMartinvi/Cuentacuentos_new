@@ -592,15 +592,15 @@
   },
   "login": {
     "title": "Iniciar sesión",
-    "subtitle": "Bienvenido de nuevo",
+    "subtitle": "Bienvenido",
     "emailLabel": "Email",
-    "emailPlaceholder": "Introduce tu email",
+    "emailPlaceholder": "Ingresa tu email",
     "passwordLabel": "Contraseña",
-    "passwordPlaceholder": "Introduce tu contraseña",
+    "passwordPlaceholder": "Ingresa tu contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "loginButton": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
-    "register": "Regístrate",
+    "register": "Registrarse",
     "signInWithGoogle": "Iniciar sesión con Google",
     "or": "o",
     "loading": "Procesando..."
@@ -623,7 +623,8 @@
     "login": "Iniciar sesión",
     "signInWithGoogle": "Registrarse con Google",
     "passwordsDontMatch": "Las contraseñas no coinciden",
-    "loading": "Procesando..."
+    "loading": "Procesando...",
+    "passwordValidation": "La contraseña debe tener al menos 6 caracteres"
   },
   "cookies": {
     "title": "Configuración de Cookies",
@@ -631,5 +632,79 @@
     "accept": "Aceptar Todo",
     "reject": "Rechazar Todo",
     "moreInfo": "Más Información"
-  }
+  },
+  "validation": {
+    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "passwordRequirements": "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "emailRequired": "Por favor, ingresa tu email",
+    "allFieldsRequired": "Por favor, completa todos los campos",
+    "invalidToken": "Token de recuperación no válido",
+    "noTokenInUrl": "Token de recuperación no encontrado en la URL",
+    "noVerificationToken": "Token de verificación no encontrado en la URL"
+  },
+  "email": {
+    "verification": {
+      "subject": "✅ Verifica tu cuenta - Cuentos Personalizados",
+      "greeting": "¡Bienvenido/a!",
+      "title": "Cuentos Personalizados",
+      "subtitle": "Verificación de cuenta",
+      "message": "Gracias por registrarte en Cuentos Personalizados. Para completar tu registro y comenzar a crear historias mágicas, necesitas verificar tu dirección de email.",
+      "buttonText": "✅ Verificar Email",
+      "cantClickButton": "Si no puedes hacer clic en el botón, copia y pega este enlace en tu navegador:",
+      "footer": "Este enlace expira en 24 horas. Si no solicitaste esta verificación, puedes ignorar este email."
+    },
+    "passwordReset": {
+      "subject": "🔐 Recuperar contraseña - Cuentos Personalizados",
+      "title": "Cuentos Personalizados",
+      "subtitle": "Recuperación de contraseña",
+      "greeting": "🔐 Restablecer contraseña",
+      "message": "Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si fuiste tú quien hizo esta solicitud, haz clic en el botón de abajo para crear una nueva contraseña.",
+      "buttonText": "🔐 Restablecer Contraseña",
+      "cantClickButton": "Si no puedes hacer clic en el botón, copia y pega este enlace en tu navegador:",
+      "footer": "Este enlace expira en 1 hora. Si no solicitaste restablecer tu contraseña, puedes ignorar este email con seguridad.",
+      "securityNote": "Por tu seguridad, nunca compartas este enlace con nadie."
+    },
+    "welcome": {
+      "subject": "🎉 ¡Bienvenido/a a Cuentos Personalizados!",
+      "title": "Cuentos Personalizados",
+      "subtitle": "¡Tu cuenta está lista!",
+      "greeting": "🎉 ¡Email verificado exitosamente!",
+      "message": "¡Felicidades! Tu cuenta ha sido verificada y ya puedes empezar a crear historias mágicas y personalizadas.",
+      "featuresTitle": "✨ ¿Qué puedes hacer ahora?",
+      "features": {
+        "freeStories": "📖 Generar hasta 3 cuentos gratuitos al mes",
+        "customize": "🎨 Personalizar historias con nombres y preferencias",
+        "audio": "🔊 Escuchar tus cuentos con audio de alta calidad",
+        "premium": "💎 Actualizar a Premium para cuentos ilimitados"
+      },
+      "buttonText": "🚀 Comenzar a Crear Cuentos",
+      "footer": "¡Gracias por unirte a nuestra comunidad de narradores!"
+    }
+  },
+  "messages": {
+    "emailVerified": "¡Email verificado exitosamente!",
+    "emailVerifiedAndLoggedIn": "¡Email verificado y sesión iniciada automáticamente!",
+    "emailAlreadyVerified": "¡Email verificado exitosamente! Tu cuenta ya está completamente activa.",
+    "verificationEmailResent": "Email de verificación reenviado. Revisa tu bandeja de entrada.",
+    "verificationEmailError": "Error al reenviar el email de verificación",
+    "passwordResetSuccess": "Contraseña restablecida exitosamente",
+    "passwordResetError": "Error al restablecer la contraseña",
+    "forgotPasswordSuccess": "¡Correo de recuperación enviado! Por favor, revisa tu bandeja de entrada",
+    "forgotPasswordError": "Error al enviar el correo de recuperación"
+  },
+  "forgotPassword": {
+    "title": "Recuperar Contraseña",
+    "heading": "¿Olvidaste tu contraseña?",
+    "subtitle": "Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "sending": "Enviando...",
+    "submitButton": "Enviar instrucciones",
+    "rememberPassword": "¿Recordaste tu contraseña?",
+    "login": "Iniciar sesión",
+    "noAccount": "¿No tienes una cuenta?",
+    "register": "Regístrate"
+  },
+  "appName": "AudioGretel"
 } 

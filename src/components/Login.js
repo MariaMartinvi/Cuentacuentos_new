@@ -177,7 +177,7 @@ const Login = () => {
 
           <div className="forgot-password-link">
             <Link to="/forgot-password" className="forgot-link">
-              ¿Olvidaste tu contraseña?
+              {t('login.forgotPassword')}
             </Link>
           </div>
 

@@ -49,7 +49,7 @@ const Register = () => {
 
     // Basic password validation
     if (formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      setError(t('register.passwordValidation'));
       setLoading(false);
       return;
     }
@@ -209,7 +209,7 @@ const Register = () => {
               className="form-input"
             />
             <div className="password-hint">
-              <small>La contraseña debe tener al menos 6 caracteres</small>
+              <small>{t('register.passwordValidation')}</small>
             </div>
           </div>
 

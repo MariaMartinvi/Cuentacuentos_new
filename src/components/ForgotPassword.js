@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     
     if (!email) {
-      setMessage('Por favor, ingresa tu email');
+      setMessage(t('forgotPassword.emailRequired'));
       setIsSuccess(false);
       return;
     }
@@ -30,12 +30,12 @@ const ForgotPassword = () => {
         setIsSuccess(true);
         setMessage(response.message);
       } else {
-        throw new Error(response.message || 'Error al enviar email de recuperación');
+        throw new Error(response.message || t('forgotPassword.recoveryError'));
       }
     } catch (error) {
       console.error('Error in forgot password:', error);
       setIsSuccess(false);
-      setMessage(error.message || 'Error al procesar la solicitud');
+      setMessage(error.message || t('forgotPassword.requestError'));
     } finally {
       setLoading(false);
     }
@@ -46,8 +46,8 @@ const ForgotPassword = () => {
       <div className="forgot-password-container">
         <div className="forgot-password-card">
           <div className="logo-section">
-            <h1>🎭 Cuentos Personalizados</h1>
-            <p>Recuperar contraseña</p>
+            <h1>🎭 {t('appName')}</h1>
+            <p>{t('forgotPassword.title')}</p>
           </div>
           
           <div className="forgot-password-content">
@@ -55,22 +55,19 @@ const ForgotPassword = () => {
               <>
                 <div className="header-section">
                   <div className="icon">🔐</div>
-                  <h2>¿Olvidaste tu contraseña?</h2>
-                  <p>
-                    No te preocupes, es algo que pasa. Ingresa tu email y te enviaremos 
-                    un enlace para restablecer tu contraseña.
-                  </p>
+                  <h2>{t('forgotPassword.heading')}</h2>
+                  <p>{t('forgotPassword.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="forgot-password-form">
                   <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email">{t('forgotPassword.emailLabel')}</label>
                     <input
                       type="email"
                       id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tu@email.com"
+                      placeholder={t('forgotPassword.emailPlaceholder')}
                       required
                       disabled={loading}
                     />
@@ -90,10 +87,10 @@ const ForgotPassword = () => {
                     {loading ? (
                       <>
                         <span className="spinner-small"></span>
-                        Enviando...
+                        {t('forgotPassword.sending')}
                       </>
                     ) : (
-                      'Enviar enlace de recuperación'
+                      t('forgotPassword.submitButton')
                     )}
                   </button>
                 </form>
@@ -101,21 +98,21 @@ const ForgotPassword = () => {
             ) : (
               <div className="success-content">
                 <div className="success-icon">📧</div>
-                <h2>¡Email enviado!</h2>
+                <h2>{t('forgotPassword.emailSent')}</h2>
                 <p>{message}</p>
                 
                 <div className="info-box">
-                  <h3>¿Qué sigue?</h3>
+                  <h3>{t('forgotPassword.nextSteps')}</h3>
                   <ul>
-                    <li>📬 Revisa tu bandeja de entrada</li>
-                    <li>📱 También verifica la carpeta de spam</li>
-                    <li>🔗 Haz clic en el enlace del email</li>
-                    <li>🔑 Crea tu nueva contraseña</li>
+                    <li>{t('forgotPassword.checkInbox')}</li>
+                    <li>{t('forgotPassword.checkSpam')}</li>
+                    <li>{t('forgotPassword.clickLink')}</li>
+                    <li>{t('forgotPassword.createPassword')}</li>
                   </ul>
                 </div>
 
                 <div className="resend-section">
-                  <p>¿No recibiste el email?</p>
+                  <p>{t('forgotPassword.noEmail')}</p>
                   <button 
                     onClick={() => {
                       setIsSuccess(false);
@@ -123,7 +120,7 @@ const ForgotPassword = () => {
                     }}
                     className="btn btn-outline"
                   >
-                    Intentar de nuevo
+                    {t('forgotPassword.tryAgain')}
                   </button>
                 </div>
               </div>
@@ -132,15 +129,15 @@ const ForgotPassword = () => {
 
           <div className="footer-section">
             <p>
-              ¿Recordaste tu contraseña? {' '}
+              {t('forgotPassword.rememberPassword')}{' '}
               <Link to="/login" className="link">
-                Iniciar sesión
+                {t('forgotPassword.login')}
               </Link>
             </p>
             <p>
-              ¿No tienes cuenta? {' '}
+              {t('forgotPassword.noAccount')}{' '}
               <Link to="/register" className="link">
-                Registrarse
+                {t('forgotPassword.register')}
               </Link>
             </p>
           </div>

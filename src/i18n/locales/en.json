@@ -56,7 +56,8 @@
     "wakingUpServer": "Waking up the server...",
     "preparingRedirect": "Preparing redirection...",
     "timeElapsed": "Time elapsed: {{seconds}} seconds",
-    "passwordsDontMatch": "Passwords do not match"
+    "passwordsDontMatch": "Passwords don't match",
+    "passwordValidation": "Password must be at least 6 characters long"
   },
   "login": {
     "title": "Welcome back",
@@ -65,6 +66,7 @@
     "emailPlaceholder": "Enter your email",
     "passwordLabel": "Password",
     "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot your password?",
     "loginButton": "Login",
     "registerLink": "Don't have an account? Register",
     "error": "Invalid email or password",
@@ -725,7 +727,10 @@
     "ca": "Catalan",
     "fr": "French",
     "it": "Italian",
-    "de": "German"
+    "de": "German",
+    "gl": "Galician",
+    "eu": "Basque",
+    "pt": "Portuguese"
   },
   "cookies": {
     "title": "Cookie Settings",
@@ -733,5 +738,80 @@
     "accept": "Accept All",
     "reject": "Reject All",
     "moreInfo": "More Information"
-  }
+  },
+  "email": {
+    "verification": {
+      "subject": "✅ Verify your account - Personalized Stories",
+      "greeting": "Welcome!",
+      "title": "Personalized Stories",
+      "subtitle": "Account verification",
+      "message": "Thank you for registering with Personalized Stories. To complete your registration and start creating magical stories, you need to verify your email address.",
+      "buttonText": "✅ Verify Email",
+      "cantClickButton": "If you can't click the button, copy and paste this link into your browser:",
+      "footer": "This link expires in 24 hours. If you didn't request this verification, you can ignore this email."
+    },
+    "passwordReset": {
+      "subject": "🔐 Password recovery - Personalized Stories",
+      "title": "Personalized Stories",
+      "subtitle": "Password recovery",
+      "greeting": "🔐 Reset password",
+      "message": "We received a request to reset your account password. If you made this request, click the button below to create a new password.",
+      "buttonText": "🔐 Reset Password",
+      "cantClickButton": "If you can't click the button, copy and paste this link into your browser:",
+      "footer": "This link expires in 1 hour. If you didn't request a password reset, you can safely ignore this email.",
+      "securityNote": "For your security, never share this link with anyone."
+    },
+    "welcome": {
+      "subject": "🎉 Welcome to Personalized Stories!",
+      "title": "Personalized Stories",
+      "subtitle": "Your account is ready!",
+      "greeting": "🎉 Email successfully verified!",
+      "message": "Congratulations! Your account has been verified and you can now start creating magical and personalized stories.",
+      "featuresTitle": "✨ What can you do now?",
+      "features": {
+        "freeStories": "📖 Generate up to 3 free stories per month",
+        "customize": "🎨 Customize stories with names and preferences",
+        "audio": "🔊 Listen to your stories with high-quality audio",
+        "premium": "💎 Upgrade to Premium for unlimited stories"
+      },
+      "buttonText": "🚀 Start Creating Stories",
+      "footer": "Thank you for joining our storytelling community!"
+    }
+  },
+  "messages": {
+    "emailVerified": "Email successfully verified!",
+    "emailVerifiedAndLoggedIn": "Email verified and automatically logged in!",
+    "emailAlreadyVerified": "Email successfully verified! Your account is already fully active.",
+    "verificationEmailResent": "Verification email resent. Please check your inbox.",
+    "verificationEmailError": "Error resending verification email",
+    "passwordResetSuccess": "Password successfully reset",
+    "passwordResetError": "Error resetting password",
+    "forgotPasswordSuccess": "Recovery email sent. Please check your inbox.",
+    "forgotPasswordError": "Error processing request"
+  },
+  "forgotPassword": {
+    "title": "Recover Password",
+    "heading": "Forgot your password?",
+    "subtitle": "Don't worry, it happens. Enter your email and we'll send you a link to reset your password.",
+    "emailLabel": "Email:",
+    "emailPlaceholder": "your@email.com",
+    "submitButton": "Send recovery link",
+    "sending": "Sending...",
+    "emailSent": "Email sent!",
+    "nextSteps": "What's next?",
+    "checkInbox": "📬 Check your inbox",
+    "checkSpam": "📱 Also check your spam folder",
+    "clickLink": "🔗 Click the link in the email",
+    "createPassword": "🔑 Create your new password",
+    "noEmail": "Didn't receive the email?",
+    "tryAgain": "Try again",
+    "rememberPassword": "Remembered your password?",
+    "login": "Login",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "emailRequired": "Please enter your email",
+    "recoveryError": "Error sending recovery email",
+    "requestError": "Error processing request"
+  },
+  "appName": "AudioGretel"
 } 

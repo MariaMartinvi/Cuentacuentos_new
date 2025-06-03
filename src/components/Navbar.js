@@ -90,8 +90,8 @@ function Navbar() {
   }, []);
 
   const languages = [
-    { code: 'en', name: t('navbar.languages.en') },
     { code: 'es', name: t('navbar.languages.es') },
+    { code: 'en', name: t('navbar.languages.en') },
     { code: 'ca', name: t('navbar.languages.ca') },
     { code: 'fr', name: t('navbar.languages.fr') },
     { code: 'it', name: t('navbar.languages.it') },
@@ -100,6 +100,10 @@ function Navbar() {
     { code: 'eu', name: t('navbar.languages.eu') },
     { code: 'pt', name: t('navbar.languages.pt') }
   ];
+
+  const getShortLanguageCode = (fullCode) => {
+    return fullCode.split('-')[0];
+  };
 
   return (
     <nav className="navbar">
@@ -293,7 +297,7 @@ function Navbar() {
               className="language-button"
               onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
             >
-              {t(`navbar.languages.${i18n.language}`)}
+              {t(`navbar.languages.${getShortLanguageCode(i18n.language)}`)}
             </button>
             {isLanguageDropdownOpen && (
               <div className="language-dropdown">
@@ -301,7 +305,7 @@ function Navbar() {
                   <button
                     key={lang.code}
                     onClick={() => changeLanguage(lang.code)}
-                    className={i18n.language === lang.code ? 'active-language' : ''}
+                    className={getShortLanguageCode(i18n.language) === lang.code ? 'active-language' : ''}
                   >
                     {lang.name}
                   </button>

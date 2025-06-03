@@ -328,7 +328,8 @@
     "login": "Se connecter",
     "signInWithGoogle": "S'inscrire avec Google",
     "passwordsDontMatch": "Les mots de passe ne correspondent pas",
-    "loading": "Traitement en cours..."
+    "loading": "Traitement en cours...",
+    "passwordValidation": "Le mot de passe doit contenir au moins 6 caractères"
   },
   "cookies": {
     "title": "Paramètres des Cookies",
@@ -339,5 +340,62 @@
   },
   "introduccionTexto": "Bienvenue sur AudioGretel. En utilisant notre service, vous acceptez ces conditions générales. Ces conditions régissent l'utilisation de notre plateforme de contes personnalisés.",
   "propiedadTexto": "Les contes créés appartiennent à l'utilisateur qui les a créés. AudioGretel se réserve le droit d'utiliser les contes de manière anonyme pour améliorer le service. La plateforme et sa technologie sont la propriété exclusive d'AudioGretel. Il est interdit de copier, modifier ou distribuer le code ou l'interface sans autorisation.",
-  "introduccionTexto": "Chez AudioGretel, nous prenons très au sérieux la vie privée de nos utilisateurs. Cette politique explique comment nous gérons vos données personnelles et comment nous protégeons votre vie privée pendant que vous utilisez notre service."
+  "introduccionTexto": "Chez AudioGretel, nous prenons très au sérieux la vie privée de nos utilisateurs. Cette politique explique comment nous gérons vos données personnelles et comment nous protégeons votre vie privée pendant que vous utilisez notre service.",
+  "languages": {
+    "title": "Langue",
+    "all": "Toutes les langues",
+    "en": "Anglais",
+    "es": "Espagnol",
+    "ca": "Catalan",
+    "fr": "Français",
+    "it": "Italien",
+    "de": "Allemand",
+    "gl": "Galicien",
+    "eu": "Basque",
+    "pt": "Portugais"
+  },
+  "languageFilter": {
+    "title": "Langue",
+    "all": "Toutes les langues",
+    "spanish": "Espagnol",
+    "english": "Anglais",
+    "catalan": "Catalan",
+    "german": "Allemand",
+    "italian": "Italien",
+    "french": "Français",
+    "galician": "Galicien",
+    "basque": "Basque",
+    "portuguese": "Portugais"
+  },
+  "navbar": {
+    "languages": {
+      "en": "Anglais",
+      "es": "Espagnol",
+      "ca": "Catalan",
+      "fr": "Français",
+      "it": "Italien",
+      "de": "Allemand",
+      "gl": "Galicien",
+      "eu": "Basque",
+      "pt": "Portugais"
+    }
+  },
+  "forgotPassword": {
+    "title": "Réinitialiser le Mot de Passe",
+    "heading": "Mot de passe oublié ?",
+    "subtitle": "Entrez votre adresse e-mail et nous vous enverrons les instructions pour réinitialiser votre mot de passe",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "Entrez votre adresse e-mail",
+    "sending": "Envoi en cours...",
+    "submitButton": "Envoyer les instructions",
+    "rememberPassword": "Vous vous souvenez de votre mot de passe ?",
+    "login": "Se connecter",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "register": "S'inscrire"
+  },
+  "messages": {
+    "forgotPasswordError": "Erreur lors de l'envoi de l'e-mail de récupération",
+    "forgotPasswordSuccess": "E-mail de récupération envoyé ! Veuillez vérifier votre boîte de réception"
+  },
+  "appName": "AudioGretel"
 } 

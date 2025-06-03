@@ -301,12 +301,12 @@
   },
   "login": {
     "title": "Iniciar sessió",
-    "subtitle": "Benvingut de nou",
-    "emailLabel": "Correu electrònic",
-    "emailPlaceholder": "Introdueix el teu correu electrònic",
+    "subtitle": "Benvingut",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Introdueix el teu email",
     "passwordLabel": "Contrasenya",
     "passwordPlaceholder": "Introdueix la teva contrasenya",
-    "forgotPassword": "Has oblidat la contrasenya?",
+    "forgotPassword": "Has oblidat la teva contrasenya?",
     "loginButton": "Iniciar sessió",
     "noAccount": "No tens compte?",
     "register": "Registrar-se",
@@ -331,7 +331,8 @@
     "login": "Iniciar sessió",
     "signInWithGoogle": "Registrar-se amb Google",
     "passwordsDontMatch": "Les contrasenyes no coincideixen",
-    "loading": "Processant..."
+    "loading": "Processant...",
+    "passwordValidation": "La contrasenya ha de tenir almenys 6 caràcters"
   },
   "terminos": {
     "title": "Termes i Condicions",
@@ -464,5 +465,49 @@
     "accept": "Acceptar Tot",
     "reject": "Rebutjar Tot",
     "moreInfo": "Més Informació"
-  }
+  },
+  "languages": {
+    "title": "Idioma",
+    "all": "Tots els idiomes",
+    "en": "Anglès",
+    "es": "Espanyol",
+    "ca": "Català",
+    "fr": "Francès",
+    "it": "Italià",
+    "de": "Alemany",
+    "gl": "Gallec",
+    "eu": "Euskera",
+    "pt": "Portuguès"
+  },
+  "languageFilter": {
+    "title": "Idioma",
+    "all": "Tots els idiomes",
+    "spanish": "Espanyol",
+    "english": "Anglès",
+    "catalan": "Català",
+    "german": "Alemany",
+    "italian": "Italià",
+    "french": "Francès",
+    "galician": "Gallec",
+    "basque": "Euskera",
+    "portuguese": "Portuguès"
+  },
+  "forgotPassword": {
+    "title": "Recuperar Contrasenya",
+    "heading": "Has oblidat la teva contrasenya?",
+    "subtitle": "Introdueix el teu correu electrònic i t'enviarem instruccions per restablir la teva contrasenya",
+    "emailLabel": "Correu electrònic",
+    "emailPlaceholder": "Introdueix el teu correu electrònic",
+    "sending": "Enviant...",
+    "submitButton": "Enviar instruccions",
+    "rememberPassword": "Has recordat la teva contrasenya?",
+    "login": "Iniciar sessió",
+    "noAccount": "No tens un compte?",
+    "register": "Registra't"
+  },
+  "messages": {
+    "forgotPasswordError": "Error en enviar el correu de recuperació",
+    "forgotPasswordSuccess": "¡Correu de recuperació enviat! Si us plau, revisa la teva safata d'entrada"
+  },
+  "appName": "AudioGretel"
 } 
