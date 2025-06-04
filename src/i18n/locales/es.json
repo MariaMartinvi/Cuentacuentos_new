@@ -723,5 +723,24 @@
     "noAccount": "¿No tienes una cuenta?",
     "register": "Regístrate"
   },
-  "appName": "AudioGretel"
+  "appName": "AudioGretel",
+  "testimonials": {
+    "title": "Lo que dicen nuestros usuarios",
+    "subtitle": "Descubre cómo AudioGretel está transformando la forma en que los niños aprenden y disfrutan de las historias",
+    "testimonial1": {
+      "name": "Juanjo Mena",
+      "role": "Padre de dos niños",
+      "content": "AudioGretel ha sido una herramienta increíble para mis hijos. Les encanta escuchar sus propias historias personalizadas y han mejorado significativamente su inglés mientras se divierten."
+    },
+    "testimonial2": {
+      "name": "Montserrat Villaró",
+      "role": "Profesora de primaria",
+      "content": "Como profesor, valoro mucho la calidad educativa de AudioGretel. La personalización de las historias y los diferentes niveles de idioma lo hacen perfecto para el aula."
+    },
+    "testimonial3": {
+      "name": "Gabriel Martín",
+      "role": "Profesor infantil",
+      "content": "Los audiocuentos personalizados son una excelente herramienta para el desarrollo del lenguaje. Mis pacientes disfrutan mucho creando sus propias historias y practicando la pronunciación."
+    }
+  }
 } 

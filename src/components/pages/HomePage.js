@@ -3,6 +3,7 @@ import StoryForm from '../StoryForm.js';
 import { useTranslation } from 'react-i18next';
 import StoryDisplay from '../StoryDisplay.js';
 import StoryExamplesSection from '../StoryExamplesSection.js';
+import TestimonialsSection from '../TestimonialsSection.js';
 import '../../styles/global.css';
 import '../FeaturesSection.css';
 import SEO from '../SEO';
@@ -121,6 +122,8 @@ function HomePage() {
             <StoryDisplay story={generatedStory} />
           )}
         </div>
+        
+        <TestimonialsSection />
         
         <div className="features-section">
           <div className="container">

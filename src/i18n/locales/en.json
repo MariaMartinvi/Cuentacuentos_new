@@ -830,5 +830,24 @@
     "recoveryError": "Error sending recovery email",
     "requestError": "Error processing request"
   },
-  "appName": "AudioGretel"
+  "appName": "AudioGretel",
+  "testimonials": {
+    "title": "What Our Users Say",
+    "subtitle": "Discover how AudioGretel is transforming the way children learn and enjoy stories",
+    "testimonial1": {
+      "name": "Maria Garcia",
+      "role": "Mother of two",
+      "content": "AudioGretel has been an incredible tool for my children. They love listening to their own personalized stories and have significantly improved their English while having fun."
+    },
+    "testimonial2": {
+      "name": "Carlos Rodriguez",
+      "role": "Primary School Teacher",
+      "content": "As a teacher, I highly value AudioGretel's educational quality. The story personalization and different language levels make it perfect for the classroom."
+    },
+    "testimonial3": {
+      "name": "Ana Martinez",
+      "role": "Child Speech Therapist",
+      "content": "Personalized audio stories are an excellent tool for language development. My patients really enjoy creating their own stories and practicing pronunciation."
+    }
+  }
 } 
