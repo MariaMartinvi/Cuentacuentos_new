@@ -78,6 +78,29 @@ enableIndexedDbPersistence(db).catch((err) => {
 auth.useDeviceLanguage();
 auth.settings.appVerificationDisabledForTesting = false;
 
+// Configuración específica para producción en Render
+if (process.env.NODE_ENV === 'production') {
+  console.log('🌐 Production mode detected, configuring for Render deployment');
+  
+  // Configurar dominios autorizados para Firebase Auth
+  const currentDomain = window.location.hostname;
+  console.log('🌐 Current domain:', currentDomain);
+  
+  // Lista de dominios autorizados (agregar tu dominio de Render aquí)
+  const authorizedDomains = [
+    'localhost',
+    'audiogretel.com',
+    'www.audiogretel.com',
+    'cuentacuentos-b2e64.firebaseapp.com',
+    // Agregar tu dominio de Render aquí cuando lo sepas
+    // 'tu-app.onrender.com'
+  ];
+  
+  if (!authorizedDomains.some(domain => currentDomain.includes(domain))) {
+    console.warn('⚠️ Current domain not in authorized list. Add to Firebase Console:', currentDomain);
+  }
+}
+
 // Configurar timeouts y reintentos
 const MAX_RETRIES = 2;
 const TIMEOUT_DURATION = 10000; // 10 segundos

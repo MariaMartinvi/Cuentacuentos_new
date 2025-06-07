@@ -27,11 +27,16 @@ const FirebaseStarRating = ({
     totalRatings, 
     isAuthenticated,
     readonly,
+    environment: process.env.NODE_ENV,
+    hasLocalStorage: typeof localStorage !== 'undefined',
+    tokenExists: !!localStorage.getItem('token'),
     user: user ? {
       uid: user.uid,
       id: user.id,
       email: user.email,
-      keys: Object.keys(user)
+      emailVerified: user.emailVerified,
+      keys: Object.keys(user),
+      fullUser: user
     } : null
   });
 
@@ -111,7 +116,15 @@ const FirebaseStarRating = ({
 
     } catch (error) {
       console.error('🌟 [FirebaseStarRating] Error rating story:', error);
-      alert(`Error al calificar la historia: ${error.message}`);
+      
+      // Manejo específico de errores de CORS/dominios
+      if (error.message.includes('Cross-Origin') || error.message.includes('CORS')) {
+        alert('Error de configuración: El dominio no está autorizado. Contacta al administrador.');
+      } else if (error.message.includes('Usuario no autenticado')) {
+        alert('Por favor, inicia sesión para calificar historias.');
+      } else {
+        alert(`Error al calificar la historia: ${error.message}`);
+      }
     } finally {
       setIsSubmitting(false);
     }
