@@ -76,30 +76,48 @@ const Register = () => {
     setSuccess('');
     setLoading(true); 
     console.log("Google Credential Response (Register):", credentialResponse);
-    const idToken = credentialResponse.credential;
-
+    
     try {
-      const backendResponse = await axios.post(`${API_URL}/api/auth/google`, {
-        idToken: idToken 
-      });
-
-      if (backendResponse.data && backendResponse.data.token) {
-        localStorage.setItem('token', backendResponse.data.token);
-        // Extract user data from nested structure
-        const userData = backendResponse.data.data || backendResponse.data.user;
-        if (userData) {
-          localStorage.setItem('user', JSON.stringify(userData));
-          console.log('Google register - User data saved:', userData);
-        }
-        await setAuthContext(backendResponse.data.token, userData); 
-        setSuccess(t('register.successGoogle')); 
-        navigate('/');
-      } else {
-        throw new Error('Invalid response from backend Google sign-in');
-      }
+      // Import Firebase Auth functions
+      const { GoogleAuthProvider, signInWithCredential } = await import('firebase/auth');
+      const { auth } = await import('../firebase/config');
+      
+      // Create Firebase credential from Google token
+      const credential = GoogleAuthProvider.credential(credentialResponse.credential);
+      
+      // Sign in to Firebase with Google credential
+      const result = await signInWithCredential(auth, credential);
+      const firebaseUser = result.user;
+      
+      console.log('✅ Firebase Google Auth successful (Register):', firebaseUser.email);
+      
+      // Get Firebase ID token (this is what the backend expects)
+      const firebaseToken = await firebaseUser.getIdToken();
+      
+      // Create user data
+      const userData = {
+        email: firebaseUser.email,
+        emailVerified: firebaseUser.emailVerified,
+        name: firebaseUser.displayName,
+        picture: firebaseUser.photoURL,
+        uid: firebaseUser.uid,
+        subscriptionStatus: 'free',
+        storiesGenerated: 0
+      };
+      
+      // Store Firebase token (not Google token)
+      localStorage.setItem('token', firebaseToken);
+      localStorage.setItem('user', JSON.stringify(userData));
+      console.log('Google register - User data saved:', userData);
+      
+      // Set auth context with Firebase token
+      await setAuthContext(firebaseToken, userData);
+      setSuccess(t('register.successGoogle')); 
+      navigate('/');
+      
     } catch (err) {
-      console.error('Backend Google sign-in error (Register):', err.response?.data?.details || err.message);
-      setError(err.response?.data?.details || err.message || t('register.googleError'));
+      console.error('Firebase Google register error:', err);
+      setError(err.message || t('register.googleError'));
     } finally {
       setLoading(false);
     }

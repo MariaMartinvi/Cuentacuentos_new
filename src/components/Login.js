@@ -6,14 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import './Login.css';
 import SEO from './SEO';
 import { jwtDecode } from 'jwt-decode';
-import axios from 'axios';
-import config from '../config';
 import GoogleButton from './GoogleButton';
-
-// Use API URL from config
-const API_URL = config.apiUrl;
-
-console.log('Login component - Using API URL:', API_URL);
 
 const Login = () => {
   const { t, i18n } = useTranslation();
@@ -58,29 +51,47 @@ const Login = () => {
     setError('');
     setLoading(true);
     console.log("Google Credential Response:", credentialResponse);
-    const idToken = credentialResponse.credential;
-
+    
     try {
-      const backendResponse = await axios.post(`${API_URL}/api/auth/google`, {
-        idToken: idToken
-      });
-
-      if (backendResponse.data && backendResponse.data.token) {
-        localStorage.setItem('token', backendResponse.data.token);
-        // Extract user data from nested structure
-        const userData = backendResponse.data.data || backendResponse.data.user;
-        if (userData) {
-          localStorage.setItem('user', JSON.stringify(userData));
-          console.log('Google login - User data saved:', userData);
-        }
-        await setAuthContext(backendResponse.data.token, userData);
-        navigate('/');
-      } else {
-        throw new Error('Invalid response from backend Google login');
-      }
+      // Import Firebase Auth functions
+      const { GoogleAuthProvider, signInWithCredential } = await import('firebase/auth');
+      const { auth } = await import('../firebase/config');
+      
+      // Create Firebase credential from Google token
+      const credential = GoogleAuthProvider.credential(credentialResponse.credential);
+      
+      // Sign in to Firebase with Google credential
+      const result = await signInWithCredential(auth, credential);
+      const firebaseUser = result.user;
+      
+      console.log('✅ Firebase Google Auth successful:', firebaseUser.email);
+      
+      // Get Firebase ID token (this is what the backend expects)
+      const firebaseToken = await firebaseUser.getIdToken();
+      
+      // Create user data
+      const userData = {
+        email: firebaseUser.email,
+        emailVerified: firebaseUser.emailVerified,
+        name: firebaseUser.displayName,
+        picture: firebaseUser.photoURL,
+        uid: firebaseUser.uid,
+        subscriptionStatus: 'free',
+        storiesGenerated: 0
+      };
+      
+      // Store Firebase token (not Google token)
+      localStorage.setItem('token', firebaseToken);
+      localStorage.setItem('user', JSON.stringify(userData));
+      console.log('Google login - User data saved:', userData);
+      
+      // Set auth context with Firebase token
+      await setAuthContext(firebaseToken, userData);
+      navigate('/');
+      
     } catch (err) {
-      console.error('Backend Google login error:', err.response?.data?.details || err.message);
-      setError(err.response?.data?.details || err.message || t('login.googleError'));
+      console.error('Firebase Google login error:', err);
+      setError(err.message || t('login.googleError'));
     } finally {
       setLoading(false);
     }

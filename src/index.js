@@ -7,13 +7,11 @@ import i18n from './i18n.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+// Temporary hardcoded Google Client ID from Firebase configuration
+// This should match the Web application client ID from Firebase Console
+const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || "8183103149-2v0n7ugpiov4l90m2imb3su9e64vaghj.apps.googleusercontent.com";
 
-if (!googleClientId) {
-  console.error('CRITICAL ERROR: REACT_APP_GOOGLE_CLIENT_ID is not defined. Google OAuth will not work.');
-  // Optionally render an error message to the DOM here if you want to halt the app
-  // For example: document.getElementById('root').innerHTML = 'Google Client ID is missing';
-}
+console.log('🔑 Google Client ID configured:', googleClientId ? '✅ Set' : '❌ Missing');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,7 +26,7 @@ root.render(
       <div>
         <h1>Error de Configuración</h1>
         <p>La aplicación no se puede iniciar porque falta el ID de cliente de Google.</p>
-        <p>Por favor, asegúrese de que la variable de entorno REACT_APP_GOOGLE_CLIENT_ID esté configurada correctamente en su archivo .env.</p>
+        <p>Por favor, configure REACT_APP_GOOGLE_CLIENT_ID en su archivo .env</p>
       </div>
     )}
   </React.StrictMode>

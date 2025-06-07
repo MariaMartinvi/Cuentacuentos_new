@@ -52,8 +52,6 @@ const GoogleButton = ({ onSuccess, onError, useOneTap = false, type = 'login' })
         ux_mode="popup"
         auto_select={false}
         cancel_on_tap_outside={true}
-        prompt_parent_id="google-signin-container"
-        disable_fedcm_api={true}
       />
     </div>
   );
