@@ -1,6 +1,19 @@
 import axios from 'axios';
 import i18next from 'i18next';
 import config from '../config';
+import { auth } from '../firebase/config';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged,
+  sendEmailVerification as firebaseSendEmailVerification,
+  applyActionCode,
+  reload,
+  sendPasswordResetEmail as firebaseSendPasswordResetEmail,
+  confirmPasswordReset,
+  verifyPasswordResetCode as firebaseVerifyPasswordResetCode
+} from 'firebase/auth';
 
 // Use API URL from config
 const API_URL = config.apiUrl;
@@ -95,161 +108,176 @@ const retryRequest = async (fn, maxRetries = 3, delay = 1000) => {
 
 export const register = async (email, password) => {
   try {
-    console.log('Registering user:', email);
+    console.log('🔥 Registering with Firebase Auth:', email);
     
-    const response = await axiosInstance.post('/api/auth/register', {
-      email,
-      password
-    });
-
-    console.log('Registration successful:', response.data);
-    return response.data;
+    // Create user with Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const firebaseUser = userCredential.user;
+    
+    console.log('✅ Firebase registration successful:', firebaseUser.email);
+    
+    // Send email verification
+    await firebaseSendEmailVerification(firebaseUser);
+    console.log('📧 Email verification sent to:', firebaseUser.email);
+    
+    // Sign out immediately - user must verify email before logging in
+    await signOut(auth);
+    console.log('🚪 User signed out - must verify email before logging in');
+    
+    return { 
+      success: true,
+      message: i18next.t('messages.emailVerified'),
+      emailSent: true
+    };
   } catch (error) {
-    console.error('Registration error:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-      error: error
-    });
+    console.error('❌ Firebase registration error:', error);
     
-    if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
-    } else if (error.response?.data?.details) {
-      throw new Error(`${error.response.data.error}: ${error.response.data.details}`);
-    } else if (!error.response) {
-      throw new Error('Network error - Unable to connect to the server. Please check if the backend server is running.');
-    } else {
-      throw new Error(error.message || 'Registration failed');
+    // Handle Firebase Auth errors
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        throw new Error(i18next.t('register.emailAlreadyInUse') || 'Ya existe una cuenta con este email');
+      case 'auth/invalid-email':
+        throw new Error(i18next.t('firebaseErrors.invalidEmail'));
+      case 'auth/operation-not-allowed':
+        throw new Error(i18next.t('register.notAllowed') || 'Registro no permitido');
+      case 'auth/weak-password':
+        throw new Error(i18next.t('firebaseErrors.weakPassword'));
+      default:
+        throw new Error(error.message || i18next.t('register.error'));
     }
   }
 };
 
 export const login = async (email, password) => {
   try {
-    const loginUrl = `${API_URL}/api/auth/login`;
+    console.log('🔥 Logging in with Firebase Auth:', email);
     
-    console.log('Making login request to:', loginUrl);
+    // Authenticate with Firebase
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const firebaseUser = userCredential.user;
     
-    const response = await retryRequest(async () => {
-      return await axios.post(loginUrl, {
-        email,
-        password
-      }, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        timeout: 10000
-      });
-    });
+    console.log('✅ Firebase Auth successful:', firebaseUser.email);
     
-    console.log('Login response:', response.data);
-    
-    if (!response.data || !response.data.token) {
-      throw new Error('Invalid response format from server');
-    }
-
-    const { token } = response.data;
-    // Extract user data from nested structure
-    const user = response.data.data || response.data.user;
-    
-    if (!user) {
-      throw new Error('No user data received from server');
+    // Check if email is verified
+    if (!firebaseUser.emailVerified) {
+      // Sign out the user immediately
+      await signOut(auth);
+      throw new Error(i18next.t('login.emailNotVerified') || 'Debes verificar tu email antes de iniciar sesión. Revisa tu bandeja de entrada.');
     }
     
-    console.log('Extracted user data:', user);
+    // Get Firebase ID token
+    const token = await firebaseUser.getIdToken();
     
-    // Guardar token y usuario en localStorage
+    // Create user object
+    const user = {
+      email: firebaseUser.email,
+      uid: firebaseUser.uid,
+      emailVerified: firebaseUser.emailVerified,
+      subscriptionStatus: 'free', // Default, could be updated from backend
+      storiesGenerated: 0
+    };
+    
+    // Save to localStorage
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     
-    // Limpiar caché al hacer login
+    // Update cache
     userCache = {
       data: user,
       timestamp: Date.now()
     };
     
-    // Verificar que se guardaron correctamente
-    const savedToken = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    
-    console.log('Token saved in localStorage:', savedToken ? 'Yes' : 'No');
-    console.log('User saved in localStorage:', savedUser ? 'Yes' : 'No');
+    console.log('💾 User data saved:', user);
     
     return { token, user };
   } catch (error) {
-    console.error('Login error:', error);
-    if (error.response?.status === 401) {
-      throw new Error(error.response.data.details || i18next.t('login.error'));
-    } else if (error.response?.status === 429) {
-      throw new Error(i18next.t('login.rateLimitError') || 'Too many login attempts. Please try again later.');
+    console.error('❌ Firebase login error:', error);
+    
+    // Handle Firebase Auth errors
+    switch (error.code) {
+      case 'auth/user-not-found':
+        throw new Error(i18next.t('firebaseErrors.userNotFound'));
+      case 'auth/wrong-password':
+        throw new Error(i18next.t('login.wrongPassword') || 'Contraseña incorrecta');
+      case 'auth/invalid-email':
+        throw new Error(i18next.t('firebaseErrors.invalidEmail'));
+      case 'auth/user-disabled':
+        throw new Error(i18next.t('login.userDisabled') || 'Esta cuenta ha sido deshabilitada');
+      case 'auth/too-many-requests':
+        throw new Error(i18next.t('firebaseErrors.tooManyRequests'));
+      default:
+        throw new Error(error.message || i18next.t('login.error'));
     }
-    throw error;
   }
 };
 
-export const logout = () => {
-  const user = getCurrentUser();
-  console.log('Logging out user:', user?.email);
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  // Limpiar caché al hacer logout
-  userCache = {
-    data: null,
-    timestamp: null
-  };
+export const logout = async () => {
+  try {
+    const user = getCurrentUser();
+    console.log('🚪 Logging out user:', user?.email);
+    
+    // Sign out from Firebase Auth
+    await signOut(auth);
+    
+    // Clear localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Clear cache
+    userCache = {
+      data: null,
+      timestamp: null
+    };
+    
+    console.log('✅ Logout successful');
+  } catch (error) {
+    console.error('❌ Logout error:', error);
+    // Still clear local data even if Firebase signout fails
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    userCache = { data: null, timestamp: null };
+  }
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = () => {
   try {
-    const token = localStorage.getItem('token');
-    console.log('Checking token in getCurrentUser:', token ? 'Token exists' : 'No token found');
+    // Check Firebase Auth current user
+    const firebaseUser = auth.currentUser;
     
-    if (!token) {
+    if (!firebaseUser) {
+      console.log('No Firebase user found');
       userCache = { data: null, timestamp: null };
       return null;
     }
-
-    // Verificar si hay datos en caché y si son válidos
-    const now = Date.now();
-    if (userCache.data && userCache.timestamp && (now - userCache.timestamp < userCache.CACHE_DURATION)) {
-      console.log('Returning cached user data');
-      return userCache.data;
+    
+    // Check localStorage cache first
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+      try {
+        const userData = JSON.parse(cachedUser);
+        console.log('Returning cached user data:', userData.email);
+        return userData;
+      } catch (e) {
+        console.warn('Error parsing cached user data:', e);
+      }
     }
-
-    // Use API_URL constant instead of hardcoded URL
-    const currentUserUrl = `${API_URL}/api/auth/me`;
     
-    console.log('Making request to get current user at:', currentUserUrl);
-
-    const response = await axios.get(currentUserUrl, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      withCredentials: true,
-      timeout: 10000
-    });
-
-    console.log('Response from /api/auth/me:', response.data);
-    
-    // Extract user data from the nested response structure
-    const userData = response.data.data || response.data;
-    
-    console.log('Extracted user data:', userData);
-    
-    // Actualizar caché
-    userCache = {
-      data: userData,
-      timestamp: now
+    // Create user object from Firebase user
+    const user = {
+      email: firebaseUser.email,
+      uid: firebaseUser.uid,
+      emailVerified: firebaseUser.emailVerified,
+      subscriptionStatus: 'free', // Default, can be updated
+      storiesGenerated: 0
     };
     
-    return userData;
+    // Save to localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    console.log('Firebase user found:', user.email);
+    return user;
   } catch (error) {
     console.error('Error in getCurrentUser:', error);
-    // En caso de error, limpiar caché
     userCache = { data: null, timestamp: null };
     return null;
   }
@@ -345,169 +373,246 @@ export const loginWithGoogle = async () => {
   }
 };
 
-// Email verification function
-export const verifyEmail = async (token) => {
+// Email verification function (updated for Firebase)
+export const verifyEmail = async (actionCode) => {
   try {
-    console.log('🔍 [AuthService] Starting email verification with token:', token);
+    console.log('🔍 [AuthService] Starting Firebase email verification');
     
-    const verifyUrl = `${API_URL}/api/auth/verify-email?token=${token}`;
-    console.log('🌐 [AuthService] Making request to:', verifyUrl);
-
-    const response = await axios.get(verifyUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      timeout: 20000 // Increased timeout to 20 seconds for email verification
-    });
-
-    console.log('✅ [AuthService] Verification response status:', response.status);
-    console.log('📦 [AuthService] Verification response data:', response.data);
-    
-    return response.data;
+    return await handleEmailVerification(actionCode);
   } catch (error) {
     console.error('💥 [AuthService] Email verification error:', error);
-    console.error('🔍 [AuthService] Error breakdown:', {
-      message: error.message,
-      code: error.code,
-      response_status: error.response?.status,
-      response_data: error.response?.data,
-      response_headers: error.response?.headers
-    });
-    
-    // If it's a timeout error, try once more with a longer timeout
-    if (error.code === 'ECONNABORTED' && error.message.includes('timeout')) {
-      console.log('⏰ [AuthService] Timeout detected, retrying with longer timeout...');
-      try {
-        const response = await axios.get(`${API_URL}/api/auth/verify-email?token=${token}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          timeout: 30000 // 30 seconds retry
-        });
-        console.log('✅ [AuthService] Retry successful:', response.data);
-        return response.data;
-      } catch (retryError) {
-        console.error('💥 [AuthService] Retry failed:', retryError);
-        throw new Error('Timeout al verificar el email. La verificación puede haberse completado, prueba a iniciar sesión.');
-      }
-    }
-    
-    if (error.response?.data?.details) {
-      throw new Error(error.response.data.details);
-    } else if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
-    } else if (!error.response) {
-      throw new Error('Network error - Unable to connect to the server');
-    } else {
-      throw new Error(error.message || 'Email verification failed');
-    }
+    throw error;
   }
 };
 
-// Resend email verification
-export const resendVerificationEmail = async (email) => {
+// Resend email verification (updated for Firebase)
+export const resendVerificationEmail = async () => {
   try {
-    console.log('Resending verification email to:', email);
+    console.log('📧 Resending Firebase email verification');
     
-    const resendUrl = `${API_URL}/api/auth/resend-verification`;
-    console.log('Making resend verification request to:', resendUrl);
-
-    const response = await axios.post(resendUrl, {
-      email
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      timeout: 10000
-    });
-
-    console.log('Resend verification response:', response.data);
-    return response.data;
+    return await sendEmailVerification();
   } catch (error) {
-    console.error('Resend verification error:', error);
-    
-    if (error.response?.data?.details) {
-      throw new Error(error.response.data.details);
-    } else if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
-    } else if (!error.response) {
-      throw new Error('Network error - Unable to connect to the server');
-    } else {
-      throw new Error(error.message || 'Failed to resend verification email');
-    }
+    console.error('❌ Resend verification error:', error);
+    throw error;
   }
 };
 
-// Forgot password function
+// Firebase forgot password function  
 export const forgotPassword = async (email) => {
   try {
-    console.log('Requesting password reset for:', email);
+    console.log('Sending Firebase password reset email to:', email);
     
-    const forgotUrl = `${API_URL}/api/auth/forgot-password`;
-    console.log('Making forgot password request to:', forgotUrl);
-
-    const response = await axios.post(forgotUrl, {
-      email
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      timeout: 10000
-    });
-
-    console.log('Forgot password response:', response.data);
-    return response.data;
+    await firebaseSendPasswordResetEmail(auth, email);
+    
+    console.log('✅ Firebase password reset email sent successfully');
+    
+    return {
+      success: true,
+      message: i18next.t('messages.forgotPasswordSuccess')
+    };
   } catch (error) {
-    console.error('Forgot password error:', error);
+    console.error('❌ Firebase forgot password error:', error);
     
-    if (error.response?.data?.details) {
-      throw new Error(error.response.data.details);
-    } else if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
-    } else if (!error.response) {
-      throw new Error('Network error - Unable to connect to the server');
-    } else {
-      throw new Error(error.message || 'Failed to process password reset request');
+    switch (error.code) {
+      case 'auth/user-not-found':
+        throw new Error(i18next.t('firebaseErrors.userNotFound'));
+      case 'auth/invalid-email':
+        throw new Error(i18next.t('firebaseErrors.invalidEmail'));
+      case 'auth/too-many-requests':
+        throw new Error(i18next.t('firebaseErrors.tooManyRequests'));
+      default:
+        throw new Error(error.message || i18next.t('forgotPassword.recoveryError'));
     }
   }
 };
 
-// Reset password function
-export const resetPassword = async (token, newPassword) => {
+// Firebase confirm password reset function
+export const resetPassword = async (actionCode, newPassword) => {
   try {
-    console.log('Resetting password with token');
+    console.log('🔍 Confirming Firebase password reset with action code');
     
-    const resetUrl = `${API_URL}/api/auth/reset-password`;
-    console.log('Making reset password request to:', resetUrl);
-
-    const response = await axios.post(resetUrl, {
-      token,
-      newPassword
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      timeout: 10000
-    });
-
-    console.log('Reset password response:', response.data);
-    return response.data;
+    // Confirm the password reset with the action code
+    await confirmPasswordReset(auth, actionCode, newPassword);
+    
+    console.log('✅ Firebase password reset successful');
+    
+    return {
+      success: true,
+      message: i18next.t('resetPassword.success')
+    };
   } catch (error) {
-    console.error('Reset password error:', error);
+    console.error('❌ Firebase reset password error:', error);
     
-    if (error.response?.data?.details) {
-      throw new Error(error.response.data.details);
-    } else if (error.response?.data?.error) {
-      throw new Error(error.response.data.error);
-    } else if (!error.response) {
-      throw new Error('Network error - Unable to connect to the server');
-    } else {
-      throw new Error(error.message || 'Failed to reset password');
+    switch (error.code) {
+      case 'auth/expired-action-code':
+        throw new Error(i18next.t('firebaseErrors.expiredActionCode'));
+      case 'auth/invalid-action-code':
+        throw new Error(i18next.t('firebaseErrors.invalidActionCode'));
+      case 'auth/weak-password':
+        throw new Error(i18next.t('firebaseErrors.weakPassword'));
+      default:
+        throw new Error(error.message || i18next.t('messages.passwordResetError'));
+    }
+  }
+};
+
+// Verify password reset code (to check if the code is valid before showing reset form)
+export const verifyPasswordResetCode = async (actionCode) => {
+  try {
+    console.log('🔍 Verifying Firebase password reset code');
+    
+    // Verify the password reset code is valid
+    const email = await firebaseVerifyPasswordResetCode(auth, actionCode);
+    
+    console.log('✅ Password reset code verified for email:', email);
+    
+    return {
+      success: true,
+      email: email
+    };
+  } catch (error) {
+    console.error('❌ Firebase verify password reset code error:', error);
+    
+    switch (error.code) {
+      case 'auth/expired-action-code':
+        throw new Error(i18next.t('firebaseErrors.expiredActionCode'));
+      case 'auth/invalid-action-code':
+        throw new Error(i18next.t('firebaseErrors.invalidActionCode'));
+      default:
+        throw new Error(i18next.t('resetPassword.linkInvalid'));
+    }
+  }
+};
+
+// Send Firebase email verification
+export const sendEmailVerification = async () => {
+  try {
+    const user = auth.currentUser;
+    
+    if (!user) {
+      throw new Error('No hay usuario autenticado');
+    }
+    
+    if (user.emailVerified) {
+      throw new Error('El email ya está verificado');
+    }
+    
+    await firebaseSendEmailVerification(user);
+    console.log('📧 Email verification sent to:', user.email);
+    
+    return {
+      success: true,
+      message: 'Email de verificación enviado. Revisa tu bandeja de entrada.'
+    };
+  } catch (error) {
+    console.error('❌ Error sending email verification:', error);
+    
+    switch (error.code) {
+      case 'auth/too-many-requests':
+        throw new Error('Demasiados intentos. Espera un momento antes de intentar de nuevo.');
+      case 'auth/user-disabled':
+        throw new Error('Esta cuenta ha sido deshabilitada.');
+      default:
+        throw new Error(error.message || 'Error al enviar email de verificación');
+    }
+  }
+};
+
+// Check email verification status
+export const checkEmailVerification = async () => {
+  try {
+    const user = auth.currentUser;
+    
+    if (!user) {
+      throw new Error('No hay usuario autenticado');
+    }
+    
+    // Reload user to get latest verification status
+    await reload(user);
+    
+    // Update user data in localStorage
+    const updatedUser = {
+      email: user.email,
+      uid: user.uid,
+      emailVerified: user.emailVerified,
+      subscriptionStatus: 'free',
+      storiesGenerated: 0
+    };
+    
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    
+    // Update cache
+    userCache = {
+      data: updatedUser,
+      timestamp: Date.now()
+    };
+    
+    console.log('🔄 Email verification status updated:', user.emailVerified);
+    
+    return {
+      emailVerified: user.emailVerified,
+      user: updatedUser
+    };
+  } catch (error) {
+    console.error('❌ Error checking email verification:', error);
+    throw new Error('Error al verificar el estado del email');
+  }
+};
+
+// Handle email verification from URL (when user clicks email link)
+export const handleEmailVerification = async (actionCode) => {
+  try {
+    console.log('🔍 Handling email verification with action code');
+    
+    // Apply the email verification code
+    await applyActionCode(auth, actionCode);
+    
+    // Reload the user to get updated verification status
+    if (auth.currentUser) {
+      await reload(auth.currentUser);
+      
+      // Update user data in localStorage
+      const user = {
+        email: auth.currentUser.email,
+        uid: auth.currentUser.uid,
+        emailVerified: auth.currentUser.emailVerified,
+        subscriptionStatus: 'free',
+        storiesGenerated: 0
+      };
+      
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Update cache
+      userCache = {
+        data: user,
+        timestamp: Date.now()
+      };
+      
+      console.log('✅ Email verification successful');
+      
+      return {
+        success: true,
+        message: '¡Email verificado exitosamente!',
+        user: user
+      };
+    }
+    
+    return {
+      success: true,
+      message: '¡Email verificado exitosamente! Ya puedes iniciar sesión.'
+    };
+  } catch (error) {
+    console.error('❌ Email verification error:', error);
+    
+    switch (error.code) {
+      case 'auth/expired-action-code':
+        throw new Error('El enlace de verificación ha expirado. Solicita uno nuevo.');
+      case 'auth/invalid-action-code':
+        throw new Error('Enlace de verificación inválido.');
+      case 'auth/user-disabled':
+        throw new Error('Esta cuenta ha sido deshabilitada.');
+      default:
+        throw new Error(error.message || 'Error al verificar el email');
     }
   }
 }; 

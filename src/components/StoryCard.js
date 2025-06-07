@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import LazyImage from './LazyImage';
 import { getStoryTextContent, getStoryAudioUrl, getStoryImageUrl } from '../services/storyExamplesService';
+import StarRating from './StarRating';
 import './StoryCard.css';
 
 const StoryCard = ({ story, onStoryClick }) => {
@@ -180,9 +181,22 @@ const StoryCard = ({ story, onStoryClick }) => {
             {t(`storyExamples.levels.${story.level}`)}
           </span>
         </div>
-        {error && (
-          <p className="error-message">{error.message || t('common.error')}</p>
+        
+        {/* Story Rating - Only show for user stories (MongoDB IDs), not Firebase examples */}
+        {(story._id || (story.id && story.id.length === 24)) && (
+          <div className="story-card-rating">
+            <StarRating
+              storyId={story._id || story.id}
+              averageRating={story.averageRating || 0}
+              totalRatings={story.totalRatings || 0}
+              userRating={story.userRating || null}
+              size="small"
+              showCount={true}
+              readonly={false}
+            />
+          </div>
         )}
+        
         <div className="story-card-actions">
           {story.textPath && (
             <button 

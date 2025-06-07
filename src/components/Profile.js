@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getCurrentUser, logout } from '../services/authService';
+import { getMyStories } from '../services/storyService';
 import { useAuth } from '../contexts/AuthContext';
 import './Profile.css';
 import SEO from './SEO';
+import StarRating from './StarRating';
 
 const Profile = () => {
   const { t, i18n } = useTranslation();
@@ -16,6 +18,14 @@ const Profile = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [storiesRemaining, setStoriesRemaining] = useState(null);
+  
+  // New states for user stories
+  const [userStories, setUserStories] = useState([]);
+  const [storiesLoading, setStoriesLoading] = useState(false);
+  const [storiesError, setStoriesError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState(null);
+  const [showStories, setShowStories] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -34,6 +44,80 @@ const Profile = () => {
     };
     loadUser();
   }, [t]);
+
+  // Load user stories
+  const loadUserStories = async (page = 1) => {
+    setStoriesLoading(true);
+    setStoriesError('');
+    
+    try {
+      console.log('Loading user stories, page:', page);
+      const response = await getMyStories(page, 6); // Load 6 stories per page
+      
+      console.log('User stories response:', response);
+      
+      if (page === 1) {
+        setUserStories(response.stories || []);
+      } else {
+        setUserStories(prev => [...prev, ...(response.stories || [])]);
+      }
+      
+      setPagination(response.pagination);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error('Error loading user stories:', error);
+      
+      // Provide more specific error messages based on the error type
+      let errorMessage = t('profile.stories.error');
+      
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+        errorMessage = i18n.language === 'es' 
+          ? 'No se puede conectar al servidor. Por favor, verifica tu conexión a internet.' 
+          : 'Cannot connect to server. Please check your internet connection.';
+      } else if (error.response?.status === 401) {
+        errorMessage = i18n.language === 'es' 
+          ? 'Sesión expirada. Por favor, inicia sesión nuevamente.' 
+          : 'Session expired. Please log in again.';
+      } else if (error.response?.status === 403) {
+        errorMessage = i18n.language === 'es' 
+          ? 'No tienes permisos para ver estas historias.' 
+          : 'You do not have permission to view these stories.';
+      } else if (error.response?.status >= 500) {
+        errorMessage = i18n.language === 'es' 
+          ? 'El servidor está experimentando problemas. Por favor, intenta más tarde.' 
+          : 'The server is experiencing issues. Please try again later.';
+      }
+      
+      setStoriesError(errorMessage);
+    } finally {
+      setStoriesLoading(false);
+    }
+  };
+
+  // Handle show stories toggle
+  const handleShowStories = () => {
+    if (!showStories && userStories.length === 0) {
+      loadUserStories(1);
+    }
+    setShowStories(!showStories);
+  };
+
+  // Handle load more stories
+  const handleLoadMore = () => {
+    if (pagination && pagination.hasNext) {
+      loadUserStories(currentPage + 1);
+    }
+  };
+
+  // Format date function
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(i18n.language === 'es' ? 'es-ES' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
   const fetchStoriesRemaining = async (currentUser) => {
     try {
@@ -194,6 +278,137 @@ const Profile = () => {
             {success}
           </div>
         )}
+
+        {/* My Stories Section */}
+        <div className="my-stories-section">
+          <div className="stories-header">
+            <h2 className="stories-title">
+              {i18n.language === 'es' ? 'Mis Cuentos' : 'My Stories'}
+            </h2>
+            <button 
+              className="toggle-stories-btn"
+              onClick={handleShowStories}
+              disabled={storiesLoading}
+            >
+              {showStories ? 
+                (i18n.language === 'es' ? 'Ocultar' : 'Hide') : 
+                (i18n.language === 'es' ? 'Ver Mis Cuentos' : 'View My Stories')
+              }
+            </button>
+          </div>
+
+          {showStories && (
+            <div className="stories-content">
+              {storiesError && (
+                <div className="error-message stories-error">
+                  {storiesError}
+                </div>
+              )}
+
+              {storiesLoading && userStories.length === 0 && (
+                <div className="stories-loading">
+                  {i18n.language === 'es' ? 'Cargando cuentos...' : 'Loading stories...'}
+                </div>
+              )}
+
+              {userStories.length > 0 && (
+                <div className="stories-grid">
+                  {userStories.map((story, index) => (
+                    <div key={story._id} className="story-card-wrapper">
+                      <Link 
+                        to={`/story-examples?storyId=${story._id}`}
+                        className="story-card-link"
+                        title={i18n.language === 'es' ? 'Ver historia en galería de ejemplos' : 'View story in examples gallery'}
+                      >
+                        <div className="story-card">
+                          <div className="story-card-header">
+                            <h4 className="story-card-title">{story.title}</h4>
+                            <span className="story-card-date">
+                              {new Date(story.createdAt).toLocaleDateString(
+                                i18n.language === 'es' ? 'es-ES' : 'en-US'
+                              )}
+                            </span>
+                          </div>
+                          <div className="story-card-content">
+                            <p className="story-card-preview">
+                              {story.content.slice(0, 150)}...
+                            </p>
+                            <div className="story-card-metadata">
+                              <span className="story-metadata-item">
+                                {i18n.language === 'es' ? 'Idioma' : 'Language'}: {story.language?.toUpperCase() || 'ES'}
+                              </span>
+                              {story.ageGroup && (
+                                <span className="story-metadata-item">
+                                  {i18n.language === 'es' ? 'Edad' : 'Age'}: {story.ageGroup}
+                                </span>
+                              )}
+                              {story.audioGenerations > 0 && (
+                                <span className="story-metadata-item audio-indicator">
+                                  🎵 {i18n.language === 'es' ? 'Con audio' : 'Has audio'}
+                                </span>
+                              )}
+                            </div>
+                            
+                            {/* Story Rating */}
+                            <div className="story-card-rating">
+                              <StarRating
+                                storyId={story._id}
+                                averageRating={story.averageRating || 0}
+                                totalRatings={story.totalRatings || 0}
+                                userRating={story.userRating || null}
+                                size="small"
+                                showCount={true}
+                                readonly={false}
+                              />
+                            </div>
+                          </div>
+                          <div className="story-card-footer">
+                            <span className="view-story-text">
+                              {i18n.language === 'es' ? 'Hacer clic para ver en galería →' : 'Click to view in gallery →'}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {pagination && pagination.hasNext && (
+                <div className="load-more-container">
+                  <button 
+                    className="load-more-btn"
+                    onClick={handleLoadMore}
+                    disabled={storiesLoading}
+                  >
+                    {storiesLoading ? 
+                      (i18n.language === 'es' ? 'Cargando...' : 'Loading...') :
+                      (i18n.language === 'es' ? 'Cargar Más' : 'Load More')
+                    }
+                  </button>
+                </div>
+              )}
+
+              {pagination && pagination.totalStories === 0 && !storiesLoading && (
+                <div className="no-stories">
+                  {i18n.language === 'es' ? 
+                    'Aún no has generado ningún cuento. ¡Crea tu primer cuento ahora!' :
+                    'You haven\'t generated any stories yet. Create your first story now!'
+                  }
+                </div>
+              )}
+
+              {pagination && (
+                <div className="stories-pagination-info">
+                  {i18n.language === 'es' ? 
+                    `Mostrando ${userStories.length} de ${pagination.totalStories} cuentos` :
+                    `Showing ${userStories.length} of ${pagination.totalStories} stories`
+                  }
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="logout-container">
           <button onClick={handleLogout} className="logout-button">

@@ -287,7 +287,10 @@
     "storyLimitReached": "3 ipuin doako muga gainditu duzu. Harpidetu zaitez ipuin gehiago sortzeko.",
     "premiumStoryLimitReached": "30 ipuin premium-eko muga gainditu duzu. Itxaron {{day}} egunera arte ipuin gehiago sortzeko.",
     "updatePlan": "Eguneratu zure plana",
-    "subscribe": "Harpidetu"
+    "subscribe": "Harpidetu",
+    "cancelButton": "Ezeztatu",
+    "verifyEmail": "Email-a Egiaztatu",
+    "emailVerificationRequired": "🔐 Ipuinak sortu aurretik zure email-a egiaztatu behar duzu."
   },
   "login": {
     "title": "Saioa hasi",

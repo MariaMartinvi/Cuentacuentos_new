@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getCurrentUser } from '../services/authService';
+import { getCurrentUser, logout as authLogout } from '../services/authService';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
@@ -108,12 +108,24 @@ export const AuthProvider = ({ children }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+  const logout = async () => {
+    try {
+      await authLogout();
+      setUser(null);
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Still clear user state even if logout fails
+      setUser(null);
+    }
+  };
+
   const value = {
     user,
     loading,
     setUser,
     refreshUser,
     login,
+    logout,
     isAuthenticated: !!user
   };
 

@@ -298,7 +298,9 @@
     "loginButton": "Iniciar Sesión",
     "subscribeButton": "Subscríbete",
     "waitButton": "Entendido",
-    "cancelButton": "Cancelar"
+    "cancelButton": "Cancelar",
+    "verifyEmail": "Verificar Email",
+    "emailVerificationRequired": "🔐 Debes verificar o teu email antes de crear contos."
   },
   "login": {
     "title": "Iniciar sesión",

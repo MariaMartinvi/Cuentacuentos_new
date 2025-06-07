@@ -18,7 +18,7 @@ console.log('Login component - Using API URL:', API_URL);
 const Login = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { refreshUser } = useAuth();
+  const { login: setAuthContext, refreshUser } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -73,7 +73,7 @@ const Login = () => {
           localStorage.setItem('user', JSON.stringify(userData));
           console.log('Google login - User data saved:', userData);
         }
-        await refreshUser();
+        await setAuthContext(backendResponse.data.token, userData);
         navigate('/');
       } else {
         throw new Error('Invalid response from backend Google login');
@@ -140,7 +140,7 @@ const Login = () => {
           <GoogleButton
             onSuccess={handleGoogleLoginSuccess}
             onError={handleGoogleLoginError}
-            useOneTap
+            useOneTap={false}
             type="login"
           />
         </div>

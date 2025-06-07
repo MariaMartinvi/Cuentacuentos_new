@@ -178,7 +178,23 @@
       "cancelled": "Cancelled"
     },
     "manageSubscription": "Manage Subscription",
-    "logout": "Logout"
+    "logout": "Logout",
+    "stories": {
+      "title": "My Stories",
+      "viewMyStories": "View My Stories",
+      "hide": "Hide",
+      "loading": "Loading stories...",
+      "error": "Error loading stories",
+      "noStories": "You haven't generated any stories yet. Create your first story now!",
+      "loadMore": "Load More",
+      "showing": "Showing",
+      "of": "of",
+      "totalStories": "stories",
+      "audioGenerated": "audio generated",
+      "audiosGenerated": "audios generated",
+      "noContent": "No content available",
+      "years": "years"
+    }
   },
   "storyExamples": {
     "title": "Explore our stories",
@@ -197,6 +213,7 @@
     },
     "levels": {
       "all": "All levels",
+      "basic": "Basic",
       "beginner": "Beginner",
       "intermediate": "Intermediate",
       "advanced": "Advanced"
@@ -205,6 +222,7 @@
     "noResults": "No stories found with the selected filters.",
     "ageGroups": {
       "all": "All ages",
+      "default": "6-8 years",
       "3to5": "3-5 years",
       "6to8": "6-8 years",
       "9to12": "9-12 years"
@@ -216,7 +234,10 @@
       "catalan": "Catalan",
       "german": "German",
       "italian": "Italian",
-      "french": "French"
+      "french": "French",
+      "galician": "Galician",
+      "basque": "Basque",
+      "portuguese": "Portuguese"
     },
     "storyCard": {
       "recommendedAge": "Recommended age:",
@@ -323,20 +344,12 @@
     }
   },
   "storyDisplay": {
-    "title": "Your personalized story",
+    "title": "Your Story",
     "copyText": "Copy text",
     "downloadText": "Download text",
-    "shareText": "Share text",
-    "shareAudio": "Share audio",
-    "shareNotSupported": "Sharing is not supported in this browser",
     "copySuccess": "Text copied to clipboard",
-    "shareError": "Error sharing",
-    "textOptions": "Text options",
     "audioOptions": "Audio options",
-    "generateAudio": "Generate Audio",
-    "generating": "Generating...",
-    "audioError": "Error generating audio",
-    "audioLimitReached": "You have reached the limit of 4 audio generations",
+    "textOptions": "Text options",
     "voiceType": "Voice type",
     "voiceFemale": "Female (Spain)",
     "voiceMale": "Male (Spain)",
@@ -354,9 +367,12 @@
     "voiceMaleGerman": "Male (German)",
     "voiceFemaleItalian": "Female (Italian)",
     "voiceMaleItalian": "Male (Italian)",
+    "voiceMalePortuguesePT": "Male (Portuguese PT)",
+    "voiceFemalePortugueseBR": "Female (Portuguese BR)",
+    "voiceMalePortugueseBR": "Male (Portuguese BR)",
     "voiceFemaleFrench": "Female (French)",
     "voiceMaleFrench": "Male (French)",
-    "speechRate": "Speech rate",
+    "speechRate": "Speed",
     "speedVerySlow": "Very slow",
     "speedSlow": "Slow",
     "speedNormal": "Normal",
@@ -365,32 +381,25 @@
     "backgroundMusic": "Background music",
     "noMusic": "No music",
     "randomMusic": "Random music",
-    "relaxingMusic": "Relaxing",
-    "magicalMusic": "Magical",
-    "adventureMusic": "Adventure",
-    "bedtimeMusic": "Bedtime",
-    "pianoMusic": "Piano",
-    "forestMusic": "Forest",
+    "relaxingMusic": "Relaxing music",
+    "magicalMusic": "Magical music",
+    "adventureMusic": "Adventure music",
+    "bedtimeMusic": "Bedtime music",
+    "pianoMusic": "Soft piano",
+    "forestMusic": "Forest sounds",
     "musicBoxMusic": "Music box",
-    "journeyMusic": "Journey",
-    "voiceMalePortuguesePT": "Portuguese (Portugal) male",
-    "voiceFemalePortugueseBR": "Portuguese (Brazil) female",
-    "voiceMalePortugueseBR": "Portuguese (Brazil) male",
-    "shareManually": "Would you like to copy the text to clipboard to share it manually?",
-    "pauseSettings": "Pause settings",
-    "enableCustomPauses": "Enable custom pauses",
-    "sentencePause": "Pause between sentences",
-    "paragraphPause": "Pause between paragraphs",
-    "dialoguePause": "Pause in dialogues",
-    "chapterPause": "Pause between chapters",
-    "pauseShort": "Short (0.5s)",
-    "pauseNormal": "Normal (1s)",
-    "pauseLong": "Long (2s)",
-    "pauseVeryLong": "Very long (3s)",
-    "pauseCustom": "Custom",
-    "pausePreview": "Pause Preview",
-    "maxAudioReached": "You have reached the limit of 4 audios",
-    "audioCount": "Audio {{count}} of 4"
+    "journeyMusic": "Journey music",
+    "generateAudio": "Generate audio",
+    "generatingAudio": "Generating audio...",
+    "audioError": "Error generating audio",
+    "audioLimitReached": "You have reached the audio limit for this story. Create a new story to generate more audio.",
+    "shareError": "Error sharing",
+    "publishStory": "Publish story",
+    "publishAudioStory": "Publish Audio Story",
+    "publishing": "Publishing...",
+    "publishSuccess": "Story published successfully! Other users can now see it in the gallery.",
+    "publishError": "Error publishing story",
+    "published": "Published"
   },
   "storyForm": {
     "title": "Create Your Story",
@@ -444,7 +453,8 @@
     "ageGroupLabel": "Age Group",
     "ageGroup": "Age Group",
     "ageGroups": {
-      "default": "Default",
+      "all": "All ages",
+      "default": "6-8 years",
       "3to5": "3-5 years",
       "6to8": "6-8 years",
       "9to12": "9-12 years"
@@ -495,15 +505,11 @@
     "subscribeButton": "Subscribe",
     "waitButton": "Understood",
     "cancelButton": "Cancel",
-    "emailRequired": "Email is required",
-    "emailInvalid": "Please enter a valid email address",
-    "nameRequired": "Name is required",
-    "ageRequired": "Age is required",
-    "ageInvalid": "Please enter a valid age",
-    "languageRequired": "Language is required",
-    "levelRequired": "Level is required",
-    "themeRequired": "Theme is required",
-    "success": "Story generated successfully"
+    "verifyEmail": "Verify Email",
+    "emailVerificationRequired": "🔐 You must verify your email before creating stories.",
+    "emailRequired": "Please enter your email",
+    "recoveryError": "Error sending recovery email",
+    "requestError": "Error processing request"
   },
   "contact": {
     "title": "Contact Us",
@@ -849,5 +855,29 @@
       "role": "Child Speech Therapist",
       "content": "Personalized audio stories are an excellent tool for language development. My patients really enjoy creating their own stories and practicing pronunciation."
     }
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "heading": "New password",
+    "subtitle": "Create a secure password for your account",
+    "newPasswordLabel": "New password",
+    "confirmPasswordLabel": "Confirm password",
+    "submitButton": "Reset password",
+    "updating": "Updating...",
+    "success": "Password successfully reset!",
+    "successMessage": "You can now log in with your new password",
+    "goToLogin": "Go to login",
+    "linkExpired": "Link expired",
+    "linkInvalid": "Invalid link",
+    "linkExpiredMessage": "The reset link has expired or is invalid",
+    "requestNew": "Request new link"
+  },
+  "firebaseErrors": {
+    "userNotFound": "No account exists with this email address",
+    "invalidEmail": "The email format is not valid",
+    "tooManyRequests": "Too many attempts. Please wait a moment before trying again",
+    "expiredActionCode": "The link has expired. Please request a new one",
+    "invalidActionCode": "The link is not valid or has already been used",
+    "weakPassword": "The password is too weak. It must be at least 6 characters"
   }
 } 

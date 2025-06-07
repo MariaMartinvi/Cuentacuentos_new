@@ -84,7 +84,7 @@
 }
 
 /* Iconos de estado */
-.success-icon, .error-icon {
+.success-icon, .error-icon, .info-icon {
   font-size: 60px;
   margin-bottom: 20px;
   animation: bounceIn 0.8s ease-out;
@@ -113,6 +113,42 @@
 
 .verification-content.error h2 {
   color: #ef4444;
+}
+
+/* Pasos de verificación manual */
+.verification-steps {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #475569;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 15px;
+  flex-shrink: 0;
 }
 
 /* Información de redirección */
@@ -171,19 +207,30 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-/* Botones */
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+}
+
 .btn {
   padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 8px;
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-block;
+  transition: all 0.2s ease;
+  border: none;
   text-decoration: none;
+  display: inline-block;
   text-align: center;
-  min-width: 120px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-primary {
@@ -193,23 +240,18 @@
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .btn-secondary {
-  background: #6b7280;
-  color: white;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
 }
 
-.btn-secondary:hover {
-  background: #4b5563;
-  transform: translateY(-2px);
+.btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -218,22 +260,23 @@
   border: 2px solid #667eea;
 }
 
-.btn-outline:hover {
+.btn-outline:hover:not(:disabled) {
   background: #667eea;
   color: white;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
-/* Botones de acción */
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.action-buttons .btn {
-  width: 100%;
+/* Responsivo */
+@media (min-width: 480px) {
+  .action-buttons {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    min-width: 120px;
+  }
 }
 
 /* Sección de ayuda */

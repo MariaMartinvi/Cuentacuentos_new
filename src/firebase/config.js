@@ -6,17 +6,31 @@ import { getStorage, connectStorageEmulator, ref, getDownloadURL } from "firebas
 
 // Configuración de Firebase usando variables de entorno
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyBDyWnyjvbATMRUzQFDk-pRndkKZKREw9o",
+  authDomain: "cuentacuentos-b2e64.firebaseapp.com",
+  projectId: "cuentacuentos-b2e64",
+  storageBucket: "cuentacuentos-b2e64.firebasestorage.app",
+  messagingSenderId: "8183103149",
+  appId: "1:8183103149:web:7e57b742d64996bd78d024"
 };
+
+console.log('🔥 Firebase Config (hardcoded for testing):', firebaseConfig);
+
+// Debug: Log configuration to check if variables are loaded
+console.log('🔥 Firebase Config Debug:', {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY ? '✅ Set' : '❌ Missing',
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN ? '✅ Set' : '❌ Missing',
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID ? '✅ Set' : '❌ Missing',
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET ? '✅ Set' : '❌ Missing',
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID ? '✅ Set' : '❌ Missing',
+  appId: process.env.REACT_APP_FIREBASE_APP_ID ? '✅ Set' : '❌ Missing'
+});
 
 // Verificar que las variables de entorno estén definidas
 const checkEnvVariables = () => {
+  // Temporarily disabled for hardcoded testing
+  return true;
+  
   const requiredVars = [
     'REACT_APP_FIREBASE_API_KEY',
     'REACT_APP_FIREBASE_AUTH_DOMAIN',
@@ -36,44 +50,33 @@ const checkEnvVariables = () => {
 // Verificar variables de entorno
 const isFirebaseConfigured = checkEnvVariables();
 
-// Inicializar Firebase solo si está configurado
-let app, db, auth, storage;
-
-if (isFirebaseConfigured) {
-  try {
-    app = initializeApp(firebaseConfig);
-    
-    // Configurar Firestore con opciones personalizadas
-    db = getFirestore(app);
-    
-    // Habilitar persistencia offline para Firestore
-    enableIndexedDbPersistence(db).catch((err) => {
-      if (err.code === 'failed-precondition') {
-        console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
-      } else if (err.code === 'unimplemented') {
-        console.warn('The current browser does not support persistence.');
-      }
-    });
-    
-    // Configurar Auth con opciones personalizadas
-    auth = getAuth(app);
-    auth.useDeviceLanguage();
-    auth.settings.appVerificationDisabledForTesting = false;
-    
-    // Configurar Storage con opciones personalizadas
-    storage = getStorage(app);
-    
-    console.log("Firebase configurado correctamente");
-  } catch (error) {
-    console.error("Error initializing Firebase:", error);
-  }
-} else {
-  console.log("Firebase not initialized - missing configuration");
-  // Crear objetos mock para evitar errores
-  db = null;
-  auth = null;
-  storage = null;
+// Initialize Firebase
+let app;
+try {
+  app = initializeApp(firebaseConfig);
+  console.log("✅ Firebase initialized successfully");
+} catch (error) {
+  console.error("❌ Error initializing Firebase:", error);
+  throw error; // Re-throw to prevent app from running with broken Firebase
 }
+
+// Initialize services
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
+
+// Enable offline persistence
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code === 'failed-precondition') {
+    console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+  } else if (err.code === 'unimplemented') {
+    console.warn('The current browser does not support persistence.');
+  }
+});
+
+// Configure Auth
+auth.useDeviceLanguage();
+auth.settings.appVerificationDisabledForTesting = false;
 
 // Configurar timeouts y reintentos
 const MAX_RETRIES = 2;

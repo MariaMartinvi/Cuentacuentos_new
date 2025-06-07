@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, limit, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, query, where, limit, doc, updateDoc, orderBy } from "firebase/firestore";
 import { ref, getDownloadURL, getBlob, getBytes, getMetadata, uploadString } from "firebase/storage";
 import { db, storage, withRetry, withTimeout, getPublicUrl, isFirebaseConfigured } from "../firebase/config";
 import { fetchThroughProxy } from "./proxyService";
@@ -89,7 +89,8 @@ export const fetchStoryExamples = async () => {
 
     console.log("Iniciando fetchStoryExamples...");
     const storyExamplesRef = collection(db, "storyExamples");
-    const storyExamplesSnapshot = await getDocs(storyExamplesRef);
+    const q = query(storyExamplesRef, orderBy("createdAt", "desc"));
+    const storyExamplesSnapshot = await getDocs(q);
     
     console.log(`Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
     
@@ -997,6 +998,36 @@ export const addProtagonistaToStory = async (storyId, protagonista) => {
     return true;
   } catch (error) {
     console.error(`Error añadiendo protagonista a la historia ${storyId}:`, error);
+    return false;
+  }
+};
+
+/**
+ * Actualiza los documentos existentes añadiendo el campo createdAt
+ */
+export const updateStoriesWithCreationDate = async () => {
+  try {
+    console.log("Iniciando actualización de fechas de creación...");
+    const storyExamplesRef = collection(db, "storyExamples");
+    const storyExamplesSnapshot = await getDocs(storyExamplesRef);
+    
+    const updatePromises = storyExamplesSnapshot.docs.map(async (doc) => {
+      const data = doc.data();
+      // Solo actualizar si no tiene createdAt
+      if (!data.createdAt) {
+        console.log(`Actualizando documento ${doc.id} con fecha de creación...`);
+        await updateDoc(doc.ref, {
+          createdAt: new Date().toISOString()
+        });
+        console.log(`✓ Documento ${doc.id} actualizado`);
+      }
+    });
+    
+    await Promise.all(updatePromises);
+    console.log("✓ Todos los documentos actualizados");
+    return true;
+  } catch (error) {
+    console.error("Error actualizando fechas de creación:", error);
     return false;
   }
 }; 

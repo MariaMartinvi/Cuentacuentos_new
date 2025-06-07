@@ -1,55 +1,110 @@
 .audio-player {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
+  width: 100%;
+  background: #f8f9fa;
   border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .player-controls {
   display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: center;
 }
 
 .play-pause-btn {
-  width: 40px;
-  height: 40px;
+  background: #007bff;
+  color: white;
   border: none;
   border-radius: 50%;
-  background: #2196F3;
-  color: white;
-  font-size: 1.25rem;
-  cursor: pointer;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.play-pause-btn:hover:not(:disabled) {
-  background: #1e88e5;
+.play-pause-btn:hover {
+  background: #0056b3;
 }
 
-.play-pause-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+.time-display {
+  font-size: 0.9rem;
+  color: #666;
+  min-width: 45px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #ddd;
+  border-radius: 2px;
+  outline: none;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.progress-bar::-webkit-slider-thumb:hover {
+  background: #0056b3;
 }
 
 .download-audio-btn {
-  padding: 0.5rem 1rem;
-  border: 1px solid #2196F3;
-  border-radius: 4px;
-  color: #2196F3;
+  background: #28a745;
+  color: white;
   text-decoration: none;
-  font-size: 0.875rem;
-  transition: all 0.2s ease-in-out;
-  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
 }
 
 .download-audio-btn:hover {
-  background: #2196F3;
-  color: white;
+  background: #218838;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .audio-player {
+    background: #2d2d2d;
+  }
+
+  .time-display {
+    color: #aaa;
+  }
+
+  .progress-bar {
+    background: #444;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .player-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .time-display {
+    font-size: 0.8rem;
+  }
+
+  .download-audio-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
 }
 
 .audio-player-container {

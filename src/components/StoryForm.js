@@ -469,7 +469,10 @@ function StoryForm({ onStoryGenerated }) {
     } catch (error) {
       console.error('Error generating story:', error);
       
-      if (error.response?.data?.error === 'Story limit reached') {
+      if (error.response?.data?.error === 'Email not verified') {
+        console.log('Email verification required');
+        setError(t('storyForm.emailVerificationRequired') + ' [[verify-email]]');
+      } else if (error.response?.data?.error === 'Story limit reached') {
         console.log('Error message from backend:', error.response.data.message);
         const errorData = error.response.data.message;
         if (typeof errorData === 'object' && errorData.key) {
@@ -802,6 +805,20 @@ function StoryForm({ onStoryGenerated }) {
                 <Link to="/login" className="error-login-link" onClick={handleLoginClick}>
                   {t('storyForm.clickToLogin')}
                 </Link>
+              </p>
+            ) : error.includes('[[verify-email]]') ? (
+              <p>
+                {error.split('[[verify-email]]').map((part, index, array) => {
+                  if (index === array.length - 1) return part;
+                  return (
+                    <React.Fragment key={index}>
+                      {part}
+                      <Link to="/verify-email" className="error-login-link">
+                        {t('storyForm.verifyEmail')}
+                      </Link>
+                    </React.Fragment>
+                  );
+                })}
               </p>
             ) : error.includes('[[subscribe]]') ? (
               <p>

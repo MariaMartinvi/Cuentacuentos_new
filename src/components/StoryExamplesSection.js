@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata, addProtagonistaToStory } from '../services/storyExamplesService';
 import { getStoriesWithCache } from '../services/cacheService';
+import { getStoryById } from '../services/storyService';
 import StoryCard from './StoryCard';
+import StoryModal from './StoryModal';
 import './StoryExamplesSection.css';
 
 // AudioPlayer component for the modal
@@ -119,76 +121,21 @@ const AudioPlayer = ({ audioUrl, title }) => {
   );
 };
 
-// Story modal component
-const StoryModal = ({ isOpen, onClose, title, content, audioUrl, showAudio, usingMockContent, imageUrl }) => {
-  const { t } = useTranslation();
-  const [processedAudioUrl, setProcessedAudioUrl] = useState(null);
-  
-  useEffect(() => {
-    if (audioUrl) {
-      setProcessedAudioUrl(audioUrl);
-    }
-  }, [audioUrl]);
-
-  const handleImageError = (e) => {
-    e.target.style.display = 'none';
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="story-modal-overlay" onClick={onClose}>
-      <div className="story-modal" onClick={e => e.stopPropagation()}>
-        <button className="story-modal-close" onClick={onClose}>×</button>
-        <div className="story-modal-content">
-          <h1>{title}</h1>
-          {imageUrl && (
-            <div className="story-modal-image-container">
-              <img 
-                src={imageUrl} 
-                alt={title} 
-                className="story-modal-image" 
-                onError={handleImageError} 
-              />
-            </div>
-          )}
-          {!showAudio && content && (
-            <div className="story-content">
-              {content.split('\n').map((paragraph, index) => (
-                <p key={index} className="story-paragraph">{paragraph}</p>
-              ))}
-              {usingMockContent && (
-                <div className="mock-content-notice">
-                  <p>{t('story.mockContentNotice')}</p>
-                </div>
-              )}
-            </div>
-          )}
-          {showAudio && processedAudioUrl && (
-            <div className="story-modal-audio">
-              <AudioPlayer audioUrl={processedAudioUrl} title={title} />
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const StoryExamplesSection = () => {
+const StoryExamplesSection = ({ autoOpenStoryId }) => {
   const { t } = useTranslation();
   const [stories, setStories] = useState([]);
   const [filteredStories, setFilteredStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
+    age: 'all',
     language: 'all',
-    level: 'all'
+    level: 'all',
+    sortBy: 'newest'
   });
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  // Add modal state
   const [modalState, setModalState] = useState({
     isOpen: false,
     title: '',
@@ -196,7 +143,8 @@ const StoryExamplesSection = () => {
     audioUrl: null,
     showAudio: false,
     usingMockContent: false,
-    imageUrl: null
+    imageUrl: null,
+    storyId: null
   });
 
   // Cargar solo los metadatos inicialmente
@@ -235,14 +183,115 @@ const StoryExamplesSection = () => {
   // Aplicar filtros localmente
   useEffect(() => {
     if (stories.length > 0) {
-      const filtered = stories.filter(story => {
+      let filtered = stories.filter(story => {
         return (filters.language === 'all' || story.language === filters.language) &&
                (filters.level === 'all' || story.level === filters.level);
       });
       
+      // Apply sorting
+      switch (filters.sortBy) {
+        case 'rating':
+          filtered = filtered.sort((a, b) => {
+            if (b.averageRating !== a.averageRating) {
+              return (b.averageRating || 0) - (a.averageRating || 0);
+            }
+            return (b.totalRatings || 0) - (a.totalRatings || 0);
+          });
+          break;
+        case 'popular':
+          filtered = filtered.sort((a, b) => (b.totalRatings || 0) - (a.totalRatings || 0));
+          break;
+        case 'newest':
+        default:
+          filtered = filtered.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+          break;
+      }
+      
       setFilteredStories(filtered);
     }
   }, [filters, stories]);
+
+  // Auto-load story from URL parameter
+  useEffect(() => {
+    if (autoOpenStoryId && !modalState.isOpen) {
+      loadStoryFromId(autoOpenStoryId);
+    }
+  }, [autoOpenStoryId, modalState.isOpen]);
+
+  const loadStoryFromId = async (storyId) => {
+    try {
+      console.log("[AUTO-LOAD] Loading story with ID:", storyId);
+      
+      // Fetch the story data from backend
+      const response = await getStoryById(storyId);
+      const story = response.story;
+      
+      if (!story) {
+        throw new Error('Story not found');
+      }
+
+      console.log("[AUTO-LOAD] Story loaded:", story.title);
+
+      // Load story content if available
+      let content = story.content || '';
+      
+      // Load audio URL if available
+      let audioUrl = null;
+      if (story.audioPath) {
+        try {
+          // For user stories, the audioPath might be a full URL or a path
+          if (story.audioPath.startsWith('http')) {
+            audioUrl = story.audioPath;
+          } else {
+            audioUrl = await getStoryAudioUrl(story.audioPath);
+          }
+          console.log("[AUTO-LOAD] Audio URL loaded");
+        } catch (error) {
+          console.warn("[AUTO-LOAD] Could not load audio:", error);
+        }
+      }
+
+      // Load image URL if available
+      let imageUrl = null;
+      if (story.imagePath) {
+        try {
+          imageUrl = await getStoryImageUrl(story.imagePath);
+          console.log("[AUTO-LOAD] Image URL loaded");
+        } catch (error) {
+          console.warn("[AUTO-LOAD] Could not load image:", error);
+        }
+      }
+
+      // Open modal with the loaded story
+      setModalState({
+        isOpen: true,
+        title: story.title,
+        content: content,
+        audioUrl: audioUrl,
+        showAudio: !!audioUrl,
+        usingMockContent: false,
+        imageUrl: imageUrl,
+        storyId: storyId
+      });
+
+    } catch (error) {
+      console.error("[AUTO-LOAD] Error loading story:", error);
+      
+      // Show a user-friendly error message
+      setModalState({
+        isOpen: true,
+        title: t('common.error'),
+        content: error.message === 'Story not found' 
+          ? t('storyExamples.storyNotFound', 'Story not found. It may have been removed or you may not have permission to view it.')
+          : t('storyExamples.loadingError', 'There was an error loading the story. Please try again later.'),
+        audioUrl: null,
+        showAudio: false,
+        usingMockContent: false,
+        imageUrl: null,
+        storyId: null
+      });
+    }
+  };
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prevFilters => ({
@@ -276,7 +325,8 @@ const StoryExamplesSection = () => {
         audioUrl: audioUrl,
         showAudio: !!audioUrl,
         usingMockContent: false,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        storyId: story.id
       });
     } catch (error) {
       console.error("[SECTION] Error handling story click:", error);
@@ -316,30 +366,6 @@ const StoryExamplesSection = () => {
     }
   };
 
-  // Add a function to test adding a protagonista field
-  const handleAddProtagonista = async (storyId) => {
-    try {
-      console.log("Añadiendo protagonista de prueba...");
-      const success = await addProtagonistaToStory(storyId, "Dragón Puff");
-      
-      if (success) {
-        alert("Campo protagonista añadido correctamente. Recargando datos...");
-        // Reload the data
-        const storyData = await fetchStoryMetadata();
-        if (storyData && storyData.length > 0) {
-          const limitedStories = storyData.slice(0, 6);
-          setStories(limitedStories);
-          setFilteredStories(limitedStories);
-        }
-      } else {
-        alert("Error al añadir el campo protagonista.");
-      }
-    } catch (error) {
-      console.error("Error al añadir protagonista:", error);
-      alert("Error al añadir el campo protagonista: " + error.message);
-    }
-  };
-
   if (loading) {
     return (
       <div className="story-examples-section loading">
@@ -364,7 +390,7 @@ const StoryExamplesSection = () => {
     <section className="story-examples-section">
       <div className="section-header">
         <h2>{t('storyExamples.title')}</h2>
-        <p>{t('storyExamples.description')}</p>
+        <p>{t('storyExamples.subtitle')}</p>
       </div>
 
       <div className="filters-container">
@@ -407,6 +433,21 @@ const StoryExamplesSection = () => {
               </select>
             </div>
           </div>
+
+          <div className="filter-group">
+            <label htmlFor="home-sort-filter">Ordenar por</label>
+            <div className="select-wrapper">
+              <select 
+                id="home-sort-filter" 
+                value={filters.sortBy || 'newest'}
+                onChange={(e) => handleFilterChange('sortBy', e.target.value)}
+              >
+                <option value="newest">Más recientes</option>
+                <option value="rating">Mejor puntuadas</option>
+                <option value="popular">Más populares</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -439,7 +480,6 @@ const StoryExamplesSection = () => {
         )}
       </div>
 
-      {/* Add StoryModal component */}
       <StoryModal
         isOpen={modalState.isOpen}
         onClose={handleCloseModal}

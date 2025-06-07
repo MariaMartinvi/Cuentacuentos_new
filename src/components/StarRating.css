@@ -1,0 +1,199 @@
+.star-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-family: inherit;
+}
+
+.stars-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-size: 1.2rem;
+  color: #ddd;
+  transition: color 0.2s ease, transform 0.1s ease;
+  line-height: 1;
+  position: relative;
+  user-select: none;
+}
+
+/* Star sizes */
+.star.small {
+  font-size: 0.9rem;
+}
+
+.star.medium {
+  font-size: 1.2rem;
+}
+
+.star.large {
+  font-size: 1.6rem;
+}
+
+/* Star states */
+.star.filled {
+  color: #ffc107;
+}
+
+.star.user-rated {
+  color: #ff6b35;
+}
+
+.star.hovered {
+  color: #ffd54f;
+  transform: scale(1.1);
+}
+
+.star.readonly {
+  cursor: default;
+  pointer-events: none;
+}
+
+.star:not(.readonly):hover {
+  transform: scale(1.1);
+}
+
+.star:not(.readonly):active {
+  transform: scale(0.95);
+}
+
+.star:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Partial star styling */
+.star-partial {
+  position: relative;
+  display: inline-block;
+}
+
+.star-partial-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  color: #ddd;
+}
+
+/* Rating info */
+.rating-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.average-rating {
+  font-weight: 600;
+  color: #333;
+}
+
+.rating-count {
+  color: #888;
+}
+
+/* User interaction prompts */
+.login-prompt,
+.user-rating-info {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.user-rating-info {
+  color: #ff6b35;
+  font-weight: 500;
+}
+
+/* Loading spinner */
+.rating-spinner {
+  font-size: 1rem;
+  color: #666;
+  animation: spin 1s linear infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Small size adjustments */
+.star-rating.small .rating-info {
+  font-size: 0.8rem;
+}
+
+.star-rating.small .login-prompt,
+.star-rating.small .user-rating-info {
+  font-size: 0.7rem;
+}
+
+/* Large size adjustments */
+.star-rating.large .rating-info {
+  font-size: 1rem;
+}
+
+.star-rating.large .login-prompt,
+.star-rating.large .user-rating-info {
+  font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .star {
+    font-size: 1rem;
+  }
+  
+  .star.small {
+    font-size: 0.8rem;
+  }
+  
+  .star.large {
+    font-size: 1.4rem;
+  }
+  
+  .rating-info {
+    font-size: 0.8rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .star.filled {
+    color: #e65100;
+  }
+  
+  .star.user-rated {
+    color: #d84315;
+  }
+  
+  .star.hovered {
+    color: #ff8f00;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    transition: none;
+  }
+  
+  .star:not(.readonly):hover {
+    transform: none;
+  }
+  
+  .rating-spinner {
+    animation: none;
+  }
+} 

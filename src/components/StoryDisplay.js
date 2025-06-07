@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AudioPlayer from './AudioPlayer.js';
 import { generateAudio } from '../services/audioService.js';
+import { publishStory } from '../services/publishService.js';
 
 function StoryDisplay({ story }) {
   const { t, i18n } = useTranslation();
@@ -13,11 +14,14 @@ function StoryDisplay({ story }) {
   const [audioCount, setAudioCount] = useState(0);
   const [alertMessage, setAlertMessage] = useState(null);
   const [isSharing, setIsSharing] = useState(false); // New state to prevent multiple share operations
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
   
   // Reset audio count when story changes
   useEffect(() => {
     setAudioCount(0);
     setAudioUrl(null);
+    setIsPublished(story?.published || false);
   }, [story]);
 
   // Update voice type when language changes
@@ -356,6 +360,28 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
     }
   };
 
+  const handlePublishStory = async () => {
+    if (!story || !story._id || isPublishing) return;
+
+    setIsPublishing(true);
+    try {
+      console.log('📤 Publishing story with ID:', story._id);
+      const result = await publishStory(story._id);
+      
+      setIsPublished(true);
+      setAlertMessage(t('storyDisplay.publishSuccess'));
+      setTimeout(() => setAlertMessage(null), 5000);
+      
+      console.log('✅ Story published successfully:', result);
+    } catch (error) {
+      console.error('❌ Error publishing story:', error);
+      setAlertMessage(t('storyDisplay.publishError') + ': ' + error.message);
+      setTimeout(() => setAlertMessage(null), 5000);
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
   return (
     <div className="story-display">
       {alertMessage && (
@@ -399,6 +425,28 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
           >
             <span className="btn-icon">📤</span> {t('common.share')}
           </button>
+          {audioUrl && !isPublished && (
+            <button 
+              onClick={handlePublishStory}
+              className="publish-button"
+              disabled={isPublishing}
+            >
+              {isPublishing ? (
+                <>
+                  <span className="spinner"></span> {t('storyDisplay.publishing')}
+                </>
+              ) : (
+                <>
+                  <span className="btn-icon">🌟</span> {t('storyDisplay.publishAudioStory')}
+                </>
+              )}
+            </button>
+          )}
+          {audioUrl && isPublished && (
+            <div className="published-status">
+              <span className="btn-icon">✅</span> {t('storyDisplay.published')}
+            </div>
+          )}
         </div>
       </div>
 

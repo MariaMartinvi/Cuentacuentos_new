@@ -380,3 +380,157 @@ const axiosInstance = axios.create({
   withCredentials: true,
   timeout: 120000 // 2 minutos de timeout
 });
+
+// Function to get current user's stories
+export const getMyStories = async (page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc') => {
+  try {
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const response = await axios.get(`${API_URL}/stories/my-stories`, {
+      params: { page, limit, sortBy, sortOrder },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...getAuthHeader()
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user stories:', error);
+    throw error;
+  }
+};
+
+// Function to get stories for a specific user (admin only)
+export const getUserStories = async (userId, page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc') => {
+  try {
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const response = await axios.get(`${API_URL}/stories/user/${userId}`, {
+      params: { page, limit, sortBy, sortOrder },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...getAuthHeader()
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user stories:', error);
+    throw error;
+  }
+};
+
+// Function to get a specific story by ID
+export const getStoryById = async (storyId) => {
+  try {
+    console.log('Fetching story by ID:', storyId);
+    
+    const response = await axios.get(`${API_URL}/stories/${storyId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...getAuthHeader()
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
+
+    console.log('Story fetched successfully:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching story by ID:', error);
+    
+    if (error.response?.status === 404) {
+      throw new Error('Story not found');
+    }
+    if (error.response?.status === 401) {
+      throw new Error('Authentication required');
+    }
+    if (error.response?.status === 403) {
+      throw new Error('Access denied');
+    }
+    
+    throw new Error('Failed to load story');
+  }
+};
+
+// Rate a story
+export const rateStory = async (storyId, rating) => {
+  try {
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const response = await axios.post(`${API_URL}/stories/${storyId}/rate`, 
+      { rating },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          ...getAuthHeader()
+        },
+        timeout: FETCH_TIMEOUT,
+        withCredentials: true
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error rating story:', error);
+    throw error;
+  }
+};
+
+// Get story ratings
+export const getStoryRatings = async (storyId) => {
+  try {
+    const response = await axios.get(`${API_URL}/stories/${storyId}/ratings`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...getAuthHeader()
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching story ratings:', error);
+    throw error;
+  }
+};
+
+// Get top rated stories
+export const getTopRatedStories = async (page = 1, limit = 10) => {
+  try {
+    const response = await axios.get(`${API_URL}/stories/top-rated`, {
+      params: { page, limit },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      timeout: FETCH_TIMEOUT,
+      withCredentials: true
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching top rated stories:', error);
+    throw error;
+  }
+};

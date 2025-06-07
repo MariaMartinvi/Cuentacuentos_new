@@ -57,12 +57,12 @@ const Register = () => {
     try {
       const response = await register(formData.email, formData.password);
 
-      if (response.success) {
-        setRegistrationComplete(true);
-        setSuccess(response.message || '¡Registro exitoso! Por favor verifica tu email antes de iniciar sesión.');
-      } else {
-        throw new Error(response.message || 'Error en el registro');
-      }
+      // Registration was successful
+      setRegistrationComplete(true);
+      setSuccess(response.message || '¡Registro exitoso! Por favor verifica tu email antes de iniciar sesión.');
+      
+      // Do NOT set auth context - user must verify email first
+      
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.message || t('register.error'));
@@ -120,21 +120,37 @@ const Register = () => {
             <p className="success-message">{success}</p>
             
             <div className="info-box">
-              <h3>Siguiente paso: Verifica tu email</h3>
-              <ul>
-                <li>📬 Revisa tu bandeja de entrada</li>
-                <li>📱 También verifica la carpeta de spam</li>
-                <li>🔗 Haz clic en el enlace de verificación</li>
-                <li>✅ Luego podrás iniciar sesión</li>
-              </ul>
+              <h3>Verifica tu email para activar tu cuenta</h3>
+              <div className="verification-steps">
+                <div className="step">
+                  <span className="step-number">1</span>
+                  <span>Revisa tu bandeja de entrada (y spam)</span>
+                </div>
+                <div className="step">
+                  <span className="step-number">2</span>
+                  <span>Busca el email de verificación de Firebase</span>
+                </div>
+                <div className="step">
+                  <span className="step-number">3</span>
+                  <span>Haz clic en "Verify Email Address"</span>
+                </div>
+                <div className="step">
+                  <span className="step-number">4</span>
+                  <span>Tu cuenta quedará activada automáticamente</span>
+                </div>
+              </div>
+              
+              <div className="important-note">
+                <strong>📍 Importante:</strong> No podrás crear cuentos hasta verificar tu email.
+              </div>
             </div>
 
             <div className="action-buttons">
-              <Link to="/login" className="btn btn-primary">
-                Ir al Login
+              <Link to="/verify-email" className="btn btn-primary">
+                Ir a Verificación
               </Link>
-              <Link to="/forgot-password" className="btn btn-outline">
-                ¿No recibiste el email?
+              <Link to="/login" className="btn btn-secondary">
+                Iniciar Sesión
               </Link>
             </div>
           </div>
@@ -175,7 +191,7 @@ const Register = () => {
           <GoogleButton
             onSuccess={handleGoogleRegisterSuccess}
             onError={handleGoogleRegisterError}
-            useOneTap
+            useOneTap={false}
             type="register"
           />
         </div>

@@ -293,7 +293,9 @@
     "loginButton": "Se Connecter",
     "subscribeButton": "S'abonner",
     "waitButton": "Compris",
-    "cancelButton": "Annuler"
+    "cancelButton": "Annuler",
+    "verifyEmail": "Vérifier l'Email",
+    "emailVerificationRequired": "🔐 Vous devez vérifier votre email avant de créer des histoires."
   },
   "login": {
     "title": "Se connecter",

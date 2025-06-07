@@ -294,7 +294,9 @@
     "loginButton": "Anmelden",
     "subscribeButton": "Abonnieren",
     "waitButton": "Verstanden",
-    "cancelButton": "Abbrechen"
+    "cancelButton": "Abbrechen",
+    "verifyEmail": "Email Verifizieren",
+    "emailVerificationRequired": "🔐 Du musst deine Email verifizieren, bevor du Geschichten erstellen kannst."
   },
   "login": {
     "title": "Anmelden",

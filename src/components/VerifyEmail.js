@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { verifyEmail, resendVerificationEmail } from '../services/authService';
+import { verifyEmail, resendVerificationEmail, checkEmailVerification } from '../services/authService';
 import { useAuth } from '../contexts/AuthContext';
 import './VerifyEmail.css';
 
@@ -9,27 +9,32 @@ const VerifyEmail = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { refreshUser, login } = useAuth();
+  const { refreshUser, user } = useAuth();
   const [status, setStatus] = useState('verifying'); // verifying, success, error, expired
   const [message, setMessage] = useState('');
   const [isResending, setIsResending] = useState(false);
-  const [email, setEmail] = useState('');
-  const [showResendForm, setShowResendForm] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false); // Prevenir múltiples ejecuciones
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const token = params.get('token');
+    const mode = params.get('mode');
+    const oobCode = params.get('oobCode'); // Firebase action code
+    
+    console.log('📧 VerifyEmail component loaded with params:', { mode, oobCode: oobCode ? 'present' : 'missing' });
 
-    if (token && !isProcessing) {
-      handleVerification(token);
-    } else if (!token) {
+    if (mode === 'verifyEmail' && oobCode && !isProcessing) {
+      handleFirebaseVerification(oobCode);
+    } else if (!oobCode) {
+      // No action code - show manual verification check
+      setStatus('manual');
+      setMessage('Revisa tu email y haz clic en el enlace de verificación.');
+    } else {
       setStatus('error');
-      setMessage('Token de verificación no encontrado en la URL');
+      setMessage('Enlace de verificación inválido.');
     }
   }, [location, isProcessing]);
 
-  const handleVerification = async (token) => {
+  const handleFirebaseVerification = async (actionCode) => {
     if (isProcessing) {
       console.log('🚫 Verification already in progress, skipping...');
       return;
@@ -38,55 +43,45 @@ const VerifyEmail = () => {
     try {
       setIsProcessing(true);
       setStatus('verifying');
-      console.log('🔍 Starting email verification with token:', token);
+      console.log('🔍 Starting Firebase email verification with action code');
       
-      const response = await verifyEmail(token);
-      console.log('✅ Email verification response received:', response);
+      const response = await verifyEmail(actionCode);
+      console.log('✅ Firebase email verification response:', response);
       
       if (response && response.success) {
         setStatus('success');
         setMessage(response.message || '¡Email verificado exitosamente!');
         
-        // Si la respuesta incluye un token, auto-loguear al usuario
-        if (response.token && response.data) {
-          console.log('🔑 Auto-login with provided token...');
-          try {
-            await login(response.token, response.data);
-            console.log('✅ Auto-login successful!');
-            setMessage('¡Email verificado y sesión iniciada automáticamente!');
-            
-            // Redirigir al dashboard después de 2 segundos
-            setTimeout(() => {
-              navigate('/dashboard', { 
-                state: { 
-                  message: '¡Bienvenido! Tu email ha sido verificado exitosamente.',
-                  type: 'success' 
-                }
-              });
-            }, 2000);
-            return;
-          } catch (loginError) {
-            console.error('⚠️ Auto-login failed:', loginError);
-            // Continuar con el flujo normal sin auto-login
-          }
-        }
-        
-        // Solo intentar refrescar el usuario si hay un token en localStorage
-        const userToken = localStorage.getItem('token');
-        if (userToken) {
-          console.log('🔄 User is logged in, attempting to refresh user context...');
+        // Refresh user context if user is logged in
+        if (user) {
           try {
             await refreshUser();
             console.log('🔄 User context refreshed after verification');
             setMessage('¡Email verificado exitosamente! Tu cuenta ya está completamente activa.');
-            return; // No redireccionar automáticamente
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+              navigate('/dashboard', { 
+                state: { 
+                  message: '¡Email verificado exitosamente!',
+                  type: 'success' 
+                }
+              });
+            }, 2000);
           } catch (refreshError) {
-            console.log('⚠️ Failed to refresh user context, but verification was successful:', refreshError);
-            // No hacer nada más, la verificación fue exitosa
+            console.log('⚠️ Failed to refresh user context:', refreshError);
+            // Still success, just redirect to login
+            setTimeout(() => {
+              navigate('/login', { 
+                state: { 
+                  message: '¡Email verificado! Ya puedes iniciar sesión.',
+                  type: 'success' 
+                }
+              });
+            }, 3000);
           }
         } else {
-          console.log('👤 User not logged in, will redirect to login');
-          // Redirigir al login después de 3 segundos solo si no está logueado
+          // Not logged in, redirect to login
           setTimeout(() => {
             navigate('/login', { 
               state: { 
@@ -101,55 +96,27 @@ const VerifyEmail = () => {
         throw new Error(response?.message || 'Error en la verificación');
       }
     } catch (error) {
-      console.error('💥 Email verification failed:', error);
-      console.error('🔍 Full error details:', {
-        message: error.message,
-        name: error.name,
-        response: error.response,
-        status: error.response?.status,
-        data: error.response?.data,
-        code: error.code
-      });
-      
+      console.error('💥 Firebase email verification failed:', error);
       setStatus('error');
-      
-      // Simplificar el manejo de errores
-      let errorMessage = error.message || 'Error desconocido al verificar el email';
-      
-      // Si el error contiene información específica del backend
-      if (error.response?.data?.details) {
-        errorMessage = error.response.data.details;
-      } else if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      }
-      
-      console.log('📝 Setting error message:', errorMessage);
-      setMessage(errorMessage);
-      
-      // Solo mostrar opción de reenvío si es realmente un token expirado/inválido
-      if (errorMessage.includes('expired') || errorMessage.includes('invalid') || errorMessage.includes('expirado')) {
-        setShowResendForm(true);
-      }
+      setMessage(error.message || 'Error desconocido al verificar el email');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleResendVerification = async (e) => {
-    e.preventDefault();
-    
-    if (!email) {
-      setMessage('Por favor, ingresa tu email');
+  const handleResendVerification = async () => {
+    if (!user) {
+      setMessage('Debes estar autenticado para reenviar la verificación');
       return;
     }
 
     try {
       setIsResending(true);
-      const response = await resendVerificationEmail(email);
+      const response = await resendVerificationEmail();
       
       if (response.success) {
         setMessage('Email de verificación reenviado. Revisa tu bandeja de entrada.');
-        setShowResendForm(false);
+        setStatus('manual');
       } else {
         throw new Error(response.message || 'Error al reenviar email');
       }
@@ -158,6 +125,38 @@ const VerifyEmail = () => {
       setMessage(error.message || 'Error al reenviar el email de verificación');
     } finally {
       setIsResending(false);
+    }
+  };
+
+  const handleCheckVerification = async () => {
+    try {
+      setIsProcessing(true);
+      const result = await checkEmailVerification();
+      
+      if (result.emailVerified) {
+        setStatus('success');
+        setMessage('¡Email verificado exitosamente!');
+        
+        // Refresh user context
+        await refreshUser();
+        
+        // Redirect to dashboard
+        setTimeout(() => {
+          navigate('/dashboard', { 
+            state: { 
+              message: '¡Email verificado exitosamente!',
+              type: 'success' 
+            }
+          });
+        }, 2000);
+      } else {
+        setMessage('El email aún no ha sido verificado. Revisa tu bandeja de entrada y spam.');
+      }
+    } catch (error) {
+      console.error('Error checking verification:', error);
+      setMessage('Error al verificar el estado del email');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -175,57 +174,74 @@ const VerifyEmail = () => {
         );
 
       case 'success':
-        const isLoggedIn = localStorage.getItem('token');
-        const isAutoLogin = message.includes('sesión iniciada automáticamente');
-        
         return (
           <div className="verification-content success">
             <div className="success-icon">✅</div>
             <h2>¡Email verificado exitosamente!</h2>
             <p>{message}</p>
             
-            {isAutoLogin ? (
-              <div className="auto-login-info">
-                <div className="loading-spinner">
-                  <div className="spinner"></div>
-                </div>
-                <p>Redirigiendo al dashboard...</p>
-                <button 
-                  onClick={() => navigate('/dashboard')}
-                  className="btn btn-primary"
-                >
-                  Ir al Dashboard Ahora
-                </button>
-              </div>
-            ) : isLoggedIn ? (
-              <div className="logged-in-actions">
-                <p>Tu cuenta ya está completamente verificada y activa.</p>
-                <div className="action-buttons">
-                  <button 
-                    onClick={() => navigate('/dashboard')}
-                    className="btn btn-primary"
-                  >
-                    Ir al Dashboard
-                  </button>
-                  <button 
-                    onClick={() => navigate('/stories')}
-                    className="btn btn-secondary"
-                  >
-                    Crear Cuento
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="redirect-info">
-                <p>Serás redirigido al login en unos segundos...</p>
+            {!user && (
+              <div className="action-buttons">
                 <button 
                   onClick={() => navigate('/login')}
                   className="btn btn-primary"
                 >
-                  Ir al Login Ahora
+                  Iniciar Sesión
                 </button>
               </div>
             )}
+          </div>
+        );
+
+      case 'manual':
+        return (
+          <div className="verification-content">
+            <div className="info-icon">📧</div>
+            <h2>Verifica tu email</h2>
+            <p>{message}</p>
+            
+            <div className="verification-steps">
+              <div className="step">
+                <span className="step-number">1</span>
+                <span>Revisa tu bandeja de entrada y spam</span>
+              </div>
+              <div className="step">
+                <span className="step-number">2</span>
+                <span>Haz clic en el enlace de verificación</span>
+              </div>
+              <div className="step">
+                <span className="step-number">3</span>
+                <span>¡Tu cuenta estará verificada!</span>
+              </div>
+            </div>
+
+            <div className="action-buttons">
+              {user && (
+                <>
+                  <button 
+                    onClick={handleCheckVerification}
+                    disabled={isProcessing}
+                    className="btn btn-primary"
+                  >
+                    {isProcessing ? 'Verificando...' : 'Ya verifiqué mi email'}
+                  </button>
+                  <button 
+                    onClick={handleResendVerification}
+                    disabled={isResending}
+                    className="btn btn-secondary"
+                  >
+                    {isResending ? 'Reenviando...' : 'Reenviar Email'}
+                  </button>
+                </>
+              )}
+              
+              <button 
+                onClick={() => navigate('/login')}
+                className="btn btn-outline"
+              >
+                Ir a Iniciar Sesión
+              </button>
+            </div>
           </div>
         );
 
@@ -236,46 +252,29 @@ const VerifyEmail = () => {
             <h2>Error en la verificación</h2>
             <p>{message}</p>
             
-            {showResendForm ? (
-              <div className="resend-form">
-                <h3>Reenviar email de verificación</h3>
-                <form onSubmit={handleResendVerification}>
-                  <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                      type="email"
-                      id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tu@email.com"
-                      required
-                    />
-                  </div>
-                  <button 
-                    type="submit" 
-                    disabled={isResending}
-                    className="btn btn-primary"
-                  >
-                    {isResending ? 'Reenviando...' : 'Reenviar Email de Verificación'}
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <div className="action-buttons">
+            <div className="action-buttons">
+              {user && (
                 <button 
-                  onClick={() => setShowResendForm(true)}
+                  onClick={handleResendVerification}
+                  disabled={isResending}
                   className="btn btn-secondary"
                 >
-                  Reenviar Email de Verificación
+                  {isResending ? 'Reenviando...' : 'Reenviar Email de Verificación'}
                 </button>
-                <button 
-                  onClick={() => navigate('/register')}
-                  className="btn btn-outline"
-                >
-                  Registrarse de Nuevo
-                </button>
-              </div>
-            )}
+              )}
+              <button 
+                onClick={() => navigate('/register')}
+                className="btn btn-outline"
+              >
+                Registrarse de Nuevo
+              </button>
+              <button 
+                onClick={() => navigate('/login')}
+                className="btn btn-primary"
+              >
+                Ir a Iniciar Sesión
+              </button>
+            </div>
           </div>
         );
 

@@ -1,0 +1,127 @@
+.story-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.story-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.story-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.story-modal-close:hover {
+  color: #333;
+}
+
+.story-modal-content {
+  padding: 1rem 0;
+}
+
+.story-modal-content h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.story-modal-image-container {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.story-modal-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Rating section styles */
+.story-modal-rating {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.rating-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: #666;
+  font-style: italic;
+}
+
+.story-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.story-paragraph {
+  margin-bottom: 1rem;
+}
+
+.mock-content-notice {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-style: italic;
+  color: #666;
+}
+
+.story-modal-audio {
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .story-modal {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .story-modal-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .story-content {
+    font-size: 1rem;
+  }
+
+  .story-modal-rating {
+    margin: 1rem 0;
+    padding: 0.8rem;
+  }
+} 

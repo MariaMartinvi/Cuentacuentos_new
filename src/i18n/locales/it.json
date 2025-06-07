@@ -301,7 +301,9 @@
     "loginButton": "Accedi",
     "subscribeButton": "Iscriviti",
     "waitButton": "Capito",
-    "cancelButton": "Annulla"
+    "cancelButton": "Annulla",
+    "verifyEmail": "Verifica Email",
+    "emailVerificationRequired": "🔐 Devi verificare la tua email prima di creare storie."
   },
   "login": {
     "title": "Accedi",

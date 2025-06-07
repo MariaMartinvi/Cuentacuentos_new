@@ -84,5 +84,15 @@
     "signInWithGoogle": "Entrar com Google",
     "or": "ou",
     "loading": "Processando..."
+  },
+  "storyForm": {
+    "title": "Criar Sua História",
+    "topic": "Tópico da História",
+    "topicPlaceholder": "Digite um tópico para sua história...",
+    "generateButton": "Gerar História",
+    "loginRequired": "Por favor, faça login para gerar histórias",
+    "clickToLogin": "Clique aqui para fazer login",
+    "verifyEmail": "Verificar Email",
+    "emailVerificationRequired": "🔐 Você deve verificar seu email antes de criar histórias."
   }
 } 

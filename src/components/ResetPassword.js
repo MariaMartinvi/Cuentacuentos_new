@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { resetPassword } from '../services/authService';
+import { resetPassword, verifyPasswordResetCode } from '../services/authService';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
@@ -13,22 +13,40 @@ const ResetPassword = () => {
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(true);
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
-  const [token, setToken] = useState('');
+  const [actionCode, setActionCode] = useState('');
+  const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const tokenParam = params.get('token');
+    const oobCode = params.get('oobCode'); // Firebase uses oobCode
     
-    if (tokenParam) {
-      setToken(tokenParam);
+    if (oobCode) {
+      setActionCode(oobCode);
+      verifyResetCode(oobCode);
     } else {
-      setMessage('Token de recuperación no encontrado en la URL');
+      setVerifying(false);
+      setMessage(t('resetPassword.linkInvalid'));
     }
-  }, [location]);
+  }, [location, t]);
+
+  const verifyResetCode = async (code) => {
+    try {
+      const result = await verifyPasswordResetCode(code);
+      if (result.success) {
+        setEmail(result.email);
+        setVerifying(false);
+      }
+    } catch (error) {
+      console.error('Error verifying reset code:', error);
+      setVerifying(false);
+      setMessage(error.message);
+    }
+  };
 
   const calculatePasswordStrength = (password) => {
     let strength = 0;
@@ -74,23 +92,23 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!token) {
-      setMessage('Token de recuperación no válido');
+    if (!actionCode) {
+      setMessage(t('resetPassword.linkInvalid'));
       return;
     }
 
     if (!formData.newPassword || !formData.confirmPassword) {
-      setMessage('Por favor, completa todos los campos');
+      setMessage(t('validation.allFieldsRequired'));
       return;
     }
 
     if (!isPasswordValid(formData.newPassword)) {
-      setMessage('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número');
+      setMessage(t('validation.passwordRequirements'));
       return;
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      setMessage('Las contraseñas no coinciden');
+      setMessage(t('validation.passwordsDontMatch'));
       return;
     }
 
@@ -98,7 +116,7 @@ const ResetPassword = () => {
       setLoading(true);
       setMessage('');
       
-      const response = await resetPassword(token, formData.newPassword);
+      const response = await resetPassword(actionCode, formData.newPassword);
       
       if (response.success) {
         setIsSuccess(true);
@@ -108,17 +126,17 @@ const ResetPassword = () => {
         setTimeout(() => {
           navigate('/login', { 
             state: { 
-              message: '¡Contraseña restablecida! Ya puedes iniciar sesión.',
+              message: t('resetPassword.successMessage'),
               type: 'success' 
             }
           });
         }, 3000);
       } else {
-        throw new Error(response.message || 'Error al restablecer contraseña');
+        throw new Error(response.message || t('messages.passwordResetError'));
       }
     } catch (error) {
       console.error('Error resetting password:', error);
-      setMessage(error.message || 'Error al restablecer la contraseña');
+      setMessage(error.message || t('messages.passwordResetError'));
     } finally {
       setLoading(false);
     }
@@ -126,24 +144,45 @@ const ResetPassword = () => {
 
   const strengthInfo = getPasswordStrengthText(passwordStrength);
 
-  if (!token) {
+  if (verifying) {
     return (
       <div className="reset-password-page">
         <div className="reset-password-container">
           <div className="reset-password-card">
             <div className="logo-section">
-              <h1>🎭 Cuentos Personalizados</h1>
+              <h1>🎭 {t('appName')}</h1>
+            </div>
+            <div className="reset-password-content">
+              <div className="loading-content">
+                <div className="spinner"></div>
+                <h2>{t('resetPassword.verifying') || 'Verificando enlace...'}</h2>
+                <p>{t('resetPassword.pleaseWait') || 'Por favor espera'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!actionCode || message) {
+    return (
+      <div className="reset-password-page">
+        <div className="reset-password-container">
+          <div className="reset-password-card">
+            <div className="logo-section">
+              <h1>🎭 {t('appName')}</h1>
             </div>
             <div className="reset-password-content">
               <div className="error-content">
                 <div className="error-icon">❌</div>
-                <h2>Enlace inválido</h2>
-                <p>El enlace de recuperación no es válido o ha expirado.</p>
+                <h2>{t('resetPassword.linkExpired')}</h2>
+                <p>{message}</p>
                 <button 
                   onClick={() => navigate('/forgot-password')}
                   className="btn btn-primary"
                 >
-                  Solicitar nuevo enlace
+                  {t('resetPassword.requestNew')}
                 </button>
               </div>
             </div>
@@ -158,8 +197,8 @@ const ResetPassword = () => {
       <div className="reset-password-container">
         <div className="reset-password-card">
           <div className="logo-section">
-            <h1>🎭 Cuentos Personalizados</h1>
-            <p>Restablecer contraseña</p>
+            <h1>🎭 {t('appName')}</h1>
+            <p>{t('resetPassword.title')}</p>
           </div>
           
           <div className="reset-password-content">
@@ -167,13 +206,18 @@ const ResetPassword = () => {
               <>
                 <div className="header-section">
                   <div className="icon">🔑</div>
-                  <h2>Nueva contraseña</h2>
-                  <p>Crea una contraseña segura para tu cuenta.</p>
+                  <h2>{t('resetPassword.heading')}</h2>
+                  <p>{t('resetPassword.subtitle')}</p>
+                  {email && (
+                    <p className="email-info">
+                      📧 {email}
+                    </p>
+                  )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="reset-password-form">
                   <div className="form-group">
-                    <label htmlFor="newPassword">Nueva contraseña:</label>
+                    <label htmlFor="newPassword">{t('resetPassword.newPasswordLabel')}</label>
                     <div className="password-input-container">
                       <input
                         type={showPassword ? 'text' : 'password'}
@@ -181,7 +225,7 @@ const ResetPassword = () => {
                         name="newPassword"
                         value={formData.newPassword}
                         onChange={handleChange}
-                        placeholder="Ingresa tu nueva contraseña"
+                        placeholder={t('resetPassword.newPasswordPlaceholder') || 'Ingresa tu nueva contraseña'}
                         required
                         disabled={loading}
                       />
@@ -198,17 +242,11 @@ const ResetPassword = () => {
                       <div className="password-strength">
                         <div className="strength-bar">
                           <div 
-                            className="strength-fill"
-                            style={{
-                              width: `${(passwordStrength / 5) * 100}%`,
-                              backgroundColor: strengthInfo.color
-                            }}
+                            className={`strength-fill strength-${passwordStrength}`}
+                            style={{ width: `${(passwordStrength / 5) * 100}%`, backgroundColor: strengthInfo.color }}
                           ></div>
                         </div>
-                        <span 
-                          className="strength-text"
-                          style={{ color: strengthInfo.color }}
-                        >
+                        <span className="strength-text" style={{ color: strengthInfo.color }}>
                           {strengthInfo.text}
                         </span>
                       </div>
@@ -216,35 +254,17 @@ const ResetPassword = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirmar contraseña:</label>
+                    <label htmlFor="confirmPassword">{t('resetPassword.confirmPasswordLabel')}</label>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type="password"
                       id="confirmPassword"
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      placeholder="Confirma tu nueva contraseña"
+                      placeholder={t('resetPassword.confirmPasswordPlaceholder') || 'Confirma tu nueva contraseña'}
                       required
                       disabled={loading}
                     />
-                  </div>
-
-                  <div className="password-requirements">
-                    <h4>La contraseña debe contener:</h4>
-                    <ul>
-                      <li className={formData.newPassword.length >= 8 ? 'valid' : ''}>
-                        ✓ Al menos 8 caracteres
-                      </li>
-                      <li className={/[a-z]/.test(formData.newPassword) ? 'valid' : ''}>
-                        ✓ Una letra minúscula
-                      </li>
-                      <li className={/[A-Z]/.test(formData.newPassword) ? 'valid' : ''}>
-                        ✓ Una letra mayúscula
-                      </li>
-                      <li className={/\d/.test(formData.newPassword) ? 'valid' : ''}>
-                        ✓ Un número
-                      </li>
-                    </ul>
                   </div>
 
                   {message && (
@@ -256,15 +276,15 @@ const ResetPassword = () => {
                   <button 
                     type="submit" 
                     className="btn btn-primary"
-                    disabled={loading || !isPasswordValid(formData.newPassword) || formData.newPassword !== formData.confirmPassword}
+                    disabled={loading || passwordStrength < 3}
                   >
                     {loading ? (
                       <>
                         <span className="spinner-small"></span>
-                        Restableciendo...
+                        {t('resetPassword.updating')}
                       </>
                     ) : (
-                      'Restablecer contraseña'
+                      t('resetPassword.submitButton')
                     )}
                   </button>
                 </form>
@@ -272,18 +292,19 @@ const ResetPassword = () => {
             ) : (
               <div className="success-content">
                 <div className="success-icon">✅</div>
-                <h2>¡Contraseña restablecida!</h2>
+                <h2>{t('resetPassword.success')}</h2>
                 <p>{message}</p>
                 
-                <div className="redirect-info">
-                  <p>Serás redirigido al login en unos segundos...</p>
-                  <button 
-                    onClick={() => navigate('/login')}
-                    className="btn btn-primary"
-                  >
-                    Ir al Login Ahora
-                  </button>
+                <div className="info-box">
+                  <p>{t('resetPassword.successMessage')}</p>
                 </div>
+
+                <button 
+                  onClick={() => navigate('/login')}
+                  className="btn btn-primary"
+                >
+                  {t('resetPassword.goToLogin')}
+                </button>
               </div>
             )}
           </div>
