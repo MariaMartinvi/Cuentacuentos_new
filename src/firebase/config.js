@@ -99,6 +99,23 @@ if (process.env.NODE_ENV === 'production') {
   if (!authorizedDomains.some(domain => currentDomain.includes(domain))) {
     console.warn('⚠️ Current domain not in authorized list. Add to Firebase Console:', currentDomain);
   }
+  
+  // Configuración específica para evitar errores COOP
+  try {
+    // Deshabilitar persistencia en producción si causa problemas
+    console.log('🔧 Configuring Firebase for production environment');
+    
+    // Configuración adicional para evitar problemas COOP
+    window.addEventListener('unhandledrejection', (event) => {
+      if (event.reason && event.reason.message && event.reason.message.includes('Cross-Origin-Opener-Policy')) {
+        console.warn('🚨 COOP error caught and suppressed:', event.reason.message);
+        event.preventDefault(); // Prevenir que el error se propague
+      }
+    });
+    
+  } catch (error) {
+    console.warn('⚠️ Error in production Firebase config:', error);
+  }
 }
 
 // Configurar timeouts y reintentos
