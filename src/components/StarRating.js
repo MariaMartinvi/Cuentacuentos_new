@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import config from '../config';
 import './StarRating.css';
 
 const StarRating = ({ 
@@ -24,9 +25,14 @@ const StarRating = ({
   const handleStarClick = async (rating) => {
     if (readonly || !isAuthenticated || isSubmitting) return;
 
+    console.log('🌟 [StarRating] Attempting to rate story:', { storyId, rating, apiUrl: config.apiUrl });
+    
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/stories/${storyId}/rate`, {
+      const url = `${config.apiUrl}/api/stories/${storyId}/rate`;
+      console.log('🌟 [StarRating] Making request to:', url);
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,8 +41,11 @@ const StarRating = ({
         body: JSON.stringify({ rating })
       });
 
+      console.log('🌟 [StarRating] Response status:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('🌟 [StarRating] Success! Response data:', data);
         setCurrentUserRating(rating);
         
         // Notify parent component of the change
@@ -49,11 +58,11 @@ const StarRating = ({
         }
       } else {
         const errorData = await response.json();
-        console.error('Error rating story:', errorData);
+        console.error('🌟 [StarRating] Error rating story:', errorData);
         // You could add a toast notification here
       }
     } catch (error) {
-      console.error('Error rating story:', error);
+      console.error('🌟 [StarRating] Network error rating story:', error);
       // You could add a toast notification here
     } finally {
       setIsSubmitting(false);

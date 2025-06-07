@@ -1,56 +1,179 @@
 .story-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  margin: 1rem;
-  width: 300px;
-  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .story-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .story-card.loading-content {
-  cursor: wait;
   opacity: 0.7;
   pointer-events: none;
 }
 
 .story-card-image-container {
+  position: relative;
   width: 100%;
   height: 200px;
-  position: relative;
   overflow: hidden;
-  background: #f5f5f5;
+  background: #f8f9fa;
 }
 
 .story-card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.story-card-image.loading {
-  opacity: 0;
+.story-card-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
 }
 
-.story-card-image.loaded {
-  opacity: 1;
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-.story-card-image.error {
-  opacity: 0;
-  visibility: hidden;
+.story-card-image-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  color: #6c757d;
+  font-size: 2rem;
 }
 
-.story-card:hover .story-card-image {
-  transform: scale(1.05);
+.story-card-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.story-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  line-height: 1.4;
+}
+
+.story-card-protagonist {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.protagonist-label {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.protagonist-name {
+  color: #495057;
+  font-weight: 600;
+}
+
+.story-card-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.story-card-age,
+.story-card-language,
+.story-card-level {
+  padding: 0.25rem 0.5rem;
+  background: #e9ecef;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.story-card-rating {
+  margin: 0.5rem 0;
+}
+
+.story-card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.story-card-button {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.story-card-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.text-button {
+  background: #007bff;
+  color: white;
+}
+
+.text-button:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.audio-button {
+  background: #28a745;
+  color: white;
+}
+
+.audio-button:hover:not(:disabled) {
+  background: #1e7e34;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .story-card-image-container {
+    height: 150px;
+  }
+  
+  .story-card-content {
+    padding: 0.75rem;
+  }
+  
+  .story-card-title {
+    font-size: 1rem;
+  }
+  
+  .story-card-button {
+    min-width: 100px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
 }
 
 /* Skeleton Loading Animation */
@@ -60,39 +183,6 @@
   }
   100% {
     background-position: 200% 0;
-  }
-}
-
-.story-card-skeleton {
-  width: 100%;
-  height: 100%;
-  background: #f0f0f0;
-  position: relative;
-  overflow: hidden;
-}
-
-.story-card-skeleton::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
   }
 }
 
@@ -143,59 +233,19 @@
   visibility: visible;
 }
 
-.story-card-content {
-  padding: 1rem;
-}
-
-.story-card-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  color: #333;
-}
-
-.story-card-protagonist {
-  margin: 8px 0;
-  font-size: 1.1em;
-}
-
-.protagonist-label {
-  color: #666;
-  font-weight: normal;
-}
-
-.protagonist-name {
-  color: #4a90e2;
-  font-weight: 600;
-}
-
-.story-card-metadata {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.story-card-age,
-.story-card-language,
-.story-card-level {
-  font-size: 0.875rem;
-  padding: 0.25rem 0.5rem;
+.story-card-rating-placeholder {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: #f8f9fa;
   border-radius: 4px;
-  background: #f5f5f5;
-  color: #666;
+  text-align: center;
 }
 
-/* Story card rating styles */
-.story-card-rating {
-  margin: 0.75rem 0;
-  padding: 0.5rem 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  background: rgba(248, 249, 250, 0.5);
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.rating-info-text {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.8rem;
 }
 
 .story-card-rating .star-rating {
@@ -224,45 +274,6 @@
   color: #d32f2f;
   font-size: 0.875rem;
   margin-top: 0.5rem;
-}
-
-.story-card-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.story-card-button {
-  flex: 1;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.story-card-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.text-button {
-  background-color: #4caf50;
-  color: white;
-}
-
-.text-button:hover:not(:disabled) {
-  background-color: #43a047;
-}
-
-.audio-button {
-  background-color: #2196f3;
-  color: white;
-}
-
-.audio-button:hover:not(:disabled) {
-  background-color: #1e88e5;
 }
 
 @keyframes pulse {

@@ -115,7 +115,8 @@
       "protagonist": "Protagonista",
       "ageRange": "años",
       "readStory": "Leer cuento",
-      "listenAudio": "Escuchar audio"
+      "listenAudio": "Escuchar audio",
+      "exampleStory": "Historia de ejemplo"
     },
     "mockContent": {
       "badge": "Ejemplo",
@@ -163,7 +164,19 @@
     "shareOnTelegram": "Compartir en Telegram",
     "copyToClipboard": "Copiar al Portapapeles",
     "copiedToClipboard": "¡Texto copiado al portapapeles!",
-    "copyError": "No se pudo copiar automáticamente. Por favor, selecciona y copia el texto manualmente."
+    "copyError": "No se pudo copiar automáticamente. Por favor, selecciona y copia el texto manualmente.",
+    "error": "Error",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "yes": "Sí",
+    "no": "No"
   },
   "footer": {
     "title": "AudioGretel",

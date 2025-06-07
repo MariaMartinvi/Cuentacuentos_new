@@ -300,12 +300,42 @@ const StoryExamplesSection = ({ autoOpenStoryId }) => {
     }));
   };
 
-  const handleStoryClick = async (story, content, audioUrl) => {
-    console.log("[SECTION] Story clicked:", story.title);
-    console.log("[SECTION] Content received:", content ? "Yes" : "No");
-    console.log("[SECTION] Audio URL received:", audioUrl ? "Yes" : "No");
+  const handleStoryClick = async (story, actionType = 'text') => {
+    console.log("[SECTION] Story clicked:", story.title, "Action:", actionType);
 
     try {
+      let content = null;
+      let audioUrl = null;
+
+      // Load content based on action type
+      if (actionType === 'text' || actionType === 'both') {
+        // Load text content
+        if (story.textPath) {
+          try {
+            content = await getStoryTextContent(story.textPath);
+            console.log("[SECTION] Text content loaded:", !!content);
+          } catch (error) {
+            console.error("[SECTION] Error loading text content:", error);
+            content = `Error al cargar el contenido del texto: ${error.message}`;
+          }
+        } else {
+          content = "El contenido de texto no está disponible para esta historia.";
+        }
+      }
+
+      if (actionType === 'audio' || actionType === 'both') {
+        // Load audio content
+        if (story.audioPath) {
+          try {
+            audioUrl = await getStoryAudioUrl(story.audioPath);
+            console.log("[SECTION] Audio URL loaded:", !!audioUrl);
+          } catch (error) {
+            console.error("[SECTION] Error loading audio:", error);
+            // Don't set audioUrl if there's an error
+          }
+        }
+      }
+
       // Get image URL
       let imageUrl = null;
       if (story.imagePath) {
@@ -452,13 +482,21 @@ const StoryExamplesSection = ({ autoOpenStoryId }) => {
       </div>
 
       <div className="stories-grid">
-        {filteredStories.map(story => (
-          <StoryCard
-            key={story.id}
-            story={story}
-            onStoryClick={handleStoryClick}
-          />
-        ))}
+        {(() => {
+          console.log('🔍 [StoryExamplesSection] About to render stories:', filteredStories.length);
+          if (filteredStories.length > 0) {
+            console.log('🔍 [StoryExamplesSection] First story data:', filteredStories[0]);
+            console.log('🔍 [StoryExamplesSection] First story keys:', Object.keys(filteredStories[0]));
+            console.log('🔍 [StoryExamplesSection] First story id:', filteredStories[0].id);
+          }
+          return filteredStories.map(story => (
+            <StoryCard
+              key={story.id}
+              story={story}
+              onStoryClick={handleStoryClick}
+            />
+          ));
+        })()}
       </div>
       
       <div className="view-all-container">

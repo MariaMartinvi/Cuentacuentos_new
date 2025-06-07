@@ -915,69 +915,77 @@ export const createStoryImages = async () => {
  */
 export const fetchStoryMetadata = async () => {
   try {
-    console.log("Iniciando fetchStoryMetadata...");
+    console.log("🚀 [fetchStoryMetadata] INICIO - Iniciando fetchStoryMetadata...");
+    console.log("🚀 [fetchStoryMetadata] Firebase DB configurado:", !!db);
+    
     const storyExamplesRef = collection(db, "storyExamples");
+    console.log("🚀 [fetchStoryMetadata] Referencia creada, consultando documentos...");
+    
     const storyExamplesSnapshot = await getDocs(storyExamplesRef);
     
-    console.log(`Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
+    console.log(`🚀 [fetchStoryMetadata] Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
+
+    if (storyExamplesSnapshot.empty) {
+      console.log("⚠️ [fetchStoryMetadata] No se encontraron documentos en storyExamples");
+      return [];
+    }
+
+    const stories = [];
     
-    // Log all fields for each document with more visible formatting
-    console.log("=== DETALLES DE DOCUMENTOS ===");
-    storyExamplesSnapshot.docs.forEach(doc => {
-      const data = doc.data();
-      console.log(`\nDocumento ${doc.id}:`, {
-        title: data.title,
-        age: data.age,
-        language: data.language,
-        level: data.level,
-        textPath: data.textPath,
-        audioPath: data.audioPath,
-        imagePath: data.imagePath,
-        protagonista: data.protagonista,
-        allFields: Object.keys(data)
-      });
-      
-      // Specifically check for protagonista field
-      if (data.protagonista) {
-        console.log(`✓ Documento ${doc.id} tiene protagonista: "${data.protagonista}"`);
-      } else {
-        console.log(`✗ Documento ${doc.id} NO tiene campo protagonista`);
+    for (const docSnapshot of storyExamplesSnapshot.docs) {
+      try {
+        const data = docSnapshot.data();
+        console.log(`📖 [fetchStoryMetadata] Procesando historia: ${docSnapshot.id}`, {
+          title: data.title,
+          hasImage: !!data.imagePath,
+          hasAudio: !!data.audioPath,
+          hasText: !!data.textPath,
+          averageRating: data.averageRating || 0,
+          totalRatings: data.totalRatings || 0
+        });
+
+        // Crear objeto de historia con datos de rating incluidos
+        const story = {
+          id: docSnapshot.id,
+          title: data.title || 'Sin título',
+          protagonista: data.protagonista || '',
+          age: data.age || '',
+          language: data.language || '',
+          level: data.level || '',
+          storyType: data.storyType || '',
+          storyLength: data.storyLength || '',
+          email: data.email || '',
+          published: data.published || false,
+          createdAt: data.createdAt,
+          imagePath: data.imagePath || null,
+          audioPath: data.audioPath || null,
+          textPath: data.textPath || null,
+          // Datos de rating de Firebase
+          averageRating: data.averageRating || 0,
+          totalRatings: data.totalRatings || 0,
+          ratingSum: data.ratingSum || 0,
+          lastRatedAt: data.lastRatedAt || null
+        };
+
+        stories.push(story);
+      } catch (error) {
+        console.error(`❌ [fetchStoryMetadata] Error procesando documento ${docSnapshot.id}:`, error);
       }
-    });
-    console.log("=== FIN DE DETALLES DE DOCUMENTOS ===\n");
+    }
+
+    console.log(`✅ [fetchStoryMetadata] Procesadas ${stories.length} historias exitosamente`);
     
-    const storyMetadataList = storyExamplesSnapshot.docs.map(doc => {
-      const data = doc.data();
-      
-      // Solo incluimos los metadatos básicos necesarios para la vista inicial
-      return {
-        id: doc.id,
-        title: data.title || `Story ${doc.id}`,
-        age: data.age || 'all',
-        language: data.language || 'spanish',
-        level: data.level || 'beginner',
-        textPath: data.textPath || null,
-        audioPath: data.audioPath || null,
-        imagePath: data.imagePath || `images/${doc.id}.jpg`,
-        protagonista: data.protagonista || null,
-        // No incluimos el contenido completo aquí
-      };
+    // Ordenar por rating promedio y luego por número total de ratings
+    stories.sort((a, b) => {
+      if (b.averageRating !== a.averageRating) {
+        return b.averageRating - a.averageRating;
+      }
+      return b.totalRatings - a.totalRatings;
     });
     
-    // Log the final metadata list with protagonista field highlighted
-    console.log("=== LISTA FINAL DE METADATOS ===");
-    storyMetadataList.forEach(story => {
-      console.log(`\nStory ${story.id}:`, {
-        title: story.title,
-        protagonista: story.protagonista || "NO TIENE PROTAGONISTA",
-        allFields: Object.keys(story)
-      });
-    });
-    console.log("=== FIN DE LISTA DE METADATOS ===\n");
-    
-    return storyMetadataList;
+    return stories;
   } catch (error) {
-    console.error("Error fetching story metadata:", error);
+    console.error("❌ [fetchStoryMetadata] Error:", error);
     throw error;
   }
 };

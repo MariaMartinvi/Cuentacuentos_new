@@ -15,7 +15,15 @@ import config from './config';
 const API_URL = 'https://generadorcuentos.onrender.com';
 
 function App() {
+  console.log('🚀🚀🚀 [APP] APLICACIÓN INICIANDO - App.js está funcionando');
+  console.log('🚀🚀🚀 [APP] Environment check:', {
+    nodeEnv: process.env.NODE_ENV,
+    apiUrl: API_URL,
+    timestamp: new Date().toISOString()
+  });
+  
   useEffect(() => {
+    console.log('🚀🚀🚀 [APP] App useEffect ejecutándose - initProxy');
     initProxy();
     return () => {
       cleanupProxy();
