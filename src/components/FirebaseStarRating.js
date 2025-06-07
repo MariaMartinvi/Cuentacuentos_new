@@ -127,38 +127,65 @@ const FirebaseStarRating = ({
     setHoveredRating(0);
   };
 
+  const getStarDisplay = (starNumber) => {
+    // Si el usuario está haciendo hover, mostrar las estrellas hasta el hover
+    if (hoveredRating > 0) {
+      return starNumber <= hoveredRating ? 'filled' : 'empty';
+    }
+    
+    // Si el usuario ya votó, mostrar su voto
+    if (currentUserRating && currentUserRating > 0) {
+      return starNumber <= currentUserRating ? 'user-rated' : 'empty';
+    }
+    
+    // Por defecto, mostrar el rating promedio
+    if (currentStats.averageRating > 0) {
+      const avgRating = currentStats.averageRating;
+      if (starNumber <= Math.floor(avgRating)) {
+        return 'average-filled';
+      } else if (starNumber === Math.ceil(avgRating) && avgRating % 1 !== 0) {
+        // Estrella parcial para decimales
+        return 'average-partial';
+      }
+    }
+    
+    return 'empty';
+  };
+
   const displayRating = hoveredRating || currentUserRating || 0;
   const starsToShow = Math.max(hoveredRating, 0);
 
   return (
     <div className={`star-rating ${size} ${readonly ? 'readonly' : ''} ${isSubmitting ? 'submitting' : ''}`}>
       <div className="stars-container" onMouseLeave={handleStarLeave}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            type="button"
-            className={`star ${
-              (hoveredRating >= star || (hoveredRating === 0 && currentUserRating >= star)) 
-                ? 'filled' 
-                : currentStats.averageRating >= star 
-                ? 'average-filled' 
-                : ''
-            } ${isSubmitting ? 'disabled' : ''}`}
-            onClick={() => handleStarClick(star)}
-            onMouseEnter={() => handleStarHover(star)}
-            disabled={readonly || !isAuthenticated || isSubmitting}
-            aria-label={`Rate ${star} stars`}
-            title={
-              !isAuthenticated 
-                ? 'Inicia sesión para calificar' 
-                : readonly 
-                ? 'Solo lectura' 
-                : `Calificar ${star} estrella${star > 1 ? 's' : ''}`
-            }
-          >
-            <span className="star-icon">★</span>
-          </button>
-        ))}
+        {[1, 2, 3, 4, 5].map((star) => {
+          const starClass = getStarDisplay(star);
+          
+          return (
+            <button
+              key={star}
+              type="button"
+              className={`star ${starClass} ${isSubmitting ? 'disabled' : ''}`}
+              onClick={() => handleStarClick(star)}
+              onMouseEnter={() => handleStarHover(star)}
+              disabled={readonly || !isAuthenticated || isSubmitting}
+              aria-label={`Rate ${star} stars`}
+              title={
+                !isAuthenticated 
+                  ? 'Inicia sesión para calificar' 
+                  : readonly 
+                  ? 'Solo lectura' 
+                  : hoveredRating > 0
+                  ? `Calificar ${star} estrella${star > 1 ? 's' : ''}`
+                  : currentUserRating
+                  ? `Tu calificación: ${currentUserRating} estrellas. Haz clic para cambiar.`
+                  : `Rating promedio: ${currentStats.averageRating.toFixed(1)}. Haz clic para calificar.`
+              }
+            >
+              <span className="star-icon">★</span>
+            </button>
+          );
+        })}
       </div>
 
       {showCount && (
@@ -169,6 +196,11 @@ const FirebaseStarRating = ({
           <span className="rating-count">
             ({currentStats.totalRatings} {currentStats.totalRatings === 1 ? 'voto' : 'votos'})
           </span>
+          {currentUserRating && (
+            <span className="user-rating-indicator">
+              • Tu voto: {currentUserRating}⭐
+            </span>
+          )}
         </div>
       )}
 

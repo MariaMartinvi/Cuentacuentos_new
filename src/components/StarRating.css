@@ -2,14 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
-  font-family: inherit;
+  gap: 0.25rem;
 }
 
 .stars-container {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.125rem;
 }
 
 .star {
@@ -17,154 +16,132 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
   font-size: 1.2rem;
-  color: #ddd;
-  transition: color 0.2s ease, transform 0.1s ease;
-  line-height: 1;
-  position: relative;
-  user-select: none;
-}
-
-/* Star sizes */
-.star.small {
-  font-size: 0.9rem;
-}
-
-.star.medium {
-  font-size: 1.2rem;
-}
-
-.star.large {
-  font-size: 1.6rem;
-}
-
-/* Star states */
-.star.filled {
-  color: #ffc107;
-}
-
-.star.user-rated {
-  color: #ff6b35;
-}
-
-.star.hovered {
-  color: #ffd54f;
-  transform: scale(1.1);
-}
-
-.star.readonly {
-  cursor: default;
-  pointer-events: none;
-}
-
-.star:not(.readonly):hover {
-  transform: scale(1.1);
-}
-
-.star:not(.readonly):active {
-  transform: scale(0.95);
 }
 
 .star:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
 }
 
-/* Partial star styling */
-.star-partial {
-  position: relative;
-  display: inline-block;
+.star:hover:not(:disabled) {
+  transform: scale(1.1);
 }
 
-.star-partial-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  color: #ddd;
+.star-icon {
+  transition: all 0.2s ease;
 }
 
-/* Rating info */
+/* Estados de las estrellas */
+.star.filled .star-icon {
+  color: #ffc107;
+  text-shadow: 0 0 3px rgba(255, 193, 7, 0.5);
+}
+
+.star.user-rated .star-icon {
+  color: #28a745;
+  text-shadow: 0 0 3px rgba(40, 167, 69, 0.5);
+}
+
+.star.average-filled .star-icon {
+  color: #6c757d;
+  text-shadow: 0 0 2px rgba(108, 117, 125, 0.3);
+}
+
+.star.average-partial .star-icon {
+  color: #6c757d;
+  opacity: 0.7;
+  text-shadow: 0 0 2px rgba(108, 117, 125, 0.3);
+}
+
+.star.empty .star-icon {
+  color: #e9ecef;
+  text-shadow: none;
+}
+
+/* Estilos para diferentes tamaños */
+.star-rating.small .star {
+  font-size: 1rem;
+}
+
+.star-rating.medium .star {
+  font-size: 1.2rem;
+}
+
+.star-rating.large .star {
+  font-size: 1.5rem;
+}
+
+/* Información de rating */
 .rating-info {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.875rem;
+  color: #6c757d;
+  flex-wrap: wrap;
 }
 
 .average-rating {
   font-weight: 600;
-  color: #333;
+  color: #495057;
 }
 
 .rating-count {
-  color: #888;
+  color: #6c757d;
 }
 
-/* User interaction prompts */
-.login-prompt,
-.user-rating-info {
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 0.25rem;
-}
-
-.user-rating-info {
-  color: #ff6b35;
+.user-rating-indicator {
+  color: #28a745;
   font-weight: 500;
-}
-
-/* Loading spinner */
-.rating-spinner {
-  font-size: 1rem;
-  color: #666;
-  animation: spin 1s linear infinite;
-  margin-left: 0.5rem;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Small size adjustments */
-.star-rating.small .rating-info {
   font-size: 0.8rem;
 }
 
-.star-rating.small .login-prompt,
-.star-rating.small .user-rating-info {
-  font-size: 0.7rem;
+/* Estados especiales */
+.star-rating.readonly .star {
+  cursor: default;
 }
 
-/* Large size adjustments */
-.star-rating.large .rating-info {
-  font-size: 1rem;
+.star-rating.readonly .star:hover {
+  transform: none;
 }
 
-.star-rating.large .login-prompt,
-.star-rating.large .user-rating-info {
-  font-size: 0.9rem;
+.star-rating.submitting {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
-/* Responsive design */
+.auth-prompt {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.rating-loading {
+  font-size: 0.75rem;
+  color: #007bff;
+  font-style: italic;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .star {
+  .star-rating.small .star {
+    font-size: 0.9rem;
+  }
+  
+  .star-rating.medium .star {
     font-size: 1rem;
-  }
-  
-  .star.small {
-    font-size: 0.8rem;
-  }
-  
-  .star.large {
-    font-size: 1.4rem;
   }
   
   .rating-info {
     font-size: 0.8rem;
+  }
+  
+  .user-rating-indicator {
+    font-size: 0.75rem;
   }
 }
 
