@@ -23,8 +23,7 @@ export const publishStory = async (storyId) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Origin': window.location.origin
-      },
-      body: JSON.stringify({ email })
+      }
     });
 
     if (!response.ok) {
