@@ -185,6 +185,13 @@ const StoryCard = ({ story, onStoryClick }) => {
             </button>
           )}
         </div>
+
+        {/* Published by info */}
+        {story.email && (
+          <div className="story-card-published-by">
+            Publicado por: {story.email.substring(0, 6)}...
+          </div>
+        )}
       </div>
     </div>
   );
