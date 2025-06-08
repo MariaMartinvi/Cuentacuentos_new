@@ -385,19 +385,38 @@ const getOrCreateUserData = async (firebaseUser) => {
 
 export const getCurrentUser = async () => {
   try {
+    console.log('🔍 getCurrentUser: Starting user authentication check...');
+    
     // Check Firebase Auth current user
     const firebaseUser = auth.currentUser;
+    console.log('🔍 Firebase current user:', firebaseUser ? {
+      email: firebaseUser.email,
+      uid: firebaseUser.uid,
+      emailVerified: firebaseUser.emailVerified
+    } : 'No user found');
     
     if (!firebaseUser) {
-      console.log('No Firebase user found');
+      console.log('❌ No Firebase user found - user not logged in');
       userCache = { data: null, timestamp: null };
+      return null;
+    }
+
+    // Check if user is authenticated (has valid session)
+    try {
+      await firebaseUser.getIdToken(); // This will fail if not properly authenticated
+      console.log('✅ Firebase user has valid session');
+    } catch (tokenError) {
+      console.error('❌ Firebase user session invalid:', tokenError);
+      userCache = { data: null, timestamp: null };
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       return null;
     }
 
     // Check cache first (but only for a short time to ensure data freshness)
     const now = Date.now();
     if (userCache.data && userCache.timestamp && (now - userCache.timestamp) < userCache.CACHE_DURATION) {
-      console.log('Returning cached user data:', userCache.data.email);
+      console.log('✅ Returning cached user data:', userCache.data.email);
       return userCache.data;
     }
 
@@ -441,7 +460,7 @@ export const getCurrentUser = async () => {
     
     return user;
   } catch (error) {
-    console.error('Error in getCurrentUser:', error);
+    console.error('❌ Error in getCurrentUser:', error);
     
     // Fallback to localStorage if available, but warn about potential inconsistency
     const cachedUser = localStorage.getItem('user');
@@ -451,7 +470,7 @@ export const getCurrentUser = async () => {
         console.warn('⚠️ Using cached user data due to Firestore error. Data may be inconsistent.');
         return userData;
       } catch (e) {
-        console.warn('Error parsing cached user data:', e);
+        console.warn('❌ Error parsing cached user data:', e);
       }
     }
     
@@ -952,4 +971,102 @@ export const updateUserStoriesCount = async (newStoriesGenerated, newMonthlyStor
     console.error('Error updating user stories count:', error);
     return null;
   }
-}; 
+};
+
+// Debug function to check authentication status (can be called from browser console)
+export const debugAuthStatus = async () => {
+  console.log('🔍 DEBUG: Checking authentication status...');
+  
+  try {
+    // Check Firebase Auth state
+    const firebaseUser = auth.currentUser;
+    console.log('Firebase Auth current user:', firebaseUser ? {
+      email: firebaseUser.email,
+      uid: firebaseUser.uid,
+      emailVerified: firebaseUser.emailVerified,
+      metadata: {
+        creationTime: firebaseUser.metadata.creationTime,
+        lastSignInTime: firebaseUser.metadata.lastSignInTime
+      }
+    } : 'No user');
+    
+    if (firebaseUser) {
+      // Test token retrieval
+      try {
+        const token = await firebaseUser.getIdToken();
+        const tokenResult = await firebaseUser.getIdTokenResult();
+        console.log('Token status:', {
+          tokenLength: token.length,
+          issuedAt: new Date(tokenResult.issuedAtTime),
+          expiresAt: new Date(tokenResult.expirationTime),
+          isExpired: new Date(tokenResult.expirationTime) <= new Date(),
+          claims: tokenResult.claims
+        });
+      } catch (tokenError) {
+        console.error('Token retrieval failed:', tokenError);
+      }
+    }
+    
+    // Check localStorage
+    const cachedUser = localStorage.getItem('user');
+    const cachedToken = localStorage.getItem('token');
+    console.log('LocalStorage:', {
+      hasUser: !!cachedUser,
+      hasToken: !!cachedToken,
+      tokenLength: cachedToken ? cachedToken.length : 0
+    });
+    
+    if (cachedUser) {
+      try {
+        const userData = JSON.parse(cachedUser);
+        console.log('Cached user data:', {
+          email: userData.email,
+          subscriptionStatus: userData.subscriptionStatus,
+          storiesGenerated: userData.storiesGenerated
+        });
+      } catch (e) {
+        console.error('Failed to parse cached user:', e);
+      }
+    }
+    
+    // Check userCache
+    console.log('User cache:', {
+      hasData: !!userCache.data,
+      timestamp: userCache.timestamp ? new Date(userCache.timestamp) : null,
+      age: userCache.timestamp ? Date.now() - userCache.timestamp : null
+    });
+    
+    // Try getCurrentUser
+    try {
+      const currentUser = await getCurrentUser();
+      console.log('getCurrentUser result:', currentUser ? {
+        email: currentUser.email,
+        subscriptionStatus: currentUser.subscriptionStatus
+      } : 'null');
+    } catch (getUserError) {
+      console.error('getCurrentUser failed:', getUserError);
+    }
+    
+    // Try getAuthHeader
+    try {
+      const authHeader = await getAuthHeader();
+      console.log('getAuthHeader result:', {
+        hasHeader: !!authHeader.Authorization,
+        headerLength: authHeader.Authorization ? authHeader.Authorization.length : 0
+      });
+    } catch (authHeaderError) {
+      console.error('getAuthHeader failed:', authHeaderError);
+    }
+    
+    console.log('🔍 DEBUG: Authentication status check complete');
+    
+  } catch (error) {
+    console.error('DEBUG: Failed to check auth status:', error);
+  }
+};
+
+// Make debug function available globally for console access
+if (typeof window !== 'undefined') {
+  window.debugAuthStatus = debugAuthStatus;
+  console.log('📋 Debug function available: call debugAuthStatus() in console to check auth status');
+} 

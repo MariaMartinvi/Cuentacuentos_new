@@ -7,6 +7,7 @@ import { checkServerHealth, diagnoseBackendIssue } from '../services/storyServic
 import AudioPlayer from './AudioPlayer';
 import './StoryForm.css';
 import axios from 'axios';
+import { auth } from '../firebase/config';
 
 // Clave para localStorage
 const FORM_STORAGE_KEY = 'storyFormData';
@@ -177,10 +178,28 @@ function StoryForm({ onStoryGenerated }) {
       if (!isMounted) return;
       
       try {
-        console.log('Loading user data...');
+        console.log('🔍 StoryForm: Loading user data...');
+        
+        // Check Firebase Auth state first
+        const firebaseUser = auth.currentUser;
+        console.log('🔍 StoryForm: Firebase user:', firebaseUser ? firebaseUser.email : 'No user');
+        
+        if (!firebaseUser) {
+          console.log('❌ StoryForm: No Firebase user - user not logged in');
+          if (isMounted) {
+            setError(t('storyForm.loginRequired'));
+          }
+          return;
+        }
+        
         const currentUser = await getCurrentUser();
         if (isMounted) {
-          console.log('User data loaded:', currentUser);
+          console.log('✅ StoryForm: User data loaded:', currentUser ? {
+            email: currentUser.email,
+            subscriptionStatus: currentUser.subscriptionStatus,
+            storiesGenerated: currentUser.storiesGenerated,
+            monthlyStoriesGenerated: currentUser.monthlyStoriesGenerated
+          } : 'null');
           setUser(currentUser);
           
           // Fetch stories remaining if user is logged in
@@ -189,7 +208,7 @@ function StoryForm({ onStoryGenerated }) {
           }
         }
       } catch (error) {
-        console.error('Error loading user:', error);
+        console.error('❌ StoryForm: Error loading user:', error);
         if (isMounted) {
           setError(t('storyForm.loginRequired'));
         }
