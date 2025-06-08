@@ -121,26 +121,29 @@ const Profile = () => {
 
   const fetchStoriesRemaining = async (currentUser) => {
     try {
-      // Determinar la URL correcta basada en el entorno
-      const isProduction = window.location.hostname !== 'localhost';
-      const API_URL = isProduction 
-        ? 'https://generadorcuentos.onrender.com'
-        : 'http://localhost:5001';
+      // Calculate locally from user data instead of making server request
+      const userData = currentUser.data || currentUser;
       
-      const token = localStorage.getItem('token');
-      const response = await axios.get(
-        `${API_URL}/api/stories/remaining`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      console.log('📊 Calculating stories remaining locally:', {
+        email: userData.email,
+        storiesGenerated: userData.storiesGenerated,
+        monthlyStoriesGenerated: userData.monthlyStoriesGenerated,
+        subscriptionStatus: userData.subscriptionStatus
+      });
       
-      setStoriesRemaining(response.data.storiesRemaining);
+      let remaining;
+      if (userData.subscriptionStatus === 'active') {
+        remaining = Math.max(0, 30 - (userData.monthlyStoriesGenerated || 0));
+      } else {
+        remaining = Math.max(0, 3 - (userData.storiesGenerated || 0));
+      }
+      
+      setStoriesRemaining(remaining);
+      console.log('✅ Stories remaining calculated:', remaining);
+      
     } catch (error) {
-      console.error('Error fetching stories remaining:', error);
-      // Calcular localmente como fallback
+      console.error('Error calculating stories remaining:', error);
+      // Default fallback
       const userData = currentUser.data || currentUser;
       if (userData.subscriptionStatus === 'active') {
         setStoriesRemaining(30 - (userData.monthlyStoriesGenerated || 0));

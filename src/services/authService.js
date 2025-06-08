@@ -1,7 +1,7 @@
 import axios from 'axios';
 import i18next from 'i18next';
 import config from '../config';
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
@@ -14,6 +14,7 @@ import {
   confirmPasswordReset,
   verifyPasswordResetCode as firebaseVerifyPasswordResetCode
 } from 'firebase/auth';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 // Use API URL from config
 const API_URL = config.apiUrl;
@@ -168,13 +169,24 @@ export const login = async (email, password) => {
     // Get Firebase ID token
     const token = await firebaseUser.getIdToken();
     
-    // Create user object
+    // Get real user data from Firestore
+    console.log('🔄 Fetching user data from Firestore after login...');
+    const firestoreUserData = await getOrCreateUserData(firebaseUser);
+    
+    // Create user object with real data from Firestore
     const user = {
       email: firebaseUser.email,
       uid: firebaseUser.uid,
       emailVerified: firebaseUser.emailVerified,
-      subscriptionStatus: 'free', // Default, could be updated from backend
-      storiesGenerated: 0
+      // Real data from Firestore (no hardcoded values!)
+      storiesGenerated: firestoreUserData.storiesGenerated || 0,
+      monthlyStoriesGenerated: firestoreUserData.monthlyStoriesGenerated || 0,
+      subscriptionStatus: firestoreUserData.subscriptionStatus || 'free',
+      isPremium: firestoreUserData.isPremium || false,
+      isAdmin: firestoreUserData.isAdmin || false,
+      lastMonthReset: firestoreUserData.lastMonthReset,
+      createdAt: firestoreUserData.createdAt,
+      updatedAt: firestoreUserData.updatedAt
     };
     
     // Save to localStorage
@@ -187,7 +199,13 @@ export const login = async (email, password) => {
       timestamp: Date.now()
     };
     
-    console.log('💾 User data saved:', user);
+    console.log('💾 User data saved with real Firestore data:', {
+      email: user.email,
+      storiesGenerated: user.storiesGenerated,
+      monthlyStoriesGenerated: user.monthlyStoriesGenerated,
+      subscriptionStatus: user.subscriptionStatus,
+      isPremium: user.isPremium
+    });
     
     return { token, user };
   } catch (error) {
@@ -239,7 +257,66 @@ export const logout = async () => {
   }
 };
 
-export const getCurrentUser = () => {
+// Helper function to get or create user data in Firestore
+const getOrCreateUserData = async (firebaseUser) => {
+  try {
+    const userRef = doc(db, 'users', firebaseUser.uid);
+    const userDoc = await getDoc(userRef);
+    
+    if (userDoc.exists()) {
+      console.log('📁 User found in Firestore:', firebaseUser.email);
+      const userData = userDoc.data();
+      
+      // Check and reset monthly count if needed
+      const now = new Date();
+      const lastReset = userData.lastMonthReset ? userData.lastMonthReset.toDate() : new Date();
+      
+      if (now.getMonth() !== lastReset.getMonth() || now.getFullYear() !== lastReset.getFullYear()) {
+        console.log('🔄 Resetting monthly story count for user:', firebaseUser.email);
+        const updatedData = {
+          ...userData,
+          monthlyStoriesGenerated: 0,
+          lastMonthReset: now,
+          updatedAt: now
+        };
+        
+        await updateDoc(userRef, {
+          monthlyStoriesGenerated: 0,
+          lastMonthReset: now,
+          updatedAt: now
+        });
+        
+        return { id: userDoc.id, ...updatedData };
+      }
+      
+      return { id: userDoc.id, ...userData };
+    } else {
+      console.log('👤 Creating new user in Firestore:', firebaseUser.email);
+      const newUserData = {
+        email: firebaseUser.email,
+        emailVerified: firebaseUser.emailVerified || false,
+        firebase_uid: firebaseUser.uid,
+        storiesGenerated: 0,
+        monthlyStoriesGenerated: 0,
+        subscriptionStatus: 'free',
+        isPremium: false,
+        isAdmin: false,
+        lastMonthReset: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      await setDoc(userRef, newUserData);
+      console.log('✅ New user created in Firestore');
+      return { id: firebaseUser.uid, ...newUserData };
+    }
+  } catch (error) {
+    console.error('❌ Error getting/creating user data from Firestore:', error);
+    throw error;
+  }
+};
+
+export const getCurrentUser = async () => {
   try {
     // Check Firebase Auth current user
     const firebaseUser = auth.currentUser;
@@ -249,35 +326,68 @@ export const getCurrentUser = () => {
       userCache = { data: null, timestamp: null };
       return null;
     }
+
+    // Check cache first (but only for a short time to ensure data freshness)
+    const now = Date.now();
+    if (userCache.data && userCache.timestamp && (now - userCache.timestamp) < userCache.CACHE_DURATION) {
+      console.log('Returning cached user data:', userCache.data.email);
+      return userCache.data;
+    }
+
+    console.log('🔄 Fetching fresh user data from Firestore for:', firebaseUser.email);
     
-    // Check localStorage cache first
+    // Get real user data from Firestore
+    const firestoreUserData = await getOrCreateUserData(firebaseUser);
+    
+    // Create complete user object with real data from Firestore
+    const user = {
+      email: firebaseUser.email,
+      uid: firebaseUser.uid,
+      emailVerified: firebaseUser.emailVerified,
+      // Real data from Firestore (no hardcoded values!)
+      storiesGenerated: firestoreUserData.storiesGenerated || 0,
+      monthlyStoriesGenerated: firestoreUserData.monthlyStoriesGenerated || 0,
+      subscriptionStatus: firestoreUserData.subscriptionStatus || 'free',
+      isPremium: firestoreUserData.isPremium || false,
+      isAdmin: firestoreUserData.isAdmin || false,
+      lastMonthReset: firestoreUserData.lastMonthReset,
+      createdAt: firestoreUserData.createdAt,
+      updatedAt: firestoreUserData.updatedAt
+    };
+    
+    // Update cache with real data
+    userCache = {
+      data: user,
+      timestamp: now
+    };
+    
+    // Save real data to localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    console.log('✅ Real user data fetched from Firestore:', {
+      email: user.email,
+      storiesGenerated: user.storiesGenerated,
+      monthlyStoriesGenerated: user.monthlyStoriesGenerated,
+      subscriptionStatus: user.subscriptionStatus,
+      isPremium: user.isPremium
+    });
+    
+    return user;
+  } catch (error) {
+    console.error('Error in getCurrentUser:', error);
+    
+    // Fallback to localStorage if available, but warn about potential inconsistency
     const cachedUser = localStorage.getItem('user');
     if (cachedUser) {
       try {
         const userData = JSON.parse(cachedUser);
-        console.log('Returning cached user data:', userData.email);
+        console.warn('⚠️ Using cached user data due to Firestore error. Data may be inconsistent.');
         return userData;
       } catch (e) {
         console.warn('Error parsing cached user data:', e);
       }
     }
     
-    // Create user object from Firebase user
-    const user = {
-      email: firebaseUser.email,
-      uid: firebaseUser.uid,
-      emailVerified: firebaseUser.emailVerified,
-      subscriptionStatus: 'free', // Default, can be updated
-      storiesGenerated: 0
-    };
-    
-    // Save to localStorage
-    localStorage.setItem('user', JSON.stringify(user));
-    
-    console.log('Firebase user found:', user.email);
-    return user;
-  } catch (error) {
-    console.error('Error in getCurrentUser:', error);
     userCache = { data: null, timestamp: null };
     return null;
   }
@@ -530,13 +640,24 @@ export const checkEmailVerification = async () => {
     // Reload user to get latest verification status
     await reload(user);
     
-    // Update user data in localStorage
+    // Get real user data from Firestore
+    console.log('🔄 Fetching user data from Firestore after email verification check...');
+    const firestoreUserData = await getOrCreateUserData(user);
+    
+    // Update user data with real Firestore data
     const updatedUser = {
       email: user.email,
       uid: user.uid,
       emailVerified: user.emailVerified,
-      subscriptionStatus: 'free',
-      storiesGenerated: 0
+      // Real data from Firestore (no hardcoded values!)
+      storiesGenerated: firestoreUserData.storiesGenerated || 0,
+      monthlyStoriesGenerated: firestoreUserData.monthlyStoriesGenerated || 0,
+      subscriptionStatus: firestoreUserData.subscriptionStatus || 'free',
+      isPremium: firestoreUserData.isPremium || false,
+      isAdmin: firestoreUserData.isAdmin || false,
+      lastMonthReset: firestoreUserData.lastMonthReset,
+      createdAt: firestoreUserData.createdAt,
+      updatedAt: firestoreUserData.updatedAt
     };
     
     localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -547,7 +668,11 @@ export const checkEmailVerification = async () => {
       timestamp: Date.now()
     };
     
-    console.log('🔄 Email verification status updated:', user.emailVerified);
+    console.log('🔄 Email verification status updated with real Firestore data:', {
+      emailVerified: user.emailVerified,
+      storiesGenerated: updatedUser.storiesGenerated,
+      subscriptionStatus: updatedUser.subscriptionStatus
+    });
     
     return {
       emailVerified: user.emailVerified,
@@ -614,5 +739,57 @@ export const handleEmailVerification = async (actionCode) => {
       default:
         throw new Error(error.message || 'Error al verificar el email');
     }
+  }
+};
+
+// Helper function to update user data after story generation
+export const updateUserStoriesCount = async (newStoriesGenerated, newMonthlyStoriesGenerated) => {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      console.warn('No authenticated user to update');
+      return null;
+    }
+
+    // Get current cached user data
+    let userData = userCache.data;
+    if (!userData) {
+      const cachedUser = localStorage.getItem('user');
+      if (cachedUser) {
+        userData = JSON.parse(cachedUser);
+      }
+    }
+
+    if (!userData) {
+      console.warn('No user data found to update');
+      return null;
+    }
+
+    // Update user data with new counts
+    const updatedUser = {
+      ...userData,
+      storiesGenerated: newStoriesGenerated,
+      monthlyStoriesGenerated: newMonthlyStoriesGenerated,
+      updatedAt: new Date()
+    };
+
+    // Update cache
+    userCache = {
+      data: updatedUser,
+      timestamp: Date.now()
+    };
+
+    // Update localStorage
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+
+    console.log('✅ User stories count updated locally:', {
+      storiesGenerated: newStoriesGenerated,
+      monthlyStoriesGenerated: newMonthlyStoriesGenerated
+    });
+
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating user stories count:', error);
+    return null;
   }
 }; 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generateStory } from '../services/storyService.js';
-import { getCurrentUser } from '../services/authService';
+import { getCurrentUser, updateUserStoriesCount } from '../services/authService';
 import { useNavigate, Link } from 'react-router-dom';
 import { checkServerHealth, diagnoseBackendIssue } from '../services/storyService';
 import AudioPlayer from './AudioPlayer';
@@ -47,25 +47,27 @@ function StoryForm({ onStoryGenerated }) {
   // Function to fetch stories remaining
   const fetchStoriesRemaining = async (currentUser) => {
     try {
-      const isProduction = window.location.hostname !== 'localhost';
-      const API_URL = isProduction 
-        ? 'https://generadorcuentos.onrender.com'
-        : 'http://localhost:5001';
+      // Calculate locally from user data instead of making server request
+      console.log('📊 Calculating stories remaining locally:', {
+        email: currentUser?.email,
+        storiesGenerated: currentUser?.storiesGenerated,
+        monthlyStoriesGenerated: currentUser?.monthlyStoriesGenerated,
+        subscriptionStatus: currentUser?.subscriptionStatus
+      });
       
-      const token = localStorage.getItem('token');
-      const response = await axios.get(
-        `${API_URL}/api/stories/remaining`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      let remaining;
+      if (currentUser?.subscriptionStatus === 'active') {
+        remaining = Math.max(0, 30 - (currentUser.monthlyStoriesGenerated || 0));
+      } else {
+        remaining = Math.max(0, 3 - (currentUser?.storiesGenerated || 0));
+      }
       
-      setStoriesRemaining(response.data.storiesRemaining);
-      return response.data.storiesRemaining;
+      setStoriesRemaining(remaining);
+      console.log('✅ Stories remaining calculated:', remaining);
+      return remaining;
+      
     } catch (error) {
-      console.error('Error fetching stories remaining:', error);
+      console.error('Error calculating stories remaining:', error);
       // Calculate locally as fallback
       if (currentUser?.subscriptionStatus === 'active') {
         const remaining = 30 - (currentUser.monthlyStoriesGenerated || 0);
@@ -440,13 +442,21 @@ function StoryForm({ onStoryGenerated }) {
       
       if (result.story) {
         console.log('Story generated successfully');
-        // Actualizar el estado del usuario con las historias restantes
+        
+        // Update user data locally with the new story counts from the server response
         if (result.storiesRemaining !== undefined) {
-          const updatedUser = {
-            ...user,
-            storiesRemaining: result.storiesRemaining
-          };
-          setUser(updatedUser);
+          // Calculate the new counts based on the response
+          const userData = user;
+          let newStoriesGenerated = userData.storiesGenerated + 1;
+          let newMonthlyStoriesGenerated = userData.monthlyStoriesGenerated + 1;
+          
+          // Update local user data to stay in sync
+          const updatedUser = await updateUserStoriesCount(newStoriesGenerated, newMonthlyStoriesGenerated);
+          if (updatedUser) {
+            setUser(updatedUser);
+            // Update stories remaining based on the new counts
+            await fetchStoriesRemaining(updatedUser);
+          }
         }
 
         // Llamar al callback con la historia generada
