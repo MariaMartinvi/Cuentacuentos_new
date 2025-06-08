@@ -182,14 +182,25 @@ export const generateStory = async (storyData) => {
       };
     }
 
-    console.log('Making story generation request...');
+    console.log('🚀 Making story generation request...');
     
-    // Get fresh authentication header
-    const authHeader = await getAuthHeader();
-    console.log('Auth header obtained:', authHeader.Authorization ? 'Token present' : 'No token');
+    // Get fresh authentication header with improved error handling
+    let authHeader;
+    try {
+      authHeader = await getAuthHeader();
+      console.log('✅ Auth header obtained successfully');
+    } catch (authError) {
+      console.error('❌ Failed to get authentication header:', authError);
+      const error = new Error('Authentication failed. Please log in again.');
+      error.code = 'AUTH_FAILED';
+      throw error;
+    }
     
     if (!authHeader.Authorization) {
-      throw new Error('No authentication token available');
+      console.error('❌ No authorization token available after getting auth header');
+      const error = new Error('No authentication token available. Please log in again.');
+      error.code = 'AUTH_FAILED';
+      throw error;
     }
     
     const response = await axios.post(`${API_URL}/stories/generate`, {
@@ -205,16 +216,36 @@ export const generateStory = async (storyData) => {
       withCredentials: true
     });
 
-    console.log('Story generated successfully');
+    console.log('✅ Story generated successfully');
     return response.data;
   } catch (error) {
-    console.error('Error in story generation request:', error);
+    console.error('❌ Error in story generation request:', error);
     
-    // Handle 401 specifically - token might be expired
+    // Handle specific error responses from the backend
     if (error.response?.status === 401) {
-      console.error('❌ Authentication failed (401). Token may be expired.');
+      const errorData = error.response.data;
+      console.error('❌ Authentication failed (401):', errorData);
       
-      // Try to refresh the user session
+      // Handle different types of 401 errors based on error codes
+      switch (errorData?.code) {
+        case 'TOKEN_EXPIRED':
+        case 'TOKEN_REVOKED':
+          console.log('🔄 Token expired/revoked, attempting to refresh session...');
+          break;
+        case 'INVALID_TOKEN':
+        case 'INVALID_TOKEN_FORMAT':
+          console.log('❌ Invalid token format, clearing auth data...');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          break;
+        case 'NO_AUTH_HEADER':
+          console.log('❌ No auth header sent');
+          break;
+        default:
+          console.log('❌ Generic 401 error');
+      }
+      
+      // Try to refresh the user session one time
       try {
         console.log('🔄 Attempting to refresh user session...');
         const currentUser = auth.currentUser;
@@ -222,11 +253,10 @@ export const generateStory = async (storyData) => {
           // Force token refresh
           const newToken = await currentUser.getIdToken(true);
           localStorage.setItem('token', newToken);
-          console.log('✅ Token refreshed successfully');
+          console.log('✅ Token refreshed successfully, retrying request...');
           
           // Retry the request once with the new token
-          console.log('🔄 Retrying story generation with fresh token...');
-          const authHeader = await getAuthHeader();
+          const retryAuthHeader = await getAuthHeader();
           const retryResponse = await axios.post(`${API_URL}/stories/generate`, {
             ...storyData,
             email: currentUser.email
@@ -234,7 +264,7 @@ export const generateStory = async (storyData) => {
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
-              ...authHeader
+              ...retryAuthHeader
             },
             timeout: FETCH_TIMEOUT,
             withCredentials: true
@@ -252,6 +282,34 @@ export const generateStory = async (storyData) => {
       const authError = new Error('Authentication failed. Please log in again.');
       authError.code = 'AUTH_FAILED';
       throw authError;
+    }
+    
+    // Handle other HTTP errors
+    if (error.response?.status === 403) {
+      console.error('❌ Forbidden (403):', error.response.data);
+      throw error; // Let the component handle this (usually story limits)
+    }
+    
+    if (error.response?.status === 500) {
+      console.error('❌ Server error (500):', error.response.data);
+      throw new Error('Server error. Please try again later.');
+    }
+    
+    if (error.response?.status === 503) {
+      console.error('❌ Service unavailable (503):', error.response.data);
+      throw new Error('Service temporarily unavailable. Please try again later.');
+    }
+    
+    // Handle network errors
+    if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
+      console.error('❌ Network error');
+      throw new Error('Network error. Please check your internet connection and try again.');
+    }
+    
+    // Handle timeout errors
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      console.error('❌ Request timeout');
+      throw new Error('Request timed out. The server may be busy. Please try again.');
     }
     
     throw error;

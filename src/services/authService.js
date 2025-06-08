@@ -465,33 +465,88 @@ export const getAuthHeader = async () => {
     const firebaseUser = auth.currentUser;
     
     if (!firebaseUser) {
-      console.warn('No Firebase user found for auth header');
+      console.warn('❌ No Firebase user found for auth header');
       return {};
     }
 
-    // Force token refresh to ensure it's valid
-    // Firebase tokens expire after 1 hour, so we need to refresh them
-    console.log('🔄 Refreshing Firebase token for request...');
-    const token = await firebaseUser.getIdToken(true); // true forces refresh
+    console.log('🔐 Getting auth header for user:', firebaseUser.email);
+    
+    // Check if token is likely expired (issued more than 50 minutes ago)
+    const tokenResult = await firebaseUser.getIdTokenResult();
+    const tokenAge = Date.now() - new Date(tokenResult.issuedAtTime).getTime();
+    const tokenAgeMinutes = Math.floor(tokenAge / (1000 * 60));
+    
+    console.log('🔐 Token age:', tokenAgeMinutes, 'minutes');
+    
+    // Force refresh if token is older than 50 minutes (Firebase tokens expire at 60 minutes)
+    const forceRefresh = tokenAgeMinutes > 50;
+    
+    if (forceRefresh) {
+      console.log('🔄 Token is getting old, forcing refresh...');
+    }
+
+    // Get token with potential refresh
+    const token = await firebaseUser.getIdToken(forceRefresh);
     
     if (!token) {
-      console.warn('No token received from Firebase');
-      return {};
+      console.warn('❌ No token received from Firebase');
+      throw new Error('Failed to get Firebase authentication token');
     }
 
-    console.log('✅ Fresh Firebase token obtained');
+    console.log('✅ Firebase token obtained successfully, length:', token.length);
+    
+    // Validate token format
+    if (token.length < 100) {
+      console.error('❌ Token appears to be invalid (too short)');
+      throw new Error('Invalid token format received');
+    }
     
     // Update localStorage with fresh token
     localStorage.setItem('token', token);
     
+    // Verify the token is valid by checking its claims
+    try {
+      const tokenResult = await firebaseUser.getIdTokenResult();
+      console.log('✅ Token verified - expires at:', new Date(tokenResult.expirationTime));
+      
+      // Check if token is actually expired
+      if (new Date(tokenResult.expirationTime) <= new Date()) {
+        console.error('❌ Token is expired!');
+        throw new Error('Token is expired');
+      }
+      
+    } catch (verifyError) {
+      console.error('❌ Token verification failed:', verifyError);
+      throw new Error('Token verification failed');
+    }
+    
     return { Authorization: `Bearer ${token}` };
   } catch (error) {
-    console.error('Error getting auth header:', error);
+    console.error('❌ Error getting auth header:', error);
     
-    // If Firebase auth fails, try to get token from localStorage as fallback
+    // If we can't get a fresh token, try to sign out and clear everything
+    if (error.code === 'auth/network-request-failed') {
+      console.error('❌ Network error getting token');
+      throw new Error('Network error getting authentication token. Please check your connection.');
+    }
+    
+    if (error.code === 'auth/user-token-expired' || error.message.includes('expired')) {
+      console.error('❌ User token expired, signing out');
+      try {
+        await signOut(auth);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        userCache = { data: null, timestamp: null };
+      } catch (signOutError) {
+        console.error('Error signing out:', signOutError);
+      }
+      throw new Error('Your session has expired. Please log in again.');
+    }
+    
+    // If Firebase auth fails, try to get token from localStorage as last resort
     try {
       const cachedToken = localStorage.getItem('token');
-      if (cachedToken) {
+      if (cachedToken && cachedToken.length > 100) {
         console.warn('⚠️ Using cached token due to Firebase error. Token may be expired.');
         return { Authorization: `Bearer ${cachedToken}` };
       }
@@ -499,7 +554,12 @@ export const getAuthHeader = async () => {
       console.error('Error getting cached token:', e);
     }
     
-    return {};
+    // If all else fails, clear everything and throw
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    userCache = { data: null, timestamp: null };
+    
+    throw new Error('Authentication failed. Please log in again.');
   }
 };
 
