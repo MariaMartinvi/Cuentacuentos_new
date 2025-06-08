@@ -479,7 +479,15 @@ function StoryForm({ onStoryGenerated }) {
     } catch (error) {
       console.error('Error generating story:', error);
       
-      if (error.response?.data?.error === 'Email not verified') {
+      // Handle authentication errors specifically
+      if (error.code === 'AUTH_FAILED') {
+        console.log('Authentication failed - redirecting to login');
+        setError(t('storyForm.authenticationExpired') + ' [[login]]');
+        // Clear user data
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+      } else if (error.response?.data?.error === 'Email not verified') {
         console.log('Email verification required');
         setError(t('storyForm.emailVerificationRequired') + ' [[verify-email]]');
       } else if (error.response?.data?.error === 'Story limit reached') {
@@ -491,6 +499,13 @@ function StoryForm({ onStoryGenerated }) {
         } else {
           setError(t('storyForm.storyLimitReached') + ' [[subscribe]]');
         }
+      } else if (error.response?.status === 401) {
+        console.log('401 Unauthorized - authentication failed');
+        setError(t('storyForm.authenticationFailed') + ' [[login]]');
+        // Clear user data and redirect to login
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
       } else if (error.response?.data?.message) {
         console.log('Error message from backend:', error.response.data.message);
         setError(error.response.data.message);

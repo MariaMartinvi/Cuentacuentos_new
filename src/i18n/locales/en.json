@@ -509,7 +509,10 @@
     "emailVerificationRequired": "🔐 You must verify your email before creating stories.",
     "emailRequired": "Please enter your email",
     "recoveryError": "Error sending recovery email",
-    "requestError": "Error processing request"
+    "requestError": "Error processing request",
+    "authenticationExpired": "Your session has expired. Please log in again.",
+    "authenticationFailed": "Authentication failed. Your session has expired.",
+    "contactUs": "contact us"
   },
   "contact": {
     "title": "Contact Us",

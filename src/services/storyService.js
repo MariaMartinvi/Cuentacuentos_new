@@ -1,5 +1,6 @@
 import i18n from 'i18next'; // Importar i18n para usar traducciones globales
 import { getAuthHeader, getCurrentUser, refreshToken } from './authService';
+import { auth } from '../firebase/config';
 import config from '../config';
 import axios from 'axios';
 
@@ -146,45 +147,51 @@ export const diagnoseBackendIssue = async () => {
 };
 
 export const generateStory = async (storyData) => {
-  console.log('generateStory called with data:', storyData);
-  
-  // Si ya hay una solicitud en curso, no permitir otra
   if (pendingRequest) {
-    console.log('⏳ A story generation request is already in progress');
-    throw new Error('A story generation request is already in progress');
+    console.log('Request already in progress, queuing...');
+    await waitForRequestSlot();
   }
+  
+  pendingRequest = true;
+  console.log('Request started, pendingRequest set to true');
 
   try {
-    // Marcar que hay una solicitud en curso
-    pendingRequest = true;
-    console.log('Request marked as pending');
-    
     const user = await getCurrentUser();
-    if (!user) {
-      console.log('No authenticated user found');
-      pendingRequest = false;
+    console.log('Current user for story generation:', user?.email);
+    
+    if (!user || !user.email) {
       throw new Error('User not authenticated');
     }
 
-    // Check server health before making the request
-    console.log('Checking server health...');
+    // Check server health first  
+    console.log('Checking server health before story generation...');
     const serverHealth = await checkServerHealth();
+    console.log('Server health status:', serverHealth);
+    
     if (!serverHealth.healthy) {
-      console.error('Server health check failed:', serverHealth.details);
-      pendingRequest = false;
-      throw {
-        response: {
-          data: {
-            error: 'Server unavailable',
-            message: i18n.language === 'es'
-              ? `El servidor no está disponible en este momento. Error: ${serverHealth.details}`
-              : `The server is currently unavailable. Error: ${serverHealth.details}`
-          }
+      console.error('Server health check failed:', serverHealth);
+      
+      return {
+        error: 'server_unavailable',
+        details: serverHealth,
+        userFriendlyMessage: {
+          es: serverHealth.details 
+            ? `El servidor no está disponible en este momento. Error: ${serverHealth.details}`
+            : `The server is currently unavailable. Error: ${serverHealth.details}`
         }
       };
     }
 
     console.log('Making story generation request...');
+    
+    // Get fresh authentication header
+    const authHeader = await getAuthHeader();
+    console.log('Auth header obtained:', authHeader.Authorization ? 'Token present' : 'No token');
+    
+    if (!authHeader.Authorization) {
+      throw new Error('No authentication token available');
+    }
+    
     const response = await axios.post(`${API_URL}/stories/generate`, {
       ...storyData,
       email: user.email
@@ -192,7 +199,7 @@ export const generateStory = async (storyData) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...getAuthHeader()
+        ...authHeader
       },
       timeout: FETCH_TIMEOUT,
       withCredentials: true
@@ -202,6 +209,51 @@ export const generateStory = async (storyData) => {
     return response.data;
   } catch (error) {
     console.error('Error in story generation request:', error);
+    
+    // Handle 401 specifically - token might be expired
+    if (error.response?.status === 401) {
+      console.error('❌ Authentication failed (401). Token may be expired.');
+      
+      // Try to refresh the user session
+      try {
+        console.log('🔄 Attempting to refresh user session...');
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          // Force token refresh
+          const newToken = await currentUser.getIdToken(true);
+          localStorage.setItem('token', newToken);
+          console.log('✅ Token refreshed successfully');
+          
+          // Retry the request once with the new token
+          console.log('🔄 Retrying story generation with fresh token...');
+          const authHeader = await getAuthHeader();
+          const retryResponse = await axios.post(`${API_URL}/stories/generate`, {
+            ...storyData,
+            email: currentUser.email
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              ...authHeader
+            },
+            timeout: FETCH_TIMEOUT,
+            withCredentials: true
+          });
+          
+          console.log('✅ Story generated successfully on retry');
+          return retryResponse.data;
+        }
+      } catch (refreshError) {
+        console.error('❌ Failed to refresh token:', refreshError);
+        // Fall through to throw the original error
+      }
+      
+      // If refresh failed, throw authentication error
+      const authError = new Error('Authentication failed. Please log in again.');
+      authError.code = 'AUTH_FAILED';
+      throw authError;
+    }
+    
     throw error;
   } finally {
     pendingRequest = false;
@@ -389,12 +441,14 @@ export const getMyStories = async (page = 1, limit = 10, sortBy = 'createdAt', s
       throw new Error('User not authenticated');
     }
 
+    const authHeader = await getAuthHeader();
+    
     const response = await axios.get(`${API_URL}/stories/my-stories`, {
       params: { page, limit, sortBy, sortOrder },
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...getAuthHeader()
+        ...authHeader
       },
       timeout: FETCH_TIMEOUT,
       withCredentials: true
@@ -402,7 +456,7 @@ export const getMyStories = async (page = 1, limit = 10, sortBy = 'createdAt', s
 
     return response.data;
   } catch (error) {
-    console.error('Error fetching user stories:', error);
+    console.error('Error fetching my stories:', error);
     throw error;
   }
 };
@@ -415,12 +469,14 @@ export const getUserStories = async (userId, page = 1, limit = 10, sortBy = 'cre
       throw new Error('User not authenticated');
     }
 
+    const authHeader = await getAuthHeader();
+
     const response = await axios.get(`${API_URL}/stories/user/${userId}`, {
       params: { page, limit, sortBy, sortOrder },
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...getAuthHeader()
+        ...authHeader
       },
       timeout: FETCH_TIMEOUT,
       withCredentials: true
@@ -436,38 +492,31 @@ export const getUserStories = async (userId, page = 1, limit = 10, sortBy = 'cre
 // Function to get a specific story by ID
 export const getStoryById = async (storyId) => {
   try {
-    console.log('Fetching story by ID:', storyId);
+    const authHeader = await getAuthHeader();
     
     const response = await axios.get(`${API_URL}/stories/${storyId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...getAuthHeader()
+        ...authHeader
       },
       timeout: FETCH_TIMEOUT,
       withCredentials: true
     });
-
-    console.log('Story fetched successfully:', response.data);
+    
     return response.data;
   } catch (error) {
     console.error('Error fetching story by ID:', error);
     
-    if (error.response?.status === 404) {
+    if (error.response && error.response.status === 404) {
       throw new Error('Story not found');
     }
-    if (error.response?.status === 401) {
-      throw new Error('Authentication required');
-    }
-    if (error.response?.status === 403) {
-      throw new Error('Access denied');
-    }
     
-    throw new Error('Failed to load story');
+    throw error;
   }
 };
 
-// Rate a story
+// Function to rate a story
 export const rateStory = async (storyId, rating) => {
   try {
     const user = await getCurrentUser();
@@ -475,13 +524,15 @@ export const rateStory = async (storyId, rating) => {
       throw new Error('User not authenticated');
     }
 
+    const authHeader = await getAuthHeader();
+
     const response = await axios.post(`${API_URL}/stories/${storyId}/rate`, 
       { rating },
       {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          ...getAuthHeader()
+          ...authHeader
         },
         timeout: FETCH_TIMEOUT,
         withCredentials: true
@@ -495,19 +546,21 @@ export const rateStory = async (storyId, rating) => {
   }
 };
 
-// Get story ratings
+// Function to get story ratings
 export const getStoryRatings = async (storyId) => {
   try {
+    const authHeader = await getAuthHeader();
+    
     const response = await axios.get(`${API_URL}/stories/${storyId}/ratings`, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...getAuthHeader()
+        ...authHeader
       },
       timeout: FETCH_TIMEOUT,
       withCredentials: true
     });
-
+    
     return response.data;
   } catch (error) {
     console.error('Error fetching story ratings:', error);

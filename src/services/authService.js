@@ -107,6 +107,73 @@ const retryRequest = async (fn, maxRetries = 3, delay = 1000) => {
   throw lastError;
 };
 
+// Firebase auth state listener to handle token refresh and state changes
+let authStateListenerInitialized = false;
+
+export const initAuthStateListener = () => {
+  if (authStateListenerInitialized) {
+    console.log('Auth state listener already initialized');
+    return;
+  }
+
+  console.log('🔄 Initializing Firebase auth state listener...');
+  
+  onAuthStateChanged(auth, async (firebaseUser) => {
+    console.log('🔄 Firebase auth state changed:', firebaseUser ? firebaseUser.email : 'No user');
+    
+    if (firebaseUser) {
+      try {
+        // User is signed in, update token and user data
+        console.log('✅ User authenticated:', firebaseUser.email);
+        
+        // Get fresh token
+        const token = await firebaseUser.getIdToken(true);
+        localStorage.setItem('token', token);
+        
+        // Get/update user data from Firestore
+        const firestoreUserData = await getOrCreateUserData(firebaseUser);
+        
+        const userData = {
+          email: firebaseUser.email,
+          uid: firebaseUser.uid,
+          emailVerified: firebaseUser.emailVerified,
+          storiesGenerated: firestoreUserData.storiesGenerated || 0,
+          monthlyStoriesGenerated: firestoreUserData.monthlyStoriesGenerated || 0,
+          subscriptionStatus: firestoreUserData.subscriptionStatus || 'free',
+          isPremium: firestoreUserData.isPremium || false,
+          isAdmin: firestoreUserData.isAdmin || false,
+          lastMonthReset: firestoreUserData.lastMonthReset,
+          createdAt: firestoreUserData.createdAt,
+          updatedAt: firestoreUserData.updatedAt
+        };
+        
+        // Update cache and localStorage
+        userCache = {
+          data: userData,
+          timestamp: Date.now()
+        };
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        console.log('✅ User data updated from auth state change');
+      } catch (error) {
+        console.error('❌ Error handling auth state change:', error);
+      }
+    } else {
+      // User is signed out
+      console.log('🚪 User signed out');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      userCache = { data: null, timestamp: null };
+    }
+  });
+  
+  authStateListenerInitialized = true;
+  console.log('✅ Firebase auth state listener initialized');
+};
+
+// Auto-initialize auth state listener when this module loads
+initAuthStateListener();
+
 export const register = async (email, password) => {
   try {
     console.log('🔥 Registering with Firebase Auth:', email);
@@ -393,12 +460,45 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const getAuthHeader = () => {
+export const getAuthHeader = async () => {
   try {
-    const token = localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    const firebaseUser = auth.currentUser;
+    
+    if (!firebaseUser) {
+      console.warn('No Firebase user found for auth header');
+      return {};
+    }
+
+    // Force token refresh to ensure it's valid
+    // Firebase tokens expire after 1 hour, so we need to refresh them
+    console.log('🔄 Refreshing Firebase token for request...');
+    const token = await firebaseUser.getIdToken(true); // true forces refresh
+    
+    if (!token) {
+      console.warn('No token received from Firebase');
+      return {};
+    }
+
+    console.log('✅ Fresh Firebase token obtained');
+    
+    // Update localStorage with fresh token
+    localStorage.setItem('token', token);
+    
+    return { Authorization: `Bearer ${token}` };
   } catch (error) {
     console.error('Error getting auth header:', error);
+    
+    // If Firebase auth fails, try to get token from localStorage as fallback
+    try {
+      const cachedToken = localStorage.getItem('token');
+      if (cachedToken) {
+        console.warn('⚠️ Using cached token due to Firebase error. Token may be expired.');
+        return { Authorization: `Bearer ${cachedToken}` };
+      }
+    } catch (e) {
+      console.error('Error getting cached token:', e);
+    }
+    
     return {};
   }
 };

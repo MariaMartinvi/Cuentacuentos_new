@@ -404,7 +404,10 @@
     "waitButton": "Entendido",
     "cancelButton": "Cancelar",
     "verifyEmail": "Verificar Email",
-    "emailVerificationRequired": "🔐 Debes verificar tu email antes de crear cuentos."
+    "emailVerificationRequired": "🔐 Debes verificar tu email antes de crear cuentos.",
+    "authenticationExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
+    "authenticationFailed": "Error de autenticación. Tu sesión ha expirado.",
+    "contactUs": "contáctanos"
   },
   "contact": {
     "title": "Contáctanos",
