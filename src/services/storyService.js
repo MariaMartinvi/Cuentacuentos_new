@@ -322,90 +322,80 @@ export const generateStory = async (storyData) => {
 // Add a health check function to test server connectivity
 export const checkServerHealth = async () => {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    console.log('🔍 Checking server health...');
     
-    try {
-      // Try OPTIONS request first for CORS check
-      try {
-        const optionsResponse = await fetch(`${API_URL}/health`, {
-          method: 'OPTIONS',
-          signal: controller.signal
-        });
+    // Use a simple fetch with timeout promise race
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('timeout')), 5000);
+    });
+    
+    const fetchPromise = fetch(`${API_URL}/health`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    // Race between fetch and timeout
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
+    
+    // Process the response
+    if (!response.ok) {
+      return {
+        healthy: false,
+        status: 'error',
+        statusCode: response.status,
+        details: `Health check failed with status ${response.status} (${response.statusText})`
+      };
+    }
+
+    // Parse the response
+    const data = await response.json();
+    console.log('✅ Health check response:', data);
+
+    // Interpret the response from our enhanced health endpoint
+    const result = {
+      healthy: data.status === 'ok',
+      status: data.status || 'unknown',
+      timestamp: data.timestamp,
+      services: data.services || {}
+    };
+
+    // Add more details if available
+    if (data.services) {
+      if (data.services.openai !== 'ok') {
+        result.details = 'The AI service is experiencing issues';
         
-        if (optionsResponse.status >= 400) {
-          return { 
-            healthy: false, 
-            details: `CORS preflight failed with status ${optionsResponse.status}` 
-          };
+        if (data.services.openai_quota === 'exceeded') {
+          result.issue = 'openai_quota_exceeded';
+          result.details = 'AI service quota has been exceeded';
         }
-      } catch (corsError) {
-        console.warn('CORS preflight check failed:', corsError);
-        // Continue even if OPTIONS fails, as some servers might not support it
       }
       
-      // Main health check request
-      const response = await fetch(`${API_URL}/health`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        },
-        signal: controller.signal
-      });
-
-      // Process the response
-      if (!response.ok) {
-        return {
-          healthy: false,
-          status: 'error',
-          statusCode: response.status,
-          details: `Health check failed with status ${response.status} (${response.statusText})`
-        };
+      if (data.services.database !== 'ok') {
+        result.details = (result.details ? result.details + '. ' : '') + 'Database connection issues';
       }
-
-      // Parse the response
-      const data = await response.json();
-      console.log('Health check response:', data);
-
-      // Interpret the response from our enhanced health endpoint
-      const result = {
-        healthy: data.status === 'ok',
-        status: data.status || 'unknown',
-        timestamp: data.timestamp,
-        services: data.services || {}
-      };
-
-      // Add more details if available
-      if (data.services) {
-        if (data.services.openai !== 'ok') {
-          result.details = 'The AI service is experiencing issues';
-          
-          if (data.services.openai_quota === 'exceeded') {
-            result.issue = 'openai_quota_exceeded';
-            result.details = 'AI service quota has been exceeded';
-          }
-        }
-        
-        if (data.services.database !== 'ok') {
-          result.details = (result.details ? result.details + '. ' : '') + 'Database connection issues';
-        }
-      }
-
-      return result;
-    } finally {
-      clearTimeout(timeoutId);
     }
+
+    return result;
   } catch (error) {
-    console.error('Health check error:', error);
+    console.error('❌ Health check error:', error);
     
     // Return a friendly error response
+    if (error.message === 'timeout') {
+      return {
+        healthy: false,
+        status: 'timeout',
+        details: 'Health check timed out - server may be slow or unavailable',
+        error: 'timeout'
+      };
+    }
+    
     return {
       healthy: false,
       status: 'error',
-      details: error.name === 'AbortError' 
-        ? 'Health check timed out' 
-        : `Connection error: ${error.message}`,
-      error: error.message
+      details: `Connection error: ${error.message}`,
+      error: error.message || error.name || 'unknown'
     };
   }
 };
