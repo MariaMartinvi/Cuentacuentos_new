@@ -94,5 +94,44 @@
     "clickToLogin": "Clique aqui para fazer login",
     "verifyEmail": "Verificar Email",
     "emailVerificationRequired": "🔐 Você deve verificar seu email antes de criar histórias."
+  },
+  "firebaseErrors": {
+    "userNotFound": "Não existe uma conta com este endereço de email",
+    "invalidEmail": "O formato do email não é válido",
+    "tooManyRequests": "Muitas tentativas. Aguarde um momento antes de tentar novamente",
+    "expiredActionCode": "O link expirou. Solicite um novo",
+    "invalidActionCode": "O link não é válido ou já foi usado",
+    "weakPassword": "A senha é muito fraca. Deve ter pelo menos 6 caracteres",
+    "invalidCredential": "Email ou senha incorretos",
+    "wrongPassword": "A senha está incorreta",
+    "userDisabled": "Esta conta foi desabilitada",
+    "emailAlreadyInUse": "Já existe uma conta com este email",
+    "networkRequestFailed": "Erro de conexão. Verifique sua internet e tente novamente",
+    "internalError": "Erro interno do sistema. Tente novamente mais tarde",
+    "invalidLoginCredentials": "Credenciais de acesso incorretas",
+    "accountExistsWithDifferentCredential": "Já existe uma conta com este email usando um método diferente",
+    "credentialAlreadyInUse": "Esta credencial já está sendo usada por outra conta",
+    "operationNotAllowed": "Esta operação não é permitida",
+    "requiredRecentLogin": "Para sua segurança, você precisa fazer login novamente para realizar esta ação"
+  },
+  "appName": "AudioGretel",
+  "testimonials": {
+    "title": "O que dizem nossos usuários",
+    "subtitle": "Descubra como o AudioGretel está transformando a forma como as crianças aprendem e desfrutam das histórias",
+    "testimonial1": {
+      "name": "Juanjo Mena",
+      "role": "Pai de duas crianças",
+      "content": "O AudioGretel tem sido uma ferramenta incrível para meus filhos. Eles adoram ouvir suas próprias histórias personalizadas e melhoraram significativamente seu inglês enquanto se divertem."
+    },
+    "testimonial2": {
+      "name": "Montserrat Villaró",
+      "role": "Professora do ensino primário",
+      "content": "Como professora, valorizo muito a qualidade educacional do AudioGretel. A personalização das histórias e os diferentes níveis de idioma o tornam perfeito para a sala de aula."
+    },
+    "testimonial3": {
+      "name": "Gabriel Martín",
+      "role": "Professor infantil",
+      "content": "As audiohistórias personalizadas são uma excelente ferramenta para o desenvolvimento da linguagem. Meus alunos adoram criar suas próprias histórias e praticar a pronúncia."
+    }
   }
 } 

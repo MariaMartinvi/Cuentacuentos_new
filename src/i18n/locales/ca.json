@@ -511,5 +511,43 @@
     "forgotPasswordError": "Error en enviar el correu de recuperació",
     "forgotPasswordSuccess": "¡Correu de recuperació enviat! Si us plau, revisa la teva safata d'entrada"
   },
-  "appName": "AudioGretel"
+  "firebaseErrors": {
+    "userNotFound": "No existeix cap compte amb aquesta adreça d'email",
+    "invalidEmail": "El format de l'email no és vàlid",
+    "tooManyRequests": "Massa intents. Espera un moment abans de tornar-ho a intentar",
+    "expiredActionCode": "L'enllaç ha caducat. Sol·licita'n un de nou",
+    "invalidActionCode": "L'enllaç no és vàlid o ja ha estat utilitzat",
+    "weakPassword": "La contrasenya és molt feble. Ha de tenir almenys 6 caràcters",
+    "invalidCredential": "Email o contrasenya incorrectes",
+    "wrongPassword": "La contrasenya és incorrecta",
+    "userDisabled": "Aquest compte ha estat deshabilitat",
+    "emailAlreadyInUse": "Ja existeix un compte amb aquest email",
+    "networkRequestFailed": "Error de connexió. Verifica el teu internet i torna-ho a intentar",
+    "internalError": "Error intern del sistema. Torna-ho a intentar més tard",
+    "invalidLoginCredentials": "Credencials d'accés incorrectes",
+    "accountExistsWithDifferentCredential": "Ja existeix un compte amb aquest email utilitzant un mètode diferent",
+    "credentialAlreadyInUse": "Aquesta credencial ja està en ús per un altre compte",
+    "operationNotAllowed": "Aquesta operació no està permesa",
+    "requiredRecentLogin": "Per la teva seguretat, necessites tornar a iniciar sessió per realitzar aquesta acció"
+  },
+  "appName": "AudioGretel",
+  "testimonials": {
+    "title": "El que diuen els nostres usuaris",
+    "subtitle": "Descobreix com AudioGretel està transformant la manera en què els nens aprenen i gaudeixen de les històries",
+    "testimonial1": {
+      "name": "Juanjo Mena",
+      "role": "Pare de dos nens",
+      "content": "AudioGretel ha estat una eina increïble per als meus fills. Els encanta escoltar les seves pròpies històries personalitzades i han millorat significativament el seu anglès mentre es diverteixen."
+    },
+    "testimonial2": {
+      "name": "Montserrat Villaró",
+      "role": "Professora de primària",
+      "content": "Com a professora, valoro molt la qualitat educativa d'AudioGretel. La personalització de les històries i els diferents nivells d'idioma el fan perfecte per a l'aula."
+    },
+    "testimonial3": {
+      "name": "Gabriel Martín",
+      "role": "Professor infantil",
+      "content": "Els audiocontes personalitzats són una excel·lent eina per al desenvolupament del llenguatge. Els meus alumnes gaudeixen molt creant les seves pròpies històries i practicant la pronunciació."
+    }
+  }
 } 

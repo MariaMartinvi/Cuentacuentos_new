@@ -789,7 +789,18 @@
     "tooManyRequests": "Demasiados intentos. Espera un momento antes de intentar de nuevo",
     "expiredActionCode": "El enlace ha expirado. Solicita uno nuevo",
     "invalidActionCode": "El enlace no es válido o ya fue usado",
-    "weakPassword": "La contraseña es muy débil. Debe tener al menos 6 caracteres"
+    "weakPassword": "La contraseña es muy débil. Debe tener al menos 6 caracteres",
+    "invalidCredential": "Email o contraseña incorrectos",
+    "wrongPassword": "La contraseña es incorrecta",
+    "userDisabled": "Esta cuenta ha sido deshabilitada",
+    "emailAlreadyInUse": "Ya existe una cuenta con este email",
+    "networkRequestFailed": "Error de conexión. Verifica tu internet e intenta de nuevo",
+    "internalError": "Error interno del sistema. Intenta de nuevo más tarde",
+    "invalidLoginCredentials": "Credenciales de acceso incorrectas",
+    "accountExistsWithDifferentCredential": "Ya existe una cuenta con este email usando un método diferente",
+    "credentialAlreadyInUse": "Esta credencial ya está en uso por otra cuenta",
+    "operationNotAllowed": "Esta operación no está permitida",
+    "requiredRecentLogin": "Para tu seguridad, necesitas volver a iniciar sesión para realizar esta acción"
   },
   "appName": "AudioGretel",
   "testimonials": {

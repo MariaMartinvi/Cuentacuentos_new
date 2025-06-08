@@ -844,19 +844,19 @@
     "title": "What Our Users Say",
     "subtitle": "Discover how AudioGretel is transforming the way children learn and enjoy stories",
     "testimonial1": {
-      "name": "Maria Garcia",
-      "role": "Mother of two",
+      "name": "Juanjo Mena",
+      "role": "Father of two children",
       "content": "AudioGretel has been an incredible tool for my children. They love listening to their own personalized stories and have significantly improved their English while having fun."
     },
     "testimonial2": {
-      "name": "Carlos Rodriguez",
-      "role": "Primary School Teacher",
+      "name": "Montserrat Villaró",
+      "role": "Primary school teacher",
       "content": "As a teacher, I highly value AudioGretel's educational quality. The story personalization and different language levels make it perfect for the classroom."
     },
     "testimonial3": {
-      "name": "Ana Martinez",
-      "role": "Child Speech Therapist",
-      "content": "Personalized audio stories are an excellent tool for language development. My patients really enjoy creating their own stories and practicing pronunciation."
+      "name": "Gabriel Martín",
+      "role": "Preschool teacher",
+      "content": "Personalized audio stories are an excellent tool for language development. My students really enjoy creating their own stories and practicing pronunciation."
     }
   },
   "resetPassword": {
@@ -881,6 +881,17 @@
     "tooManyRequests": "Too many attempts. Please wait a moment before trying again",
     "expiredActionCode": "The link has expired. Please request a new one",
     "invalidActionCode": "The link is not valid or has already been used",
-    "weakPassword": "The password is too weak. It must be at least 6 characters"
+    "weakPassword": "The password is too weak. It must be at least 6 characters",
+    "invalidCredential": "Invalid email or password",
+    "wrongPassword": "Incorrect password",
+    "userDisabled": "This account has been disabled",
+    "emailAlreadyInUse": "An account already exists with this email",
+    "networkRequestFailed": "Connection error. Check your internet and try again",
+    "internalError": "Internal system error. Please try again later",
+    "invalidLoginCredentials": "Invalid login credentials",
+    "accountExistsWithDifferentCredential": "An account already exists with this email using a different method",
+    "credentialAlreadyInUse": "This credential is already in use by another account",
+    "operationNotAllowed": "This operation is not allowed",
+    "requiredRecentLogin": "For your security, you need to log in again to perform this action"
   }
 } 

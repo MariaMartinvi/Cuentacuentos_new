@@ -203,13 +203,19 @@ export const register = async (email, password) => {
     // Handle Firebase Auth errors
     switch (error.code) {
       case 'auth/email-already-in-use':
-        throw new Error(i18next.t('register.emailAlreadyInUse') || 'Ya existe una cuenta con este email');
+        throw new Error(i18next.t('firebaseErrors.emailAlreadyInUse'));
       case 'auth/invalid-email':
         throw new Error(i18next.t('firebaseErrors.invalidEmail'));
       case 'auth/operation-not-allowed':
-        throw new Error(i18next.t('register.notAllowed') || 'Registro no permitido');
+        throw new Error(i18next.t('firebaseErrors.operationNotAllowed'));
       case 'auth/weak-password':
         throw new Error(i18next.t('firebaseErrors.weakPassword'));
+      case 'auth/network-request-failed':
+        throw new Error(i18next.t('firebaseErrors.networkRequestFailed'));
+      case 'auth/internal-error':
+        throw new Error(i18next.t('firebaseErrors.internalError'));
+      case 'auth/too-many-requests':
+        throw new Error(i18next.t('firebaseErrors.tooManyRequests'));
       default:
         throw new Error(error.message || i18next.t('register.error'));
     }
@@ -283,13 +289,31 @@ export const login = async (email, password) => {
       case 'auth/user-not-found':
         throw new Error(i18next.t('firebaseErrors.userNotFound'));
       case 'auth/wrong-password':
-        throw new Error(i18next.t('login.wrongPassword') || 'Contraseña incorrecta');
+        throw new Error(i18next.t('firebaseErrors.wrongPassword'));
+      case 'auth/invalid-credential':
+        throw new Error(i18next.t('firebaseErrors.invalidCredential'));
+      case 'auth/invalid-login-credentials':
+        throw new Error(i18next.t('firebaseErrors.invalidLoginCredentials'));
       case 'auth/invalid-email':
         throw new Error(i18next.t('firebaseErrors.invalidEmail'));
       case 'auth/user-disabled':
-        throw new Error(i18next.t('login.userDisabled') || 'Esta cuenta ha sido deshabilitada');
+        throw new Error(i18next.t('firebaseErrors.userDisabled'));
       case 'auth/too-many-requests':
         throw new Error(i18next.t('firebaseErrors.tooManyRequests'));
+      case 'auth/email-already-in-use':
+        throw new Error(i18next.t('firebaseErrors.emailAlreadyInUse'));
+      case 'auth/network-request-failed':
+        throw new Error(i18next.t('firebaseErrors.networkRequestFailed'));
+      case 'auth/internal-error':
+        throw new Error(i18next.t('firebaseErrors.internalError'));
+      case 'auth/account-exists-with-different-credential':
+        throw new Error(i18next.t('firebaseErrors.accountExistsWithDifferentCredential'));
+      case 'auth/credential-already-in-use':
+        throw new Error(i18next.t('firebaseErrors.credentialAlreadyInUse'));
+      case 'auth/operation-not-allowed':
+        throw new Error(i18next.t('firebaseErrors.operationNotAllowed'));
+      case 'auth/requires-recent-login':
+        throw new Error(i18next.t('firebaseErrors.requiredRecentLogin'));
       default:
         throw new Error(error.message || i18next.t('login.error'));
     }

@@ -484,6 +484,45 @@
     "french": "Frantsesa",
     "galician": "Galiziera",
     "basque": "Euskara",
-    "portuguese": "Portugesa"
+    "portuguese": "Portugalera"
+  },
+  "firebaseErrors": {
+    "userNotFound": "Ez dago konturik email helbide honekin",
+    "invalidEmail": "Email formatua ez da baliozkoa",
+    "tooManyRequests": "Saiaera gehiegi. Itxaron pixka bat berriro saiatu aurretik",
+    "expiredActionCode": "Esteka iraungi da. Eskatu berri bat",
+    "invalidActionCode": "Esteka ez da baliozkoa edo dagoeneko erabili da",
+    "weakPassword": "Pasahitza oso ahula da. Gutxienez 6 karaktere izan behar ditu",
+    "invalidCredential": "Email edo pasahitz okerra",
+    "wrongPassword": "Pasahitza okerra da",
+    "userDisabled": "Kontu hau desgaitu egin da",
+    "emailAlreadyInUse": "Dagoeneko badago kontu bat email honekin",
+    "networkRequestFailed": "Konexio errorea. Egiaztatu zure internet konexioa eta saiatu berriro",
+    "internalError": "Sistemaren barne errorea. Saiatu berriro geroago",
+    "invalidLoginCredentials": "Saioa hasteko kredentzial okerrak",
+    "accountExistsWithDifferentCredential": "Dagoeneko badago kontu bat email honekin metodo desberdin bat erabiliz",
+    "credentialAlreadyInUse": "Kredentzial hau dagoeneko beste kontu batek erabiltzen du",
+    "operationNotAllowed": "Eragiketa hau ez dago baimenduta",
+    "requiredRecentLogin": "Zure segurtasunerako, berriro saioa hasi behar duzu ekintza hau egiteko"
+  },
+  "appName": "AudioGretel",
+  "testimonials": {
+    "title": "Gure erabiltzaileek zer dioten",
+    "subtitle": "Aurkitu nola aldatzen ari den AudioGretel haurrek istoriak ikasi eta gozatzen dituzten modua",
+    "testimonial1": {
+      "name": "Juanjo Mena",
+      "role": "Bi seme-alaben aita",
+      "content": "AudioGretel tresna bikaina izan da nire seme-alabentzat. Beren istorio pertsonalizatuak entzutea gustoko dute eta nabarmen hobetu dute beren ingelesa ondo pasatzen duen bitartean."
+    },
+    "testimonial2": {
+      "name": "Montserrat Villaró",
+      "role": "Lehen hezkuntzako irakasle",
+      "content": "Irakasle gisa, AudioGretel-en hezkuntza kalitatea asko baloratzen dut. Istorien pertsonalizazioak eta hizkuntza maila desberdinak ikasgelarako perfektua egiten dute."
+    },
+    "testimonial3": {
+      "name": "Gabriel Martín",
+      "role": "Haur hezkuntza irakasle",
+      "content": "Audio-ipuin pertsonalizatuak hizkuntza garapenerako tresna bikaina dira. Nire ikasleek asko gozatzen dute beren ipuinak sortzen eta ahoskera praktikatzen."
+    }
   }
 } 
