@@ -24,37 +24,51 @@ function StoryDisplay({ story }) {
     setIsPublished(story?.published || false);
   }, [story]);
 
-  // Update voice type when language changes
+  // Update voice type when story language changes
   useEffect(() => {
-    switch (i18n.language) {
+    if (!story?.language) return;
+    
+    // Map story language to voice type
+    const storyLanguage = story.language.toLowerCase();
+    switch (storyLanguage) {
+      case 'english':
       case 'en':
         setVoiceType('female-english');
         break;
+      case 'catalan':
       case 'ca':
         setVoiceType('female-catalan');
         break;
+      case 'galician':
       case 'gl':
         setVoiceType('female-galician');
         break;
+      case 'basque':
       case 'eu':
         setVoiceType('female-basque');
         break;
+      case 'german':
       case 'de':
         setVoiceType('female-german');
         break;
+      case 'italian':
       case 'it':
         setVoiceType('female-italian');
         break;
+      case 'french':
       case 'fr':
         setVoiceType('female-french');
         break;
+      case 'portuguese':
       case 'pt':
-        setVoiceType('female-portuguese');
+        setVoiceType('female-portuguese-br');
         break;
+      case 'spanish':
+      case 'es':
       default:
         setVoiceType('female');
     }
-  }, [i18n.language]);
+  }, [story?.language]);
 
   if (!story) return null;
 
@@ -397,6 +411,29 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
 
       {audioUrl && <AudioPlayer audioUrl={audioUrl} />}
 
+      {audioUrl && !isPublished && (
+        <button 
+          onClick={handlePublishStory}
+          className="publish-button full-width"
+          disabled={isPublishing}
+        >
+          {isPublishing ? (
+            <>
+              <span className="spinner"></span> {t('storyDisplay.publishing')}
+            </>
+          ) : (
+            <>
+              <span className="btn-icon">🌟</span> {t('storyDisplay.publishAudioStory')}
+            </>
+          )}
+        </button>
+      )}
+      {audioUrl && isPublished && (
+        <div className="published-status full-width">
+          <span className="btn-icon">✅</span> {t('storyDisplay.published')}
+        </div>
+      )}
+
       {audioUrl && (
         <div className="audio-actions">
           {/* Share button moved to AudioPlayer component */}
@@ -425,28 +462,6 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
           >
             <span className="btn-icon">📤</span> {t('common.share')}
           </button>
-          {audioUrl && !isPublished && (
-            <button 
-              onClick={handlePublishStory}
-              className="publish-button"
-              disabled={isPublishing}
-            >
-              {isPublishing ? (
-                <>
-                  <span className="spinner"></span> {t('storyDisplay.publishing')}
-                </>
-              ) : (
-                <>
-                  <span className="btn-icon">🌟</span> {t('storyDisplay.publishAudioStory')}
-                </>
-              )}
-            </button>
-          )}
-          {audioUrl && isPublished && (
-            <div className="published-status">
-              <span className="btn-icon">✅</span> {t('storyDisplay.published')}
-            </div>
-          )}
         </div>
       </div>
 
