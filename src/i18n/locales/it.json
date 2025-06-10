@@ -216,6 +216,9 @@
     "published": "Pubblicato",
     "audioGenerationInProgress": "L'audio è in fase di generazione. Se esci ora, il progresso andrà perso. Sei sicuro?"
   },
+  "auth": {
+    "signingInWithGoogle": "Accesso con Google in corso..."
+  },
   "storyForm": {
     "title": "Crea la Tua Storia",
     "topicLabel": "Tema della Storia",

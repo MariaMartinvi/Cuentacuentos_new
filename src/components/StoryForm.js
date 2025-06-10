@@ -485,7 +485,7 @@ function StoryForm({ onStoryGenerated }) {
         ageGroup,
         childNames,
         englishLevel,
-        spanishLevel: selectedLanguage,
+        spanishLevel: selectedLanguage === 'es' ? englishLevel : 'intermediate', // Only set spanishLevel for Spanish
         language: selectedLanguage,
         email: user?.email
       };
@@ -661,16 +661,29 @@ function StoryForm({ onStoryGenerated }) {
     if (!showWarning) return null;
 
     const nextDay = getNextRenewalDay();
+    
+    // Get the appropriate message based on warning type
+    let modalMessage = '';
+    if (warningType === 'login') {
+      modalMessage = t('storyForm.loginRequiredWarning');
+    } else if (warningType === 'freeLimit') {
+      modalMessage = t('storyForm.freeLimitWarning');
+    } else if (warningType === 'premiumLimit') {
+      modalMessage = t('storyForm.premiumLimitWarning', { day: nextDay });
+    } else if (warningMessage) {
+      modalMessage = warningMessage;
+    }
+    
+    // Don't show modal if there's no message
+    if (!modalMessage || modalMessage.trim() === '') {
+      return null;
+    }
 
     return (
       <div className="warning-overlay" onClick={() => setShowWarning(false)}>
         <div className="warning-modal" onClick={(e) => e.stopPropagation()}>
           <div className="warning-content">
-            <p>
-              {warningType === 'login' && t('storyForm.loginRequiredWarning')}
-              {warningType === 'freeLimit' && t('storyForm.freeLimitWarning')}
-              {warningType === 'premiumLimit' && t('storyForm.premiumLimitWarning', { day: nextDay })}
-            </p>
+            <p>{modalMessage}</p>
           </div>
           <div className="warning-actions">
             {warningType === 'login' && (

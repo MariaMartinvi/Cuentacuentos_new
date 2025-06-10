@@ -70,15 +70,20 @@ function StoryDisplay({ story }) {
     console.log('📖 Story object:', story);
     console.log('🌍 Story language:', story?.language);
     console.log('🗣️ Current voice type:', voiceType);
+    console.log('🌐 Current interface language:', i18n.language);
     console.log('================================');
     
+    // Use story language if available, otherwise fall back to interface language
+    let languageToUse = story?.language || i18n.language;
+    
+    // Additional fallback: if story language is not properly mapped, use interface language
     if (!story?.language) {
-      console.log('⚠️ No story language found, keeping default voice type');
-      return;
+      console.log('⚠️ No story language found, using interface language:', i18n.language);
+      languageToUse = i18n.language;
     }
     
-    // Map story language to voice type
-    const storyLanguage = story.language.toLowerCase();
+    // Map language to voice type
+    const storyLanguage = languageToUse.toLowerCase();
     console.log('🔄 Mapping language to voice:', storyLanguage);
     
     switch (storyLanguage) {
@@ -121,7 +126,7 @@ function StoryDisplay({ story }) {
         setVoiceType('female');
     }
     console.log('✅ Voice type mapping complete');
-  }, [story?.language]);
+  }, [story?.language, i18n.language]);
 
   if (!story) return null;
 
@@ -157,12 +162,17 @@ function StoryDisplay({ story }) {
     setIsGeneratingAudio(true);
 
     try {
-      console.log("Solicitando audio para texto:", story.content.substring(0, 50) + "...");
-      console.log("Opciones de audio:", {
+      console.log("🎤 === AUDIO GENERATION DEBUG ===");
+      console.log("📖 Story language:", story?.language);
+      console.log("🗣️ Selected voice type:", voiceType);
+      console.log("🌐 Interface language:", i18n.language);
+      console.log("📝 Story content preview:", story.content.substring(0, 50) + "...");
+      console.log("🎛️ Audio options:", {
         voiceType,
         speechRate,
         musicTrack
       });
+      console.log("================================");
 
       // Separar título del contenido (igual que hace el backend en storyController)
       const contentLines = story.content.split('\n');

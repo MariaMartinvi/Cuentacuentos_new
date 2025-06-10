@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import './GoogleCallback.css'; // We'll create this CSS file next
 
 const GoogleCallback = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
@@ -41,7 +43,7 @@ const GoogleCallback = () => {
     <div className="auth-overlay">
       <div className="auth-modal">
         <div className="loading-spinner"></div>
-        <p>Iniciando sesión con Google...</p>
+        <p>{t('auth.signingInWithGoogle', 'Iniciando sesión con Google...')}</p>
       </div>
     </div>
   );
