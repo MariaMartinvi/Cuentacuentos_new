@@ -99,8 +99,21 @@ export const initProxy = () => {
  * Handle messages from the proxy iframe
  */
 const handleProxyMessage = (event) => {
-  if (!event.data) {
+  // Validate event data structure
+  if (!event || !event.data) {
     console.warn('[PROXY-HANDLER] Mensaje recibido sin datos');
+    return;
+  }
+  
+  // Filter out messages from other sources (like browser extensions, other iframes, etc.)
+  if (event.source !== proxyFrame?.contentWindow) {
+    console.log('[PROXY-HANDLER] Mensaje ignorado de fuente externa:', event.origin);
+    return;
+  }
+  
+  // Ensure the message has a valid type
+  if (typeof event.data.type === 'undefined' || event.data.type === null) {
+    console.warn('[PROXY-HANDLER] Mensaje recibido con tipo undefined/null, ignorando:', event.data);
     return;
   }
   
@@ -146,7 +159,17 @@ const handleProxyMessage = (event) => {
   } else if (event.data.type === 'proxyError') {
     console.error(`[PROXY-HANDLER] Error general del proxy: ${event.data.error}`);
   } else {
-    console.warn(`[PROXY-HANDLER] Mensaje de tipo desconocido recibido: ${event.data.type}`);
+    // Log more details about unknown messages to debug the issue
+    console.warn(`[PROXY-HANDLER] Mensaje de tipo desconocido recibido:`, {
+      type: event.data.type,
+      origin: event.origin,
+      source: event.source,
+      dataKeys: Object.keys(event.data || {}),
+      fullData: event.data
+    });
+    
+    // Don't throw an error for unknown message types, just ignore them
+    return;
   }
 };
 

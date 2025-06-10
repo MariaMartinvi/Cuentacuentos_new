@@ -8,7 +8,7 @@ function StoryDisplay({ story }) {
   const { t, i18n } = useTranslation();
   const [audioUrl, setAudioUrl] = useState(null);
   const [voiceType, setVoiceType] = useState(i18n.language === 'en' ? 'female-english' : 'female');
-  const [speechRate, setSpeechRate] = useState(0.8); // Default to normal speed
+  const [speechRate, setSpeechRate] = useState(0.6); // Default to relaxing speed for bedtime stories
   const [musicTrack, setMusicTrack] = useState('random'); // Default to random music
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioCount, setAudioCount] = useState(0);
@@ -166,6 +166,7 @@ function StoryDisplay({ story }) {
       console.log("📖 Story language:", story?.language);
       console.log("🗣️ Selected voice type:", voiceType);
       console.log("🌐 Interface language:", i18n.language);
+      console.log("📋 Story ID:", story?.id);
       console.log("📝 Story content preview:", story.content.substring(0, 50) + "...");
       console.log("🎛️ Audio options:", {
         voiceType,
@@ -188,7 +189,8 @@ function StoryDisplay({ story }) {
         voiceId: voiceType,
         speechRate: speechRate,
         musicTrack: musicTrack,
-        title: titleFromContent // Pasar el título extraído para detección automática de pausas
+        title: titleFromContent, // Pasar el título extraído para detección automática de pausas
+        storyId: story?.id // Agregar storyId para que el backend pueda guardar datos temporales
       });
 
       if (!audioData) {
@@ -589,11 +591,11 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
                 onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
                 disabled={isGeneratingAudio || audioCount >= 4}
               >
-                <option value="0.5">{t('storyDisplay.speedVerySlow')}</option>
-                <option value="0.7">{t('storyDisplay.speedSlow')}</option>
-                <option value="0.8">{t('storyDisplay.speedNormal')}</option>
-                <option value="1.0">{t('storyDisplay.speedFast')}</option>
-                <option value="1.2">{t('storyDisplay.speedVeryFast')}</option>
+                <option value="0.4">{t('storyDisplay.speedVerySlow')}</option>
+                <option value="0.5">{t('storyDisplay.speedSlow')}</option>
+                <option value="0.6">{t('storyDisplay.speedNormal')}</option>
+                <option value="0.7">{t('storyDisplay.speedFast')}</option>
+                <option value="0.8">{t('storyDisplay.speedVeryFast')}</option>
               </select>
             </div>
           </div>

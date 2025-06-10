@@ -319,18 +319,20 @@ const Profile = () => {
                   {userStories.map((story, index) => (
                     <div key={story._id} className="story-card-wrapper">
                       <Link 
-                        to={`/story-examples?storyId=${story._id}`}
+                        to={`/story-examples?storyId=${story._id}&autoPlay=audio`}
                         className="story-card-link"
-                        title={i18n.language === 'es' ? 'Ver historia en galería de ejemplos' : 'View story in examples gallery'}
+                        title={i18n.language === 'es' ? 'Escuchar historia' : 'Listen to story'}
                       >
                         <div className="story-card">
                           <div className="story-card-header">
                             <h4 className="story-card-title">{story.title}</h4>
-                            <span className="story-card-date">
-                              {new Date(story.createdAt).toLocaleDateString(
-                                i18n.language === 'es' ? 'es-ES' : 'en-US'
-                              )}
-                            </span>
+                            {story.createdAt && !isNaN(new Date(story.createdAt)) && (
+                              <span className="story-card-date">
+                                {new Date(story.createdAt).toLocaleDateString(
+                                  i18n.language === 'es' ? 'es-ES' : 'en-US'
+                                )}
+                              </span>
+                            )}
                           </div>
                           <div className="story-card-content">
                             <p className="story-card-preview">
@@ -367,7 +369,7 @@ const Profile = () => {
                           </div>
                           <div className="story-card-footer">
                             <span className="view-story-text">
-                              {i18n.language === 'es' ? 'Hacer clic para ver en galería →' : 'Click to view in gallery →'}
+                              {i18n.language === 'es' ? 'Hacer clic para escuchar →' : 'Click to listen →'}
                             </span>
                           </div>
                         </div>
