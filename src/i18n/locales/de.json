@@ -302,7 +302,10 @@
     "emailVerificationRequired": "🔐 Du musst deine Email verifizieren, bevor du Geschichten erstellen kannst.",
     "authenticationFailed": "Authentifizierungsfehler. Ihre Sitzung ist abgelaufen.",
     "contactUs": "kontaktieren Sie uns",
-    "generateInProgress": "Eine Geschichte wird generiert. Wenn Sie jetzt verlassen, geht der Fortschritt verloren. Sind Sie sicher?"
+    "generateInProgress": "Eine Geschichte wird generiert. Wenn Sie jetzt verlassen, geht der Fortschritt verloren. Sind Sie sicher?",
+    "storyGenerationWarning": "Eine Geschichte wird generiert. Wenn Sie die Seite jetzt verlassen, geht der Fortschritt verloren und Sie müssen von vorne beginnen.",
+    "audioGenerationWarning": "Audio wird generiert. Wenn Sie die Seite jetzt verlassen, geht der Fortschritt verloren und Sie müssen das Audio erneut generieren.",
+    "publishingWarning": "Die Geschichte wird veröffentlicht. Wenn Sie die Seite jetzt verlassen, wird die Veröffentlichung möglicherweise nicht korrekt abgeschlossen."
   },
   "login": {
     "title": "Anmelden",

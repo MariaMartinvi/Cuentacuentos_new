@@ -304,7 +304,10 @@
     "verifyEmail": "Verificar Email",
     "emailVerificationRequired": "🔐 Has de verificar el teu email abans de crear contes.",
     "authenticationFailed": "Error d'autenticació. La teva sessió ha expirat.",
-    "generateInProgress": "S'està generant un conte. Si surts ara, es perdrà el progrés. Estàs segur?"
+    "generateInProgress": "S'està generant un conte. Si surts ara, es perdrà el progrés. Estàs segur?",
+    "storyGenerationWarning": "S'està generant un conte. Si abandones la pàgina ara, es perdrà el progrés i hauràs de començar de nou.",
+    "audioGenerationWarning": "S'està generant l'àudio. Si abandones la pàgina ara, es perdrà el progrés i hauràs de generar l'àudio de nou.",
+    "publishingWarning": "S'està publicant la història. Si abandones la pàgina ara, és possible que la publicació no es completi correctament."
   },
   "login": {
     "title": "Iniciar sessió",

@@ -306,7 +306,10 @@
     "emailVerificationRequired": "🔐 Debes verificar o teu email antes de crear contos.",
     "authenticationFailed": "Erro de autenticación. A túa sesión caducou.",
     "contactUs": "contactanos",
-    "generateInProgress": "Estase xerando un conto. Se saes agora, perderase o progreso. Estás seguro?"
+    "generateInProgress": "Estase xerando un conto. Se saes agora, perderase o progreso. Estás seguro?",
+    "storyGenerationWarning": "Estase xerando un conto. Se abandonas a páxina agora, perderase o progreso e deberás comezar de novo.",
+    "audioGenerationWarning": "Estase xerando o audio. Se abandonas a páxina agora, perderase o progreso e deberás xerar o audio de novo.",
+    "publishingWarning": "Estase publicando a historia. Se abandonas a páxina agora, é posible que a publicación non se complete correctamente."
   },
   "login": {
     "title": "Iniciar sesión",

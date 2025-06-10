@@ -44,12 +44,43 @@ function StoryDisplay({ story }) {
     };
   }, [isGeneratingAudio, t]);
 
+  // Handle beforeunload event to warn user when publishing
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isPublishing) {
+        const message = t('storyForm.publishingWarning', { defaultValue: 'Se está publicando la historia. Si sales ahora, es posible que la publicación no se complete correctamente.' });
+        e.preventDefault();
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    if (isPublishing) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isPublishing, t]);
+
   // Update voice type when story language changes
   useEffect(() => {
-    if (!story?.language) return;
+    console.log('🔍 === VOICE TYPE MAPPING DEBUG ===');
+    console.log('📖 Story object:', story);
+    console.log('🌍 Story language:', story?.language);
+    console.log('🗣️ Current voice type:', voiceType);
+    console.log('================================');
+    
+    if (!story?.language) {
+      console.log('⚠️ No story language found, keeping default voice type');
+      return;
+    }
     
     // Map story language to voice type
     const storyLanguage = story.language.toLowerCase();
+    console.log('🔄 Mapping language to voice:', storyLanguage);
+    
     switch (storyLanguage) {
       case 'english':
       case 'en':
@@ -86,8 +117,10 @@ function StoryDisplay({ story }) {
       case 'spanish':
       case 'es':
       default:
+        console.log('🇪🇸 Setting default Spanish voice');
         setVoiceType('female');
     }
+    console.log('✅ Voice type mapping complete');
   }, [story?.language]);
 
   if (!story) return null;
@@ -424,6 +457,21 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
         </div>
       )}
 
+      {/* Warning banners for different processes */}
+      {isGeneratingAudio && (
+        <div className="warning-banner audio-warning">
+          <span className="warning-icon">⚠️</span>
+          <span className="warning-text">{t('storyForm.audioGenerationWarning')}</span>
+        </div>
+      )}
+
+      {isPublishing && (
+        <div className="warning-banner publishing-warning">
+          <span className="warning-icon">⚠️</span>
+          <span className="warning-text">{t('storyForm.publishingWarning')}</span>
+        </div>
+      )}
+
       <h3>
         <span className="title-icon">📖</span>
         {story.title || (i18n.language === 'en' ? 'Your Story' : t('storyDisplay.title'))}
@@ -559,6 +607,15 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
                 <option value="forest">{t('storyDisplay.forestMusic')}</option>
                 <option value="magic-box">{t('storyDisplay.musicBoxMusic')}</option>
                 <option value="journey">{t('storyDisplay.journeyMusic')}</option>
+                {/* Additional music options - only show in dev mode for now */}
+                {process.env.NODE_ENV === 'development' && (
+                  <>
+                    <option value="quiet-sleep">Quiet Sleep</option>
+                    <option value="meditation">Meditation</option>
+                    <option value="calm">Calm Mind</option>
+                    <option value="just-relax">Just Relax</option>
+                  </>
+                )}
               </select>
             </div>
           </div>

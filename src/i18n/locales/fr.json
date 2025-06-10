@@ -301,7 +301,10 @@
     "emailVerificationRequired": "🔐 Vous devez vérifier votre email avant de créer des histoires.",
     "authenticationFailed": "Échec de l'authentification. Votre session a expiré.",
     "contactUs": "nous contacter",
-    "generateInProgress": "Une histoire est en cours de génération. Si vous partez maintenant, le progrès sera perdu. Êtes-vous sûr?"
+    "generateInProgress": "Une histoire est en cours de génération. Si vous partez maintenant, le progrès sera perdu. Êtes-vous sûr?",
+    "storyGenerationWarning": "Une histoire est en cours de génération. Si vous quittez la page maintenant, le progrès sera perdu et vous devrez recommencer.",
+    "audioGenerationWarning": "L'audio est en cours de génération. Si vous quittez la page maintenant, le progrès sera perdu et vous devrez générer l'audio à nouveau.",
+    "publishingWarning": "L'histoire est en cours de publication. Si vous quittez la page maintenant, la publication pourrait ne pas se terminer correctement."
   },
   "login": {
     "title": "Se connecter",

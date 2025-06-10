@@ -292,6 +292,7 @@
     "creativityInnovative": "Innovativo",
     "creativityCreative": "Molto Creativo",
     "generateButton": "Genera Storia",
+    "generating": "Generazione in corso...",
     "alertTopicRequired": "Scrivi qui il tema della tua storia",
     "storyLimitReached": "Hai raggiunto il tuo limite di 3 storie gratuite. Iscriviti per generare più storie.",
     "premiumStoryLimitReached": "Hai raggiunto il tuo limite di 30 storie premium. Aspetta fino al giorno {{day}} per generare più storie.",
@@ -309,7 +310,10 @@
     "emailVerificationRequired": "🔐 Devi verificare la tua email prima di creare storie.",
     "authenticationFailed": "Autenticazione fallita. La tua sessione è scaduta.",
     "contactUs": "contattaci",
-    "generateInProgress": "Una storia è in fase di generazione. Se esci ora, il progresso andrà perso. Sei sicuro?"
+    "generateInProgress": "Una storia è in fase di generazione. Se esci ora, il progresso andrà perso. Sei sicuro?",
+    "storyGenerationWarning": "Una storia è in fase di generazione. Se abbandoni la pagina ora, il progresso andrà perso e dovrai ricominciare da capo.",
+    "audioGenerationWarning": "L'audio è in fase di generazione. Se abbandoni la pagina ora, il progresso andrà perso e dovrai generare l'audio di nuovo.",
+    "publishingWarning": "La storia è in fase di pubblicazione. Se abbandoni la pagina ora, la pubblicazione potrebbe non completarsi correttamente."
   },
   "login": {
     "title": "Accedi",

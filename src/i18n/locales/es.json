@@ -409,7 +409,10 @@
     "authenticationExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
     "authenticationFailed": "Error de autenticación. Tu sesión ha expirado.",
     "contactUs": "contáctanos",
-    "generateInProgress": "Se está generando un cuento. Si sales ahora, se perderá el progreso. ¿Estás seguro?"
+    "generateInProgress": "Se está generando un cuento. Si sales ahora, se perderá el progreso. ¿Estás seguro?",
+    "storyGenerationWarning": "Se está generando un cuento. Si abandonas la página ahora, se perderá el progreso y deberás comenzar de nuevo.",
+    "audioGenerationWarning": "Se está generando el audio. Si abandonas la página ahora, se perderá el progreso y deberás generar el audio nuevamente.",
+    "publishingWarning": "Se está publicando la historia. Si abandonas la página ahora, es posible que la publicación no se complete correctamente."
   },
   "contact": {
     "title": "Contáctanos",

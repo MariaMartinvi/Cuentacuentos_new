@@ -514,7 +514,10 @@
     "authenticationExpired": "Your session has expired. Please log in again.",
     "authenticationFailed": "Authentication failed. Your session has expired.",
     "contactUs": "contact us",
-    "generateInProgress": "A story is being generated. If you leave now, progress will be lost. Are you sure?"
+    "generateInProgress": "A story is being generated. If you leave now, progress will be lost. Are you sure?",
+    "storyGenerationWarning": "A story is being generated. If you leave the page now, progress will be lost and you will need to start over.",
+    "audioGenerationWarning": "Audio is being generated. If you leave the page now, progress will be lost and you will need to generate the audio again.",
+    "publishingWarning": "The story is being published. If you leave the page now, the publication may not complete correctly."
   },
   "contact": {
     "title": "Contact Us",

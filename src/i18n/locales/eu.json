@@ -296,7 +296,10 @@
     "emailVerificationRequired": "🔐 Ipuinak sortu aurretik zure email-a egiaztatu behar duzu.",
     "authenticationFailed": "Autentifikazio errorea. Zure saioa iraungitu da.",
     "contactUs": "jarri gurekin harremanetan",
-    "generateInProgress": "Ipuin bat sortzen ari da. Orain irteten bazara, aurrerapena galduko da. Ziur zaude?"
+    "generateInProgress": "Ipuin bat sortzen ari da. Orain irteten bazara, aurrerapena galduko da. Ziur zaude?",
+    "storyGenerationWarning": "Ipuin bat sortzen ari da. Orrialdea orain uzten baduzu, aurrerapena galduko da eta berriro hasi beharko duzu.",
+    "audioGenerationWarning": "Audioa sortzen ari da. Orrialdea orain uzten baduzu, aurrerapena galduko da eta berriro sortu beharko duzu audioa.",
+    "publishingWarning": "Istorioa argitaratzen ari da. Orrialdea orain uzten baduzu, argitalpena ez da behar bezala amaituko."
   },
   "login": {
     "title": "Saioa hasi",

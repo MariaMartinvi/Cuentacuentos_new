@@ -161,6 +161,21 @@ function StoryForm({ onStoryGenerated }) {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isLoading, t]);
+
+  // Show warning banner when generating story
+  useEffect(() => {
+    if (isLoading) {
+      setWarningMessage(t('storyForm.storyGenerationWarning'));
+      setWarningType('generation');
+      setShowWarning(true);
+    } else {
+      if (warningType === 'generation') {
+        setShowWarning(false);
+        setWarningMessage('');
+        setWarningType('');
+      }
+    }
+  }, [isLoading, t]);
   
   const setupRateLimitCountdown = (retryAfterISO) => {
     let retryAfter;
@@ -772,6 +787,14 @@ function StoryForm({ onStoryGenerated }) {
         <img src="/logo192.png" alt="AudioGretel Logo" className="icon-title-logo" />
         {t('storyForm.title')}
       </h2>
+
+      {/* Warning banner when generating story */}
+      {isLoading && (
+        <div className="warning-banner story-generation-warning">
+          <span className="warning-icon">⚠️</span>
+          <span className="warning-text">{t('storyForm.storyGenerationWarning')}</span>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
