@@ -9,6 +9,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isSharing, setIsSharing] = useState(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -66,6 +67,50 @@ const AudioPlayer = ({ audioUrl, title }) => {
     return audioUrl;
   };
 
+  const handleShareAudio = async () => {
+    if (isSharing) return;
+    
+    setIsSharing(true);
+    
+    try {
+      const productionUrl = 'https://www.audiogretel.com';
+      const textToShare = `🎧 ${title || 'Cuento'}
+
+Escucha este cuento en AudioGretel: ${productionUrl}`;
+      
+      // Check if Web Share API is available and supports files
+      if (navigator.share) {
+        try {
+          // Try to share the audio file if possible
+          const response = await fetch(getDownloadUrl());
+          const blob = await response.blob();
+          const file = new File([blob], `${title || 'cuento'}.mp3`, { type: 'audio/mp3' });
+          
+          await navigator.share({
+            title: title || 'Cuento',
+            text: textToShare,
+            files: [file]
+          });
+        } catch (shareError) {
+          // Fallback to text-only sharing
+          await navigator.share({
+            title: title || 'Cuento',
+            text: textToShare
+          });
+        }
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(textToShare);
+        // You could add a toast notification here
+        console.log('Texto copiado al portapapeles');
+      }
+    } catch (error) {
+      console.error('Error sharing audio:', error);
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
   return (
     <div className="audio-player">
       <audio ref={audioRef} src={getDownloadUrl()} />
@@ -108,6 +153,14 @@ const AudioPlayer = ({ audioUrl, title }) => {
         >
           {t('audioPlayer.download')}
         </a>
+
+        <button 
+          className="share-audio-btn"
+          onClick={handleShareAudio}
+          aria-label={t('audioPlayer.share.audioTitle')}
+        >
+          📤 {t('storyDisplay.shareAudio', 'Compartir')}
+        </button>
       </div>
     </div>
   );
