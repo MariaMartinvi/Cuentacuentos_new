@@ -670,6 +670,8 @@ function StoryForm({ onStoryGenerated }) {
       modalMessage = t('storyForm.freeLimitWarning');
     } else if (warningType === 'premiumLimit') {
       modalMessage = t('storyForm.premiumLimitWarning', { day: nextDay });
+    } else if (warningType === 'generation') {
+      modalMessage = t('storyForm.storyGenerationWarning');
     } else if (warningMessage) {
       modalMessage = warningMessage;
     }
@@ -730,6 +732,14 @@ function StoryForm({ onStoryGenerated }) {
                 onClick={() => setShowWarning(false)}
               >
                 {t('storyForm.waitButton')}
+              </button>
+            )}
+            {warningType === 'generation' && (
+              <button 
+                className="warning-btn warning-btn-secondary"
+                onClick={() => setShowWarning(false)}
+              >
+                {t('storyForm.okButton', 'OK')}
               </button>
             )}
           </div>
