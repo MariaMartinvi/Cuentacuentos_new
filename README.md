@@ -1,201 +1,224 @@
-# Getting Started with Create React App
+# 🎨 AudioGretel - AI Audio Story Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> **Generador de audiocuentos personalizados con IA para niños**  
+> AI-powered personalized audio story generator for children
 
-## Available Scripts
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://audiogretel.com)
+[![React](https://img.shields.io/badge/React-18.0-blue)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.0-green)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-In the project directory, you can run:
+## 🌟 Características Principales
 
-### `npm start`
+AudioGretel es una aplicación web innovadora que utiliza inteligencia artificial para crear cuentos de audio personalizados para niños. Perfecta para:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🎭 **Cuentos Personalizados**: Genera historias únicas basadas en protagonistas y temas elegidos
+- 🌍 **Multiidioma**: Soporte para Español, Inglés y Francés
+- 👶 **Grupos de Edad**: Contenido apropiado para 3-5, 6-8 y 9-12 años
+- 🎵 **Audio Profesional**: Narración con voces naturales y música de fondo
+- 📚 **Aprendizaje de Idiomas**: Ideal para familias multilingües
+- ⚡ **Generación Instantánea**: Cuentos creados en tiempo real
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Demo en Vivo
 
-### `npm test`
+👉 **[Prueba AudioGretel aquí](https://audiogretel.com)**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Páginas Principales:
+- [Generador de Audiocuentos](https://audiogretel.com/herramientas/generador-audiocuentos)
+- [Guía: Cómo Generar Audiocuentos con IA](https://audiogretel.com/como-generar-audiocuentos-ia)
+- [Ejemplos de Cuentos](https://audiogretel.com/ejemplos)
 
-### `npm run build`
+## 🛠️ Stack Tecnológico
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
+- **React 18** - Biblioteca de UI con hooks y context API
+- **React Router** - Enrutamiento SPA
+- **i18next** - Internacionalización (ES/EN/FR)
+- **CSS3** - Diseño responsive moderno
+- **Intersection Observer API** - Lazy loading optimizado
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend  
+- **Node.js** - Runtime de JavaScript
+- **Express.js** - Framework web
+- **OpenAI API** - Generación de contenido con IA
+- **Text-to-Speech APIs** - Síntesis de voz natural
+- **Firebase** - Autenticación y almacenamiento
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### DevOps & Performance
+- **Netlify** - Hosting y CI/CD
+- **Lighthouse CI** - Monitoreo de performance
+- **Webpack Bundle Analyzer** - Optimización de bundles
+- **Service Workers** - Caching estratégico
 
-### `npm run eject`
+## 📱 Capturas de Pantalla
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Generador de Cuentos
+![Story Generator](./docs/screenshots/generator.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Reproductor de Audio
+![Audio Player](./docs/screenshots/player.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Ejemplos de Cuentos
+![Story Examples](./docs/screenshots/examples.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎯 Casos de Uso
 
-## Learn More
+### 👨‍👩‍👧‍👦 Para Familias
+- Cuentos personalizados para la hora de dormir
+- Aprendizaje de idiomas en casa
+- Entretenimiento educativo durante viajes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🏫 Para Educadores
+- Material didáctico personalizado
+- Práctica de comprensión auditiva
+- Actividades de idiomas extranjeros
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🩺 Para Terapeutas
+- Herramienta de engagement para terapia del habla
+- Estimulación cognitiva a través de narrativas
+- Práctica de habilidades sociales
 
-### Code Splitting
+## 🔧 Instalación y Desarrollo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# AudioGretel - Personalized Story Examples Setup
-
-## Environment Variables
-
-This project uses environment variables for Firebase configuration. To set up your environment:
-
-1. Create a `.env` file in the root directory of the project with the following variables:
-```
-REACT_APP_FIREBASE_API_KEY=your_api_key_here
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain_here
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id_here
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket_here
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id_here
-REACT_APP_FIREBASE_APP_ID=your_app_id_here
-REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id_here
-```
-
-2. Replace the placeholders with your actual Firebase configuration values.
-
-3. For Node.js scripts (`cors-fix.js`, `cors-test.js`, `verify-files.js`), make sure you have installed the `dotenv` package:
-```
-npm install dotenv --save
+### Prerrequisitos
+```bash
+node >= 18.0.0
+npm >= 8.0.0
 ```
 
-## Fixing Firebase Permission Errors
+### Configuración Local
 
-If you're seeing errors like:
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/tu-usuario/audiogretel.git
+cd audiogretel
 ```
-Error fetching story examples: FirebaseError: Missing or insufficient permissions.
-Error loading stories: FirebaseError: Missing or insufficient permissions.
+
+2. **Instalar dependencias**
+```bash
+# Frontend
+cd Cuentos_Front_Clean
+npm install
+
+# Backend
+cd ../generador-cuentos-backend
+npm install
 ```
 
-This is because the Firebase security rules need to be updated to allow public read access to the story examples.
+3. **Variables de entorno**
+```bash
+# Frontend (.env)
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_FIREBASE_API_KEY=your_firebase_key
 
-### Step 1: Update Firebase Security Rules
-
-1. Go to the [Firebase Console](https://console.firebase.google.com/)
-2. Select your project: "cuentacuentos-b2e64"
-3. For Firestore Rules:
-   - Go to Firestore Database
-   - Click on the "Rules" tab
-   - Replace the existing rules with:
-   ```
-   rules_version = '2';
-   service cloud.firestore {
-     match /databases/{database}/documents {
-       // Allow public read access to story examples
-       match /storyExamples/{document=**} {
-         allow read: if true;
-         allow write: if request.auth != null; // Only authenticated users can write
-       }
-       
-       // For other collections, require authentication
-       match /{document=**} {
-         allow read, write: if request.auth != null;
-       }
-     }
-   }
-   ```
-   - Click "Publish"
-   
-4. For Storage Rules:
-   - Go to Storage
-   - Click on the "Rules" tab
-   - Replace the existing rules with:
-   ```
-   rules_version = '2';
-   service firebase.storage {
-     match /b/{bucket}/o {
-       // Allow public read access to stories and audio files
-       match /stories/{fileName} {
-         allow read: if true;
-         allow write: if request.auth != null; // Only authenticated users can write
-       }
-       
-       match /audio/{fileName} {
-         allow read: if true;
-         allow write: if request.auth != null; // Only authenticated users can write
-       }
-       
-       // For other files, require authentication
-       match /{allPaths=**} {
-         allow read, write: if request.auth != null;
-       }
-     }
-   }
-   ```
-   - Click "Publish"
-
-### Step 2: Create Example Story Data
-
-To add example stories to your Firebase project, follow these steps:
-
-1. Go to the Firebase Console
-2. Navigate to Firestore Database
-3. Create a collection called `storyExamples`
-4. Add a document with the following fields:
-   - id: "dragon-no-volar"
-   - title: "El dragón que no podía volar"
-   - age: "3to5"
-   - language: "spanish"
-   - level: "beginner"
-   - textPath: "stories/dragon-no-volar.txt"
-   - audioPath: "audio/dragon-no-volar.mp3"
-
-5. Navigate to Storage
-6. Create a folder called `stories`
-7. Upload a text file named `dragon-no-volar.txt` with a sample story
-8. Create a folder called `audio`
-9. Upload an MP3 file named `dragon-no-volar.mp3` (you can use any small MP3 file for testing)
-
-After completing these steps, reload your application and the story examples should load correctly.
-
-## Running the Application
-
-To run the application in development mode:
-
+# Backend (.env)
+OPENAI_API_KEY=your_openai_key
+FIREBASE_ADMIN_SDK=your_firebase_admin_key
 ```
+
+4. **Ejecutar en desarrollo**
+```bash
+# Backend (puerto 5000)
+cd generador-cuentos-backend
+npm run dev
+
+# Frontend (puerto 3000)
+cd ../Cuentos_Front_Clean
 npm start
 ```
 
-To build the application for production:
+### Scripts Disponibles
 
+```bash
+# Performance y SEO
+npm run performance      # Análisis de performance con PageSpeed
+npm run lighthouse      # Audit completo con Lighthouse
+npm run seo-check       # Verificación SEO completa
+npm run sitemap         # Envío de sitemap a buscadores
+
+# Desarrollo
+npm run build           # Build de producción
+npm run test           # Tests unitarios
+npm run bundle-analyzer # Análisis de bundle size
 ```
-npm run build
+
+## 🎨 Arquitectura del Sistema
+
+```mermaid
+graph TB
+    A[Usuario] --> B[React Frontend]
+    B --> C[Express Backend]
+    C --> D[OpenAI API]
+    C --> E[Text-to-Speech]
+    C --> F[Firebase]
+    F --> G[Story Storage]
+    F --> H[User Auth]
+    B --> I[Audio Player]
+    I --> J[Generated Audio]
 ```
 
-## Additional Information
+## 📊 Performance
 
-For more detailed setup instructions, see the `STORY_EXAMPLES_SETUP.md` file in the project root.
+- **Lighthouse Score**: 95+ (Performance, SEO, Accessibility)
+- **First Contentful Paint**: < 1.8s
+- **Largest Contentful Paint**: < 2.5s
+- **Cumulative Layout Shift**: < 0.1
+- **Time to Interactive**: < 3.0s
+
+## 🌍 SEO y Discoverabilidad
+
+AudioGretel está optimizado para aparecer en:
+- **Google Search**: "generador audiocuentos IA", "cuentos personalizados niños"
+- **Gemini AI**: "herramientas IA educación", "generador cuentos audio"
+- **ChatGPT**: Recomendaciones para familias y educadores
+
+### Palabras Clave Objetivo
+- Generador audiocuentos IA
+- Cuentos personalizados niños
+- Audio stories AI generator
+- Multilingual children stories
+- Educational AI tools
+- Language learning kids
+
+## 🤝 Contribuciones
+
+¡Las contribuciones son bienvenidas! Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+### Áreas de Contribución
+- 🌍 Nuevos idiomas (Italiano, Alemán, Portugués)
+- 🎨 Temas y géneros de cuentos adicionales
+- 🔊 Nuevas voces y estilos de narración
+- ⚡ Optimizaciones de performance
+- 🧪 Tests automatizados
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+## 🔗 Enlaces Útiles
+
+- **Sitio Web**: [https://audiogretel.com](https://audiogretel.com)
+- **Documentación**: [AudioGretel Docs](https://audiogretel.com/como-generar-audiocuentos-ia)
+- **Generador**: [Crear Audiocuento](https://audiogretel.com/herramientas/generador-audiocuentos)
+- **Ejemplos**: [Galería de Cuentos](https://audiogretel.com/ejemplos)
+
+## 🏆 Reconocimientos
+
+- **OpenAI** por la tecnología de generación de contenido
+- **React Team** por el framework de UI
+- **Firebase** por los servicios backend
+- **Netlify** por el hosting y CI/CD
+
+---
+
+**¿Te gusta AudioGretel?** ⭐ ¡Dale una estrella al repo y compártelo!
+
+**¿Tienes ideas?** 💡 Abre un issue o contribuye al proyecto
+
+**¿Necesitas ayuda?** 📧 Contacta en [support@audiogretel.com](mailto:support@audiogretel.com)

@@ -31,10 +31,15 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=3000 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "performance": "node scripts/performance-check.js",
+    "sitemap": "node scripts/submit-sitemap.js",
+    "seo-check": "npm run performance && npm run sitemap",
+    "lighthouse": "lighthouse http://localhost:3000 --output=json --output=html --output-path=./lighthouse-report",
+    "bundle-analyzer": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
     "postinstall": "cd netlify/functions && npm install"
   },
   "eslintConfig": {

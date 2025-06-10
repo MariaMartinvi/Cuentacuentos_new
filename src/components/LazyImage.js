@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const LazyImage = ({ src, alt, className, placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg==' }) => {
-  const [imageSrc, setImageSrc] = useState(placeholder);
+const LazyImage = ({ 
+  src, 
+  alt, 
+  className = '', 
+  onLoad,
+  onError,
+  ...props 
+}) => {
+  const [imageSrc, setImageSrc] = useState('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg==');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const imgRef = useRef(null);
@@ -24,6 +31,7 @@ const LazyImage = ({ src, alt, className, placeholder = 'data:image/svg+xml;base
               setImageSrc(src);
               setIsLoading(false);
               setError(false);
+              if (onLoad) onLoad();
               resolve();
             }
           };
@@ -32,6 +40,7 @@ const LazyImage = ({ src, alt, className, placeholder = 'data:image/svg+xml;base
               console.error(`Failed to load image: ${src}`);
               setError(true);
               setIsLoading(false);
+              if (onError) onError();
               reject(new Error(`Failed to load image: ${src}`));
             }
           };
@@ -41,6 +50,7 @@ const LazyImage = ({ src, alt, className, placeholder = 'data:image/svg+xml;base
           console.error(`Error loading image ${src}:`, error);
           setError(true);
           setIsLoading(false);
+          if (onError) onError();
         }
       }
     };
@@ -75,33 +85,28 @@ const LazyImage = ({ src, alt, className, placeholder = 'data:image/svg+xml;base
         observer.unobserve(imgRef.current);
       }
     };
-  }, [src]);
+  }, [src, onLoad, onError]);
 
   return (
-    <div className="story-card-image-container">
-      {isLoading && !error && (
-        <div className="story-card-skeleton">
-          <div className="skeleton-image" />
-        </div>
-      )}
-      <div className={`story-card-error ${error ? 'visible' : ''}`} />
-      <img
-        ref={imgRef}
-        src={imageSrc}
-        alt={alt}
-        className={`story-card-image ${isLoading ? 'loading' : 'loaded'} ${error ? 'error' : ''} ${className || ''}`}
-        onLoad={() => {
-          if (isLoading) {
-            setIsLoading(false);
-            setError(false);
-          }
-        }}
-        onError={() => {
-          setError(true);
+    <img
+      ref={imgRef}
+      src={imageSrc}
+      alt={alt}
+      className={`${className} ${isLoading ? 'loading' : 'loaded'} ${error ? 'error' : ''}`}
+      onLoad={() => {
+        if (isLoading) {
           setIsLoading(false);
-        }}
-      />
-    </div>
+          setError(false);
+          if (onLoad) onLoad();
+        }
+      }}
+      onError={() => {
+        setError(true);
+        setIsLoading(false);
+        if (onError) onError();
+      }}
+      {...props}
+    />
   );
 };
 

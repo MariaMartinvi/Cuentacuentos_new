@@ -27,7 +27,7 @@ function StoryForm({ onStoryGenerated }) {
   const [storyLength, setStoryLength] = useState('medium');
   const [storyType, setStoryType] = useState('original');
   const [creativityLevel, setCreativityLevel] = useState('innovative');
-  const [ageGroup, setAgeGroup] = useState('default');
+  const [ageGroup, setAgeGroup] = useState('6to8');
   const [childNames, setChildNames] = useState('');
   const [englishLevel, setEnglishLevel] = useState('intermediate');
   const [audioUrl, setAudioUrl] = useState(null);
@@ -521,7 +521,7 @@ function StoryForm({ onStoryGenerated }) {
         setStoryLength('medium');
         setStoryType('original');
         setCreativityLevel('innovative');
-        setAgeGroup('default');
+        setAgeGroup('6to8');
         setChildNames('');
         setEnglishLevel('intermediate');
         // Borrar datos guardados

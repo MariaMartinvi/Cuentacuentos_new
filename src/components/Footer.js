@@ -50,7 +50,7 @@ function Footer() {
                 <i className="fab fa-tiktok"></i>
               </a>
               <span style={{ margin: '0 12px' }}></span>
-              <a href="https://instagram.com/mi_cuentacuentos" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://instagram.com/audiogretel_" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <i className="fab fa-instagram"></i>
               </a>
             </div>
