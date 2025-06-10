@@ -93,7 +93,10 @@
     "loginRequired": "Por favor, faça login para gerar histórias",
     "clickToLogin": "Clique aqui para fazer login",
     "verifyEmail": "Verificar Email",
-    "emailVerificationRequired": "🔐 Você deve verificar seu email antes de criar histórias."
+    "emailVerificationRequired": "🔐 Você deve verificar seu email antes de criar histórias.",
+    "publishError": "Erro ao publicar a história",
+    "published": "Publicada",
+    "audioGenerationInProgress": "O áudio está sendo gerado. Se você sair agora, o progresso será perdido. Tem certeza?"
   },
   "firebaseErrors": {
     "userNotFound": "Não existe uma conta com este endereço de email",
@@ -133,5 +136,7 @@
       "role": "Professor infantil",
       "content": "As audiohistórias personalizadas são uma excelente ferramenta para o desenvolvimento da linguagem. Meus alunos adoram criar suas próprias histórias e praticar a pronúncia."
     }
+  },
+  "navbar": {
   }
 } 

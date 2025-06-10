@@ -399,7 +399,8 @@
     "publishing": "Publishing...",
     "publishSuccess": "Story published successfully! Other users can now see it in the gallery.",
     "publishError": "Error publishing story",
-    "published": "Published"
+    "published": "Published",
+    "audioGenerationInProgress": "Audio is being generated. If you leave now, progress will be lost. Are you sure?"
   },
   "storyForm": {
     "title": "Create Your Story",
@@ -512,7 +513,8 @@
     "requestError": "Error processing request",
     "authenticationExpired": "Your session has expired. Please log in again.",
     "authenticationFailed": "Authentication failed. Your session has expired.",
-    "contactUs": "contact us"
+    "contactUs": "contact us",
+    "generateInProgress": "A story is being generated. If you leave now, progress will be lost. Are you sure?"
   },
   "contact": {
     "title": "Contact Us",

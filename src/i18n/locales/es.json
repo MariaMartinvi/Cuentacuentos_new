@@ -277,7 +277,8 @@
     "publishing": "Publicando...",
     "publishSuccess": "¡Historia publicada exitosamente! Ahora otros usuarios pueden verla en la galería.",
     "publishError": "Error al publicar la historia",
-    "published": "Publicada"
+    "published": "Publicada",
+    "audioGenerationInProgress": "Se está generando el audio. Si sales ahora, se perderá el progreso. ¿Estás seguro?"
   },
   "navbar": {
     "home": "Inicio",
@@ -407,7 +408,8 @@
     "emailVerificationRequired": "🔐 Debes verificar tu email antes de crear cuentos.",
     "authenticationExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
     "authenticationFailed": "Error de autenticación. Tu sesión ha expirado.",
-    "contactUs": "contáctanos"
+    "contactUs": "contáctanos",
+    "generateInProgress": "Se está generando un cuento. Si sales ahora, se perderá el progreso. ¿Estás seguro?"
   },
   "contact": {
     "title": "Contáctanos",

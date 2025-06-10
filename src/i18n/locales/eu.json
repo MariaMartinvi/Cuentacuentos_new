@@ -206,7 +206,10 @@
     "journeyMusic": "Bidaia",
     "voiceMalePortuguesePT": "Portugesa (Portugal) maskulinoa",
     "voiceFemalePortugueseBR": "Portugesa (Brasil) femeninoa",
-    "voiceMalePortugueseBR": "Portugesa (Brasil) maskulinoa"
+    "voiceMalePortugueseBR": "Portugesa (Brasil) maskulinoa",
+    "publishError": "Errorea istorioa argitaratzean",
+    "published": "Argitaratua",
+    "audioGenerationInProgress": "Audioa sortzen ari da. Orain irteten bazara, aurrerapena galduko da. Ziur zaude?"
   },
   "storyForm": {
     "title": "Sortu Zure Ipuina",
@@ -290,7 +293,10 @@
     "subscribe": "Harpidetu",
     "cancelButton": "Ezeztatu",
     "verifyEmail": "Email-a Egiaztatu",
-    "emailVerificationRequired": "🔐 Ipuinak sortu aurretik zure email-a egiaztatu behar duzu."
+    "emailVerificationRequired": "🔐 Ipuinak sortu aurretik zure email-a egiaztatu behar duzu.",
+    "authenticationFailed": "Autentifikazio errorea. Zure saioa iraungitu da.",
+    "contactUs": "jarri gurekin harremanetan",
+    "generateInProgress": "Ipuin bat sortzen ari da. Orain irteten bazara, aurrerapena galduko da. Ziur zaude?"
   },
   "login": {
     "title": "Saioa hasi",

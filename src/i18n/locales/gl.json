@@ -209,7 +209,10 @@
     "journeyMusic": "Viaxe",
     "voiceMalePortuguesePT": "Portugués (Portugal) masculino",
     "voiceFemalePortugueseBR": "Portugués (Brasil) feminino",
-    "voiceMalePortugueseBR": "Portugués (Brasil) masculino"
+    "voiceMalePortugueseBR": "Portugués (Brasil) masculino",
+    "publishError": "Erro ao publicar a historia",
+    "published": "Publicada",
+    "audioGenerationInProgress": "Estase xerando o audio. Se saes agora, perderase o progreso. Estás seguro?"
   },
   "storyForm": {
     "title": "Crea o Teu Conto",
@@ -300,7 +303,10 @@
     "waitButton": "Entendido",
     "cancelButton": "Cancelar",
     "verifyEmail": "Verificar Email",
-    "emailVerificationRequired": "🔐 Debes verificar o teu email antes de crear contos."
+    "emailVerificationRequired": "🔐 Debes verificar o teu email antes de crear contos.",
+    "authenticationFailed": "Erro de autenticación. A túa sesión caducou.",
+    "contactUs": "contactanos",
+    "generateInProgress": "Estase xerando un conto. Se saes agora, perderase o progreso. Estás seguro?"
   },
   "login": {
     "title": "Iniciar sesión",

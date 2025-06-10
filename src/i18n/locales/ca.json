@@ -206,7 +206,10 @@
     "journeyMusic": "Viatge",
     "voiceMalePortuguesePT": "Portuguès (Portugal) masculí",
     "voiceFemalePortugueseBR": "Portuguès (Brasil) femení",
-    "voiceMalePortugueseBR": "Portuguès (Brasil) masculí"
+    "voiceMalePortugueseBR": "Portuguès (Brasil) masculí",
+    "publishError": "Error en publicar la història",
+    "published": "Publicada",
+    "audioGenerationInProgress": "S'està generant l'àudio. Si surts ara, es perdrà el progrés. Estàs segur?"
   },
   "storyForm": {
     "title": "Crea el Teu Conte",
@@ -299,7 +302,9 @@
     "waitButton": "Entès",
     "cancelButton": "Cancel·lar",
     "verifyEmail": "Verificar Email",
-    "emailVerificationRequired": "🔐 Has de verificar el teu email abans de crear contes."
+    "emailVerificationRequired": "🔐 Has de verificar el teu email abans de crear contes.",
+    "authenticationFailed": "Error d'autenticació. La teva sessió ha expirat.",
+    "generateInProgress": "S'està generant un conte. Si surts ara, es perdrà el progrés. Estàs segur?"
   },
   "login": {
     "title": "Iniciar sessió",

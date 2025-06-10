@@ -142,6 +142,26 @@ function StoryForm({ onStoryGenerated }) {
     };
   }, []);
   
+  // Handle beforeunload event to warn user when generating story
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isLoading) {
+        const message = t('storyForm.generateInProgress', { defaultValue: 'Se está generando un cuento. Si sales ahora, se perderá el progreso. ¿Estás seguro?' });
+        e.preventDefault();
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    if (isLoading) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isLoading, t]);
+  
   const setupRateLimitCountdown = (retryAfterISO) => {
     let retryAfter;
     try {

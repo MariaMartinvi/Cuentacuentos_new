@@ -24,6 +24,26 @@ function StoryDisplay({ story }) {
     setIsPublished(story?.published || false);
   }, [story]);
 
+  // Handle beforeunload event to warn user when generating audio
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isGeneratingAudio) {
+        const message = t('storyDisplay.audioGenerationInProgress', { defaultValue: 'Se está generando el audio. Si sales ahora, se perderá el progreso. ¿Estás seguro?' });
+        e.preventDefault();
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    if (isGeneratingAudio) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isGeneratingAudio, t]);
+
   // Update voice type when story language changes
   useEffect(() => {
     if (!story?.language) return;

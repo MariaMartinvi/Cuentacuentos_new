@@ -203,7 +203,10 @@
     "journeyMusic": "Voyage",
     "voiceMalePortuguesePT": "Portugais (Portugal) masculin",
     "voiceFemalePortugueseBR": "Portugais (Brésil) féminin",
-    "voiceMalePortugueseBR": "Portugais (Brésil) masculin"
+    "voiceMalePortugueseBR": "Portugais (Brésil) masculin",
+    "publishError": "Erreur lors de la publication de l'histoire",
+    "published": "Publié",
+    "audioGenerationInProgress": "L'audio est en cours de génération. Si vous partez maintenant, le progrès sera perdu. Êtes-vous sûr?"
   },
   "storyForm": {
     "title": "Créez Votre Histoire",
@@ -295,7 +298,10 @@
     "waitButton": "Compris",
     "cancelButton": "Annuler",
     "verifyEmail": "Vérifier l'Email",
-    "emailVerificationRequired": "🔐 Vous devez vérifier votre email avant de créer des histoires."
+    "emailVerificationRequired": "🔐 Vous devez vérifier votre email avant de créer des histoires.",
+    "authenticationFailed": "Échec de l'authentification. Votre session a expiré.",
+    "contactUs": "nous contacter",
+    "generateInProgress": "Une histoire est en cours de génération. Si vous partez maintenant, le progrès sera perdu. Êtes-vous sûr?"
   },
   "login": {
     "title": "Se connecter",

@@ -204,7 +204,10 @@
     "pianoMusic": "Klavier",
     "forestMusic": "Wald",
     "musicBoxMusic": "Spieldose",
-    "journeyMusic": "Reise"
+    "journeyMusic": "Reise",
+    "publishError": "Fehler beim Veröffentlichen der Geschichte",
+    "published": "Veröffentlicht",
+    "audioGenerationInProgress": "Audio wird generiert. Wenn Sie jetzt verlassen, geht der Fortschritt verloren. Sind Sie sicher?"
   },
   "storyForm": {
     "title": "Erstelle Deine Geschichte",
@@ -296,7 +299,10 @@
     "waitButton": "Verstanden",
     "cancelButton": "Abbrechen",
     "verifyEmail": "Email Verifizieren",
-    "emailVerificationRequired": "🔐 Du musst deine Email verifizieren, bevor du Geschichten erstellen kannst."
+    "emailVerificationRequired": "🔐 Du musst deine Email verifizieren, bevor du Geschichten erstellen kannst.",
+    "authenticationFailed": "Authentifizierungsfehler. Ihre Sitzung ist abgelaufen.",
+    "contactUs": "kontaktieren Sie uns",
+    "generateInProgress": "Eine Geschichte wird generiert. Wenn Sie jetzt verlassen, geht der Fortschritt verloren. Sind Sie sicher?"
   },
   "login": {
     "title": "Anmelden",
