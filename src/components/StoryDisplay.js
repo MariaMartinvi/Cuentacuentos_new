@@ -8,7 +8,7 @@ function StoryDisplay({ story }) {
   const { t, i18n } = useTranslation();
   const [audioUrl, setAudioUrl] = useState(null);
   const [voiceType, setVoiceType] = useState(i18n.language === 'en' ? 'female-english' : 'female');
-  const [speechRate, setSpeechRate] = useState(0.6); // Default to relaxing speed for bedtime stories
+  const [speechRate, setSpeechRate] = useState(0.8); // Default to faster normal speed
   const [musicTrack, setMusicTrack] = useState('random'); // Default to random music
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioCount, setAudioCount] = useState(0);
@@ -591,11 +591,11 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
                 onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
                 disabled={isGeneratingAudio || audioCount >= 4}
               >
-                <option value="0.4">{t('storyDisplay.speedVerySlow')}</option>
-                <option value="0.5">{t('storyDisplay.speedSlow')}</option>
-                <option value="0.6">{t('storyDisplay.speedNormal')}</option>
-                <option value="0.7">{t('storyDisplay.speedFast')}</option>
-                <option value="0.8">{t('storyDisplay.speedVeryFast')}</option>
+                <option value="0.6">{t('storyDisplay.speedVerySlow')}</option>
+                <option value="0.7">{t('storyDisplay.speedSlow')}</option>
+                <option value="0.8">{t('storyDisplay.speedNormal')}</option>
+                <option value="0.9">{t('storyDisplay.speedFast')}</option>
+                <option value="1.0">{t('storyDisplay.speedVeryFast')}</option>
               </select>
             </div>
           </div>

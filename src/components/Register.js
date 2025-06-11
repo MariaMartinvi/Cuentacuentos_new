@@ -139,24 +139,7 @@ const Register = () => {
             
             <div className="info-box">
               <h3>Verifica tu email para activar tu cuenta</h3>
-              <div className="verification-steps">
-                <div className="step">
-                  <span className="step-number">1</span>
-                  <span>Revisa tu bandeja de entrada (y spam)</span>
-                </div>
-                <div className="step">
-                  <span className="step-number">2</span>
-                  <span>Busca el email de verificación de Firebase</span>
-                </div>
-                <div className="step">
-                  <span className="step-number">3</span>
-                  <span>Haz clic en "Verify Email Address"</span>
-                </div>
-                <div className="step">
-                  <span className="step-number">4</span>
-                  <span>Tu cuenta quedará activada automáticamente</span>
-                </div>
-              </div>
+              <p>Revisa tu bandeja de entrada (y spam) y haz clic en el enlace de verificación.</p>
               
               <div className="important-note">
                 <strong>📍 Importante:</strong> No podrás crear cuentos hasta verificar tu email.
@@ -164,10 +147,7 @@ const Register = () => {
             </div>
 
             <div className="action-buttons">
-              <Link to="/verify-email" className="btn btn-primary">
-                Ir a Verificación
-              </Link>
-              <Link to="/login" className="btn btn-secondary">
+              <Link to="/login" className="btn btn-primary">
                 Iniciar Sesión
               </Link>
             </div>
