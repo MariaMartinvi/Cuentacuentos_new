@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata, addProtagonistaToStory, updateStoriesWithCreationDate } from '../services/storyExamplesService';
+import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata, addProtagonistaToStory, updateStoriesWithCreationDate, diagnoseDateIssues } from '../services/storyExamplesService';
 import { getStoriesWithCache } from '../services/cacheService';
 import { getStoryById } from '../services/storyService';
 import StoryCard from './StoryCard';
@@ -122,6 +122,8 @@ const AudioPlayer = ({ audioUrl, title }) => {
 };
 
 const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
+  console.log('🚀 [COMPONENT] StoryExamplesSection rendered with:', { autoOpenStoryId, autoPlayMode });
+  
   const { t } = useTranslation();
   const [stories, setStories] = useState([]);
   const [filteredStories, setFilteredStories] = useState([]);
@@ -147,52 +149,49 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
     storyId: null
   });
 
+  console.log('🚀 [COMPONENT] Initial filters state:', filters);
+
   // Cargar solo los metadatos inicialmente
   useEffect(() => {
     const loadStories = async () => {
       try {
         setLoading(true);
-        console.log("Cargando metadatos de historias...");
+        console.log("🚀 Loading stories...");
         
         let storyData = await fetchStoryMetadata();
         
         // Check if stories have creation dates
         if (storyData && storyData.length > 0) {
           const storiesWithoutDates = storyData.filter(story => !story.createdAt);
-          console.log(`📅 [DATE-CHECK] Stories without dates: ${storiesWithoutDates.length}/${storyData.length}`);
+          console.log(`📅 Stories without dates: ${storiesWithoutDates.length}/${storyData.length}`);
           
           if (storiesWithoutDates.length > 0) {
-            console.log('📅 [DATE-UPDATE] Updating stories with creation dates...');
+            console.log('📅 Updating creation dates...');
             try {
               await updateStoriesWithCreationDate();
-              console.log('📅 [DATE-UPDATE] ✅ Creation dates updated, reloading...');
               // Reload stories after updating dates
               storyData = await fetchStoryMetadata();
-              console.log("📅 [DATE-UPDATE] Stories reloaded after date update");
             } catch (updateError) {
-              console.error('📅 [DATE-UPDATE] ❌ Error updating dates:', updateError);
+              console.error('❌ Error updating dates:', updateError);
             }
           }
         }
         
         if (storyData && storyData.length > 0) {
-          console.log(`✓ Éxito! Cargados ${storyData.length} metadatos de historias`);
-          console.log("Ejemplo de historia con campos:", storyData[0]);
-          // Mostrar solo un subconjunto de historias en la página principal (máximo 6)
-          const limitedStories = storyData.slice(0, 6);
-          setStories(limitedStories);
+          console.log(`✅ Loaded ${storyData.length} stories`);
+          // Cargar todas las historias para permitir filtros y ordenamiento correcto
+          setStories(storyData);
           // Remove setFilteredStories - let the useEffect handle filtering and sorting
-          setHasMore(storyData.length > 6);
+          setHasMore(false); // Disable load more since we're loading all
         } else {
-          console.warn("⚠ No se encontraron historias");
+          console.warn("⚠️ No stories found");
           setError(new Error("No se encontraron historias"));
         }
       } catch (error) {
-        console.error("✗ Error al cargar metadatos de historias:", error);
+        console.error("❌ Error loading stories:", error);
         setError(error);
       } finally {
         setLoading(false);
-        console.log("=== CARGA DE METADATOS COMPLETADA ===");
       }
     };
     
@@ -201,21 +200,12 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
 
   // Aplicar filtros localmente
   useEffect(() => {
-    console.log('🔄 [FILTER-EFFECT] Running filter effect...');
-    console.log('🔄 [FILTER-EFFECT] Stories count:', stories.length);
+    console.log('🔄 [FILTER-EFFECT] ===== EFFECT TRIGGERED =====');
+    console.log('🔄 [FILTER-EFFECT] Stories length:', stories.length);
     console.log('🔄 [FILTER-EFFECT] Current filters:', filters);
+    console.log('🔄 [FILTER-EFFECT] Running filter effect...');
     
     if (stories.length > 0) {
-      console.log('🔄 [FILTER-EFFECT] Sample story structure:', {
-        title: stories[0].title,
-        language: stories[0].language,
-        level: stories[0].level,
-        averageRating: stories[0].averageRating,
-        totalRatings: stories[0].totalRatings,
-        createdAt: stories[0].createdAt,
-        allKeys: Object.keys(stories[0])
-      });
-      
       let filtered = stories.filter(story => {
         return (filters.language === 'all' || story.language === filters.language) &&
                (filters.level === 'all' || story.level === filters.level);
@@ -224,6 +214,7 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
       console.log('🔄 [FILTER-EFFECT] After language/level filter:', filtered.length);
       
       // Apply sorting
+      console.log(`🎯 [SORTING] Current sortBy filter: "${filters.sortBy}"`);
       switch (filters.sortBy) {
         case 'rating':
           // Sort by best rated: first by average rating, then by number of ratings
@@ -249,52 +240,126 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
           break;
         case 'newest':
         default:
-          // Sort by creation date (newest first, stories without date go to the end)
-          console.log('📅 [DATE-DEBUG] Before sorting - all story dates:', filtered.map(s => ({
-            title: s.title,
-            createdAt: s.createdAt,
-            createdAtType: typeof s.createdAt,
-            parsedDate: s.createdAt ? new Date(s.createdAt) : 'No date',
-            isValidDate: s.createdAt ? !isNaN(new Date(s.createdAt)) : false
-          })));
+          // Sort by creation date: NEW stories first, then OLD stories
+          console.log('📅 [DATE-SORT] Sorting by creation date...');
           
           filtered = filtered.sort((a, b) => {
-            const aHasDate = a.createdAt && !isNaN(new Date(a.createdAt));
-            const bHasDate = b.createdAt && !isNaN(new Date(b.createdAt));
+            // Función para detectar si es formato localizado (español) - NUEVAS HISTORIAS
+            const isNewFormat = (dateValue) => {
+              if (!dateValue) return false;
+              
+              // Si es un objeto Timestamp de Firebase, NO es formato nuevo
+              if (dateValue && typeof dateValue === 'object' && dateValue.seconds !== undefined) {
+                return false;
+              }
+              
+              // Solo strings pueden ser formato nuevo localizado
+              if (typeof dateValue !== 'string') return false;
+              
+              return dateValue.includes('de ') || dateValue.includes('p.m.') || dateValue.includes('a.m.');
+            };
             
-            // Stories without dates go to the end
-            if (!aHasDate && !bHasDate) return 0; // Both without dates, keep order
-            if (!aHasDate) return 1; // a without date goes after b
-            if (!bHasDate) return -1; // b without date goes after a
+            const aIsNew = isNewFormat(a.createdAt);
+            const bIsNew = isNewFormat(b.createdAt);
             
-            // Both have dates, sort by date (newest first)
-            const aDate = new Date(a.createdAt);
-            const bDate = new Date(b.createdAt);
-            const result = bDate.getTime() - aDate.getTime();
+            // PRIORIDAD ABSOLUTA: Historias nuevas SIEMPRE van primero
+            if (aIsNew && !bIsNew) {
+              return -1; // a (nueva) va antes que b (vieja)
+            }
+            if (!aIsNew && bIsNew) {
+              return 1;  // b (nueva) va antes que a (vieja)
+            }
             
-            console.log('📅 [DATE-SORT] Comparing:', {
-              a: { title: a.title, hasDate: aHasDate, date: a.createdAt, parsed: aDate },
-              b: { title: b.title, hasDate: bHasDate, date: b.createdAt, parsed: bDate },
-              result: result
-            });
-            
-            return result;
+            // Si ambas son del mismo tipo (ambas nuevas o ambas viejas), ordenar por fecha
+            try {
+              if (!a.createdAt && !b.createdAt) return 0;
+              if (!a.createdAt) return 1;
+              if (!b.createdAt) return -1;
+              
+              // Convertir fechas correctamente según su tipo
+              let dateA, dateB;
+              
+              // Para objetos Timestamp de Firebase
+              if (a.createdAt && typeof a.createdAt === 'object' && a.createdAt.seconds !== undefined) {
+                dateA = new Date(a.createdAt.seconds * 1000);
+              } else {
+                dateA = new Date(a.createdAt);
+              }
+              
+              if (b.createdAt && typeof b.createdAt === 'object' && b.createdAt.seconds !== undefined) {
+                dateB = new Date(b.createdAt.seconds * 1000);
+              } else {
+                dateB = new Date(b.createdAt);
+              }
+              
+              // DEBUG: Log NEW date comparisons only (since those are the priority)
+              if (aIsNew && bIsNew) {
+                console.log(`📅 [NEW-DATE-SORT] Comparing new dates:`, {
+                  a: { title: a.title.substring(0, 20), dateA: dateA.getTime(), dateStr: dateA.toISOString() },
+                  b: { title: b.title.substring(0, 20), dateB: dateB.getTime(), dateStr: dateB.toISOString() },
+                  result: dateB.getTime() - dateA.getTime(),
+                  winner: (dateB.getTime() - dateA.getTime()) < 0 ? 'A' : (dateB.getTime() - dateA.getTime()) > 0 ? 'B' : 'TIE'
+                });
+              }
+              
+              if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+                const result = dateB.getTime() - dateA.getTime(); // Más recientes primero
+                
+                return result;
+              }
+              
+              // If date parsing fails, try to fallback to string comparison for localized dates
+              if (aIsNew && bIsNew) {
+                console.log(`⚠️ [DATE-PARSE-FAIL] Could not parse dates, using string comparison`);
+                return b.createdAt.localeCompare(a.createdAt);
+              }
+              
+              return 0;
+            } catch (error) {
+              console.error('❌ [DATE-SORT] Error:', error);
+              return 0;
+            }
           });
           
-          console.log('📅 Sorted by date (DESCENDING, no-date at end) - all stories:', filtered.map((s, index) => ({
-            position: index + 1,
-            title: s.title,
-            date: s.createdAt,
-            parsedDate: s.createdAt ? new Date(s.createdAt).toLocaleString() : '❌ SIN FECHA'
-          })));
+          // Log resultado final con más detalle para fechas nuevas
+          console.log('📅 [RESULT] Order after sorting:');
+          filtered.slice(0, 8).forEach((s, index) => {
+            let dateStr = '';
+            let parsed = null;
+            
+            // Determinar tipo de fecha y parsear correctamente
+            if (s.createdAt) {
+              if (typeof s.createdAt === 'object' && s.createdAt.seconds !== undefined) {
+                // Timestamp de Firebase
+                parsed = new Date(s.createdAt.seconds * 1000);
+                dateStr = `Timestamp(${s.createdAt.seconds})`;
+              } else if (typeof s.createdAt === 'string') {
+                // String date (puede ser localizada o ISO)
+                dateStr = s.createdAt;
+                parsed = new Date(s.createdAt);
+              } else {
+                dateStr = String(s.createdAt);
+                parsed = new Date(s.createdAt);
+              }
+            }
+            
+            const isNew = (typeof s.createdAt === 'string') && (s.createdAt.includes('de ') || s.createdAt.includes('p.m.') || s.createdAt.includes('a.m.'));
+            
+            console.log(`${index + 1}. "${s.title}" - ${isNew ? '🆕 NEW' : '🕰️ OLD'} - ${dateStr} ${parsed && !isNaN(parsed.getTime()) ? `(parsed: ${parsed.toISOString()})` : '(parse failed)'}`);
+          });
           break;
       }
       
       console.log('🔄 [FILTER-EFFECT] Final filtered stories count:', filtered.length);
       console.log('🔄 [FILTER-EFFECT] Setting filtered stories...');
-      setFilteredStories(filtered);
+      // For homepage, show only first 6 after filtering and sorting
+      const displayStories = filtered.slice(0, 6);
+      setFilteredStories(displayStories);
+      setHasMore(filtered.length > 6);
+      
+      console.log(`✅ [FILTER] Showing ${displayStories.length} stories (${filtered.length} total after filters)`);
     } else {
-      console.log('🔄 [FILTER-EFFECT] No stories to filter');
+      console.log('⚠️ [FILTER] No stories to filter');
     }
   }, [filters, stories]);
 
@@ -432,18 +497,12 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
   };
 
   const handleFilterChange = (filterType, value) => {
-    console.log('🔧 [FILTER-CHANGE] Changing filter:', filterType, 'to:', value);
-    console.log('🔧 [FILTER-CHANGE] Current stories count:', stories.length);
-    console.log('🔧 [FILTER-CHANGE] Sample story data:', stories[0]);
+    console.log(`🔧 [FILTER] ${filterType} = ${value}`);
     
-    setFilters(prevFilters => {
-      const newFilters = {
-        ...prevFilters,
-        [filterType]: value
-      };
-      console.log('🔧 [FILTER-CHANGE] New filters:', newFilters);
-      return newFilters;
-    });
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterType]: value
+    }));
   };
 
   const handleStoryClick = async (story, actionType = 'text') => {
@@ -521,19 +580,70 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
       setLoadingMore(true);
       console.log("Cargando más historias...");
       
-      const storyData = await fetchStoryMetadata();
       const nextPage = page + 1;
-      const startIndex = 0;
       const endIndex = nextPage * 6;
-      const newStories = storyData.slice(startIndex, endIndex);
       
-      if (newStories.length > stories.length) {
-        setStories(newStories);
-        setPage(nextPage);
-        setHasMore(storyData.length > newStories.length);
-      } else {
-        setHasMore(false);
+      // Re-apply filters and get more stories to display
+      let filtered = stories.filter(story => {
+        return (filters.language === 'all' || story.language === filters.language) &&
+               (filters.level === 'all' || story.level === filters.level);
+      });
+      
+      // Apply current sorting
+      switch (filters.sortBy) {
+        case 'rating':
+          filtered = filtered.sort((a, b) => {
+            const aRating = a.averageRating || 0;
+            const bRating = b.averageRating || 0;
+            const aTotalRatings = a.totalRatings || 0;
+            const bTotalRatings = b.totalRatings || 0;
+            
+            if (bRating !== aRating) {
+              return bRating - aRating;
+            }
+            return bTotalRatings - aTotalRatings;
+          });
+          break;
+        case 'newest':
+        default:
+          filtered = filtered.sort((a, b) => {
+            const isNewFormat = (dateValue) => {
+              if (!dateValue) return false;
+              const dateStr = typeof dateValue === 'string' ? dateValue : String(dateValue);
+              return dateStr.includes('de ') || dateStr.includes('p.m.') || dateStr.includes('a.m.');
+            };
+            
+            const aIsNew = isNewFormat(a.createdAt);
+            const bIsNew = isNewFormat(b.createdAt);
+            
+            if (aIsNew && !bIsNew) return -1;
+            if (!aIsNew && bIsNew) return 1;
+            
+            try {
+              if (!a.createdAt && !b.createdAt) return 0;
+              if (!a.createdAt) return 1;
+              if (!b.createdAt) return -1;
+              
+              const dateA = new Date(a.createdAt);
+              const dateB = new Date(b.createdAt);
+              
+              if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+                return dateB.getTime() - dateA.getTime();
+              }
+              
+              return 0;
+            } catch (error) {
+              return 0;
+            }
+          });
+          break;
       }
+      
+      const displayStories = filtered.slice(0, endIndex);
+      setFilteredStories(displayStories);
+      setPage(nextPage);
+      setHasMore(filtered.length > displayStories.length);
+      
     } catch (error) {
       console.error("Error al cargar más historias:", error);
       setError(error);

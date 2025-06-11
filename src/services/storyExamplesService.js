@@ -89,8 +89,8 @@ export const fetchStoryExamples = async () => {
 
     console.log("Iniciando fetchStoryExamples...");
     const storyExamplesRef = collection(db, "storyExamples");
-    const q = query(storyExamplesRef, orderBy("createdAt", "desc"));
-    const storyExamplesSnapshot = await getDocs(q);
+    // Obtener todos los documentos sin ordenar en Firestore (para manejar campos faltantes)
+    const storyExamplesSnapshot = await getDocs(storyExamplesRef);
     
     console.log(`Encontrados ${storyExamplesSnapshot.docs.length} documentos en la colección`);
     
@@ -121,6 +121,55 @@ export const fetchStoryExamples = async () => {
       
       return storyData;
     });
+    
+    // COMENTADO: No ordenar en el backend, dejar que el frontend maneje el ordenamiento
+    /*
+    // Ordenar por fecha de creación con prioridad para historias nuevas
+    storyExamplesList.sort((a, b) => {
+      // Función para detectar si es formato localizado (español)
+      const isLocalizedFormat = (dateValue) => {
+        if (!dateValue) return false;
+        // Convert to string if it's not already a string
+        const dateStr = typeof dateValue === 'string' ? dateValue : String(dateValue);
+        return dateStr.includes('de ') || dateStr.includes('p.m.') || dateStr.includes('a.m.');
+      };
+      
+      // Manejar casos donde createdAt pueda ser undefined o null
+      if (!a.createdAt && !b.createdAt) return 0;
+      if (!a.createdAt) return 1; // a va al final
+      if (!b.createdAt) return 1; // b va al final
+      
+      const aIsLocalized = isLocalizedFormat(a.createdAt);
+      const bIsLocalized = isLocalizedFormat(b.createdAt);
+      
+      // Prioridad 1: Historias con formato localizado (nuevas) van primero
+      if (aIsLocalized && !bIsLocalized) return -1; // a es nueva, va primero
+      if (!aIsLocalized && bIsLocalized) return 1;  // b es nueva, va primero
+      
+      // Prioridad 2: Si ambas son del mismo tipo, ordenar por fecha
+      try {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        
+        // Verificar si las fechas son válidas
+        const isValidA = !isNaN(dateA.getTime());
+        const isValidB = !isNaN(dateB.getTime());
+        
+        if (isValidA && isValidB) {
+          return dateB - dateA; // Orden descendente (más recientes primero)
+        } else if (isValidA) {
+          return -1; // a tiene fecha válida, va primero
+        } else if (isValidB) {
+          return 1; // b tiene fecha válida, va primero
+        } else {
+          return 0; // Ninguna tiene fecha válida
+        }
+      } catch (error) {
+        console.error('Error parsing dates for sorting:', { a: a.createdAt, b: b.createdAt });
+        return 0;
+      }
+    });
+    */
     
     return storyExamplesList;
   } catch (error) {
@@ -975,14 +1024,6 @@ export const fetchStoryMetadata = async () => {
 
     console.log(`✅ [fetchStoryMetadata] Procesadas ${stories.length} historias exitosamente`);
     
-    // Ordenar por rating promedio y luego por número total de ratings
-    stories.sort((a, b) => {
-      if (b.averageRating !== a.averageRating) {
-        return b.averageRating - a.averageRating;
-      }
-      return b.totalRatings - a.totalRatings;
-    });
-    
     return stories;
   } catch (error) {
     console.error("❌ [fetchStoryMetadata] Error:", error);
@@ -1012,6 +1053,7 @@ export const addProtagonistaToStory = async (storyId, protagonista) => {
 
 /**
  * Actualiza los documentos existentes añadiendo el campo createdAt
+ * Asigna fechas más realistas basadas en el orden de creación
  */
 export const updateStoriesWithCreationDate = async () => {
   try {
@@ -1019,15 +1061,25 @@ export const updateStoriesWithCreationDate = async () => {
     const storyExamplesRef = collection(db, "storyExamples");
     const storyExamplesSnapshot = await getDocs(storyExamplesRef);
     
-    const updatePromises = storyExamplesSnapshot.docs.map(async (doc) => {
+    // Crear fechas escalonadas para dar orden realista
+    const baseDate = new Date('2024-01-01');
+    let dayOffset = 0;
+    
+    const updatePromises = storyExamplesSnapshot.docs.map(async (doc, index) => {
       const data = doc.data();
       // Solo actualizar si no tiene createdAt
       if (!data.createdAt) {
-        console.log(`Actualizando documento ${doc.id} con fecha de creación...`);
+        // Crear fecha escalonada (cada historia un día diferente)
+        const storyDate = new Date(baseDate.getTime() + (dayOffset * 24 * 60 * 60 * 1000));
+        dayOffset++;
+        
+        console.log(`Actualizando documento ${doc.id} (${data.title}) con fecha: ${storyDate.toISOString()}`);
         await updateDoc(doc.ref, {
-          createdAt: new Date().toISOString()
+          createdAt: storyDate
         });
         console.log(`✓ Documento ${doc.id} actualizado`);
+      } else {
+        console.log(`⏭️ Documento ${doc.id} (${data.title}) ya tiene fecha: ${data.createdAt}`);
       }
     });
     
@@ -1037,5 +1089,54 @@ export const updateStoriesWithCreationDate = async () => {
   } catch (error) {
     console.error("Error actualizando fechas de creación:", error);
     return false;
+  }
+};
+
+/**
+ * Diagnóstico de fechas de creación en los documentos
+ */
+export const diagnoseDateIssues = async () => {
+  try {
+    console.log("🔍 DIAGNÓSTICO DE FECHAS DE CREACIÓN");
+    const storyExamplesRef = collection(db, "storyExamples");
+    const storyExamplesSnapshot = await getDocs(storyExamplesRef);
+    
+    const stories = [];
+    
+    storyExamplesSnapshot.docs.forEach(doc => {
+      const data = doc.data();
+      stories.push({
+        id: doc.id,
+        title: data.title,
+        createdAt: data.createdAt,
+        hasCreatedAt: !!data.createdAt
+      });
+    });
+    
+    console.log(`📊 Total documentos: ${stories.length}`);
+    console.log(`✅ Con createdAt: ${stories.filter(s => s.hasCreatedAt).length}`);
+    console.log(`❌ Sin createdAt: ${stories.filter(s => !s.hasCreatedAt).length}`);
+    
+    console.log("\n📋 LISTA DE HISTORIAS (orden actual en BD):");
+    stories.forEach((story, index) => {
+      console.log(`${index + 1}. ${story.title} - ${story.createdAt ? new Date(story.createdAt).toLocaleDateString() : 'SIN FECHA'}`);
+    });
+    
+    // Ordenar como lo hace el frontend
+    stories.sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+      const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+      return dateB - dateA;
+    });
+    
+    console.log("\n🔄 ORDEN DESPUÉS DE APLICAR SORT (como aparece en frontend):");
+    stories.forEach((story, index) => {
+      console.log(`${index + 1}. ${story.title} - ${story.createdAt ? new Date(story.createdAt).toLocaleDateString() : 'SIN FECHA'}`);
+    });
+    
+    return stories;
+  } catch (error) {
+    console.error("Error en diagnóstico:", error);
+    return [];
   }
 }; 
