@@ -273,7 +273,7 @@
     "audioLimitReached": "Has alcanzado el límite de audios para esta historia. Crea una nueva historia para generar más audios.",
     "shareError": "Error al compartir",
     "publishStory": "Publicar historia",
-    "publishAudioStory": "Publicar Audiocuento",
+    "publishAudioStory": "Publicar y guardar en mi perfil",
     "publishing": "Publicando...",
     "publishSuccess": "¡Historia publicada exitosamente! Ahora otros usuarios pueden verla en la galería.",
     "publishError": "Error al publicar la historia",
@@ -722,7 +722,8 @@
     "register": "Registrarse",
     "signInWithGoogle": "Iniciar sesión con Google",
     "or": "o",
-    "loading": "Procesando..."
+    "loading": "Procesando...",
+    "emailNotVerified": "Debes verificar tu email antes de iniciar sesión. Revisa tu bandeja de entrada."
   },
   "register": {
     "title": "Crear una cuenta",

@@ -494,7 +494,7 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
       {audioUrl && !isPublished && (
         <button 
           onClick={handlePublishStory}
-          className="publish-button full-width"
+          className="publish-button"
           disabled={isPublishing}
         >
           {isPublishing ? (
@@ -509,7 +509,7 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
         </button>
       )}
       {audioUrl && isPublished && (
-        <div className="published-status full-width">
+        <div className="published-status">
           <span className="btn-icon">✅</span> {t('storyDisplay.published')}
         </div>
       )}

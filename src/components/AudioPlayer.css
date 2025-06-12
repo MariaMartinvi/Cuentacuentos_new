@@ -13,17 +13,22 @@
 }
 
 .play-pause-btn {
-  background: #007bff;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  font-size: 1.2rem;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+  flex-shrink: 0;
 }
 
 .play-pause-btn:hover {
@@ -363,7 +368,7 @@
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background-color: #4361ee;
+  background-color: #6366f1;
   color: white;
   cursor: pointer;
   font-size: 16px;
@@ -371,15 +376,16 @@
   transition: all 0.2s ease;
   width: 100%;
   text-decoration: none;
-  box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+  box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+  margin-top: 0.5rem;
 }
 
 .download-audio-button:hover,
 .share-audio-button:hover,
 .share-audio-btn:hover {
-  background-color: #3a56d4;
+  background-color: #5048e5;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.4);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
 }
 
 .btn-icon {
