@@ -496,14 +496,61 @@ Escucha este cuento en AudioGretel: ${productionUrl}`;
           onClick={handlePublishStory}
           className="publish-button"
           disabled={isPublishing}
+          style={{
+            background: 'linear-gradient(135deg, #4A90E2, #357ABD)',
+            color: 'white',
+            border: 'none',
+            padding: '1rem 1.5rem',
+            borderRadius: '12px',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            cursor: isPublishing ? 'not-allowed' : 'pointer',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.75rem',
+            width: '100%',
+            minHeight: '50px',
+            margin: '1.5rem 0',
+            boxShadow: '0 6px 20px rgba(74, 144, 226, 0.3)',
+            border: '2px solid #ffffff',
+            textTransform: 'none',
+            letterSpacing: '0.5px',
+            position: 'relative',
+            overflow: 'hidden',
+            textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+            textDecoration: 'none',
+            outline: 'none',
+            boxSizing: 'border-box',
+            fontFamily: 'inherit'
+          }}
         >
           {isPublishing ? (
             <>
-              <span className="spinner"></span> {t('storyDisplay.publishing')}
+              <span 
+                className="spinner"
+                style={{
+                  width: '18px',
+                  height: '18px',
+                  border: '3px solid #ffffff',
+                  borderTop: '3px solid transparent',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}
+              ></span> 
+              {t('storyDisplay.publishing')}
             </>
           ) : (
             <>
-              <span className="btn-icon">🌟</span> {t('storyDisplay.publishAudioStory')}
+              <span 
+                className="btn-icon"
+                style={{
+                  fontSize: '1.2rem',
+                  filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))'
+                }}
+              >🌟</span> 
+              {t('storyDisplay.publishAudioStory')}
             </>
           )}
         </button>
