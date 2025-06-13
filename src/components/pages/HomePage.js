@@ -199,125 +199,49 @@ function HomePage() {
         
         <TestimonialsSection />
         
-        {/* SEO Internal Links Section */}
-        <div className="seo-links-section" style={{ 
-          background: '#f8f9fa', 
-          padding: '4rem 0', 
-          textAlign: 'center' 
-        }}>
-          <div className="container">
-            <h2 style={{ marginBottom: '2rem', color: '#2c3e50', fontSize: '2.5rem' }}>
-              {i18n.language === 'es' ? 
-                'Explora Nuestras Herramientas de IA' : 
-                'Explore Our AI Tools'}
+        {/* AI Tools Section */}
+        <div className="ai-tools-section">
+          <div className="ai-tools-container">
+            <h2 className="ai-tools-title">
+              {t('aiTools.title')}
             </h2>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              gap: '2rem', 
-              flexWrap: 'wrap',
-              maxWidth: '1000px',
-              margin: '0 auto'
-            }}>
+            <div className="ai-tools-grid">
               <a 
                 href="/herramientas/generador-audiocuentos" 
-                style={{ 
-                  background: 'white', 
-                  padding: '2rem', 
-                  borderRadius: '15px', 
-                  textDecoration: 'none', 
-                  color: '#2c3e50',
-                  boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                  minWidth: '280px',
-                  flex: '1',
-                  transition: 'all 0.3s ease',
-                  border: '2px solid transparent'
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.transform = 'translateY(-5px)';
-                  e.target.style.border = '2px solid #667eea';
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.border = '2px solid transparent';
-                }}
+                className="ai-tool-card"
               >
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛠️</div>
-                <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>
-                  {i18n.language === 'es' ? 'Generador de Audiocuentos' : 'Audio Story Generator'}
+                <div className="ai-tool-icon">🛠️</div>
+                <h3 className="ai-tool-title">
+                  {t('aiTools.audioStoryGenerator.title')}
                 </h3>
-                <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>
-                  {i18n.language === 'es' ? 
-                    'Descubre todas las características de nuestra herramienta de IA para crear audiocuentos únicos' :
-                    'Discover all the features of our AI tool to create unique audio stories'}
+                <p className="ai-tool-description">
+                  {t('aiTools.audioStoryGenerator.description')}
                 </p>
               </a>
               
               <a 
                 href="/como-generar-audiocuentos-ia" 
-                style={{ 
-                  background: 'white', 
-                  padding: '2rem', 
-                  borderRadius: '15px', 
-                  textDecoration: 'none', 
-                  color: '#2c3e50',
-                  boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                  minWidth: '280px',
-                  flex: '1',
-                  transition: 'all 0.3s ease',
-                  border: '2px solid transparent'
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.transform = 'translateY(-5px)';
-                  e.target.style.border = '2px solid #667eea';
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.border = '2px solid transparent';
-                }}
+                className="ai-tool-card"
               >
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
-                <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>
-                  {i18n.language === 'es' ? 'Guía Completa' : 'Complete Guide'}
+                <div className="ai-tool-icon">📚</div>
+                <h3 className="ai-tool-title">
+                  {t('aiTools.completeGuide.title')}
                 </h3>
-                <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>
-                  {i18n.language === 'es' ? 
-                    'Aprende paso a paso cómo crear audiocuentos profesionales con inteligencia artificial' :
-                    'Learn step by step how to create professional audio stories with artificial intelligence'}
+                <p className="ai-tool-description">
+                  {t('aiTools.completeGuide.description')}
                 </p>
               </a>
               
               <a 
                 href="/ejemplos" 
-                style={{ 
-                  background: 'white', 
-                  padding: '2rem', 
-                  borderRadius: '15px', 
-                  textDecoration: 'none', 
-                  color: '#2c3e50',
-                  boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                  minWidth: '280px',
-                  flex: '1',
-                  transition: 'all 0.3s ease',
-                  border: '2px solid transparent'
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.transform = 'translateY(-5px)';
-                  e.target.style.border = '2px solid #667eea';
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.border = '2px solid transparent';
-                }}
+                className="ai-tool-card"
               >
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎵</div>
-                <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>
-                  {i18n.language === 'es' ? 'Ejemplos de Audiocuentos' : 'Audio Story Examples'}
+                <div className="ai-tool-icon">🎵</div>
+                <h3 className="ai-tool-title">
+                  {t('aiTools.audioStoryExamples.title')}
                 </h3>
-                <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>
-                  {i18n.language === 'es' ? 
-                    'Escucha ejemplos reales de audiocuentos creados con nuestra tecnología de IA' :
-                    'Listen to real examples of audio stories created with our AI technology'}
+                <p className="ai-tool-description">
+                  {t('aiTools.audioStoryExamples.description')}
                 </p>
               </a>
             </div>
