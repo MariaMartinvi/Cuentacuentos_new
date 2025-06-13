@@ -891,5 +891,20 @@
       "role": "Profesor infantil",
       "content": "Los audiocuentos personalizados son una excelente herramienta para el desarrollo del lenguaje. Mis alumnos disfrutan mucho creando sus propias historias y practicando la pronunciación."
     }
+  },
+  "aiTools": {
+    "title": "Explora Nuestras Herramientas de IA",
+    "audioStoryGenerator": {
+      "title": "Generador de Audiocuentos",
+      "description": "Descubre todas las características de nuestra herramienta de IA para crear audiocuentos únicos"
+    },
+    "completeGuide": {
+      "title": "Guía Completa",
+      "description": "Aprende paso a paso cómo crear audiocuentos profesionales con inteligencia artificial"
+    },
+    "audioStoryExamples": {
+      "title": "Ejemplos de Audiocuentos",
+      "description": "Escucha ejemplos reales de audiocuentos creados con nuestra tecnología de IA"
+    }
   }
 } 

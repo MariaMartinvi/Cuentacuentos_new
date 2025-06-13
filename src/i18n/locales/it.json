@@ -532,5 +532,20 @@
       "role": "Insegnante dell'infanzia",
       "content": "Le audiostorie personalizzate sono un eccellente strumento per lo sviluppo del linguaggio. I miei studenti si divertono molto a creare le loro storie e a praticare la pronuncia."
     }
+  },
+  "aiTools": {
+    "title": "Esplora i Nostri Strumenti IA",
+    "audioStoryGenerator": {
+      "title": "Generatore di Storie Audio",
+      "description": "Scopri tutte le funzionalità del nostro strumento IA per creare storie audio uniche"
+    },
+    "completeGuide": {
+      "title": "Guida Completa",
+      "description": "Impara passo dopo passo come creare storie audio professionali con l'intelligenza artificiale"
+    },
+    "audioStoryExamples": {
+      "title": "Esempi di Storie Audio",
+      "description": "Ascolta esempi reali di storie audio create con la nostra tecnologia IA"
+    }
   }
 } 

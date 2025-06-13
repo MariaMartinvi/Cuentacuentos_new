@@ -962,5 +962,20 @@
     "credentialAlreadyInUse": "This credential is already in use by another account",
     "operationNotAllowed": "This operation is not allowed",
     "requiredRecentLogin": "For your security, you need to log in again to perform this action"
+  },
+  "aiTools": {
+    "title": "Explore Our AI Tools",
+    "audioStoryGenerator": {
+      "title": "Audio Story Generator",
+      "description": "Discover all the features of our AI tool to create unique audio stories"
+    },
+    "completeGuide": {
+      "title": "Complete Guide",
+      "description": "Learn step by step how to create professional audio stories with artificial intelligence"
+    },
+    "audioStoryExamples": {
+      "title": "Audio Story Examples",
+      "description": "Listen to real examples of audio stories created with our AI technology"
+    }
   }
 } 

@@ -446,5 +446,20 @@
       "role": "Professeur maternelle",
       "content": "Les audiocontes personnalisés sont un excellent outil pour le développement du langage. Mes élèves aiment beaucoup créer leurs propres histoires et pratiquer la prononciation."
     }
+  },
+  "aiTools": {
+    "title": "Explorez Nos Outils IA",
+    "audioStoryGenerator": {
+      "title": "Générateur d'Histoires Audio",
+      "description": "Découvrez toutes les fonctionnalités de notre outil IA pour créer des histoires audio uniques"
+    },
+    "completeGuide": {
+      "title": "Guide Complet",
+      "description": "Apprenez étape par étape comment créer des histoires audio professionnelles avec l'intelligence artificielle"
+    },
+    "audioStoryExamples": {
+      "title": "Exemples d'Histoires Audio",
+      "description": "Écoutez des exemples réels d'histoires audio créées avec notre technologie IA"
+    }
   }
 } 
