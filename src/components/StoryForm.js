@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { generateStory } from '../services/storyService.js';
+import { generateStory, generateStoryWithStreaming } from '../services/storyService.js';
 import { getCurrentUser, updateUserStoriesCount } from '../services/authService';
 import { useNavigate, Link } from 'react-router-dom';
 import { checkServerHealth, diagnoseBackendIssue } from '../services/storyService';
@@ -32,6 +32,17 @@ function StoryForm({ onStoryGenerated }) {
   const [englishLevel, setEnglishLevel] = useState('intermediate');
   const [audioUrl, setAudioUrl] = useState(null);
   const [isMounted, setIsMounted] = useState(true);
+
+  // Streaming states
+  const [streamingText, setStreamingText] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamingProgress, setStreamingProgress] = useState({ percentage: 0, phase: '' });
+  const [enableTextStreaming, setEnableTextStreaming] = useState(true);
+  
+  // Ref para auto-scroll del streaming
+  const streamingTextRef = useRef(null);
+
+  console.log('🔥 [FRONTEND-FORM] enableTextStreaming:', enableTextStreaming);
 
   // Special handler for rate limit errors with countdown
   const formatTimeRemaining = (milliseconds) => {
@@ -164,6 +175,8 @@ function StoryForm({ onStoryGenerated }) {
 
   // Show warning banner when generating story
   useEffect(() => {
+    // COMENTADO: Quitamos el popup molesto durante las pruebas de streaming
+    /*
     if (isLoading) {
       setWarningMessage(t('storyForm.storyGenerationWarning'));
       setWarningType('generation');
@@ -175,6 +188,7 @@ function StoryForm({ onStoryGenerated }) {
         setWarningType('');
       }
     }
+    */
   }, [isLoading, t]);
   
   const setupRateLimitCountdown = (retryAfterISO) => {
@@ -472,6 +486,10 @@ function StoryForm({ onStoryGenerated }) {
     setIsLoading(true);
     setError(null);
 
+    // Clear previous streaming state
+    setStreamingText('');
+    setStreamingProgress({ percentage: 0, phase: '' });
+
     try {
       // Asegurarnos de que el idioma esté definido
       const selectedLanguage = i18n.language || 'es';
@@ -491,10 +509,133 @@ function StoryForm({ onStoryGenerated }) {
       };
 
       console.log('Sending story generation request with params:', storyParams);
+      console.log('🔥 [FRONTEND-FORM] enableTextStreaming value:', enableTextStreaming);
+      console.log('🔥 [FRONTEND-FORM] typeof enableTextStreaming:', typeof enableTextStreaming);
 
-      const result = await generateStory(storyParams);
+      let result;
+
+      if (enableTextStreaming) {
+        // Use streaming generation
+        console.log('🔥 [FRONTEND-FORM] Activando modo streaming...');
+        setIsStreaming(true);
+        console.log('🔥 [FRONTEND-FORM] Estado streaming activado:', { isStreaming: true });
+        console.log('🚀 Iniciando generación con streaming...');
+        
+        const onTextChunk = (chunk, accumulatedText) => {
+          console.log('🔥 [FRONTEND-FORM] onTextChunk called!', { 
+            chunk, 
+            chunkLength: chunk?.length, 
+            accumulatedLength: accumulatedText?.length 
+          });
+          
+          // Convertir texto a párrafos HTML con mejor formato
+          const paragraphs = accumulatedText
+            .split('\n\n')
+            .filter(paragraph => paragraph.trim())
+            .map(paragraph => {
+              // Limpiar el texto del párrafo
+              const cleanText = paragraph.trim()
+                .replace(/^\s*[\"\']/, '') // Quitar comillas al inicio
+                .replace(/[\"\']?\s*$/, '') // Quitar comillas al final
+                .replace(/\n/g, ' ') // Convertir saltos de línea en espacios
+                .replace(/\s+/g, ' '); // Normalizar espacios múltiples
+              
+              return cleanText ? `<p>${cleanText}</p>` : '';
+            })
+            .filter(p => p) // Filtrar párrafos vacíos
+            .join('');
+          
+          console.log('🔥 [FRONTEND-FORM] Setting streaming text, HTML length:', paragraphs.length);
+          setStreamingText(paragraphs);
+          
+          // Auto-scroll suave con un pequeño delay para mejor experiencia
+          setTimeout(() => {
+            scrollToBottom();
+          }, 50);
+        };
+
+        const onProgress = (progressData) => {
+          console.log('📊 [FRONTEND-FORM] onProgress called!', progressData);
+          setStreamingProgress({
+            percentage: progressData.percentage || 0,
+            phase: progressData.phase || ''
+          });
+        };
+
+        const onPhaseComplete = (phaseData) => {
+          console.log('✅ Phase completed:', phaseData.phase);
+        };
+
+        try {
+          console.log('🚀 [FRONTEND-FORM] Iniciando generateStoryWithStreaming...');
+          result = await generateStoryWithStreaming(
+            storyParams,
+            onTextChunk,
+            onProgress,
+            onPhaseComplete
+          );
+          console.log('✅ [FRONTEND-FORM] Streaming completado exitosamente:', result);
+        } catch (streamError) {
+          console.error('❌ [FRONTEND-FORM] Error en streaming:', streamError);
+          
+          // Solo hacer fallback si el error es de conexión SSE
+          if (streamError.message === 'SSE_CONNECTION_FAILED') {
+            console.log('🔄 [FRONTEND-FORM] Fallback a generación tradicional debido a fallo de SSE');
+            result = await generateStory(storyParams);
+          } else {
+            // Para otros errores, re-lanzar la excepción
+            throw streamError;
+          }
+        }
+
+        setIsStreaming(false);
+        setStreamingText(''); // Clear streaming text since we'll use the final story
+      } else {
+        // Use traditional generation
+        console.log('🔥 [FRONTEND-FORM] Usando generación tradicional (NO streaming)');
+        result = await generateStory(storyParams);
+      }
       
-      if (result.story) {
+      console.log('🔍 [FRONTEND-FORM] Evaluando resultado:', {
+        hasResult: !!result,
+        hasStory: !!result?.story,
+        hasContent: !!result?.content,
+        hasResultStory: !!result?.result?.story,
+        hasTitle: !!result?.title,
+        resultKeys: result ? Object.keys(result) : []
+      });
+      
+      // Evaluar si tenemos una historia válida en cualquier formato
+      const hasValidStory = result && (
+        result.story ||           // Formato tradicional: { story: {...} }
+        result.content ||         // Formato directo: { content: "...", title: "..." }
+        result.result?.story ||   // Formato streaming: { result: { story: {...} } }
+        result.title              // Formato directo: { title: "...", content: "..." }
+      );
+      
+      if (hasValidStory) {
+        // Extraer la historia del formato correcto
+        let story;
+        if (result.story) {
+          story = result.story;
+          console.log('📖 [FRONTEND-FORM] Historia extraída de result.story');
+        } else if (result.result?.story) {
+          story = result.result.story;
+          console.log('📖 [FRONTEND-FORM] Historia extraída de result.result.story');
+        } else if (result.title || result.content) {
+          story = result;
+          console.log('📖 [FRONTEND-FORM] Historia extraída directamente del result');
+        } else {
+          story = result;
+          console.log('📖 [FRONTEND-FORM] Usando result completo como historia');
+        }
+        
+        console.log('✅ [FRONTEND-FORM] Historia extraída exitosamente:', {
+          title: story.title,
+          hasContent: !!story.content,
+          hasContentWithTitle: !!story.contentWithTitle
+        });
+        
         console.log('Story generated successfully');
         
         // Update user data locally with the new story counts from the server response
@@ -514,7 +655,7 @@ function StoryForm({ onStoryGenerated }) {
         }
 
         // Llamar al callback con la historia generada
-        onStoryGenerated(result.story);
+        onStoryGenerated(story);
         
         // Limpiar el formulario
         setTopic('');
@@ -532,6 +673,10 @@ function StoryForm({ onStoryGenerated }) {
       }
     } catch (error) {
       console.error('Error generating story:', error);
+      
+      // Clear streaming state on error
+      setIsStreaming(false);
+      setStreamingText('');
       
       // Handle authentication errors specifically
       if (error.code === 'AUTH_FAILED') {
@@ -568,6 +713,8 @@ function StoryForm({ onStoryGenerated }) {
       }
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
+      setStreamingText('');
     }
   };
 
@@ -804,6 +951,24 @@ function StoryForm({ onStoryGenerated }) {
     setCreativityLevel(e.target.value);
   };
 
+  // Función para hacer auto-scroll al final del contenido streaming
+  const scrollToBottom = () => {
+    if (streamingTextRef.current) {
+      const element = streamingTextRef.current;
+      // Usar requestAnimationFrame para asegurar que el DOM se ha actualizado
+      requestAnimationFrame(() => {
+        element.scrollTop = element.scrollHeight;
+      });
+    }
+  };
+
+  // Efecto para hacer auto-scroll cuando cambie el streaming text
+  useEffect(() => {
+    if (streamingText && isStreaming) {
+      scrollToBottom();
+    }
+  }, [streamingText, isStreaming]);
+
   return (
     <div className="story-form-container">
       <h2>
@@ -811,8 +976,8 @@ function StoryForm({ onStoryGenerated }) {
         {t('storyForm.title')}
       </h2>
 
-      {/* Warning banner when generating story */}
-      {isLoading && (
+      {/* Warning banner when generating story - COMENTADO PARA PRUEBAS */}
+      {false && isLoading && (
         <div className="warning-banner story-generation-warning">
           <span className="warning-icon">⚠️</span>
           <span className="warning-text">{t('storyForm.storyGenerationWarning')}</span>
@@ -828,7 +993,7 @@ function StoryForm({ onStoryGenerated }) {
             type="text"
             id="topic"
             value={topic}
-            onChange={handleTopicChangeWithCheck}
+            onChange={handleTopicChange}
             onBlur={handleTopicBlur}
             placeholder={t('storyForm.topicPlaceholder')}
             required
@@ -967,6 +1132,31 @@ function StoryForm({ onStoryGenerated }) {
         {/* Server status indicator */}
         {renderServerStatus()}
 
+        {/* Streaming text area */}
+        {isStreaming && streamingText && (
+          <div className="streaming-area">
+            <div className="streaming-header">
+              <h3>{t('storyForm.generatingStory')}</h3>
+              {streamingProgress.phase && (
+                <div className="streaming-progress">
+                  <span className="progress-phase">{streamingProgress.phase}</span>
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill" 
+                      style={{ width: `${streamingProgress.percentage}%` }}
+                    ></div>
+                  </div>
+                  <span className="progress-percentage">{streamingProgress.percentage}%</span>
+                </div>
+              )}
+            </div>
+            <div className="streaming-text" ref={streamingTextRef}>
+              <div className="story-content" dangerouslySetInnerHTML={{ __html: streamingText }} />
+              <span className="typing-cursor"></span>
+            </div>
+          </div>
+        )}
+
         <div className="button-group">
           <button
             type="submit"
@@ -994,8 +1184,8 @@ function StoryForm({ onStoryGenerated }) {
         </div>
       )}
 
-      {/* Warning Modal */}
-      <WarningModal />
+      {/* Warning Modal - COMENTADO PARA PRUEBAS DE STREAMING */}
+      {false && <WarningModal />}
     </div>
   );
 }

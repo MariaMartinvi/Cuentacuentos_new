@@ -439,6 +439,7 @@
     "creativityCreative": "Muy Creativo",
     "generateButton": "Generar Cuento",
     "generating": "Generando...",
+    "generatingStory": "Generando tu cuento...",
     "loginRequired": "Por favor inicia sesión para generar cuentos",
     "error": "Error al generar el cuento",
     "rateLimit": "Límite de uso alcanzado. Por favor intenta de nuevo en",

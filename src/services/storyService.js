@@ -18,7 +18,7 @@ console.log('StoryService - Using API URL:', API_URL);
 console.log('StoryService - Using backend base URL:', backendBaseUrl);
 
 // Timeout en milisegundos (8 minutos para audios largos)
-const FETCH_TIMEOUT = 480000;
+const FETCH_TIMEOUT = config.isProduction ? 300000 : 120000; // 5 min prod, 2 min dev
 
 // Client-side rate limiting and throttling
 const waitForRequestSlot = async () => {
@@ -316,6 +316,467 @@ export const generateStory = async (storyData) => {
   } finally {
     pendingRequest = false;
     console.log('Request completed, pendingRequest set to false');
+  }
+};
+
+export const generateStoryWithStreaming = async (storyData, onTextChunk, onProgress, onPhaseComplete) => {
+  if (pendingRequest) {
+    console.log('Request already in progress, queuing...');
+    await waitForRequestSlot();
+  }
+  
+  pendingRequest = true;
+  console.log('Request started with streaming, pendingRequest set to true');
+
+  try {
+    const user = await getCurrentUser();
+    console.log('Current user for story generation:', user?.email);
+    
+    if (!user || !user.email) {
+      throw new Error('User not authenticated');
+    }
+
+    // Check server health first  
+    console.log('Checking server health before story generation...');
+    const serverHealth = await checkServerHealth();
+    console.log('Server health status:', serverHealth);
+    
+    if (!serverHealth.healthy) {
+      console.error('Server health check failed:', serverHealth);
+      
+      return {
+        error: 'server_unavailable',
+        details: serverHealth,
+        userFriendlyMessage: {
+          es: serverHealth.details 
+            ? `El servidor no está disponible en este momento. Error: ${serverHealth.details}`
+            : `The server is currently unavailable. Error: ${serverHealth.details}`
+        }
+      };
+    }
+
+    console.log('🚀 Making streaming story generation request...');
+    
+    // Get fresh authentication header
+    let authHeader;
+    try {
+      authHeader = await getAuthHeader();
+      console.log('✅ Auth header obtained successfully');
+    } catch (authError) {
+      console.error('❌ Failed to get authentication header:', authError);
+      const error = new Error('Authentication failed. Please log in again.');
+      error.code = 'AUTH_FAILED';
+      throw error;
+    }
+    
+    if (!authHeader.Authorization) {
+      console.error('❌ No authorization token available after getting auth header');
+      const error = new Error('No authentication token available. Please log in again.');
+      error.code = 'AUTH_FAILED';
+      throw error;
+    }
+
+    // Step 1: Start streaming generation
+    console.log('🚀 Iniciando request con streaming...');
+    
+    // Crear promesas para manejar tanto el response inicial como el streaming
+    const streamingPromise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.post(`${API_URL}/stories/generate`, {
+          ...storyData,
+          email: user.email,
+          enableStreaming: true
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            ...authHeader
+          },
+          timeout: FETCH_TIMEOUT,
+          withCredentials: true
+        });
+
+        const { streamId } = response.data;
+        
+        if (!streamId) {
+          throw new Error('No stream ID received from server');
+        }
+
+        console.log('✅ StreamId recibido:', streamId);
+        console.log('📡 Conectando al SSE inmediatamente...');
+
+        // Step 2: Connect to SSE stream INMEDIATAMENTE
+        const streamUrl = `${API_URL}/stories/stream?storyId=${streamId}`;
+        console.log('🔗 [FRONTEND-SERVICE] Connecting to SSE URL:', streamUrl);
+        
+        // Configurar EventSource con opciones para producción
+        const eventSourceConfig = {
+          withCredentials: true, // Importante para HTTPS/producción
+        };
+        
+        // En algunos navegadores/entornos, EventSource no acepta opciones, 
+        // así que lo intentamos con configuración estándar
+        let eventSource;
+        try {
+          eventSource = new EventSource(streamUrl, eventSourceConfig);
+        } catch (error) {
+          console.log('⚠️ [FRONTEND-SERVICE] EventSource with config failed, trying standard:', error.message);
+          eventSource = new EventSource(streamUrl);
+        }
+        
+        console.log('🔗 [FRONTEND-SERVICE] EventSource created, readyState:', eventSource.readyState);
+
+        let accumulatedText = '';
+        let connectionOpened = false;
+        let storyCompleted = false; // Flag para detectar si ya se completó
+        
+        // Timeouts ajustados para producción (conexiones más lentas)
+        const connectionTimeoutMs = config.isProduction ? 60000 : 30000; // 60s en prod, 30s en dev
+        const completionTimeoutMs = config.isProduction ? 20000 : 10000; // 20s en prod, 10s en dev
+        
+        // Set timeout for initial connection
+        const connectionTimeout = setTimeout(() => {
+          if (!connectionOpened) {
+            console.log('❌ [SSE] Connection timeout - no initial connection established');
+            eventSource.close();
+            reject(new Error('SSE_CONNECTION_FAILED'));
+          }
+        }, connectionTimeoutMs);
+        
+        // Timeout específico para el evento complete después de que se inicie la fase final
+        let completionTimeout = null;
+        const startCompletionTimeout = () => {
+          if (completionTimeout) return; // Ya está configurado
+          
+          completionTimeout = setTimeout(() => {
+            if (!storyCompleted && accumulatedText.length > 100) {
+              console.log('⏰ [FRONTEND] Timeout esperando evento complete, usando texto acumulado');
+              console.log('📝 [FRONTEND] Texto acumulado length:', accumulatedText.length);
+              eventSource.close();
+              resolve({
+                title: 'Historia Generada',
+                content: accumulatedText,
+                contentWithTitle: accumulatedText
+              });
+            }
+          }, completionTimeoutMs);
+        };
+
+        eventSource.onopen = (event) => {
+          console.log('✅ [FRONTEND-SERVICE] SSE connection opened successfully', event);
+          console.log('✅ [FRONTEND-SERVICE] EventSource readyState:', eventSource.readyState);
+          connectionOpened = true;
+          clearTimeout(connectionTimeout); // Clear connection timeout once connected
+        };
+
+        eventSource.addEventListener('textChunk', (event) => {
+          try {
+            console.log('📝 [FRONTEND-SERVICE] Raw textChunk event:', event.data);
+            const data = JSON.parse(event.data);
+            const chunk = data.content || data.chunk || '';
+            accumulatedText += chunk;
+            console.log('📝 [FRONTEND-SERVICE] Text chunk received:', chunk);
+            console.log('📝 [FRONTEND-SERVICE] Accumulated text length:', accumulatedText.length);
+            console.log('📝 [FRONTEND-SERVICE] onTextChunk callback exists?', !!onTextChunk);
+            
+            if (onTextChunk) {
+              console.log('📝 [FRONTEND-SERVICE] Calling onTextChunk callback...');
+              onTextChunk(chunk, accumulatedText);
+              console.log('📝 [FRONTEND-SERVICE] onTextChunk callback executed');
+            } else {
+              console.error('❌ [FRONTEND-SERVICE] onTextChunk callback is missing!');
+            }
+          } catch (error) {
+            console.error('❌ [FRONTEND-SERVICE] Error parsing text chunk:', error, 'Raw data:', event.data);
+          }
+        });
+
+        eventSource.addEventListener('progress', (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            console.log('📊 [FRONTEND] Progress update:', data);
+            
+            if (onProgress) {
+              onProgress(data);
+            }
+          } catch (error) {
+            console.error('❌ [FRONTEND] Error parsing progress:', error);
+          }
+        });
+
+        eventSource.addEventListener('phaseComplete', (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            console.log('✅ [FRONTEND] Phase complete:', data.phase || data);
+            
+            // Si se completó la fase de historia, iniciar timeout para completion
+            if (data.phase === 'story' || data.phaseName?.includes('historia') || data.phaseName?.includes('Historia')) {
+              console.log('🕐 [FRONTEND] Fase de historia completada, iniciando timeout para completion');
+              startCompletionTimeout();
+            }
+            
+            if (onPhaseComplete) {
+              onPhaseComplete(data);
+            }
+          } catch (error) {
+            console.error('❌ [FRONTEND] Error parsing phase complete:', error);
+          }
+        });
+
+        eventSource.addEventListener('complete', (event) => {
+          try {
+            console.log('🏁 [FRONTEND] Evento complete recibido, marcando como completado');
+            storyCompleted = true; // Marcar como completado para evitar timeout
+            
+            // Cancelar el timeout de completion si existe
+            if (completionTimeout) {
+              clearTimeout(completionTimeout);
+              completionTimeout = null;
+              console.log('✅ [FRONTEND] Timeout de completion cancelado');
+            }
+            
+            console.log('🏁 [FRONTEND] Story generation complete - raw event data length:', event.data ? event.data.length : 'No data');
+            console.log('🏁 [FRONTEND] Raw event data preview:', event.data ? event.data.substring(0, 200) + '...' : 'No data');
+            
+            // Verificar si hay datos válidos
+            if (!event.data || event.data === 'undefined') {
+              console.log('⚠️ [FRONTEND] No data in complete event, using accumulated text as fallback');
+              eventSource.close();
+              // Usar el texto acumulado como resultado
+              resolve({
+                title: 'Historia Generada',
+                content: accumulatedText,
+                contentWithTitle: accumulatedText
+              });
+              return;
+            }
+            
+            let data;
+            try {
+              data = JSON.parse(event.data);
+              console.log('✅ [FRONTEND] Event data parsed successfully');
+            } catch (parseError) {
+              console.error('❌ [FRONTEND] Error parsing JSON:', parseError.message);
+              console.log('📝 [FRONTEND] Falling back to accumulated text due to JSON parse error');
+              eventSource.close();
+              resolve({
+                title: 'Historia Generada',
+                content: accumulatedText,
+                contentWithTitle: accumulatedText
+              });
+              return;
+            }
+            
+            console.log('🏁 [FRONTEND] Final story result:', { 
+              hasStory: !!data.story, 
+              hasResultStory: !!data.result?.story,
+              hasResult: !!data.result,
+              contentLength: data.story?.content?.length || data.result?.story?.content?.length,
+              accumulatedLength: accumulatedText.length,
+              dataKeys: Object.keys(data),
+              resultKeys: data.result ? Object.keys(data.result) : undefined
+            });
+            
+            // Buscar la historia en diferentes ubicaciones posibles
+            let finalStory = null;
+            
+            if (data.story) {
+              // Formato directo
+              finalStory = data.story;
+              console.log('📖 [FRONTEND] Historia encontrada en data.story');
+            } else if (data.result && data.result.story) {
+              // Formato anidado (como viene del backend)
+              finalStory = data.result.story;
+              console.log('📖 [FRONTEND] Historia encontrada en data.result.story');
+            } else if (data.result && typeof data.result === 'object' && data.result.title) {
+              // El resultado es directamente la historia
+              finalStory = data.result;
+              console.log('📖 [FRONTEND] Historia encontrada directamente en data.result');
+            }
+            
+            if (finalStory) {
+              console.log('✅ [FRONTEND] Historia extraída exitosamente:', {
+                title: finalStory.title,
+                contentLength: finalStory.content?.length || finalStory.contentWithTitle?.length,
+                hasContent: !!finalStory.content,
+                hasContentWithTitle: !!finalStory.contentWithTitle
+              });
+              console.log('🎯 [FRONTEND] Resolviendo promesa con historia válida');
+              eventSource.close();
+              resolve(finalStory);
+            } else {
+              console.log('⚠️ [FRONTEND] No se encontró historia en el resultado');
+              console.log('📊 [FRONTEND] Estructura completa del data:', JSON.stringify(data, null, 2));
+              console.log('⚠️ [FRONTEND] Usando texto acumulado como fallback');
+              eventSource.close();
+              resolve({
+                title: 'Historia Generada',
+                content: accumulatedText,
+                contentWithTitle: accumulatedText
+              });
+            }
+          } catch (error) {
+            console.error('❌ [FRONTEND] Error parsing completion:', error, 'Event data:', event.data);
+            console.log('📝 [FRONTEND] Using accumulated text as fallback due to parse error');
+            eventSource.close();
+            // Usar el texto acumulado como resultado si falla el parsing
+            resolve({
+              title: 'Historia Generada',
+              content: accumulatedText,
+              contentWithTitle: accumulatedText
+            });
+          }
+        });
+
+        eventSource.addEventListener('error', (event) => {
+          try {
+            console.log('❌ SSE error event received:', event.data);
+            
+            // Si hay datos específicos del error, manejarlos
+            if (event.data && event.data !== 'undefined') {
+              const data = JSON.parse(event.data);
+              console.error('❌ Stream error:', data.error);
+              
+              // Solo cerrar si es un error crítico
+              if (data.error && data.error.includes('crítico')) {
+                eventSource.close();
+                reject(new Error(data.error));
+                return;
+              }
+            }
+            
+            // Para otros errores, solo log y continuar
+            console.log('⚠️ SSE error event, but continuing to wait for completion...');
+            
+          } catch (error) {
+            console.log('⚠️ Error parsing SSE error event, continuing...', error.message);
+          }
+        });
+
+        eventSource.onerror = (error) => {
+          console.error('❌ SSE connection error:', error);
+          console.log('📊 Connection details:', {
+            readyState: eventSource.readyState,
+            url: eventSource.url,
+            connectionOpened,
+            accumulatedTextLength: accumulatedText.length
+          });
+          
+          // Solo rechazar si nunca se conectó exitosamente
+          if (!connectionOpened) {
+            console.log('❌ Connection never opened, falling back to traditional generation');
+            eventSource.close();
+            reject(new Error('SSE_CONNECTION_FAILED'));
+            return;
+          }
+          
+          // Si la conexión estaba abierta, esperar un poco antes de decidir qué hacer
+          console.log('⚠️ Connection lost after opening, waiting for potential recovery...');
+          
+          // Dar tiempo para recibir el evento complete antes de cerrar
+          setTimeout(() => {
+            if (eventSource.readyState === EventSource.CLOSED) {
+              console.log('📡 Connection already closed, checking if we have content...');
+              
+              // Si tenemos texto acumulado suficiente, usarlo como resultado
+              if (accumulatedText.length > 100) {
+                console.log('📝 Using accumulated text as fallback result (sufficient content)');
+                resolve({
+                  title: 'Historia Generada',
+                  content: accumulatedText,
+                  contentWithTitle: accumulatedText
+                });
+              } else {
+                console.log('❌ Insufficient content accumulated, rejecting');
+                reject(new Error('Connection error during streaming - insufficient content'));
+              }
+            }
+          }, 2000); // Esperar 2 segundos para dar tiempo al evento complete
+        };
+
+        // Cleanup timeout after 10 minutes
+        const timeoutId = setTimeout(() => {
+          if (eventSource.readyState !== EventSource.CLOSED) {
+            console.log('⏰ Streaming timeout, closing connection');
+            eventSource.close();
+            
+            // If we have accumulated text, use it as fallback
+            if (accumulatedText.length > 0) {
+              console.log('📝 Using accumulated text after timeout');
+              resolve({
+                title: 'Historia Generada',
+                content: accumulatedText,
+                contentWithTitle: accumulatedText
+              });
+            } else {
+              reject(new Error('Streaming timeout'));
+            }
+          }
+        }, 600000);
+
+        // Cleanup function to clear timeouts
+        const cleanup = () => {
+          clearTimeout(timeoutId);
+          clearTimeout(connectionTimeout);
+          if (completionTimeout) {
+            clearTimeout(completionTimeout);
+          }
+          if (eventSource.readyState !== EventSource.CLOSED) {
+            eventSource.close();
+          }
+        };
+        
+      } catch (error) {
+        console.error('❌ Error iniciando streaming:', error);
+        reject(error);
+      }
+    });
+
+         // Retornar la promesa del streaming
+     return streamingPromise;
+
+  } catch (error) {
+    console.error('❌ Error in streaming story generation request:', error);
+    
+    // Handle authentication errors
+    if (error.response?.status === 401) {
+      const authError = new Error('Authentication failed. Please log in again.');
+      authError.code = 'AUTH_FAILED';
+      throw authError;
+    }
+    
+    // Handle other errors similar to the original function
+    if (error.response?.status === 403) {
+      console.error('❌ Forbidden (403):', error.response.data);
+      throw error;
+    }
+    
+    if (error.response?.status === 500) {
+      console.error('❌ Server error (500):', error.response.data);
+      throw new Error('Server error. Please try again later.');
+    }
+    
+    if (error.response?.status === 503) {
+      console.error('❌ Service unavailable (503):', error.response.data);
+      throw new Error('Service temporarily unavailable. Please try again later.');
+    }
+    
+    // Handle network errors
+    if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
+      console.error('❌ Network error');
+      throw new Error('Network error. Please check your internet connection and try again.');
+    }
+    
+    // Handle timeout errors
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      console.error('❌ Request timeout');
+      throw new Error('Request timed out. The server may be busy. Please try again.');
+    }
+    
+    throw error;
+  } finally {
+    pendingRequest = false;
+    console.log('Streaming request completed, pendingRequest set to false');
   }
 };
 

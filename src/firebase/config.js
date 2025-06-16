@@ -120,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Configurar timeouts y reintentos
 const MAX_RETRIES = 2;
-const TIMEOUT_DURATION = 10000; // 10 segundos
+const TIMEOUT_DURATION = 480000; // 8 minutos para uploads grandes (publicación)
 
 // Función para manejar reintentos
 const withRetry = async (operation, retries = MAX_RETRIES) => {

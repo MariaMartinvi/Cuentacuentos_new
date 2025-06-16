@@ -478,6 +478,7 @@
     "creativityCreative": "Very Creative",
     "generateButton": "Generate Story",
     "generating": "Generating...",
+    "generatingStory": "Generating your story...",
     "loginRequired": "Please log in to generate stories",
     "clickToLogin": "Click here to log in",
     "error": "Error generating story",

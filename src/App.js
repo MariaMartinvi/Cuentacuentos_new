@@ -11,14 +11,15 @@ import { initProxy, cleanupProxy } from './services/proxyService';
 import GoogleTagManager from './components/GoogleTagManager';
 import config from './config';
 
-// Use production server URL
-const API_URL = 'https://generadorcuentos.onrender.com';
+// Usar configuración dinámica en lugar de URL hardcodeada
+const API_URL = config.apiUrl;
 
 function App() {
   console.log('🚀🚀🚀 [APP] APLICACIÓN INICIANDO - App.js está funcionando');
   console.log('🚀🚀🚀 [APP] Environment check:', {
     nodeEnv: process.env.NODE_ENV,
     apiUrl: API_URL,
+    isProduction: config.isProduction,
     timestamp: new Date().toISOString()
   });
   

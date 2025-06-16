@@ -17,24 +17,39 @@ export const publishStory = async (storyId) => {
 
     console.log('📤 Publishing story:', { storyId, email, backendUrl: BACKEND_URL });
 
-    const response = await fetch(`${BACKEND_URL}/api/stories/${storyId}/publish`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        'Origin': window.location.origin
+    // Create AbortController for timeout handling
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 minutos para publicación
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/stories/${storyId}/publish`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Origin': window.location.origin
+        },
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al publicar la historia');
       }
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Error al publicar la historia');
+      const data = await response.json();
+      console.log('✅ Story published successfully:', data);
+      
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('La publicación tomó demasiado tiempo. El servidor puede estar ocupado, intenta de nuevo.');
+      }
+      throw error;
     }
-
-    const data = await response.json();
-    console.log('✅ Story published successfully:', data);
-    
-    return data;
   } catch (error) {
     console.error('❌ Error publishing story:', error);
     throw error;
