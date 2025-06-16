@@ -17,8 +17,8 @@ const backendBaseUrl = config.apiUrl;
 console.log('StoryService - Using API URL:', API_URL);
 console.log('StoryService - Using backend base URL:', backendBaseUrl);
 
-// Timeout en milisegundos (2 minutos)
-const FETCH_TIMEOUT = 120000;
+// Timeout en milisegundos (8 minutos para audios largos)
+const FETCH_TIMEOUT = 480000;
 
 // Client-side rate limiting and throttling
 const waitForRequestSlot = async () => {
