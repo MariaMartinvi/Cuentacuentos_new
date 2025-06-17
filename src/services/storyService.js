@@ -811,56 +811,19 @@ export const checkServerHealth = async () => {
   try {
     console.log('🔍 Checking server health...');
     
-    // First attempt with shorter timeout for fast response
-    const quickCheckPromise = new Promise((resolve, reject) => {
-      const timeoutId = setTimeout(() => reject(new Error('quick_timeout')), 3000); // 3 seconds for quick check
-      
-      fetch(`${API_URL}/health`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => {
-        clearTimeout(timeoutId);
-        resolve(response);
-      })
-      .catch(error => {
-        clearTimeout(timeoutId);
-        reject(error);
-      });
-    });
+    // Multiple health endpoints to try (for production compatibility)
+    const healthEndpoints = [
+      `${API_URL}/health`,          // Backend: /api/health
+      `${config.apiUrl}/health`,    // Backend: /health  
+      `${API_URL}/stories/health`   // Story routes: /api/stories/health
+    ];
     
-    try {
-      // Try quick check first
-      const response = await quickCheckPromise;
-      
-      if (response.ok) {
-        console.log('✅ Quick health check passed');
-        try {
-          const data = await response.json();
-          return {
-            healthy: true,
-            status: 'ok',
-            timestamp: data.timestamp,
-            details: 'Server responded quickly'
-          };
-        } catch (parseError) {
-          return {
-            healthy: true,
-            status: 'ok',
-            details: 'Server responded but health data not parseable'
-          };
-        }
-      }
-    } catch (quickError) {
-      console.log('⚠️ Quick check failed, trying extended check for cold start...');
-      
-      // If quick check fails, try extended timeout for cold start scenario
-      const extendedCheckPromise = new Promise((resolve, reject) => {
-        const timeoutId = setTimeout(() => reject(new Error('extended_timeout')), 15000); // 15 seconds for cold start
+    // First attempt with shorter timeout for fast response
+    const tryHealthEndpoint = async (url, timeout) => {
+      return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => reject(new Error('timeout')), timeout);
         
-        fetch(`${API_URL}/health`, {
+        fetch(url, {
           method: 'GET',
           headers: {
             'Accept': 'application/json'
@@ -875,18 +838,57 @@ export const checkServerHealth = async () => {
           reject(error);
         });
       });
-      
+    };
+    
+    // Try quick check on all endpoints
+    for (const endpoint of healthEndpoints) {
       try {
-        const response = await extendedCheckPromise;
+        console.log(`🔍 Trying quick check on: ${endpoint}`);
+        const response = await tryHealthEndpoint(endpoint, 4000); // 4 seconds for quick check
         
         if (response.ok) {
-          console.log('✅ Extended health check passed (cold start detected)');
+          console.log(`✅ Quick health check passed on: ${endpoint}`);
           try {
             const data = await response.json();
             return {
               healthy: true,
               status: 'ok',
               timestamp: data.timestamp,
+              endpoint: endpoint,
+              details: 'Server responded quickly'
+            };
+          } catch (parseError) {
+            return {
+              healthy: true,
+              status: 'ok',
+              endpoint: endpoint,
+              details: 'Server responded but health data not parseable'
+            };
+          }
+        }
+      } catch (quickError) {
+        console.log(`⚠️ Quick check failed on ${endpoint}: ${quickError.message}`);
+        continue; // Try next endpoint
+      }
+    }
+    
+    console.log('⚠️ All quick checks failed, trying extended check for cold start...');
+    
+    // If all quick checks fail, try extended timeout for cold start scenario (Render can be very slow)
+    for (const endpoint of healthEndpoints) {
+      try {
+        console.log(`🔍 Trying extended check on: ${endpoint}`);
+        const response = await tryHealthEndpoint(endpoint, 25000); // 25 seconds for Render cold start
+        
+        if (response.ok) {
+          console.log(`✅ Extended health check passed on: ${endpoint} (cold start detected)`);
+          try {
+            const data = await response.json();
+            return {
+              healthy: true,
+              status: 'ok',
+              timestamp: data.timestamp,
+              endpoint: endpoint,
               details: 'Server responded after cold start delay',
               coldStart: true
             };
@@ -894,42 +896,30 @@ export const checkServerHealth = async () => {
             return {
               healthy: true,
               status: 'ok',
+              endpoint: endpoint,
               details: 'Server responded after cold start but health data not parseable',
               coldStart: true
             };
           }
         } else {
-          // Server responded but with error status
-          return {
-            healthy: false,
-            status: 'error',
-            statusCode: response.status,
-            details: `Health check failed with status ${response.status} (${response.statusText})`,
-            error: 'server_error'
-          };
+          console.log(`❌ Server responded with error on ${endpoint}: ${response.status}`);
         }
       } catch (extendedError) {
-        console.error('❌ Extended health check also failed:', extendedError);
-        
-        // Return timeout-specific error
-        if (extendedError.message === 'extended_timeout') {
-          return {
-            healthy: false,
-            status: 'timeout',
-            details: 'Health check timed out after 15 seconds - server may be unavailable',
-            error: 'timeout'
-          };
-        }
-        
-        // Network or other errors
-        return {
-          healthy: false,
-          status: 'error',
-          details: `Connection error: ${extendedError.message}`,
-          error: extendedError.message || 'unknown'
-        };
+        console.log(`❌ Extended check failed on ${endpoint}: ${extendedError.message}`);
+        continue; // Try next endpoint
       }
     }
+    
+    // If all endpoints fail
+    console.error('❌ All health check endpoints failed');
+    return {
+      healthy: false,
+      status: 'timeout',
+      details: 'Health check timed out on all endpoints - server may be unavailable',
+      error: 'timeout',
+      attemptedEndpoints: healthEndpoints
+    };
+    
   } catch (error) {
     console.error('❌ Health check error:', error);
     
@@ -1260,3 +1250,93 @@ export const generateAudio = async (storyId, voiceId = 'female', speechRate = 1.
     throw error;
   }
 };
+
+// Production diagnostic function - can be run from browser console
+export const diagnoseProductionIssues = async () => {
+  console.log('🏥 Running production diagnostics...');
+  console.log('🌍 Current config:', {
+    apiUrl: config.apiUrl,
+    isProduction: config.isProduction,
+    fullApiUrl: `${config.apiUrl}/api`
+  });
+  
+  // Test multiple endpoints
+  const testEndpoints = [
+    `${config.apiUrl}/health`,
+    `${config.apiUrl}/api/health`, 
+    `${config.apiUrl}/api/stories/health`,
+    `${config.apiUrl}/test`,
+    `${config.apiUrl}/api/test`
+  ];
+  
+  console.log('🔍 Testing endpoints:', testEndpoints);
+  
+  for (const endpoint of testEndpoints) {
+    try {
+      console.log(`\n🔍 Testing: ${endpoint}`);
+      const startTime = Date.now();
+      
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+      
+      const duration = Date.now() - startTime;
+      console.log(`⏱️ Response time: ${duration}ms`);
+      console.log(`📊 Status: ${response.status} ${response.statusText}`);
+      
+      if (response.ok) {
+        try {
+          const data = await response.json();
+          console.log(`✅ ${endpoint} - OK:`, data);
+        } catch (parseError) {
+          console.log(`✅ ${endpoint} - OK (non-JSON response)`);
+        }
+      } else {
+        console.log(`❌ ${endpoint} - Failed: ${response.status}`);
+      }
+    } catch (error) {
+      console.log(`❌ ${endpoint} - Error: ${error.message}`);
+    }
+  }
+  
+  // Test auth
+  try {
+    console.log('\n🔐 Testing authentication...');
+    const authHeader = await getAuthHeader();
+    console.log('✅ Auth header obtained successfully');
+  } catch (authError) {
+    console.log('❌ Auth failed:', authError.message);
+  }
+  
+  console.log('\n✨ Production diagnostic complete!');
+};
+
+// Log instructions for production debugging
+if (config.isProduction) {
+  console.log(
+    '%c🔧 AudioGretel Production Debug Commands',
+    'color: #4CAF50; font-weight: bold; font-size: 14px;'
+  );
+  console.log(
+    '%cRun these commands in console to debug issues:\n' +
+    '• window.diagnoseProduction() - Full diagnostic\n' +
+    '• window.checkHealth() - Health check only\n' +
+    '• window.testAuth() - Test authentication',
+    'color: #2196F3; font-size: 12px;'
+  );
+  
+  // Expose functions to global scope for debugging
+  window.diagnoseProduction = diagnoseProductionIssues;
+  window.checkHealth = checkServerHealth;
+  window.testAuth = async () => {
+    try {
+      const header = await getAuthHeader();
+      console.log('✅ Auth test passed');
+      return header;
+    } catch (error) {
+      console.log('❌ Auth test failed:', error);
+      throw error;
+    }
+  };
+}
