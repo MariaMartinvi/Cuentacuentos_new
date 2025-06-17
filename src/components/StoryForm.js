@@ -524,8 +524,32 @@ function StoryForm({ onStoryGenerated }) {
             accumulatedLength: accumulatedText?.length 
           });
           
+          // Filtrar el JSON y extraer solo el contenido de la historia
+          let cleanContent = accumulatedText;
+          
+          // Si el texto contiene JSON, extraer solo el contenido
+          try {
+            // Buscar patrones de JSON
+            if (accumulatedText.includes('"content":') || accumulatedText.includes('"title":')) {
+              // Intentar extraer el contenido del JSON
+              const jsonMatch = accumulatedText.match(/\{[^}]*"content"\s*:\s*"([^"]*)"[^}]*\}/);
+              if (jsonMatch && jsonMatch[1]) {
+                cleanContent = jsonMatch[1];
+                console.log('📝 [FRONTEND-FORM] JSON detectado, extraído contenido:', cleanContent.length, 'caracteres');
+              } else {
+                // Si no podemos extraer el contenido, buscar texto después del JSON
+                const afterJson = accumulatedText.replace(/^\s*\{[^}]*\}\s*/, '');
+                if (afterJson.length > 0) {
+                  cleanContent = afterJson;
+                }
+              }
+            }
+          } catch (error) {
+            console.log('🔥 [FRONTEND-FORM] Error parsing JSON, usando texto completo');
+          }
+          
           // Convertir texto a párrafos HTML con mejor formato
-          const paragraphs = accumulatedText
+          const paragraphs = cleanContent
             .split('\n\n')
             .filter(paragraph => paragraph.trim())
             .map(paragraph => {
