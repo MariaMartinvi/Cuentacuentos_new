@@ -811,99 +811,130 @@ export const checkServerHealth = async () => {
   try {
     console.log('🔍 Checking server health...');
     
-    // Use a simple fetch with timeout promise race - timeout aumentado para ser más tolerante
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('timeout')), 8000); // Aumentado de 5s a 8s
-    });
-    
-    const fetchPromise = fetch(`${API_URL}/health`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    
-    // Race between fetch and timeout
-    const response = await Promise.race([fetchPromise, timeoutPromise]);
-    
-    // Process the response - ser más tolerante con códigos de respuesta
-    if (!response.ok) {
-      // 503 puede ser temporal, no bloquear completamente
-      if (response.status === 503) {
-        return {
-          healthy: false,
-          status: 'temporarily_unavailable',
-          statusCode: response.status,
-          details: `Server temporarily unavailable (${response.status})`,
-          error: 'temporary'
-        };
-      }
+    // First attempt with shorter timeout for fast response
+    const quickCheckPromise = new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => reject(new Error('quick_timeout')), 3000); // 3 seconds for quick check
       
-      // Otros errores son más serios
-      return {
-        healthy: false,
-        status: 'error',
-        statusCode: response.status,
-        details: `Health check failed with status ${response.status} (${response.statusText})`,
-        error: 'server_error'
-      };
-    }
-
-    // Parse the response
-    let data;
+      fetch(`${API_URL}/health`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        clearTimeout(timeoutId);
+        resolve(response);
+      })
+      .catch(error => {
+        clearTimeout(timeoutId);
+        reject(error);
+      });
+    });
+    
     try {
-      data = await response.json();
-      console.log('✅ Health check response:', data);
-    } catch (parseError) {
-      console.warn('⚠️ Could not parse health check response as JSON, assuming server is up');
-      return {
-        healthy: true,
-        status: 'ok',
-        details: 'Server responded but health data not parseable'
-      };
-    }
-
-    // Interpret the response from our enhanced health endpoint
-    const result = {
-      healthy: data.status === 'ok',
-      status: data.status || 'unknown',
-      timestamp: data.timestamp,
-      services: data.services || {}
-    };
-
-    // Add more details if available - ser más específico sobre qué servicios fallan
-    if (data.services) {
-      let criticalIssues = [];
+      // Try quick check first
+      const response = await quickCheckPromise;
       
-      if (data.services.openai !== 'ok') {
-        if (data.services.openai_quota === 'exceeded') {
-          result.issue = 'openai_quota_exceeded';
-          result.details = 'AI service quota has been exceeded';
-          criticalIssues.push('quota_exceeded');
-        } else {
-          result.details = 'The AI service is experiencing issues';
-          criticalIssues.push('ai_service');
+      if (response.ok) {
+        console.log('✅ Quick health check passed');
+        try {
+          const data = await response.json();
+          return {
+            healthy: true,
+            status: 'ok',
+            timestamp: data.timestamp,
+            details: 'Server responded quickly'
+          };
+        } catch (parseError) {
+          return {
+            healthy: true,
+            status: 'ok',
+            details: 'Server responded but health data not parseable'
+          };
         }
       }
+    } catch (quickError) {
+      console.log('⚠️ Quick check failed, trying extended check for cold start...');
       
-      if (data.services.database !== 'ok') {
-        result.details = (result.details ? result.details + '. ' : '') + 'Database connection issues';
-        criticalIssues.push('database');
-      }
+      // If quick check fails, try extended timeout for cold start scenario
+      const extendedCheckPromise = new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => reject(new Error('extended_timeout')), 15000); // 15 seconds for cold start
+        
+        fetch(`${API_URL}/health`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => {
+          clearTimeout(timeoutId);
+          resolve(response);
+        })
+        .catch(error => {
+          clearTimeout(timeoutId);
+          reject(error);
+        });
+      });
       
-      // Solo marcar como no saludable si hay problemas críticos específicos
-      if (criticalIssues.includes('quota_exceeded') || criticalIssues.includes('database')) {
-        result.healthy = false;
-        result.error = 'critical_service_failure';
+      try {
+        const response = await extendedCheckPromise;
+        
+        if (response.ok) {
+          console.log('✅ Extended health check passed (cold start detected)');
+          try {
+            const data = await response.json();
+            return {
+              healthy: true,
+              status: 'ok',
+              timestamp: data.timestamp,
+              details: 'Server responded after cold start delay',
+              coldStart: true
+            };
+          } catch (parseError) {
+            return {
+              healthy: true,
+              status: 'ok',
+              details: 'Server responded after cold start but health data not parseable',
+              coldStart: true
+            };
+          }
+        } else {
+          // Server responded but with error status
+          return {
+            healthy: false,
+            status: 'error',
+            statusCode: response.status,
+            details: `Health check failed with status ${response.status} (${response.statusText})`,
+            error: 'server_error'
+          };
+        }
+      } catch (extendedError) {
+        console.error('❌ Extended health check also failed:', extendedError);
+        
+        // Return timeout-specific error
+        if (extendedError.message === 'extended_timeout') {
+          return {
+            healthy: false,
+            status: 'timeout',
+            details: 'Health check timed out after 15 seconds - server may be unavailable',
+            error: 'timeout'
+          };
+        }
+        
+        // Network or other errors
+        return {
+          healthy: false,
+          status: 'error',
+          details: `Connection error: ${extendedError.message}`,
+          error: extendedError.message || 'unknown'
+        };
       }
     }
-
-    return result;
   } catch (error) {
     console.error('❌ Health check error:', error);
     
     // Return a friendly error response
-    if (error.message === 'timeout') {
+    if (error.message === 'timeout' || error.message.includes('timeout')) {
       return {
         healthy: false,
         status: 'timeout',
@@ -912,7 +943,7 @@ export const checkServerHealth = async () => {
       };
     }
     
-    // Errores de red pueden ser temporales
+    // Network errors can be temporary
     if (error.message.includes('Failed to fetch') || error.message.includes('Network Error')) {
       return {
         healthy: false,

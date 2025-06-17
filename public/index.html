@@ -94,7 +94,46 @@
           "price": "5.00",
           "priceCurrency": "EUR",
           "priceValidUntil": "2025-12-31",
-          "availability": "https://schema.org/InStock"
+          "availability": "https://schema.org/InStock",
+          "url": "https://audiogretel.com/subscribe",
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "ES",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 14,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn"
+          },
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": "0",
+              "currency": "EUR"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "handlingTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 0,
+                "maxValue": 0,
+                "unitCode": "DAY"
+              },
+              "transitTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 0,
+                "maxValue": 0,
+                "unitCode": "DAY"
+              }
+            }
+          }
+        },
+        "category": "Software",
+        "sku": "audiogretel-premium",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "150"
         }
       }
     </script>

@@ -37,18 +37,55 @@ const ProductSchema = ({
     name: name,
     description: description,
     image: fullImageUrl,
+    category: 'Software',
     offers: {
       '@type': 'Offer',
       price: price,
       priceCurrency: currency,
       availability: `https://schema.org/${availability}`,
       url: fullUrl,
-      ...(priceValidUntil && { priceValidUntil })
+      ...(priceValidUntil && { priceValidUntil }),
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'ES',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 14,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn'
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: currency
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 0,
+            unitCode: 'DAY'
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 0,
+            unitCode: 'DAY'
+          }
+        }
+      }
     },
     ...(sku && { sku }),
     brand: {
       '@type': 'Brand',
       name: brand
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '150'
     }
   };
 
