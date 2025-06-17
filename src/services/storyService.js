@@ -168,8 +168,12 @@ export const generateStory = async (storyData) => {
     const serverHealth = await checkServerHealth();
     console.log('Server health status:', serverHealth);
     
-    if (!serverHealth.healthy) {
-      console.error('Server health check failed:', serverHealth);
+    // Solo bloquear si hay errores críticos (quota excedida, database down, server_error)
+    const criticalErrors = ['critical_service_failure', 'server_error'];
+    const shouldBlock = !serverHealth.healthy && criticalErrors.includes(serverHealth.error);
+    
+    if (shouldBlock) {
+      console.error('Server health check failed with critical error:', serverHealth);
       
       return {
         error: 'server_unavailable',
@@ -180,6 +184,15 @@ export const generateStory = async (storyData) => {
             : `The server is currently unavailable. Error: ${serverHealth.details}`
         }
       };
+    }
+    
+    // Para timeouts, errores de red o temporales, continuar pero con warning
+    if (!serverHealth.healthy) {
+      console.warn('⚠️ Health check issue detected, but proceeding anyway:', {
+        status: serverHealth.status,
+        error: serverHealth.error,
+        details: serverHealth.details
+      });
     }
 
     console.log('🚀 Making story generation request...');
@@ -341,8 +354,12 @@ export const generateStoryWithStreaming = async (storyData, onTextChunk, onProgr
     const serverHealth = await checkServerHealth();
     console.log('Server health status:', serverHealth);
     
-    if (!serverHealth.healthy) {
-      console.error('Server health check failed:', serverHealth);
+    // Solo bloquear si hay errores críticos (quota excedida, database down, server_error)
+    const criticalErrors2 = ['critical_service_failure', 'server_error'];
+    const shouldBlock2 = !serverHealth.healthy && criticalErrors2.includes(serverHealth.error);
+    
+    if (shouldBlock2) {
+      console.error('Server health check failed with critical error:', serverHealth);
       
       return {
         error: 'server_unavailable',
@@ -353,6 +370,15 @@ export const generateStoryWithStreaming = async (storyData, onTextChunk, onProgr
             : `The server is currently unavailable. Error: ${serverHealth.details}`
         }
       };
+    }
+    
+    // Para timeouts, errores de red o temporales, continuar pero con warning
+    if (!serverHealth.healthy) {
+      console.warn('⚠️ Health check issue detected, but proceeding anyway:', {
+        status: serverHealth.status,
+        error: serverHealth.error,
+        details: serverHealth.details
+      });
     }
 
     console.log('🚀 Making streaming story generation request...');
@@ -785,9 +811,9 @@ export const checkServerHealth = async () => {
   try {
     console.log('🔍 Checking server health...');
     
-    // Use a simple fetch with timeout promise race
+    // Use a simple fetch with timeout promise race - timeout aumentado para ser más tolerante
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('timeout')), 5000);
+      setTimeout(() => reject(new Error('timeout')), 8000); // Aumentado de 5s a 8s
     });
     
     const fetchPromise = fetch(`${API_URL}/health`, {
@@ -800,19 +826,42 @@ export const checkServerHealth = async () => {
     // Race between fetch and timeout
     const response = await Promise.race([fetchPromise, timeoutPromise]);
     
-    // Process the response
+    // Process the response - ser más tolerante con códigos de respuesta
     if (!response.ok) {
+      // 503 puede ser temporal, no bloquear completamente
+      if (response.status === 503) {
+        return {
+          healthy: false,
+          status: 'temporarily_unavailable',
+          statusCode: response.status,
+          details: `Server temporarily unavailable (${response.status})`,
+          error: 'temporary'
+        };
+      }
+      
+      // Otros errores son más serios
       return {
         healthy: false,
         status: 'error',
         statusCode: response.status,
-        details: `Health check failed with status ${response.status} (${response.statusText})`
+        details: `Health check failed with status ${response.status} (${response.statusText})`,
+        error: 'server_error'
       };
     }
 
     // Parse the response
-    const data = await response.json();
-    console.log('✅ Health check response:', data);
+    let data;
+    try {
+      data = await response.json();
+      console.log('✅ Health check response:', data);
+    } catch (parseError) {
+      console.warn('⚠️ Could not parse health check response as JSON, assuming server is up');
+      return {
+        healthy: true,
+        status: 'ok',
+        details: 'Server responded but health data not parseable'
+      };
+    }
 
     // Interpret the response from our enhanced health endpoint
     const result = {
@@ -822,19 +871,30 @@ export const checkServerHealth = async () => {
       services: data.services || {}
     };
 
-    // Add more details if available
+    // Add more details if available - ser más específico sobre qué servicios fallan
     if (data.services) {
+      let criticalIssues = [];
+      
       if (data.services.openai !== 'ok') {
-        result.details = 'The AI service is experiencing issues';
-        
         if (data.services.openai_quota === 'exceeded') {
           result.issue = 'openai_quota_exceeded';
           result.details = 'AI service quota has been exceeded';
+          criticalIssues.push('quota_exceeded');
+        } else {
+          result.details = 'The AI service is experiencing issues';
+          criticalIssues.push('ai_service');
         }
       }
       
       if (data.services.database !== 'ok') {
         result.details = (result.details ? result.details + '. ' : '') + 'Database connection issues';
+        criticalIssues.push('database');
+      }
+      
+      // Solo marcar como no saludable si hay problemas críticos específicos
+      if (criticalIssues.includes('quota_exceeded') || criticalIssues.includes('database')) {
+        result.healthy = false;
+        result.error = 'critical_service_failure';
       }
     }
 
@@ -849,6 +909,16 @@ export const checkServerHealth = async () => {
         status: 'timeout',
         details: 'Health check timed out - server may be slow or unavailable',
         error: 'timeout'
+      };
+    }
+    
+    // Errores de red pueden ser temporales
+    if (error.message.includes('Failed to fetch') || error.message.includes('Network Error')) {
+      return {
+        healthy: false,
+        status: 'network_error',
+        details: 'Network connectivity issues detected',
+        error: 'network'
       };
     }
     
@@ -1093,6 +1163,69 @@ export const getTopRatedStories = async (page = 1, limit = 10) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching top rated stories:', error);
+    throw error;
+  }
+};
+
+// Updated function to support fast audio generation
+export const generateAudio = async (storyId, voiceId = 'female', speechRate = 1.0, musicTrack = 'none', fastMode = false) => {
+  try {
+    console.log('🎵 Starting audio generation request...');
+    console.log('🔧 Audio parameters:', { voiceId, speechRate, musicTrack, fastMode });
+    
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const authHeader = await getAuthHeader();
+    
+    const audioPayload = {
+      voiceId,
+      speechRate: parseFloat(speechRate),
+      musicTrack,
+      skipMixing: fastMode // NEW: Use fast mode for quicker generation
+    };
+    
+    console.log('📡 Sending audio generation request with payload:', audioPayload);
+    
+    const response = await axios.post(`${API_URL}/stories/${storyId}/generate-audio`, audioPayload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...authHeader
+      },
+      timeout: fastMode ? 60000 : 120000, // Shorter timeout for fast mode
+      withCredentials: true
+    });
+
+    console.log('✅ Audio generation completed successfully');
+    return response.data;
+  } catch (error) {
+    console.error('❌ Error generating audio:', error);
+    
+    if (error.response?.status === 401) {
+      const authError = new Error('Authentication failed. Please log in again.');
+      authError.code = 'AUTH_FAILED';
+      throw authError;
+    }
+    
+    if (error.response?.status === 404) {
+      throw new Error('Story not found');
+    }
+    
+    if (error.response?.status === 403) {
+      throw new Error('Permission denied. You can only generate audio for your own stories.');
+    }
+    
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      const timeoutError = new Error(fastMode ? 
+        'Audio generation timed out. Try using background music for longer texts.' :
+        'Audio generation timed out. The server may be busy. Please try again.');
+      timeoutError.code = 'TIMEOUT';
+      throw timeoutError;
+    }
+    
     throw error;
   }
 };
