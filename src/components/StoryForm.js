@@ -124,10 +124,6 @@ function StoryForm({ onStoryGenerated }) {
   };
 
   // Enhanced change handlers that check user status
-  const handleTopicChangeWithCheck = (e) => {
-    if (!canGenerateStory()) return;
-    setTopic(e.target.value);
-  };
 
   const handleSelectChangeWithCheck = (setter) => (e) => {
     if (handleFieldInteraction(e)) {
@@ -951,6 +947,16 @@ function StoryForm({ onStoryGenerated }) {
     setCreativityLevel(e.target.value);
   };
 
+  // Handler para topic con validación temprana
+  const handleTopicChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    
+    // Limpiar mensaje de validación HTML5
+    const input = e.target;
+    input.setCustomValidity('');
+    setTopic(e.target.value);
+  };
+
   // Función para hacer auto-scroll al final del contenido streaming
   const scrollToBottom = () => {
     if (streamingTextRef.current) {
@@ -993,7 +999,7 @@ function StoryForm({ onStoryGenerated }) {
             type="text"
             id="topic"
             value={topic}
-            onChange={handleTopicChange}
+            onChange={handleTopicChangeWithCheck}
             onBlur={handleTopicBlur}
             placeholder={t('storyForm.topicPlaceholder')}
             required
@@ -1184,8 +1190,8 @@ function StoryForm({ onStoryGenerated }) {
         </div>
       )}
 
-      {/* Warning Modal - COMENTADO PARA PRUEBAS DE STREAMING */}
-      {false && <WarningModal />}
+      {/* Warning Modal */}
+      <WarningModal />
     </div>
   );
 }
