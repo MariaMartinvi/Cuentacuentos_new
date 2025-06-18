@@ -53,21 +53,30 @@ const Login = () => {
     console.log("Google Credential Response:", credentialResponse);
     
     try {
-      // Import Firebase Auth functions
-      const { GoogleAuthProvider, signInWithCredential } = await import('firebase/auth');
+      // Si el credentialResponse viene del redirect, puede que ya tengamos el user autenticado
       const { auth } = await import('../firebase/config');
       
-      // Create Firebase credential from Google token
-      const credential = GoogleAuthProvider.credential(credentialResponse.credential);
+      let firebaseUser;
+      let firebaseToken;
       
-      // Sign in to Firebase with Google credential
-      const result = await signInWithCredential(auth, credential);
-      const firebaseUser = result.user;
-      
-      console.log('✅ Firebase Google Auth successful:', firebaseUser.email);
-      
-      // Get Firebase ID token (this is what the backend expects)
-      const firebaseToken = await firebaseUser.getIdToken();
+      // Verificar si ya estamos autenticados (caso del redirect)
+      if (auth.currentUser) {
+        firebaseUser = auth.currentUser;
+        firebaseToken = await firebaseUser.getIdToken();
+        console.log('✅ User already authenticated from redirect:', firebaseUser.email);
+      } else {
+        // Fallback: usar el credential para autenticar
+        const { GoogleAuthProvider, signInWithCredential } = await import('firebase/auth');
+        
+        // Create Firebase credential from Google token
+        const credential = GoogleAuthProvider.credential(credentialResponse.credential);
+        
+        // Sign in to Firebase with Google credential
+        const result = await signInWithCredential(auth, credential);
+        firebaseUser = result.user;
+        firebaseToken = await firebaseUser.getIdToken();
+        console.log('✅ Firebase Google Auth successful via credential:', firebaseUser.email);
+      }
       
       // Create user data
       const userData = {
@@ -80,7 +89,7 @@ const Login = () => {
         storiesGenerated: 0
       };
       
-      // Store Firebase token (not Google token)
+      // Store Firebase token
       localStorage.setItem('token', firebaseToken);
       localStorage.setItem('user', JSON.stringify(userData));
       console.log('Google login - User data saved:', userData);
@@ -91,7 +100,21 @@ const Login = () => {
       
     } catch (err) {
       console.error('Firebase Google login error:', err);
-      setError(err.message || t('login.googleError'));
+      
+      // Manejo mejorado de errores específicos
+      let errorMessage = t('login.googleError');
+      
+      if (err.code === 'auth/network-request-failed') {
+        errorMessage = 'Error de conexión. Por favor, verifica tu conexión a internet e intenta de nuevo.';
+      } else if (err.code === 'auth/popup-blocked') {
+        errorMessage = 'El popup fue bloqueado. Por favor, permite popups para este sitio.';
+      } else if (err.code === 'auth/cancelled-popup-request') {
+        errorMessage = 'Proceso de login cancelado. Intenta de nuevo.';
+      } else if (err.message && err.message.includes('Cross-Origin-Opener-Policy')) {
+        errorMessage = 'Error de seguridad del navegador. Intenta de nuevo.';
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

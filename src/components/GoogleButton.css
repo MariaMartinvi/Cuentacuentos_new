@@ -6,8 +6,60 @@
   width: 100%;
 }
 
-/* Override Google's default button styles to make it much bigger and more prominent */
-.google-button-container button {
+/* Estilo para el botón personalizado de Google */
+.google-signin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  padding: 0 50px !important;
+  height: 72px !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100% !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid rgba(66, 133, 244, 0.1) !important;
+  background: #4285f4 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.google-signin-button:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-2px) !important;
+  background: #3367d6 !important;
+}
+
+.google-signin-button:active {
+  transform: translateY(0) !important;
+}
+
+.google-signin-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.google-icon {
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 16px !important;
+  background: white;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.google-button-text {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Fallback para botones Google OAuth existentes */
+.google-button-container button:not(.google-signin-button) {
   font-family: inherit !important;
   font-size: 22px !important;
   font-weight: 600 !important;
@@ -22,18 +74,18 @@
   border: 2px solid rgba(66, 133, 244, 0.1) !important;
 }
 
-.google-button-container button:hover {
+.google-button-container button:not(.google-signin-button):hover {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
   transform: translateY(-2px) !important;
 }
 
-.google-button-container button:active {
+.google-button-container button:not(.google-signin-button):active {
   transform: translateY(0) !important;
 }
 
-/* Make the Google logo bigger */
-.google-button-container button svg,
-.google-button-container button img {
+/* Make the Google logo bigger for fallback buttons */
+.google-button-container button:not(.google-signin-button) svg,
+.google-button-container button:not(.google-signin-button) img {
   width: 28px !important;
   height: 28px !important;
   margin-right: 16px !important;
