@@ -78,18 +78,15 @@ enableIndexedDbPersistence(db).catch((err) => {
 auth.useDeviceLanguage();
 auth.settings.appVerificationDisabledForTesting = false;
 
-// Configuración específica para producción en Render
+// Configuración específica para producción
 if (process.env.NODE_ENV === 'production') {
-  console.log('🌐 Production mode detected, configuring for audiogretel.com');
+  console.log('🌐 Production mode detected');
   
   // Configurar dominios autorizados para Firebase Auth
   const currentDomain = window.location.hostname;
-  const currentOrigin = window.location.origin;
   console.log('🌐 Current domain:', currentDomain);
-  console.log('🌐 Current origin:', currentOrigin);
-  console.log('🌐 Current protocol:', window.location.protocol);
   
-  // Lista de dominios autorizados - incluir exactamente audiogretel.com
+  // Lista de dominios autorizados
   const authorizedDomains = [
     'localhost',
     'audiogretel.com',
@@ -100,39 +97,24 @@ if (process.env.NODE_ENV === 'production') {
   const isDomainAuthorized = authorizedDomains.some(domain => currentDomain === domain || currentDomain.endsWith('.' + domain));
   
   if (!isDomainAuthorized) {
-    console.error('❌ Current domain NOT in authorized list:', currentDomain);
-    console.log('📋 Please add this domain to Firebase Console > Authentication > Settings > Authorized domains:');
-    console.log(`   - ${currentDomain}`);
-    console.log(`   - ${currentOrigin}`);
+    console.warn('⚠️ Current domain not in authorized list. Add to Firebase Console:', currentDomain);
   } else {
     console.log('✅ Current domain is authorized for Firebase Auth');
   }
   
-  // Configuración específica para evitar errores COOP en audiogretel.com
+  // Configuración para evitar errores COOP
   try {
-    console.log('🔧 Configuring Firebase for audiogretel.com production environment');
-    
-    // Configuración adicional para evitar problemas COOP
+    // Suprimir errores COOP no críticos
     window.addEventListener('unhandledrejection', (event) => {
       if (event.reason && event.reason.message && event.reason.message.includes('Cross-Origin-Opener-Policy')) {
         console.warn('🚨 COOP error caught and suppressed:', event.reason.message);
-        console.log('🔧 This is expected when using Firebase Auth with redirect flow');
-        event.preventDefault(); // Prevenir que el error se propague
+        event.preventDefault();
       }
     });
-    
-    // Configurar Firebase Auth para usar redirect preferentemente
-    console.log('🔧 Configuring Firebase Auth to prefer redirect flow over popup');
     
   } catch (error) {
     console.warn('⚠️ Error in production Firebase config:', error);
   }
-  
-  // Log adicional para debugging de autenticación
-  console.log('🔐 Firebase Auth Debug Info:');
-  console.log('   - Auth Domain:', firebaseConfig.authDomain);
-  console.log('   - Project ID:', firebaseConfig.projectId);
-  console.log('   - Current User Agent:', navigator.userAgent.substring(0, 100) + '...');
 }
 
 // Configurar timeouts y reintentos
