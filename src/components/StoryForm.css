@@ -1155,7 +1155,7 @@ select, select option {
   min-height: 400px;
   max-height: 600px;
   overflow-y: auto;
-  z-index: 2;
+  z-index: 5;
   
   scroll-behavior: smooth;
   scrollbar-width: thin;
@@ -1189,6 +1189,8 @@ select, select option {
   font-family: 'Georgia', 'Times New Roman', serif;
   text-align: justify;
   hyphens: auto;
+  position: relative;
+  z-index: 10;
   
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -1198,6 +1200,8 @@ select, select option {
   margin-bottom: 1.5rem;
   opacity: 1 !important;
   color: #2c3e50 !important;
+  position: relative;
+  z-index: 11;
 }
 
 .streaming-text .story-content p:last-child {
@@ -1307,10 +1311,14 @@ select, select option {
 
   .streaming-text .story-content {
     color: #f7fafc !important;
+    position: relative;
+    z-index: 10;
   }
 
   .streaming-text .story-content p {
     color: #f7fafc !important;
+    position: relative;
+    z-index: 11;
   }
 }
 
