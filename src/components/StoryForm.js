@@ -1167,18 +1167,6 @@ function StoryForm({ onStoryGenerated }) {
           <div className="streaming-area">
             <div className="streaming-header">
               <h3>{t('storyForm.generatingStory')}</h3>
-              {streamingProgress.phase && (
-                <div className="streaming-progress">
-                  <span className="progress-phase">{streamingProgress.phase}</span>
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{ width: `${streamingProgress.percentage}%` }}
-                    ></div>
-                  </div>
-                  <span className="progress-percentage">{streamingProgress.percentage}%</span>
-                </div>
-              )}
             </div>
             <div className="streaming-text" ref={streamingTextRef}>
               <div className="story-content" dangerouslySetInnerHTML={{ __html: streamingText }} />
