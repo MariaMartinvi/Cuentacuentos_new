@@ -17,6 +17,8 @@
   height: 50px;
   min-width: 50px;
   min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
   font-size: 1.2rem;
   background-color: #007bff;
   color: white;
@@ -29,6 +31,8 @@
   transition: all 0.2s ease;
   box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
   flex-shrink: 0;
+  aspect-ratio: 1;
+  box-sizing: border-box;
 }
 
 .play-pause-btn:hover {
@@ -147,6 +151,10 @@
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  max-width: 48px;
+  max-height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,6 +162,8 @@
   transition: all 0.2s ease;
   font-size: 1.2rem;
   box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+  aspect-ratio: 1;
+  box-sizing: border-box;
 }
 
 .audio-player-button:hover {
@@ -287,6 +297,10 @@
   .audio-player-button {
     width: 48px;
     height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
     font-size: 1.2rem;
     background-color: #4361ee;
     color: white;
@@ -298,6 +312,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+    aspect-ratio: 1;
+    box-sizing: border-box;
   }
   
   .audio-player-button:hover {
@@ -325,6 +341,10 @@
   .play-pause-btn {
     width: 48px;
     height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
     font-size: 1.2rem;
     background-color: #4361ee;
     color: white;
@@ -336,6 +356,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+    aspect-ratio: 1;
+    box-sizing: border-box;
   }
 
   .play-pause-btn:hover {
