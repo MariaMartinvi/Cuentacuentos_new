@@ -107,9 +107,21 @@ if (process.env.NODE_ENV === 'production') {
     
     // Configuración adicional para evitar problemas COOP
     window.addEventListener('unhandledrejection', (event) => {
-      if (event.reason && event.reason.message && event.reason.message.includes('Cross-Origin-Opener-Policy')) {
-        console.warn('🚨 COOP error caught and suppressed:', event.reason.message);
+      if (event.reason && event.reason.message && 
+          (event.reason.message.includes('Cross-Origin-Opener-Policy') ||
+           event.reason.message.includes('postMessage'))) {
+        console.debug('🔇 COOP/postMessage error suppressed:', event.reason.message);
         event.preventDefault(); // Prevenir que el error se propague
+      }
+    });
+
+    // También capturar errores de consola relacionados con COOP
+    window.addEventListener('error', (event) => {
+      if (event.message && 
+          (event.message.includes('Cross-Origin-Opener-Policy') ||
+           event.message.includes('postMessage'))) {
+        console.debug('🔇 COOP/postMessage console error suppressed:', event.message);
+        event.preventDefault();
       }
     });
     
