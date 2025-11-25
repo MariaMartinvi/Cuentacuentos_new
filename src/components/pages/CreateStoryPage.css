@@ -1,0 +1,72 @@
+/* CreateStoryPage.css */
+
+.create-story-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+}
+
+.create-story-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 3rem 1rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.create-story-hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.create-story-title {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+}
+
+.create-story-subtitle {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.create-story-content {
+  padding: 0 1rem 4rem 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .create-story-hero {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .create-story-title {
+    font-size: 1.8rem;
+  }
+
+  .create-story-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-story-hero {
+    padding: 1.5rem 1rem;
+  }
+
+  .create-story-title {
+    font-size: 1.5rem;
+  }
+
+  .create-story-subtitle {
+    font-size: 0.9rem;
+  }
+}
+

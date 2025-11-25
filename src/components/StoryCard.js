@@ -143,7 +143,7 @@ const StoryCard = ({ story, onStoryClick }) => {
           )}
           {story.level && (
             <span className="story-card-level">
-              {story.level === 'beginner' ? 'Principiante' :
+              {story.level === 'basic' ? 'Principiante' :
                story.level === 'intermediate' ? 'Intermedio' :
                story.level === 'advanced' ? 'Avanzado' : story.level}
             </span>

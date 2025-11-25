@@ -217,8 +217,8 @@
     "childNamesLabel": "Kindernamen (optional)",
     "childNames": "Kindernamen (optional)",
     "childNamesPlaceholder": "Gib Namen durch Kommas getrennt ein...",
-    "englishLevelLabel": "Deutschniveau",
-    "englishLevel": "Deutschniveau",
+    "englishLevelLabel": "Sprachniveau",
+    "englishLevel": "Sprachniveau",
     "loginRequired": "Bitte melde dich an, um Geschichten zu erstellen",
     "clickToLogin": "Klicke hier, um dich anzumelden",
     "englishLevels": {

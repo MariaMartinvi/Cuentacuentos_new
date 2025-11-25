@@ -227,8 +227,8 @@
     "childNamesLabel": "Nomi dei Bambini (opzionale)",
     "childNames": "Nomi dei Bambini (opzionale)",
     "childNamesPlaceholder": "Inserisci nomi separati da virgole...",
-    "englishLevelLabel": "Livello di Italiano",
-    "englishLevel": "Livello di Italiano",
+    "englishLevelLabel": "Livello di Lingua",
+    "englishLevel": "Livello di Lingua",
     "loginRequired": "Per favore, accedi per generare storie",
     "clickToLogin": "Clicca qui per accedere",
     "englishLevels": {

@@ -4,6 +4,8 @@ import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './components/pages/HomePage';
+import CreateStoryPage from './components/pages/CreateStoryPage';
+import LearnEnglishPage from './components/pages/LearnEnglishPage';
 import Login from './components/Login';
 import Register from './components/Register';
 import VerifyEmail from './components/VerifyEmail';
@@ -63,6 +65,10 @@ const AppRoutes = () => {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/crear-cuento" element={<CreateStoryPage />} />
+          <Route path="/create-story" element={<CreateStoryPage />} />
+          <Route path="/aprender-ingles" element={<LearnEnglishPage />} />
+          <Route path="/learn-english" element={<LearnEnglishPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/contact" element={<ContactPage />} />

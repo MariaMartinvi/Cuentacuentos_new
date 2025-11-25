@@ -219,8 +219,8 @@
     "childNamesLabel": "Noms dels Nens (opcional)",
     "childNames": "Noms dels Nens (opcional)",
     "childNamesPlaceholder": "Introdueix noms separats per comes...",
-    "englishLevelLabel": "Nivell de Català",
-    "englishLevel": "Nivell de Català",
+    "englishLevelLabel": "Nivell d'Idioma",
+    "englishLevel": "Nivell d'Idioma",
     "loginRequired": "Si us plau, inicia sessió per generar contes",
     "clickToLogin": "Fes clic aquí per iniciar sessió",
     "englishLevels": {

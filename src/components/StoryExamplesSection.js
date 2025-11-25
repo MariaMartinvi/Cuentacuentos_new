@@ -713,7 +713,7 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
                 onChange={(e) => handleFilterChange('level', e.target.value)}
               >
                 <option value="all">{t('storyExamples.levels.all')}</option>
-                <option value="beginner">{t('storyExamples.levels.beginner')}</option>
+                <option value="basic">{t('storyExamples.levels.basic')}</option>
                 <option value="intermediate">{t('storyExamples.levels.intermediate')}</option>
                 <option value="advanced">{t('storyExamples.levels.advanced')}</option>
               </select>

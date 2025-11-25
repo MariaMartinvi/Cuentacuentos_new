@@ -216,8 +216,8 @@
     "childNamesLabel": "Noms des Enfants (optionnel)",
     "childNames": "Noms des Enfants (optionnel)",
     "childNamesPlaceholder": "Entrez les noms séparés par des virgules...",
-    "englishLevelLabel": "Niveau de Français",
-    "englishLevel": "Niveau de Français",
+    "englishLevelLabel": "Niveau de Langue",
+    "englishLevel": "Niveau de Langue",
     "loginRequired": "Veuillez vous connecter pour générer des histoires",
     "clickToLogin": "Cliquez ici pour vous connecter",
     "englishLevels": {
@@ -461,5 +461,31 @@
       "title": "Exemples d'Histoires Audio",
       "description": "Écoutez des exemples réels d'histoires audio créées avec notre technologie IA"
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Apprendre l'Anglais avec des Histoires Audio",
+    "pageSubtitle": "Les Cinq de la Terre • 3 histoires par semaine • Aventures spatiales",
+    "month1Title": "Mois 1: Mon équipe et moi",
+    "month1Short": "Mon équipe et moi",
+    "month2": "Mois 2: Prochainement",
+    "month3": "Mois 3: Prochainement",
+    "monthPrefix": "Mois",
+    "monthVocabulary": "Vocabulaire du mois",
+    "structures": "Structures",
+    "week": "Semaine",
+    "stories": "histoires",
+    "vocabulary": "Vocabulaire:",
+    "listen": "Écouter",
+    "teamIntro": "Découvrez Les Cinq de la Terre: Sara (Espagne), María (Cameroun), Eva (Chine), Robert (USA) et Gabriel (Australie). 5 adolescents dans des missions spatiales secrètes!",
+    "howItWorks": "Comment ça marche",
+    "introSection": "Introduction du vocabulaire (français→anglais) avec voix américaine",
+    "storySection": "Histoire audio complète en anglais mettant en vedette Les Cinq de la Terre",
+    "formatInfo": "Format: \"Mère... Mother... Mother... Mother...\" (français d'abord, anglais 3 fois)",
+    "missionInfo": "5 adolescents de différents pays dans des missions spatiales secrètes",
+    "audioIntro": "Introduction",
+    "audioVocab": "Vocabulaire",
+    "audioStory": "Histoire",
+    "errorLoading": "Erreur de chargement de l'audio. Veuillez réessayer.",
+    "generating": "Génération de l'audio de l'histoire..."
   }
 } 

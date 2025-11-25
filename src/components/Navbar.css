@@ -1149,3 +1149,96 @@
 .desktop-only {
   display: flex;
 }
+
+/* Desktop navigation links center */
+.nav-links-center {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 2rem;
+}
+
+.nav-link-library,
+.nav-link-create,
+.nav-link-learn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  color: #4a5568 !important;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link-library:hover,
+.nav-link-create:hover,
+.nav-link-learn:hover {
+  color: #667eea !important;
+}
+
+.nav-link-library::after,
+.nav-link-create::after,
+.nav-link-learn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link-library:hover::after,
+.nav-link-create:hover::after,
+.nav-link-learn:hover::after {
+  width: 100%;
+}
+
+/* Mobile library, create story and learn english links - normal style */
+.mobile-library,
+.mobile-create-story,
+.mobile-learn-english {
+  color: #4a5568 !important;
+  font-weight: 500 !important;
+  padding: 0.65rem 1rem !important;
+  border-radius: 8px !important;
+  margin-bottom: 0.25rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+.mobile-library::before,
+.mobile-create-story::before,
+.mobile-learn-english::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%) !important;
+  transition: left 0.3s ease !important;
+}
+
+.mobile-library:hover,
+.mobile-create-story:hover,
+.mobile-learn-english:hover {
+  color: #667eea !important;
+  transform: translateX(3px) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.mobile-library:hover::before,
+.mobile-create-story:hover::before,
+.mobile-learn-english:hover::before {
+  left: 0 !important;
+}

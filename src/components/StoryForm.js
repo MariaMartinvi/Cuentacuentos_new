@@ -30,6 +30,9 @@ function StoryForm({ onStoryGenerated }) {
   const [ageGroup, setAgeGroup] = useState('6to8');
   const [childNames, setChildNames] = useState('');
   const [englishLevel, setEnglishLevel] = useState('intermediate');
+  const [storyLanguage, setStoryLanguage] = useState('es'); // Idioma en el que se generará el cuento
+  const [learningMode, setLearningMode] = useState(false); // Modo aprendizaje
+  const [vocabularyWords, setVocabularyWords] = useState(''); // Palabras de vocabulario (1-10)
   const [audioUrl, setAudioUrl] = useState(null);
   const [isMounted, setIsMounted] = useState(true);
 
@@ -438,6 +441,9 @@ function StoryForm({ onStoryGenerated }) {
         if (data.storyType) setStoryType(data.storyType);
         if (data.childNames) setChildNames(data.childNames);
         if (data.englishLevel) setEnglishLevel(data.englishLevel);
+        if (data.storyLanguage) setStoryLanguage(data.storyLanguage);
+        if (data.learningMode !== undefined) setLearningMode(data.learningMode);
+        if (data.vocabularyWords) setVocabularyWords(data.vocabularyWords);
       } catch {}
     }
   }, []);
@@ -466,7 +472,10 @@ function StoryForm({ onStoryGenerated }) {
         storyLength,
         storyType,
         childNames,
-        englishLevel
+        englishLevel,
+        storyLanguage,
+        learningMode,
+        vocabularyWords
       }));
       console.log('No user found');
       setError(t('storyForm.loginRequired'));
@@ -487,9 +496,20 @@ function StoryForm({ onStoryGenerated }) {
     setStreamingProgress({ percentage: 0, phase: '' });
 
     try {
-      // Asegurarnos de que el idioma esté definido
-      const selectedLanguage = i18n.language || 'es';
-      console.log('Selected language:', selectedLanguage);
+      // Usar el idioma seleccionado para el cuento
+      console.log('Story language:', storyLanguage);
+      console.log('Learning mode:', learningMode);
+      console.log('Vocabulary words:', vocabularyWords);
+      
+      // Procesar palabras de vocabulario
+      let vocabularyArray = [];
+      if (learningMode && vocabularyWords.trim()) {
+        vocabularyArray = vocabularyWords
+          .split(',')
+          .map(word => word.trim())
+          .filter(word => word.length > 0)
+          .slice(0, 10); // Máximo 10 palabras
+      }
       
       const storyParams = {
         topic,
@@ -499,8 +519,10 @@ function StoryForm({ onStoryGenerated }) {
         ageGroup,
         childNames,
         englishLevel,
-        spanishLevel: selectedLanguage === 'es' ? englishLevel : 'intermediate', // Only set spanishLevel for Spanish
-        language: selectedLanguage,
+        spanishLevel: storyLanguage === 'es' ? englishLevel : 'intermediate', // Only set spanishLevel for Spanish
+        language: storyLanguage, // Idioma en el que se generará el cuento
+        learningMode: learningMode, // Modo aprendizaje
+        vocabularyWords: vocabularyArray, // Array de palabras de vocabulario
         email: user?.email
       };
 
@@ -951,6 +973,31 @@ function StoryForm({ onStoryGenerated }) {
     setEnglishLevel(e.target.value);
   };
 
+  const handleStoryLanguageChangeWithCheck = (e) => {
+    if (!canGenerateStory()) return;
+    setStoryLanguage(e.target.value);
+  };
+
+  const handleLearningModeChange = (e) => {
+    if (!canGenerateStory()) return;
+    setLearningMode(e.target.checked);
+    // Si desactiva el modo aprendizaje, limpiar las palabras
+    if (!e.target.checked) {
+      setVocabularyWords('');
+    }
+  };
+
+  const handleVocabularyWordsChange = (e) => {
+    if (!canGenerateStory()) return;
+    const value = e.target.value;
+    // Contar palabras (separadas por comas)
+    const wordCount = value.split(',').filter(word => word.trim().length > 0).length;
+    // Limitar a 10 palabras
+    if (wordCount <= 10) {
+      setVocabularyWords(value);
+    }
+  };
+
   const handleLengthChangeWithCheck = (e) => {
     if (!canGenerateStory()) return;
     setStoryLength(e.target.value);
@@ -1045,6 +1092,29 @@ function StoryForm({ onStoryGenerated }) {
           </div>
 
           <div className="form-group">
+            <label htmlFor="storyLanguage">
+              <span className="form-icon">🗣️</span> {t('storyForm.storyLanguageLabel')}
+            </label>
+            <div className="select-wrapper">
+              <select
+                id="storyLanguage"
+                value={storyLanguage}
+                onChange={handleStoryLanguageChangeWithCheck}
+              >
+                <option value="es">{t('storyForm.storyLanguageSpanish')}</option>
+                <option value="en">{t('storyForm.storyLanguageEnglish')}</option>
+                <option value="ca">{t('storyForm.storyLanguageCatalan')}</option>
+                <option value="fr">{t('storyForm.storyLanguageFrench')}</option>
+                <option value="de">{t('storyForm.storyLanguageGerman')}</option>
+                <option value="it">{t('storyForm.storyLanguageItalian')}</option>
+                <option value="pt">{t('storyForm.storyLanguagePortuguese')}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
             <label htmlFor="englishLevel">
               <span className="form-icon">🌍</span> {t('storyForm.englishLevelLabel')}
             </label>
@@ -1061,6 +1131,53 @@ function StoryForm({ onStoryGenerated }) {
             </div>
           </div>
         </div>
+
+        {/* Modo Aprendizaje - Diseño compacto */}
+        <div className="form-row">
+          <div className="form-group compact-toggle-group">
+            <label className="compact-toggle-label">
+              <input
+                type="checkbox"
+                id="learningMode"
+                checked={learningMode}
+                onChange={handleLearningModeChange}
+                className="compact-toggle-input"
+              />
+              <span className="compact-toggle-slider"></span>
+              <span className="compact-toggle-text">
+                <span className="form-icon">🎓</span> {t('storyForm.learningModeLabel')}
+              </span>
+            </label>
+            {learningMode && (
+              <p className="compact-hint">
+                {t('storyForm.learningModeDescription')}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Campo de vocabulario - solo visible si learningMode está activado */}
+        {learningMode && (
+          <div className="form-group vocabulary-group">
+            <label htmlFor="vocabularyWords">
+              <span className="form-icon">📝</span> {t('storyForm.vocabularyWordsLabel')}
+              <span className="word-count">
+                ({vocabularyWords.split(',').filter(w => w.trim()).length}/10)
+              </span>
+            </label>
+            <input
+              type="text"
+              id="vocabularyWords"
+              value={vocabularyWords}
+              onChange={handleVocabularyWordsChange}
+              placeholder={t('storyForm.vocabularyWordsPlaceholder')}
+              className="vocabulary-input"
+            />
+            <p className="vocabulary-help">
+              {t('storyForm.vocabularyWordsHelp')}
+            </p>
+          </div>
+        )}
 
         <div className="form-row">
           <div className="form-group">

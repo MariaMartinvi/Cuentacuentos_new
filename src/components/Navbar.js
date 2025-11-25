@@ -55,6 +55,28 @@ function Navbar() {
     });
   };
 
+  const handleCreateStoryClick = () => {
+    // Navegar a la página de creación
+    navigate('/crear-cuento');
+    
+    // Cerrar menú móvil si está abierto
+    setIsMobileMenuOpen(false);
+    
+    // Scroll to top
+    scrollToTop();
+  };
+
+  const handleLibraryClick = () => {
+    // Navegar a la home
+    navigate('/');
+    
+    // Cerrar menú móvil si está abierto
+    setIsMobileMenuOpen(false);
+    
+    // Scroll to top
+    scrollToTop();
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
@@ -116,6 +138,19 @@ function Navbar() {
             </Link>
           </div>
 
+          {/* Desktop navigation links */}
+          <div className="nav-links-center desktop-only">
+            <Link to="/" onClick={handleLibraryClick} className="nav-link-library">
+              📚 {t('navbar.library')}
+            </Link>
+            <Link to="/crear-cuento" onClick={handleCreateStoryClick} className="nav-link-create">
+              ✍️ {t('navbar.createStory')}
+            </Link>
+            <Link to="/aprender-ingles" onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} className="nav-link-learn">
+              🎓 {t('navbar.learnEnglish')}
+            </Link>
+          </div>
+
           {/* Mobile menu toggle - moved next to logo */}
           <div className="mobile-menu-toggle" ref={mobileMenuRef}>
             <button
@@ -130,6 +165,33 @@ function Navbar() {
             {/* Mobile dropdown menu */}
             {isMobileMenuOpen && (
               <div className="mobile-dropdown">
+                {/* Library Link - always visible */}
+                <Link 
+                  to="/" 
+                  onClick={handleLibraryClick} 
+                  className="mobile-menu-item mobile-library"
+                >
+                  📚 {t('navbar.library')}
+                </Link>
+                
+                {/* Create Story Link - always visible */}
+                <Link 
+                  to="/crear-cuento" 
+                  onClick={handleCreateStoryClick} 
+                  className="mobile-menu-item mobile-create-story"
+                >
+                  ✍️ {t('navbar.createStory')}
+                </Link>
+                
+                {/* Learn English Link - always visible */}
+                <Link 
+                  to="/aprender-ingles" 
+                  onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} 
+                  className="mobile-menu-item mobile-learn-english"
+                >
+                  🎓 {t('navbar.learnEnglish')}
+                </Link>
+                
                 {user ? (
                   <div className="mobile-user-section">
                     <div className="mobile-user-info">
