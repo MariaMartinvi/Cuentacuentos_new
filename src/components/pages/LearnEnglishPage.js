@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema';
@@ -18,13 +18,13 @@ const AudioPlayer = ({ audioUrl, title }) => {
       const audio = audioRef.current;
 
       const setAudioData = () => {
-        setDuration(audio.duration);
+        setDuration(audio.duration || 0);
       };
 
       const setAudioTime = () => {
-        const currentTime = audio.currentTime;
-        const duration = audio.duration;
-        const progress = (currentTime / duration) * 100;
+        const currentTime = audio.currentTime || 0;
+        const duration = audio.duration || 0;
+        const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
         
         setCurrentTime(currentTime);
         setProgress(progress);
@@ -89,7 +89,7 @@ const AudioPlayer = ({ audioUrl, title }) => {
         <input
           type="range"
           className="progress-bar"
-          value={progress}
+          value={isNaN(progress) ? 0 : progress}
           onChange={handleProgressChange}
           min="0"
           max="100"
@@ -128,24 +128,30 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
   const [totalDuration, setTotalDuration] = useState(0);
   const [accumulatedTime, setAccumulatedTime] = useState(0);
   
-  const parts = [
-    { url: introUrl, name: t('storyExamples.audioIntro') || 'Introduction' },
-    { url: vocabUrl, name: t('storyExamples.audioVocab') || 'Vocabulary' },
-    { url: storyUrl, name: t('storyExamples.audioStory') || 'Story' }
-  ];
+  const parts = useMemo(() => {
+    console.log('🎵 Parts array created with URLs:');
+    console.log('   Intro:', introUrl);
+    console.log('   Vocab:', vocabUrl);
+    console.log('   Story:', storyUrl);
+    return [
+      { url: introUrl, name: t('storyExamples.audioIntro') || 'Introduction' },
+      { url: vocabUrl, name: t('storyExamples.audioVocab') || 'Vocabulary' },
+      { url: storyUrl, name: t('storyExamples.audioStory') || 'Story' }
+    ];
+  }, [introUrl, vocabUrl, storyUrl, t]);
 
   useEffect(() => {
     if (audioRef.current) {
       const audio = audioRef.current;
 
       const setAudioData = () => {
-        setDuration(audio.duration);
+        setDuration(audio.duration || 0);
       };
 
       const setAudioTime = () => {
-        const currentTime = audio.currentTime;
-        const duration = audio.duration;
-        const progress = (currentTime / duration) * 100;
+        const currentTime = audio.currentTime || 0;
+        const duration = audio.duration || 0;
+        const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
         
         setCurrentTime(currentTime);
         setProgress(progress);
@@ -153,16 +159,21 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
 
       const handleAudioEnd = () => {
         // Cuando termina una parte, pasar a la siguiente
-        if (currentPart < parts.length - 1) {
-          console.log(`✅ Part ${currentPart + 1} finished, moving to part ${currentPart + 2}`);
-          setAccumulatedTime(prev => prev + duration);
-          setCurrentPart(currentPart + 1);
-          setProgress(0);
-          setCurrentTime(0);
-        } else {
-          console.log('✅ All parts finished');
-          setIsPlaying(false);
-        }
+        setCurrentPart(prev => {
+          if (prev < parts.length - 1) {
+            console.log(`✅ Part ${prev + 1} finished, moving to part ${prev + 2}`);
+            setAccumulatedTime(prevTime => prevTime + duration);
+            setProgress(0);
+            setCurrentTime(0);
+            // MANTENER isPlaying en true para que siga reproduciendo
+            setIsPlaying(true);
+            return prev + 1;
+          } else {
+            console.log('✅ All parts finished');
+            setIsPlaying(false);
+            return prev;
+          }
+        });
       };
 
       audio.addEventListener('loadeddata', setAudioData);
@@ -175,20 +186,33 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
         audio.removeEventListener('ended', handleAudioEnd);
       };
     }
-  }, [currentPart, duration, parts.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [duration, parts.length]); // parts.length es estable gracias a useMemo
 
   // Cuando cambia la parte actual, cargar y reproducir automáticamente si estaba reproduciendo
   useEffect(() => {
-    if (audioRef.current && currentPart < parts.length) {
-      audioRef.current.load();
+    if (audioRef.current && currentPart < parts.length && parts[currentPart]?.url) {
+      const audio = audioRef.current;
+      const url = parts[currentPart].url;
+      
+      console.log(`🔄 Loading part ${currentPart + 1}: ${parts[currentPart].name}`);
+      console.log(`   URL: ${url}`);
+      
+      // Actualizar el src manualmente
+      audio.src = url;
+      audio.load();
+      
       if (isPlaying) {
-        audioRef.current.play().catch(err => {
-          console.error('Error playing audio:', err);
-          setIsPlaying(false);
-        });
+        // Pequeño delay para asegurar que el audio se cargó
+        setTimeout(() => {
+          audio.play().catch(err => {
+            console.error('Error playing audio:', err);
+            setIsPlaying(false);
+          });
+        }, 100);
       }
     }
-  }, [currentPart, isPlaying, parts.length]);
+  }, [currentPart, isPlaying, parts]); // Ahora parts es estable gracias a useMemo
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -217,7 +241,7 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
 
   return (
     <div className="audio-player">
-      <audio ref={audioRef} src={parts[currentPart]?.url} />
+      <audio ref={audioRef} />
       
       {/* Indicador de parte actual */}
       <div className="audio-part-indicator" style={{ marginBottom: '10px', textAlign: 'center', fontSize: '14px', color: '#666' }}>
@@ -240,7 +264,7 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
         <input
           type="range"
           className="progress-bar"
-          value={progress}
+          value={isNaN(progress) ? 0 : progress}
           onChange={handleProgressChange}
           min="0"
           max="100"
@@ -402,7 +426,10 @@ function LearnEnglishPage() {
       }
       
       console.log('✅ Story loaded:', data.story.title.en);
-      console.log('🎵 Audio URLs:', { intro: data.story.introUrl, vocab: data.story.vocabUrl, story: data.story.storyUrl });
+      console.log('🎵 Audio URLs:');
+      console.log('  - Intro:', data.story.introUrl);
+      console.log('  - Vocab:', data.story.vocabUrl);
+      console.log('  - Story:', data.story.storyUrl);
       setSelectedStory(data.story);
       
     } catch (error) {
@@ -457,13 +484,92 @@ function LearnEnglishPage() {
       <div className="learn-english-hero">
         <div className="learn-english-hero-container">
           <h1 className="learn-english-title">
-            📚 {t('learnEnglish.pageTitle')}
+            {t('learnEnglish.pageTitle')}
           </h1>
           <p className="learn-english-subtitle">
             {t('learnEnglish.pageSubtitle')}
           </p>
           <div className="plan-badge">
             🎯 {t('learnEnglish.month1Title')}
+          </div>
+        </div>
+      </div>
+
+      {/* METODOLOGÍA - INTRODUCCIÓN */}
+      <div className="methodology-section">
+        <div className="methodology-container">
+          <div className="methodology-card">
+            <div className="methodology-icon">🎧</div>
+            <h3 className="methodology-subtitle">
+              {i18n.language === 'es' ? 'Método Progresivo' : 'Progressive Method'}
+            </h3>
+            <p className="methodology-text">
+              {i18n.language === 'es' 
+                ? 'Basado en escuchar una serie de audiocuentos que contienen vocabulario y estructuras apropiados para cada semana de aprendizaje.'
+                : 'Based on listening to a series of audio stories containing vocabulary and structures appropriate for each week of learning.'}
+            </p>
+          </div>
+
+          <div className="methodology-card">
+            <div className="methodology-icon">🧠</div>
+            <h3 className="methodology-subtitle">
+              {i18n.language === 'es' ? 'Aprendizaje Natural' : 'Natural Learning'}
+            </h3>
+            <p className="methodology-text">
+              {i18n.language === 'es'
+                ? 'La ciencia ha probado que los niños aprenden un idioma gracias a escuchar historias. Aprovechamos el momento de ir a dormir para escuchar historias de Los Cinco de la Tierra e ir mejorando sus habilidades en inglés.'
+                : 'Science has proven that children learn a language by listening to stories. We take advantage of bedtime to listen to stories of The Five from Earth and improve their English skills.'}
+            </p>
+          </div>
+
+          <div className="methodology-card">
+            <div className="methodology-icon">👧👦</div>
+            <h3 className="methodology-subtitle">
+              {i18n.language === 'es' ? 'Edades 4-7 años' : 'Ages 4-7'}
+            </h3>
+            <p className="methodology-text">
+              {i18n.language === 'es'
+                ? 'Perfecto para niños entre 4 y 7 años para complementar el inglés que aprenden en el colegio. Cada audiocuento comienza con un resumen del vocabulario que aprenderemos en la historia.'
+                : 'Perfect for children between 4 and 7 years old to complement the English they learn at school. Each audiobook starts with a summary of the vocabulary that we will learn in the story.'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* LOS CINCO DE LA TIERRA - PROTAGONISTAS */}
+      <div className="five-heroes-section">
+        <h2 className="five-heroes-title">
+          🚀 {i18n.language === 'es' ? '¡Los Cinco de la Tierra!' : 'The Five from Earth!'}
+        </h2>
+        <div className="five-heroes-container">
+          <div className="hero-card">
+            <span className="hero-avatar">👧🏼</span>
+            <div className="hero-name">Sara</div>
+            <div className="hero-country">{i18n.language === 'es' ? 'España' : 'Spain'}</div>
+          </div>
+          
+          <div className="hero-card">
+            <span className="hero-avatar">👧🏿</span>
+            <div className="hero-name">María</div>
+            <div className="hero-country">{i18n.language === 'es' ? 'Camerún' : 'Cameroon'}</div>
+          </div>
+          
+          <div className="hero-card">
+            <span className="hero-avatar">👧🏻</span>
+            <div className="hero-name">Eva</div>
+            <div className="hero-country">China</div>
+          </div>
+          
+          <div className="hero-card">
+            <span className="hero-avatar">👦🏻</span>
+            <div className="hero-name">Robert</div>
+            <div className="hero-country">USA</div>
+          </div>
+          
+          <div className="hero-card">
+            <span className="hero-avatar">👦🏼</span>
+            <div className="hero-name">Gabriel</div>
+            <div className="hero-country">Australia</div>
           </div>
         </div>
       </div>
@@ -563,25 +669,6 @@ function LearnEnglishPage() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Info Box */}
-          <div className="info-box">
-            <h3>📝 {t('learnEnglish.howItWorks')}</h3>
-            <ul>
-              <li>
-                <strong>[0:00-2:30]</strong> {t('learnEnglish.introSection')}
-              </li>
-              <li>
-                <strong>[2:30-10:00]</strong> {t('learnEnglish.storySection')}
-              </li>
-              <li>
-                🗣️ {t('learnEnglish.formatInfo')}
-              </li>
-              <li>
-                🚀 {t('learnEnglish.missionInfo')}
-              </li>
-            </ul>
           </div>
         </div>
       </div>
