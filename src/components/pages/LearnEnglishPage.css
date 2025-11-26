@@ -583,24 +583,48 @@
   background: rgba(149, 117, 205, 0.25);
   border: 4px solid #80deea;
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 0;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   box-shadow: 5px 5px 0px rgba(126, 87, 194, 0.5);
   backdrop-filter: blur(15px);
+}
+
+/* Imagen de la tarjeta - Ancho completo */
+.story-card-image {
+  width: 100%;
+  height: 180px;
+  margin: 0;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 4px solid #80deea;
+}
+
+.story-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.story-card:hover .story-card-image img {
+  transform: scale(1.05);
 }
 
 .story-card::before {
   content: '⭐';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  font-size: 1.8rem;
-  z-index: 1;
-  opacity: 0.8;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 2.5rem;
+  z-index: 10;
+  opacity: 1;
   animation: starGentlePulse 4s ease-in-out infinite;
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.7));
 }
 
 @keyframes starGentlePulse {
@@ -622,14 +646,17 @@
 
 .story-number {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: #7e57c2;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: linear-gradient(135deg, #7e57c2 0%, #9575cd 100%);
   color: #FFFFFF;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
+  z-index: 10;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
   align-items: center;
   justify-content: center;
   font-weight: 900;
@@ -642,6 +669,8 @@
   font-size: 1.15rem;
   color: #FFFFFF;
   margin-bottom: 1rem;
+  padding: 0 1.5rem;
+  margin-top: 1rem;
   padding-right: 3.5rem;
   font-weight: 800;
   line-height: 1.3;
@@ -650,6 +679,7 @@
 
 .story-vocabulary {
   margin-bottom: 1rem;
+  padding: 0 1.5rem;
 }
 
 .vocab-label {
@@ -681,6 +711,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1.5rem 1.5rem 1.5rem;
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 2px dashed rgba(128, 222, 234, 0.5);
@@ -778,6 +809,79 @@
   font-size: 2rem;
   margin-bottom: 1.5rem;
   padding-right: 3rem;
+}
+
+/* Imagen Memphis Espacial Nocturno */
+.story-image-container {
+  margin: 1.5rem 0 2rem 0;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 6px solid;
+  border-image: linear-gradient(135deg, #80deea 0%, #ffd54f 25%, #ff4081 50%, #9575cd 75%, #80deea 100%) 1;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    8px 8px 0px rgba(255, 183, 77, 0.5),
+    -8px -8px 0px rgba(128, 222, 234, 0.4);
+  position: relative;
+  background: linear-gradient(135deg, #3949ab 0%, #5e35b1 100%);
+  animation: imageGlow 6s ease-in-out infinite;
+}
+
+.story-image-container::before {
+  content: '✨';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 2rem;
+  z-index: 2;
+  animation: starRotate 8s linear infinite;
+}
+
+.story-image-container::after {
+  content: '🌟';
+  position: absolute;
+  bottom: -15px;
+  left: -15px;
+  font-size: 2rem;
+  z-index: 2;
+  animation: starRotate 10s linear infinite reverse;
+}
+
+@keyframes imageGlow {
+  0%, 100% {
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      8px 8px 0px rgba(255, 183, 77, 0.5),
+      -8px -8px 0px rgba(128, 222, 234, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 15px 40px rgba(255, 64, 129, 0.4),
+      10px 10px 0px rgba(255, 213, 79, 0.7),
+      -10px -10px 0px rgba(149, 117, 205, 0.6);
+  }
+}
+
+@keyframes starRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.story-memphis-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  position: relative;
+  z-index: 1;
 }
 
 .modal-vocabulary {
@@ -1061,11 +1165,11 @@
   }
 
   .story-number {
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     font-size: 1rem;
-    border-width: 2px;
-    box-shadow: 2px 2px 0px rgba(255, 183, 77, 0.5);
+    border-width: 3px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   }
 
   .play-button {

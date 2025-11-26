@@ -297,9 +297,27 @@ function LearnEnglishPage() {
   const [selectedStory, setSelectedStory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [imageUrls, setImageUrls] = useState({});
 
   // Configuración de backend
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
+  
+  // Cargar URLs de imágenes al montar el componente
+  useEffect(() => {
+    const loadImageUrls = async () => {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/learn-english/image-urls`);
+        const data = await response.json();
+        if (data.success) {
+          setImageUrls(data.imageUrls);
+          console.log('🖼️ Image URLs loaded:', Object.keys(data.imageUrls).length, 'images');
+        }
+      } catch (error) {
+        console.error('Error loading image URLs:', error);
+      }
+    };
+    loadImageUrls();
+  }, [BACKEND_URL]);
 
   // Estructura del contenido del curso - Month 1: Los Cinco de la Tierra
   const courseData = {
@@ -430,6 +448,7 @@ function LearnEnglishPage() {
       console.log('  - Intro:', data.story.introUrl);
       console.log('  - Vocab:', data.story.vocabUrl);
       console.log('  - Story:', data.story.storyUrl);
+      console.log('🖼️ Image URL:', data.story.imageUrl);
       setSelectedStory(data.story);
       
     } catch (error) {
@@ -647,6 +666,21 @@ function LearnEnglishPage() {
                   {week.stories.map((story, index) => (
                     <div key={story.id} className="story-card" onClick={() => handleStoryClick(story)}>
                       <div className="story-number">{index + 1}</div>
+                      
+                      {/* Imagen Memphis de la historia */}
+                      {imageUrls[story.id] && (
+                        <div className="story-card-image">
+                          <img 
+                            src={imageUrls[story.id]}
+                            alt={story.title}
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.parentElement.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                      
                       <h4 className="story-title">{story.title}</h4>
                       <div className="story-vocabulary">
                         <span className="vocab-label">
@@ -687,6 +721,17 @@ function LearnEnglishPage() {
             ) : (
               <>
                 <h2>{typeof selectedStory.title === 'object' ? selectedStory.title[i18n.language] : selectedStory.title}</h2>
+                
+                {/* Imagen Memphis Espacial Nocturno */}
+                {selectedStory.imageUrl && (
+                  <div className="story-image-container">
+                    <img 
+                      src={selectedStory.imageUrl} 
+                      alt={typeof selectedStory.title === 'object' ? selectedStory.title.en : selectedStory.title}
+                      className="story-memphis-image"
+                    />
+                  </div>
+                )}
                 
                 {/* Personajes que aparecen en el cuento */}
                 {selectedStory.characters && (
