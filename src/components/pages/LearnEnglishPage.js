@@ -300,7 +300,7 @@ function LearnEnglishPage() {
   const [imageUrls, setImageUrls] = useState({});
 
   // Configuración de backend
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
+  const BACKEND_URL = process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
   
   // Cargar URLs de imágenes al montar el componente
   useEffect(() => {
@@ -308,12 +308,14 @@ function LearnEnglishPage() {
       try {
         const response = await fetch(`${BACKEND_URL}/api/learn-english/image-urls`);
         const data = await response.json();
-        if (data.success) {
+        if (data.success && data.imageUrls) {
           setImageUrls(data.imageUrls);
           console.log('🖼️ Image URLs loaded:', Object.keys(data.imageUrls).length, 'images');
         }
       } catch (error) {
-        console.error('Error loading image URLs:', error);
+        console.warn('⚠️ Could not load image URLs, continuing without images:', error.message);
+        // Continuar sin imágenes, no romper la aplicación
+        setImageUrls({});
       }
     };
     loadImageUrls();
