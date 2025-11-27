@@ -4,18 +4,18 @@
 
 .learn-english-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+  background: linear-gradient(180deg, #d8d0f0 0%, #e8e0fa 50%, #f0e8ff 100%);
 }
 
 /* Hero Section - Memphis Espacial Nocturno */
 .learn-english-hero {
-  background: linear-gradient(135deg, #3949ab 0%, #5e35b1 50%, #7e57c2 100%);
+  background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 50%, #e8d8ff 100%);
   padding: 3rem 1rem 2rem 1rem;
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
-  border-bottom: 6px solid #ffb74d;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-bottom: 6px solid #d4a574;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Luna grande de fondo */
@@ -116,53 +116,53 @@
 }
 
 .learn-english-title {
-  color: #FFFFFF;
+  color: #4a3a6a;
   font-size: 3rem;
   font-weight: 900;
   margin-bottom: 1rem;
   line-height: 1.2;
   letter-spacing: 0px;
-  text-shadow: 4px 4px 0px rgba(255, 183, 77, 0.6);
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 
 .learn-english-subtitle {
-  color: #ffd54f;
+  color: #6a5a8a;
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   line-height: 1.6;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .plan-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.95);
-  color: #5e35b1;
+  color: #5a5175;
   padding: 1rem 2.5rem;
   border-radius: 50px;
   font-weight: 900;
   font-size: 1.2rem;
-  box-shadow: 6px 6px 0px rgba(255, 183, 77, 0.7);
-  border: 4px solid #80deea;
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.5);
+  border: 4px solid #6b8a9a;
   transform: rotate(-1deg);
   transition: all 0.4s ease;
 }
 
 .plan-badge:hover {
   transform: rotate(1deg) scale(1.05);
-  box-shadow: 8px 8px 0px rgba(255, 183, 77, 0.9);
+  box-shadow: 8px 8px 0px rgba(201, 167, 106, 0.7);
   background: rgba(255, 255, 255, 1);
 }
 
 /* Metodología - Introducción - ⭐ CAJAS BLANCAS */
 .methodology-section {
-  background: rgba(26, 35, 126, 0.5);
+  background: rgba(232, 224, 250, 0.6);
   padding: 2.5rem 1rem;
   margin-bottom: 1rem;
   backdrop-filter: blur(15px);
-  border-top: 3px solid rgba(128, 222, 234, 0.3);
-  border-bottom: 3px solid rgba(128, 222, 234, 0.3);
+  border-top: 3px solid rgba(200, 184, 232, 0.4);
+  border-bottom: 3px solid rgba(200, 184, 232, 0.4);
 }
 
 .methodology-container {
@@ -177,8 +177,8 @@
   background: rgba(255, 255, 255, 0.95);
   padding: 2rem 1.5rem;
   border-radius: 20px;
-  border: 4px solid #80deea;
-  box-shadow: 5px 5px 0px rgba(255, 183, 77, 0.5);
+  border: 4px solid #b8a8d8;
+  box-shadow: 5px 5px 0px rgba(200, 184, 232, 0.4);
   text-align: center;
   transition: all 0.4s ease;
   backdrop-filter: blur(10px);
@@ -186,8 +186,8 @@
 
 .methodology-card:hover {
   transform: translateY(-6px);
-  box-shadow: 6px 6px 0px rgba(255, 213, 79, 0.7);
-  border-color: #ffd54f;
+  box-shadow: 6px 6px 0px rgba(200, 184, 232, 0.6);
+  border-color: #c8b8e8;
   background: rgba(255, 255, 255, 1);
 }
 
@@ -200,7 +200,7 @@
 .methodology-subtitle {
   font-size: 1.3rem;
   font-weight: 900;
-  color: #5e35b1;
+  color: #5a5175;
   margin-bottom: 1rem;
   text-shadow: none;
 }
@@ -215,14 +215,14 @@
 
 /* Sección Los Cinco de la Tierra */
 .five-heroes-section {
-  background: linear-gradient(135deg, #5e35b1 0%, #7e57c2 50%, #9575cd 100%);
+  background: linear-gradient(135deg, #d8c8f8 0%, #e8d8ff 50%, #f0e0ff 100%);
   padding: 3rem 1rem;
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
-  border-top: 5px solid rgba(255, 213, 79, 0.5);
-  border-bottom: 5px solid rgba(128, 222, 234, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-top: 5px solid rgba(200, 184, 232, 0.5);
+  border-bottom: 5px solid rgba(200, 184, 232, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Estrellas de fondo */
@@ -250,10 +250,10 @@
   text-align: center;
   font-size: 2.5rem;
   font-weight: 900;
-  color: #FFFFFF;
-  text-shadow: 3px 3px 0px rgba(255, 183, 77, 0.5);
+  color: #4a3a6a;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
   margin-bottom: 2rem;
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 
 .five-heroes-container {
@@ -269,12 +269,12 @@
 /* ⭐ HERO CARDS - CAJAS BLANCAS */
 .hero-card {
   background: rgba(255, 255, 255, 0.95);
-  border: 5px solid #80deea;
+  border: 5px solid #b8a8d8;
   border-radius: 20px;
   padding: 1rem 1rem 0.8rem 1rem;
   width: 140px;
   text-align: center;
-  box-shadow: 6px 6px 0px rgba(255, 183, 77, 0.6);
+  box-shadow: 6px 6px 0px rgba(200, 184, 232, 0.4);
   transition: all 0.4s ease;
   cursor: pointer;
   position: relative;
@@ -283,8 +283,8 @@
 
 .hero-card:hover {
   transform: translateY(-8px) rotate(2deg);
-  box-shadow: 8px 8px 0px rgba(255, 213, 79, 0.8);
-  border-color: #ffd54f;
+  box-shadow: 8px 8px 0px rgba(200, 184, 232, 0.6);
+  border-color: #c8b8e8;
   background: rgba(255, 255, 255, 1);
 }
 
@@ -328,14 +328,14 @@
 .hero-name {
   font-size: 1.2rem;
   font-weight: 900;
-  color: #5e35b1;
+  color: #5a5175;
   margin-bottom: 0.2rem;
   text-shadow: none;
 }
 
 .hero-country {
   font-size: 0.85rem;
-  color: #7e57c2;
+  color: #6a6185;
   font-weight: 800;
   margin-bottom: 0;
   text-shadow: none;
@@ -343,12 +343,12 @@
 
 /* Month Navigation */
 .month-navigation {
-  background: rgba(94, 53, 177, 0.3);
+  background: rgba(232, 224, 250, 0.5);
   padding: 1.5rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
-  border-top: 3px solid rgba(128, 222, 234, 0.4);
-  border-bottom: 3px solid rgba(128, 222, 234, 0.4);
+  border-top: 3px solid rgba(200, 184, 232, 0.4);
+  border-bottom: 3px solid rgba(200, 184, 232, 0.4);
   backdrop-filter: blur(10px);
 }
 
@@ -361,38 +361,38 @@
 
 .month-button {
   padding: 1rem 2.5rem;
-  border: 4px solid #80deea;
+  border: 4px solid #b8a8d8;
   background: rgba(255, 255, 255, 0.95);
-  color: #5e35b1;
+  color: #6a5a8a;
   border-radius: 50px;
   font-weight: 900;
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 4px 4px 0px rgba(255, 183, 77, 0.6);
+  box-shadow: 4px 4px 0px rgba(200, 184, 232, 0.4);
   text-transform: uppercase;
 }
 
 .month-button:hover:not(.disabled) {
   background: rgba(255, 255, 255, 1);
-  color: #7e57c2;
+  color: #7a6a9a;
   transform: translateY(-4px) rotate(-1deg);
-  box-shadow: 6px 6px 0px rgba(255, 213, 79, 0.8);
-  border-color: #ffd54f;
+  box-shadow: 6px 6px 0px rgba(200, 184, 232, 0.6);
+  border-color: #c8b8e8;
 }
 
 .month-button.active {
-  background: #7e57c2;
+  background: #b8a8d8;
   color: #FFFFFF;
-  border-color: #80deea;
-  box-shadow: 5px 5px 0px rgba(255, 183, 77, 0.7);
+  border-color: #c8b8e8;
+  box-shadow: 5px 5px 0px rgba(200, 184, 232, 0.5);
   transform: scale(1.05);
 }
 
 .month-button.disabled {
   opacity: 0.3;
   cursor: not-allowed;
-  border-color: rgba(128, 222, 234, 0.3);
+  border-color: rgba(107, 138, 154, 0.3);
   color: #999;
   box-shadow: 3px 3px 0px rgba(200, 200, 200, 0.3);
 }
@@ -409,12 +409,12 @@
 
 .month-title {
   font-size: 2.2rem;
-  color: #FFFFFF;
+  color: #4a3a6a;
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 900;
-  text-shadow: 3px 3px 0px rgba(255, 183, 77, 0.5);
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 
 /* ⭐ FAMILY INTRO - CAJA BLANCA */
@@ -423,13 +423,13 @@
   padding: 1rem 1.5rem;
   border-radius: 20px;
   margin-bottom: 1.5rem;
-  border: 4px solid rgba(128, 222, 234, 0.6);
-  box-shadow: 5px 5px 0px rgba(255, 183, 77, 0.4);
+  border: 4px solid rgba(184, 168, 216, 0.6);
+  box-shadow: 5px 5px 0px rgba(200, 184, 232, 0.4);
   backdrop-filter: blur(10px);
 }
 
 .family-intro-text {
-  color: #5e35b1;
+  color: #6a5a8a;
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
@@ -946,8 +946,8 @@
 
   .learn-english-title {
     font-size: 2rem;
-    text-shadow: 3px 3px 0px rgba(255, 183, 77, 0.6);
-    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
   }
 
   .learn-english-subtitle {
@@ -988,7 +988,7 @@
     width: 120px;
     padding: 0.8rem 0.8rem 0.6rem 0.8rem;
     border-width: 4px;
-    box-shadow: 5px 5px 0px rgba(255, 183, 77, 0.6);
+    box-shadow: 5px 5px 0px rgba(200, 184, 232, 0.4);
   }
 
   .hero-avatar {
@@ -1005,7 +1005,7 @@
 
   .month-title {
     font-size: 1.8rem;
-    text-shadow: 2px 2px 0px rgba(255, 183, 77, 0.5);
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
   }
 
   .month-info {
@@ -1066,14 +1066,14 @@
 @media (max-width: 480px) {
   .learn-english-title {
     font-size: 1.5rem;
-    text-shadow: 2px 2px 0px rgba(255, 183, 77, 0.6);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
   }
 
   .plan-badge {
     font-size: 1rem;
     padding: 0.8rem 1.8rem;
-    box-shadow: 4px 4px 0px rgba(255, 183, 77, 0.7);
+    box-shadow: 4px 4px 0px rgba(200, 184, 232, 0.4);
     border-width: 3px;
   }
 
@@ -1088,7 +1088,7 @@
   .methodology-card {
     padding: 1.2rem 0.8rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(255, 183, 77, 0.5);
+    box-shadow: 4px 4px 0px rgba(200, 184, 232, 0.3);
   }
 
   .methodology-icon {
@@ -1109,7 +1109,7 @@
 
   .five-heroes-title {
     font-size: 1.6rem;
-    text-shadow: 3px 3px 0px rgba(255, 183, 77, 0.5);
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
   }
 
   .five-heroes-container {
@@ -1120,7 +1120,7 @@
     width: 120px;
     padding: 0.75rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(255, 183, 77, 0.6);
+    box-shadow: 4px 4px 0px rgba(200, 184, 232, 0.4);
   }
 
   .hero-avatar {
