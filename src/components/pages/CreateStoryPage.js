@@ -118,12 +118,10 @@ function CreateStoryPage() {
       <div className="create-story-hero">
         <div className="create-story-hero-container">
           <h1 className="create-story-title">
-            {i18n.language === 'es' ? '✨ Crea tu Cuento Personalizado' : '✨ Create Your Personalized Story'}
+            {t('createStoryPage.title')}
           </h1>
           <p className="create-story-subtitle">
-            {i18n.language === 'es' 
-              ? 'Rellena el formulario y genera un audiocuento único en segundos' 
-              : 'Fill out the form and generate a unique audio story in seconds'}
+            {t('createStoryPage.subtitle')}
           </p>
         </div>
       </div>

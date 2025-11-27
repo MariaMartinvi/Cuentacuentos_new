@@ -115,7 +115,7 @@
       "protagonist": "Protagonista",
       "ageRange": "años",
       "readStory": "Leer cuento",
-      "listenAudio": "Escuchar audio",
+      "listenAudio": "Escuchar",
       "exampleStory": "Historia de ejemplo"
     },
     "mockContent": {
@@ -177,6 +177,10 @@
       "title": "Explora Nuestros Cuentos",
       "description": "Descubre nuestra colección de cuentos de ejemplo para todas las edades"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Crea tu Cuento Personalizado",
+    "subtitle": "Rellena el formulario y genera un audiocuento único en segundos"
   },
   "common": {
     "learnMore": "Saber más",
@@ -977,6 +981,12 @@
     "audioVocab": "Vocabulario",
     "audioStory": "Cuento",
     "errorLoading": "Error cargando el audio. Por favor, intenta de nuevo.",
-    "generating": "Generando audio del cuento..."
+    "generating": "Generando audio del cuento...",
+    "methodologyProgressiveTitle": "Método Progresivo",
+    "methodologyProgressiveText": "Basado en escuchar una serie de audiocuentos que contienen vocabulario y estructuras apropiados para cada semana de aprendizaje.",
+    "methodologyNaturalTitle": "Aprendizaje Natural",
+    "methodologyNaturalText": "La ciencia ha probado que los niños aprenden un idioma gracias a escuchar historias. Aprovechamos el momento de ir a dormir para escuchar historias de Los Cinco de la Tierra e ir mejorando sus habilidades en inglés.",
+    "methodologyAgesTitle": "Edades 4-7 años",
+    "methodologyAgesText": "Perfecto para niños entre 4 y 7 años para complementar el inglés que aprenden en el colegio. Cada audiocuento comienza con un resumen del vocabulario que aprenderemos en la historia."
   }
 } 

@@ -1,4 +1,18 @@
 {
+  "createStoryPage": {
+    "title": "✨ Creează-ți Povestea Personalizată",
+    "subtitle": "Completează formularul și generează o poveste audio unică în câteva secunde"
+  },
+  "learnEnglish": {
+    "pageTitle": "Învață Engleză cu Povești Audio",
+    "pageSubtitle": "Cei Cinci de pe Pământ • 3 povești pe săptămână • Aventuri spațiale",
+    "methodologyProgressiveTitle": "Metodă Progresivă",
+    "methodologyProgressiveText": "Bazată pe ascultarea unei serii de povești audio care conțin vocabular și structuri potrivite pentru fiecare săptămână de învățare.",
+    "methodologyNaturalTitle": "Învățare Naturală",
+    "methodologyNaturalText": "Știința a demonstrat că copiii învață o limbă ascultând povești. Profităm de momentul de culcare pentru a asculta povești ale Celor Cinci de pe Pământ și pentru a-și îmbunătăți abilitățile în engleză.",
+    "methodologyAgesTitle": "Vârste 4-7 ani",
+    "methodologyAgesText": "Perfect pentru copiii între 4 și 7 ani pentru a completa engleza pe care o învață la școală. Fiecare poveste audio începe cu un rezumat al vocabularului pe care îl vom învăța în poveste."
+  },
   "title": "Termeni și Condiții",
   "introduccion": "Introducere",
   "introduccionTexto": "Bine ați venit la AudioGretel. Prin utilizarea serviciului nostru, acceptați acești termeni și condiții. Acești termeni reglementează utilizarea platformei noastre de povești personalizate.",

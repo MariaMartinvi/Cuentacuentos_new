@@ -137,6 +137,20 @@
       "content": "As audiohistórias personalizadas são uma excelente ferramenta para o desenvolvimento da linguagem. Meus alunos adoram criar suas próprias histórias e praticar a pronúncia."
     }
   },
+  "createStoryPage": {
+    "title": "✨ Crie Sua História Personalizada",
+    "subtitle": "Preencha o formulário e gere uma história em áudio única em segundos"
+  },
+  "learnEnglish": {
+    "pageTitle": "Aprenda Inglês com Histórias em Áudio",
+    "pageSubtitle": "Os Cinco da Terra • 3 histórias por semana • Aventuras espaciais",
+    "methodologyProgressiveTitle": "Método Progressivo",
+    "methodologyProgressiveText": "Baseado em ouvir uma série de histórias em áudio contendo vocabulário e estruturas apropriadas para cada semana de aprendizagem.",
+    "methodologyNaturalTitle": "Aprendizagem Natural",
+    "methodologyNaturalText": "A ciência provou que as crianças aprendem um idioma ouvindo histórias. Aproveitamos a hora de dormir para ouvir histórias dos Cinco da Terra e melhorar suas habilidades em inglês.",
+    "methodologyAgesTitle": "Idades 4-7 anos",
+    "methodologyAgesText": "Perfeito para crianças entre 4 e 7 anos para complementar o inglês que aprendem na escola. Cada história em áudio começa com um resumo do vocabulário que aprenderemos na história."
+  },
   "navbar": {
   }
 } 

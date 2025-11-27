@@ -88,7 +88,7 @@
       "language": "Idioma:",
       "level": "Nivel:",
       "readStory": "Ler conto",
-      "listenAudio": "Escoitar audio",
+      "listenAudio": "Escoitar",
       "usingMockContent": "Usando contido de exemplo",
       "protagonist": "Protagonista",
       "ageRange": "anos"
@@ -123,6 +123,10 @@
       "title": "Explora os Nosos Contos",
       "description": "Descobre a nosa colección de contos de exemplo para todas as idades"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Crea o teu Conto Personalizado",
+    "subtitle": "Enche o formulario e xera un audioconto único en segundos"
   },
   "common": {
     "learnMore": "Máis información",
@@ -544,5 +548,15 @@
       "role": "Profesor infantil",
       "content": "Os audiocontos personalizados son unha excelente ferramenta para o desenvolvemento da linguaxe. Os meus alumnos disfrutan moito creando as súas propias historias e practicando a pronunciación."
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Aprende Inglés con Audiocontos",
+    "pageSubtitle": "Os Cinco da Terra • 3 contos por semana • Aventuras espaciais",
+    "methodologyProgressiveTitle": "Método Progresivo",
+    "methodologyProgressiveText": "Baseado en escoitar unha serie de audiocontos que conteñen vocabulario e estruturas apropiadas para cada semana de aprendizaxe.",
+    "methodologyNaturalTitle": "Aprendizaxe Natural",
+    "methodologyNaturalText": "A ciencia demostrou que os nenos aprenden un idioma escoitando historias. Aproveitamos o momento de ir durmir para escoitar historias dos Cinco da Terra e mellorar as súas habilidades en inglés.",
+    "methodologyAgesTitle": "Idades 4-7 anos",
+    "methodologyAgesText": "Perfecto para nenos entre 4 e 7 anos para complementar o inglés que aprenden no colexio. Cada audioconto comeza cun resumo do vocabulario que aprenderemos na historia."
   }
 } 

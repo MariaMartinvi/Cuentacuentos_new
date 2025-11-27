@@ -556,36 +556,30 @@ function LearnEnglishPage() {
           <div className="methodology-card">
             <div className="methodology-icon">🎧</div>
             <h3 className="methodology-subtitle">
-              {i18n.language === 'es' ? 'Método Progresivo' : 'Progressive Method'}
+              {t('learnEnglish.methodologyProgressiveTitle')}
             </h3>
             <p className="methodology-text">
-              {i18n.language === 'es' 
-                ? 'Basado en escuchar una serie de audiocuentos que contienen vocabulario y estructuras apropiados para cada semana de aprendizaje.'
-                : 'Based on listening to a series of audio stories containing vocabulary and structures appropriate for each week of learning.'}
+              {t('learnEnglish.methodologyProgressiveText')}
             </p>
           </div>
 
           <div className="methodology-card">
             <div className="methodology-icon">🧠</div>
             <h3 className="methodology-subtitle">
-              {i18n.language === 'es' ? 'Aprendizaje Natural' : 'Natural Learning'}
+              {t('learnEnglish.methodologyNaturalTitle')}
             </h3>
             <p className="methodology-text">
-              {i18n.language === 'es'
-                ? 'La ciencia ha probado que los niños aprenden un idioma gracias a escuchar historias. Aprovechamos el momento de ir a dormir para escuchar historias de Los Cinco de la Tierra e ir mejorando sus habilidades en inglés.'
-                : 'Science has proven that children learn a language by listening to stories. We take advantage of bedtime to listen to stories of The Five from Earth and improve their English skills.'}
+              {t('learnEnglish.methodologyNaturalText')}
             </p>
           </div>
 
           <div className="methodology-card">
             <div className="methodology-icon">👧👦</div>
             <h3 className="methodology-subtitle">
-              {i18n.language === 'es' ? 'Edades 4-7 años' : 'Ages 4-7'}
+              {t('learnEnglish.methodologyAgesTitle')}
             </h3>
             <p className="methodology-text">
-              {i18n.language === 'es'
-                ? 'Perfecto para niños entre 4 y 7 años para complementar el inglés que aprenden en el colegio. Cada audiocuento comienza con un resumen del vocabulario que aprenderemos en la historia.'
-                : 'Perfect for children between 4 and 7 years old to complement the English they learn at school. Each audiobook starts with a summary of the vocabulary that we will learn in the story.'}
+              {t('learnEnglish.methodologyAgesText')}
             </p>
           </div>
         </div>

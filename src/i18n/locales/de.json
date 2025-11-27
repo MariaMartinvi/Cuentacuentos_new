@@ -56,7 +56,7 @@
       "protagonist": "Protagonist",
       "ageRange": "Jahre",
       "readStory": "Geschichte lesen",
-      "listenAudio": "Audio hören"
+      "listenAudio": "Hören"
     },
     "filters": {
       "title": "Filtern nach:",
@@ -117,6 +117,10 @@
       "title": "Entdecke unsere Geschichten",
       "description": "Entdecke unsere Sammlung von Beispielgeschichten für alle Altersgruppen"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Erstellen Sie Ihre Persönliche Geschichte",
+    "subtitle": "Füllen Sie das Formular aus und erstellen Sie in Sekunden eine einzigartige Audio-Geschichte"
   },
   "common": {
     "learnMore": "Mehr erfahren",
@@ -538,5 +542,15 @@
       "role": "Kindergartenlehrer",
       "content": "Personalisierte Audiogeschichten sind ein hervorragendes Werkzeug für die Sprachentwicklung. Meine Schüler haben viel Spaß daran, ihre eigenen Geschichten zu erstellen und die Aussprache zu üben."
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Englisch Lernen mit Audiogeschichten",
+    "pageSubtitle": "Die Fünf von der Erde • 3 Geschichten pro Woche • Weltraumabenteuer",
+    "methodologyProgressiveTitle": "Progressive Methode",
+    "methodologyProgressiveText": "Basierend auf dem Hören einer Reihe von Audiogeschichten, die Vokabular und Strukturen enthalten, die für jede Lernwoche geeignet sind.",
+    "methodologyNaturalTitle": "Natürliches Lernen",
+    "methodologyNaturalText": "Die Wissenschaft hat bewiesen, dass Kinder eine Sprache durch das Hören von Geschichten lernen. Wir nutzen die Schlafenszeit, um Geschichten von den Fünf von der Erde zu hören und ihre Englischkenntnisse zu verbessern.",
+    "methodologyAgesTitle": "Alter 4-7 Jahre",
+    "methodologyAgesText": "Perfekt für Kinder zwischen 4 und 7 Jahren, um das Englisch zu ergänzen, das sie in der Schule lernen. Jede Audiogeschichte beginnt mit einer Zusammenfassung des Vokabulars, das wir in der Geschichte lernen werden."
   }
 } 

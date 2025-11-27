@@ -438,12 +438,14 @@
     padding: 3rem 1rem 2rem 1rem;
   }
 
-  /* Ocultar estrellas decorativas en tablet */
+  /* Decoraciones visibles en tablet - ahora están bien posicionadas en laterales */
   .hero-section::before,
-  .hero-section::after,
-  .hero-container::before,
-  .hero-container::after {
-    display: none;
+  .hero-section::after {
+    font-size: 4rem; /* Tamaño reducido para tablet */
+  }
+  
+  .hero-section::after {
+    font-size: 2rem;
   }
 
   .hero-container h1 {
@@ -501,12 +503,14 @@
     padding: 2.5rem 0.8rem 1.5rem 0.8rem;
   }
 
-  /* Ocultar estrellas decorativas en mobile */
+  /* Decoraciones visibles en mobile - ahora están bien posicionadas en laterales */
   .hero-section::before,
-  .hero-section::after,
-  .hero-container::before,
-  .hero-container::after {
-    display: none;
+  .hero-section::after {
+    font-size: 3rem; /* Tamaño más pequeño para mobile */
+  }
+  
+  .hero-section::after {
+    font-size: 1.5rem;
   }
 
   .hero-container h1 {

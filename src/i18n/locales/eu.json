@@ -56,7 +56,7 @@
       "protagonist": "Protagonista",
       "ageRange": "urte",
       "readStory": "Ipuina irakurri",
-      "listenAudio": "Audioa entzun"
+      "listenAudio": "Entzun"
     },
     "filters": {
       "title": "Iragazi honen arabera:",
@@ -120,6 +120,10 @@
       "title": "Esploratu Gure Ipuinak",
       "description": "Aurkitu gure adin guztietarako adibide ipuinen bilduma"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Sortu Zure Ipuin Pertsonalizatua",
+    "subtitle": "Bete inprimakia eta sortu audio-ipuin bakarra segundu gutxitan"
   },
   "common": {
     "learnMore": "Gehiago jakin",
@@ -533,5 +537,15 @@
       "role": "Haur hezkuntza irakasle",
       "content": "Audio-ipuin pertsonalizatuak hizkuntza garapenerako tresna bikaina dira. Nire ikasleek asko gozatzen dute beren ipuinak sortzen eta ahoskera praktikatzen."
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Ikasi Ingelesa Audio-ipuinekin",
+    "pageSubtitle": "Lurreko Bostak • 3 ipuin astero • Espazio abenturak",
+    "methodologyProgressiveTitle": "Metodo Aurrerakorra",
+    "methodologyProgressiveText": "Ikaskuntza aste bakoitzerako egokiak diren hiztegia eta egiturak dituzten audio-ipuinen serie bat entzutean oinarrituta.",
+    "methodologyNaturalTitle": "Ikaskuntza Naturala",
+    "methodologyNaturalText": "Zientziak frogatu du haurrek hizkuntza bat istoriak entzutean ikasten dutela. Lo egiteko unea aprobetxatzen dugu Lurreko Bostetakoen istoriak entzuteko eta beren ingelesa trebetasunak hobetzeko.",
+    "methodologyAgesTitle": "4-7 urte",
+    "methodologyAgesText": "Perfektua 4 eta 7 urte bitarteko haurrentzat eskolan ikasten duten ingelesa osatzeko. Audio-ipuin bakoitza ikasiko dugun hiztegiaren laburpen batekin hasten da."
   }
 } 

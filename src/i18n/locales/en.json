@@ -206,7 +206,7 @@
       "protagonist": "Protagonist",
       "ageRange": "years",
       "readStory": "Read story",
-      "listenAudio": "Listen audio"
+      "listenAudio": "Listen"
     },
     "filters": {
       "title": "Filter by:",
@@ -247,7 +247,7 @@
       "language": "Language:",
       "level": "Level:",
       "readStory": "Read story",
-      "listenAudio": "Listen to audio",
+      "listenAudio": "Listen",
       "usingMockContent": "Using example content",
       "protagonist": "Protagonist"
     },
@@ -310,6 +310,10 @@
       "title": "Explore Our Stories",
       "description": "Discover our collection of example stories for all ages"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Create Your Personalized Story",
+    "subtitle": "Fill out the form and generate a unique audio story in seconds"
   },
   "common": {
     "learnMore": "Learn more",
@@ -1023,5 +1027,15 @@
       "title": "Audio Story Examples",
       "description": "Listen to real examples of audio stories created with our AI technology"
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Learn English with Audio Stories",
+    "pageSubtitle": "The Five from Earth • 3 stories per week • Space adventures",
+    "methodologyProgressiveTitle": "Progressive Method",
+    "methodologyProgressiveText": "Based on listening to a series of audio stories containing vocabulary and structures appropriate for each week of learning.",
+    "methodologyNaturalTitle": "Natural Learning",
+    "methodologyNaturalText": "Science has proven that children learn a language by listening to stories. We take advantage of bedtime to listen to stories of The Five from Earth and improve their English skills.",
+    "methodologyAgesTitle": "Ages 4-7",
+    "methodologyAgesText": "Perfect for children between 4 and 7 years old to complement the English they learn at school. Each audiobook starts with a summary of the vocabulary that we will learn in the story."
   }
 } 

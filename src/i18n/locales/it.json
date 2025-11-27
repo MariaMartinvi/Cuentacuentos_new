@@ -90,7 +90,7 @@
       "language": "Lingua:",
       "level": "Livello:",
       "readStory": "Leggi storia",
-      "listenAudio": "Ascolta audio",
+      "listenAudio": "Ascolta",
       "usingMockContent": "Utilizzo di contenuto di esempio",
       "protagonist": "Protagonista",
       "ageRange": "anni"
@@ -125,6 +125,10 @@
       "title": "Esplora le Nostre Storie",
       "description": "Scopri la nostra collezione di storie di esempio per tutte le età"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Crea la Tua Storia Personalizzata",
+    "subtitle": "Compila il modulo e genera una storia audio unica in pochi secondi"
   },
   "common": {
     "learnMore": "Scopri di più",
@@ -547,5 +551,15 @@
       "title": "Esempi di Storie Audio",
       "description": "Ascolta esempi reali di storie audio create con la nostra tecnologia IA"
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Impara l'Inglese con Storie Audio",
+    "pageSubtitle": "I Cinque dalla Terra • 3 storie a settimana • Avventure spaziali",
+    "methodologyProgressiveTitle": "Metodo Progressivo",
+    "methodologyProgressiveText": "Basato sull'ascolto di una serie di storie audio contenenti vocabolario e strutture appropriate per ogni settimana di apprendimento.",
+    "methodologyNaturalTitle": "Apprendimento Naturale",
+    "methodologyNaturalText": "La scienza ha dimostrato che i bambini imparano una lingua ascoltando storie. Approfittiamo del momento della nanna per ascoltare storie dei Cinque dalla Terra e migliorare le loro abilità in inglese.",
+    "methodologyAgesTitle": "Età 4-7 anni",
+    "methodologyAgesText": "Perfetto per bambini tra 4 e 7 anni per completare l'inglese che imparano a scuola. Ogni storia audio inizia con un riassunto del vocabolario che impareremo nella storia."
   }
 } 

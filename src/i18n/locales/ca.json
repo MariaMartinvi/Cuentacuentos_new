@@ -88,7 +88,7 @@
       "protagonist": "Protagonista",
       "ageRange": "anys",
       "readStory": "Llegir conte",
-      "listenAudio": "Escoltar àudio"
+      "listenAudio": "Escoltar"
     },
     "mockContent": {
       "badge": "Exemple",
@@ -120,6 +120,10 @@
       "title": "Explora els Nostres Contes",
       "description": "Descobreix la nostra col·lecció de contes d'exemple per a totes les edats"
     }
+  },
+  "createStoryPage": {
+    "title": "✨ Crea el teu Conte Personalitzat",
+    "subtitle": "Omple el formulari i genera un audioconte únic en segons"
   },
   "common": {
     "learnMore": "Més informació",
@@ -557,5 +561,15 @@
       "role": "Professor infantil",
       "content": "Els audiocontes personalitzats són una excel·lent eina per al desenvolupament del llenguatge. Els meus alumnes gaudeixen molt creant les seves pròpies històries i practicant la pronunciació."
     }
+  },
+  "learnEnglish": {
+    "pageTitle": "Aprèn Anglès amb Audiocontes",
+    "pageSubtitle": "Els Cinc de la Terra • 3 contes per setmana • Aventures espacials",
+    "methodologyProgressiveTitle": "Mètode Progressiu",
+    "methodologyProgressiveText": "Basat en escoltar una sèrie d'audiocontes que contenen vocabulari i estructures apropiades per a cada setmana d'aprenentatge.",
+    "methodologyNaturalTitle": "Aprenentatge Natural",
+    "methodologyNaturalText": "La ciència ha demostrat que els nens aprenen un idioma escoltant històries. Aprofitem el moment d'anar a dormir per escoltar històries dels Cinc de la Terra i millorar les seves habilitats en anglès.",
+    "methodologyAgesTitle": "Edats 4-7 anys",
+    "methodologyAgesText": "Perfecte per a nens entre 4 i 7 anys per complementar l'anglès que aprenen a l'escola. Cada audioconte comença amb un resum del vocabulari que aprendrem a la història."
   }
 } 

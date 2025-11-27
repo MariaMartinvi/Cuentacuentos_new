@@ -121,39 +121,56 @@
 .story-card-button {
   flex: 1;
   min-width: 120px;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .story-card-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
-.text-button {
-  background: #007bff;
-  color: white;
+/* Link "Leer cuento" - Estilo link azul simple */
+.story-card-button.text-button {
+  background: none !important;
+  color: #4a7ca8 !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.5rem 1rem !important;
+  text-decoration: underline;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
-.text-button:hover:not(:disabled) {
-  background: #0056b3;
-  transform: translateY(-1px);
+.story-card-button.text-button:hover:not(:disabled) {
+  color: #2a5a88 !important;
+  text-decoration: underline;
+  transform: none;
+  background: none !important;
+  box-shadow: none !important;
 }
 
-.audio-button {
-  background: #28a745;
-  color: white;
+/* Botón "Escuchar" - Estilo Memphis Amarillo */
+.story-card-button.audio-button {
+  background: linear-gradient(135deg, #ffd700 0%, #ffeb3b 100%) !important;
+  color: #4a3a6a !important;
+  border: 3px solid #d4a574 !important;
+  box-shadow: 4px 4px 0px rgba(212, 165, 116, 0.5) !important;
 }
 
-.audio-button:hover:not(:disabled) {
-  background: #1e7e34;
-  transform: translateY(-1px);
+.story-card-button.audio-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffeb3b 0%, #fff176 100%) !important;
+  box-shadow: 5px 5px 0px rgba(212, 165, 116, 0.7) !important;
+  transform: translateY(-2px) rotate(1deg);
 }
 
 .story-card-published-by {
