@@ -67,8 +67,8 @@ function Navbar() {
   };
 
   const handleLibraryClick = () => {
-    // Navegar a la home
-    navigate('/');
+    // Navegar a la página de ejemplos (biblioteca)
+    navigate('/ejemplos');
     
     // Cerrar menú móvil si está abierto
     setIsMobileMenuOpen(false);
@@ -140,7 +140,7 @@ function Navbar() {
 
           {/* Desktop navigation links */}
           <div className="nav-links-center desktop-only">
-            <Link to="/" onClick={handleLibraryClick} className="nav-link-library">
+            <Link to="/ejemplos" onClick={handleLibraryClick} className="nav-link-library">
               📚 {t('navbar.library')}
             </Link>
             <Link to="/crear-cuento" onClick={handleCreateStoryClick} className="nav-link-create">
@@ -167,7 +167,7 @@ function Navbar() {
               <div className="mobile-dropdown">
                 {/* Library Link - always visible */}
                 <Link 
-                  to="/" 
+                  to="/ejemplos" 
                   onClick={handleLibraryClick} 
                   className="mobile-menu-item mobile-library"
                 >

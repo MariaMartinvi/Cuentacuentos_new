@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import StoryExamplesSection from '../StoryExamplesSection.js';
 import TestimonialsSection from '../TestimonialsSection.js';
 import '../../styles/global.css';
+import '../../styles/landing-sections.css';
 import '../FeaturesSection.css';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema.js';
@@ -79,22 +79,69 @@ function HomePage() {
       <div className="hero-section">
         <div className="hero-container">
           <h1>{t('homepage.heroTitle')}</h1>
-          <p>
-            {t('homepage.heroDescription').split(':').map((part, index, array) => {
-              if (index === array.length - 1) {
-                return <span key={index} className="language-levels">{part}</span>;
-              }
-              return part + ':';
-            })}
-          </p>
+          <p className="hero-intro">{t('homepage.heroIntro')}</p>
+          <p className="hero-mission">{t('homepage.heroMission')}</p>
+        </div>
+      </div>
+
+      {/* 🎯 NUEVA SECCIÓN: LAS 3 ÁREAS DE AUDIOGRETEL */}
+      <div className="three-sections-area">
+        <div className="container">
+          <h2 className="sections-main-title">{t('homepage.sectionsTitle')}</h2>
+          
+          <div className="sections-grid">
+            {/* 📚 SECCIÓN 1: BIBLIOTECA */}
+            <div className="section-card library-card">
+              <div className="section-icon">📚</div>
+              <h3 className="section-title">{t('homepage.sections.library.title')}</h3>
+              <p className="section-description">
+                {t('homepage.sections.library.description')}
+              </p>
+              <Link to="/ejemplos" className="section-button library-button">
+                {t('homepage.sections.library.button')} →
+              </Link>
+            </div>
+
+            {/* ✍️ SECCIÓN 2: CREA TUS CUENTOS */}
+            <div className="section-card create-card">
+              <div className="section-icon">✍️</div>
+              <h3 className="section-title">{t('homepage.sections.create.title')}</h3>
+              <div className="create-modes">
+                <div className="mode-item">
+                  <strong>🎨 {t('homepage.sections.create.funMode')}:</strong>
+                  <p>{t('homepage.sections.create.funModeDescription')}</p>
+                </div>
+                <div className="mode-item">
+                  <strong>📖 {t('homepage.sections.create.learningMode')}:</strong>
+                  <p>{t('homepage.sections.create.learningModeDescription')}</p>
+                </div>
+              </div>
+              <Link to="/crear-cuento" className="section-button create-button">
+                {t('homepage.sections.create.button')} →
+              </Link>
+            </div>
+
+            {/* 🎓 SECCIÓN 3: APRENDE INGLÉS */}
+            <div className="section-card learn-card">
+              <div className="section-icon">🎓</div>
+              <h3 className="section-title">{t('homepage.sections.learnEnglish.title')}</h3>
+              <p className="section-subtitle">{t('homepage.sections.learnEnglish.subtitle')}</p>
+              <p className="section-description">
+                {t('homepage.sections.learnEnglish.description')}
+              </p>
+              <p className="section-methodology">
+                <em>{t('homepage.sections.learnEnglish.methodology')}</em>
+              </p>
+              <Link to="/aprender-ingles" className="section-button learn-button">
+                {t('homepage.sections.learnEnglish.button')} →
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="main-content">
-        {/* 1️⃣ PRIMERO: Explora nuestros cuentos */}
-        <StoryExamplesSection />
-        
-        {/* 2️⃣ SEGUNDO: CTA para crear cuento */}
+        {/* 2️⃣ CTA para crear cuento */}
         <div className="cta-section">
           <div className="cta-container">
             <div className="cta-content">

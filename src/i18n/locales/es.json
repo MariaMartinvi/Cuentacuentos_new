@@ -133,8 +133,37 @@
     }
   },
   "homepage": {
-    "heroTitle": "Crea AudioCuentos Mágicos",
+    "heroTitle": "Aprende idiomas con Audiocuentos educativos 3-7 años",
     "heroDescription": "Elige un tema único, los nombres de los protagonistas y también el nivel del idioma seleccionado. Los niños se dormirán y aprenderán nuevo vocabulario.",
+    "heroIntro": "Somos un grupo de padres y madres educadores que hemos creado audiogretel.",
+    "heroMission": "Creemos que la hora de ir a dormir puede ser un momento perfecto para transmitir valores y aprendizaje a nuestros hijos.",
+    "sectionsTitle": "En audiogretel encontrarás:",
+    "sections": {
+      "library": {
+        "title": "Biblioteca gratuita de cuentos",
+        "description": "Una biblioteca gratuita de cuentos en diferentes idiomas y niveles perfectos para la hora de dormir.",
+        "button": "Ver biblioteca"
+      },
+      "create": {
+        "title": "Crea tus propios cuentos",
+        "funMode": "Modo diversión",
+        "funModeDescription": "Crea cuentos mágicos y divertidos para tus hijos con total libertad creativa.",
+        "learningMode": "Modo aprendizaje",
+        "learningModeDescription": "Genera cuentos educativos con vocabulario específico y estructuras gramaticales personalizadas.",
+        "button": "Crear cuento"
+      },
+      "learnEnglish": {
+        "title": "Aprende inglés con audiocuentos",
+        "subtitle": "Programa anual para niños de entre 4-7 años",
+        "description": "Programa anual para niños de entre 4-7 años para ir aprendiendo inglés de forma progresiva. Los cuentos son elegidos por su vocabulario en cada fase.",
+        "methodology": "El aprendizaje se basa en la repetición y en un aumento progresivo del vocabulario semana tras semana.",
+        "button": "Descubre el programa"
+      }
+    },
+    "librarySection": {
+      "title": "Explora nuestra biblioteca",
+      "subtitle": "Descubre cuentos gratuitos listos para escuchar"
+    },
     "featuresTitle": "¿Por qué elegirnos?",
     "uniqueStoriesTitle": "Cuentos Únicos",
     "uniqueStoriesDescription": "Cada cuento es único y personalizado para tu hijo",

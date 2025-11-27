@@ -266,8 +266,37 @@
     }
   },
   "homepage": {
-    "heroTitle": "Create Magical AudioStories",
+    "heroTitle": "Learn languages with Educational Audio Stories ages 3-7",
     "heroDescription": "Customize stories by choosing a unique theme, the names of the protagonists, and the level of the selected language. Besides falling asleep, children will learn new vocabulary.",
+    "heroIntro": "We are a group of parents and educators who have created audiogretel.",
+    "heroMission": "We believe that bedtime can be a perfect moment to transmit values and learning to our children.",
+    "sectionsTitle": "In audiogretel you will find:",
+    "sections": {
+      "library": {
+        "title": "Free story library",
+        "description": "A free library of stories in different languages and levels, perfect for bedtime.",
+        "button": "View library"
+      },
+      "create": {
+        "title": "Create your own stories",
+        "funMode": "Fun mode",
+        "funModeDescription": "Create magical and fun stories for your children with complete creative freedom.",
+        "learningMode": "Learning mode",
+        "learningModeDescription": "Generate educational stories with specific vocabulary and personalized grammatical structures.",
+        "button": "Create story"
+      },
+      "learnEnglish": {
+        "title": "Learn English with audio stories",
+        "subtitle": "Annual program for children aged 4-7",
+        "description": "Annual program for children aged 4-7 to progressively learn English. Stories are chosen for their vocabulary at each stage.",
+        "methodology": "Learning is based on repetition and progressive vocabulary increase week by week.",
+        "button": "Discover the program"
+      }
+    },
+    "librarySection": {
+      "title": "Explore our library",
+      "subtitle": "Discover free stories ready to listen"
+    },
     "featuresTitle": "Why choose us?",
     "uniqueStoriesTitle": "Unique Stories",
     "uniqueStoriesDescription": "Each story is unique and personalized for your child",

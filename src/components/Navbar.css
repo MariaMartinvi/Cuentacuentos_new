@@ -1164,19 +1164,23 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0;
+  padding: 0.7rem 1rem;
   color: #4a5568 !important;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
   transition: all 0.3s ease;
   position: relative;
+  border-radius: 8px;
+  background: transparent;
 }
 
 .nav-link-library:hover,
 .nav-link-create:hover,
 .nav-link-learn:hover {
   color: #667eea !important;
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
 }
 
 .nav-link-library::after,
@@ -1196,6 +1200,34 @@
 .nav-link-create:hover::after,
 .nav-link-learn:hover::after {
   width: 100%;
+}
+
+/* Colores específicos para cada enlace */
+.nav-link-library:hover {
+  color: #48bb78 !important;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.nav-link-library::after {
+  background: #48bb78 !important;
+}
+
+.nav-link-create:hover {
+  color: #ed8936 !important;
+  background: rgba(237, 137, 54, 0.1);
+}
+
+.nav-link-create::after {
+  background: #ed8936 !important;
+}
+
+.nav-link-learn:hover {
+  color: #4299e1 !important;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.nav-link-learn::after {
+  background: #4299e1 !important;
 }
 
 /* Mobile library, create story and learn english links - normal style */
