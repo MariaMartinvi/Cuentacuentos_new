@@ -1,18 +1,18 @@
-/* LearnEnglishPage.css - MEMPHIS ESPACIAL NOCTURNO */
+/* LearnEnglishPage.css - OPTION 3: FONDO OSCURO + CAJAS CLARAS CON TEXTO OSCURO */
 
 .learn-english-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0f1419 0%, #1a1f2e 50%, #252b3d 100%);
+  background: linear-gradient(180deg, #1a1d2e 0%, #242840 50%, #2d2f4a 100%);
 }
 
-/* Hero Section - Memphis Espacial Nocturno */
+/* Hero Section */
 .learn-english-hero {
-  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f42 50%, #3a3f52 100%);
+  background: linear-gradient(135deg, #2d2640 0%, #3d3454 50%, #4a4165 100%);
   padding: 3rem 1rem 2rem 1rem;
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
-  border-bottom: 6px solid #d4a574;
+  border-bottom: 6px solid #c9a76a;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -120,7 +120,7 @@
   margin-bottom: 1rem;
   line-height: 1.2;
   letter-spacing: 0px;
-  text-shadow: 4px 4px 0px rgba(212, 165, 116, 0.4);
+  text-shadow: 4px 4px 0px rgba(201, 167, 106, 0.4);
   filter: drop-shadow(0 0 20px rgba(232, 220, 196, 0.2));
 }
 
@@ -135,32 +135,32 @@
 
 .plan-badge {
   display: inline-block;
-  background: rgba(232, 220, 196, 0.95);
-  color: #2a2f42;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2d2640;
   padding: 1rem 2.5rem;
   border-radius: 50px;
   font-weight: 900;
   font-size: 1.2rem;
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.4);
-  border: 4px solid #5a7d8c;
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.5);
+  border: 4px solid #7a6a98;
   transform: rotate(-1deg);
   transition: all 0.4s ease;
 }
 
 .plan-badge:hover {
   transform: rotate(1deg) scale(1.05);
-  box-shadow: 8px 8px 0px rgba(255, 183, 77, 0.9);
+  box-shadow: 8px 8px 0px rgba(201, 167, 106, 0.7);
   background: rgba(255, 255, 255, 1);
 }
 
-/* Metodología - Introducción */
+/* Metodología - Introducción - CAJAS CLARAS */
 .methodology-section {
-  background: rgba(42, 48, 66, 0.5);
+  background: rgba(45, 38, 64, 0.5);
   padding: 2.5rem 1rem;
   margin-bottom: 1rem;
   backdrop-filter: blur(15px);
-  border-top: 3px solid rgba(90, 125, 140, 0.3);
-  border-bottom: 3px solid rgba(90, 125, 140, 0.3);
+  border-top: 3px solid rgba(122, 106, 152, 0.3);
+  border-bottom: 3px solid rgba(122, 106, 152, 0.3);
 }
 
 .methodology-container {
@@ -172,11 +172,11 @@
 }
 
 .methodology-card {
-  background: rgba(58, 63, 82, 0.4);
+  background: rgba(255, 255, 255, 0.95);
   padding: 2rem 1.5rem;
   border-radius: 20px;
-  border: 4px solid #5a7d8c;
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+  border: 4px solid #7a6a98;
+  box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   text-align: center;
   transition: all 0.4s ease;
   backdrop-filter: blur(10px);
@@ -184,9 +184,9 @@
 
 .methodology-card:hover {
   transform: translateY(-6px);
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.5);
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.6);
   border-color: #9b87c4;
-  background: rgba(58, 63, 82, 0.5);
+  background: rgba(255, 255, 255, 1);
 }
 
 .methodology-icon {
@@ -198,28 +198,28 @@
 .methodology-subtitle {
   font-size: 1.3rem;
   font-weight: 900;
-  color: #d4a574;
+  color: #2d2640;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 .methodology-text {
   font-size: 1rem;
-  line-height: 1.6;
-  color: #e8dcc4;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  line-height: 1.8;
+  color: #3d3454;
+  text-shadow: none;
   font-weight: 500;
 }
 
-/* Sección Los Cinco de la Tierra - PROTAGONISTAS NOCTURNO */
+/* Sección Los Cinco de la Tierra */
 .five-heroes-section {
-  background: linear-gradient(135deg, #2a2f42 0%, #3a3f52 50%, #4a4b5e 100%);
+  background: linear-gradient(135deg, #2d2640 0%, #3d3454 50%, #4a4165 100%);
   padding: 3rem 1rem;
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
-  border-top: 5px solid rgba(155, 135, 196, 0.4);
-  border-bottom: 5px solid rgba(90, 125, 140, 0.4);
+  border-top: 5px solid rgba(201, 167, 106, 0.5);
+  border-bottom: 5px solid rgba(122, 106, 152, 0.5);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -249,7 +249,7 @@
   font-size: 2.5rem;
   font-weight: 900;
   color: #e8dcc4;
-  text-shadow: 3px 3px 0px rgba(155, 135, 196, 0.3);
+  text-shadow: 3px 3px 0px rgba(201, 167, 106, 0.4);
   margin-bottom: 2rem;
   filter: drop-shadow(0 0 15px rgba(232, 220, 196, 0.2));
 }
@@ -265,13 +265,13 @@
 }
 
 .hero-card {
-  background: rgba(58, 63, 82, 0.5);
-  border: 5px solid #5a7d8c;
+  background: rgba(255, 255, 255, 0.95);
+  border: 5px solid #7a6a98;
   border-radius: 20px;
   padding: 1rem 1rem 0.8rem 1rem;
   width: 140px;
   text-align: center;
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.3);
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.4);
   transition: all 0.4s ease;
   cursor: pointer;
   position: relative;
@@ -280,8 +280,9 @@
 
 .hero-card:hover {
   transform: translateY(-8px) rotate(2deg);
-  box-shadow: 8px 8px 0px rgba(155, 135, 196, 0.5);
+  box-shadow: 8px 8px 0px rgba(201, 167, 106, 0.6);
   border-color: #9b87c4;
+  background: rgba(255, 255, 255, 1);
 }
 
 .hero-card::before {
@@ -324,27 +325,27 @@
 .hero-name {
   font-size: 1.2rem;
   font-weight: 900;
-  color: #e8dcc4;
+  color: #2d2640;
   margin-bottom: 0.2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: none;
 }
 
 .hero-country {
   font-size: 0.85rem;
-  color: #c9b8a0;
+  color: #5a4d72;
   font-weight: 800;
   margin-bottom: 0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 /* Month Navigation */
 .month-navigation {
-  background: rgba(42, 48, 66, 0.4);
+  background: rgba(45, 38, 64, 0.5);
   padding: 1.5rem 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
-  border-top: 3px solid rgba(90, 125, 140, 0.4);
-  border-bottom: 3px solid rgba(90, 125, 140, 0.4);
+  border-top: 3px solid rgba(122, 106, 152, 0.4);
+  border-bottom: 3px solid rgba(122, 106, 152, 0.4);
   backdrop-filter: blur(10px);
 }
 
@@ -357,38 +358,38 @@
 
 .month-button {
   padding: 1rem 2.5rem;
-  border: 4px solid #5a7d8c;
-  background: rgba(232, 220, 196, 0.95);
-  color: #2a2f42;
+  border: 4px solid #7a6a98;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2d2640;
   border-radius: 50px;
   font-weight: 900;
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.4);
+  box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.4);
   text-transform: uppercase;
 }
 
 .month-button:hover:not(.disabled) {
-  background: rgba(232, 220, 196, 1);
-  color: #3a3f52;
+  background: rgba(255, 255, 255, 1);
+  color: #3d3454;
   transform: translateY(-4px) rotate(-1deg);
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.6);
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.6);
   border-color: #9b87c4;
 }
 
 .month-button.active {
   background: #9b87c4;
-  color: #e8dcc4;
-  border-color: #5a7d8c;
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.5);
+  color: #FFFFFF;
+  border-color: #7a6a98;
+  box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.5);
   transform: scale(1.05);
 }
 
 .month-button.disabled {
   opacity: 0.3;
   cursor: not-allowed;
-  border-color: rgba(128, 222, 234, 0.3);
+  border-color: rgba(122, 106, 152, 0.3);
   color: #999;
   box-shadow: 3px 3px 0px rgba(200, 200, 200, 0.3);
 }
@@ -409,28 +410,28 @@
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 900;
-  text-shadow: 3px 3px 0px rgba(155, 135, 196, 0.3);
+  text-shadow: 3px 3px 0px rgba(201, 167, 106, 0.4);
   filter: drop-shadow(0 0 15px rgba(232, 220, 196, 0.2));
 }
 
 .family-intro {
-  background: rgba(58, 63, 82, 0.6);
+  background: rgba(255, 255, 255, 0.95);
   padding: 1rem 1.5rem;
   border-radius: 20px;
   margin-bottom: 1.5rem;
-  border: 4px solid rgba(90, 125, 140, 0.5);
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+  border: 4px solid rgba(122, 106, 152, 0.6);
+  box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   backdrop-filter: blur(10px);
 }
 
 .family-intro-text {
-  color: #e8dcc4;
+  color: #2d2640;
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
   margin: 0;
   line-height: 1.5;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
 }
 
 .month-info {
@@ -441,28 +442,28 @@
 }
 
 .info-card {
-  background: rgba(58, 63, 82, 0.5);
+  background: rgba(255, 255, 255, 0.95);
   padding: 1.2rem;
   border-radius: 16px;
-  border: 4px solid #5a7d8c;
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+  border: 4px solid #7a6a98;
+  box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   transition: all 0.4s ease;
   backdrop-filter: blur(15px);
 }
 
 .info-card:hover {
   transform: translateY(-4px);
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.5);
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.6);
   border-color: #9b87c4;
-  background: rgba(58, 63, 82, 0.6);
+  background: rgba(255, 255, 255, 1);
 }
 
 .info-card h3 {
   font-size: 1.1rem;
-  color: #e8dcc4;
+  color: #2d2640;
   margin-bottom: 0.8rem;
   font-weight: 900;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 .vocabulary-list {
@@ -472,14 +473,14 @@
 }
 
 .vocabulary-item {
-  background: rgba(201, 184, 160, 0.9);
-  color: #2a2f42;
+  background: rgba(245, 240, 232, 0.9);
+  color: #2d2640;
   padding: 0.4rem 0.8rem;
   border-radius: 15px;
   font-weight: 800;
   font-size: 0.85rem;
   border: 3px solid #9b87c4;
-  box-shadow: 2px 2px 0px rgba(90, 125, 140, 0.4);
+  box-shadow: 2px 2px 0px rgba(122, 106, 152, 0.3);
 }
 
 .structures-list {
@@ -489,15 +490,15 @@
 }
 
 .structure-item {
-  background: rgba(90, 125, 140, 0.8);
+  background: rgba(245, 240, 232, 0.9);
   padding: 0.6rem 0.8rem;
   border-radius: 10px;
   border: 3px solid #9b87c4;
   font-family: 'Courier New', monospace;
-  color: #e8dcc4;
+  color: #2d2640;
   font-weight: 800;
   font-size: 0.9rem;
-  box-shadow: 3px 3px 0px rgba(155, 135, 196, 0.4);
+  box-shadow: 3px 3px 0px rgba(122, 106, 152, 0.3);
 }
 
 /* Weeks Calendar */
@@ -508,11 +509,11 @@
 }
 
 .week-card {
-  background: rgba(58, 63, 82, 0.4);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   padding: 1.5rem;
-  border: 5px solid #5a7d8c;
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.3);
+  border: 5px solid #7a6a98;
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.4);
   transition: all 0.4s ease;
   position: relative;
   overflow: visible;
@@ -541,9 +542,10 @@
 }
 
 .week-card:hover {
-  box-shadow: 8px 8px 0px rgba(155, 135, 196, 0.5);
+  box-shadow: 8px 8px 0px rgba(201, 167, 106, 0.6);
   transform: translateY(-4px);
   border-color: #9b87c4;
+  background: rgba(255, 255, 255, 1);
 }
 
 .week-header {
@@ -552,25 +554,25 @@
   align-items: center;
   margin-bottom: 1.2rem;
   padding-bottom: 0.8rem;
-  border-bottom: 3px dashed rgba(90, 125, 140, 0.4);
+  border-bottom: 3px dashed rgba(122, 106, 152, 0.3);
 }
 
 .week-title {
   font-size: 1.6rem;
-  color: #e8dcc4;
+  color: #2d2640;
   font-weight: 900;
-  text-shadow: 3px 3px 0px rgba(155, 135, 196, 0.3), 0 0 20px rgba(232, 220, 196, 0.2);
+  text-shadow: none;
 }
 
 .week-stories-count {
-  background: rgba(201, 184, 160, 0.9);
+  background: rgba(201, 167, 106, 0.9);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
-  color: #2a2f42;
+  color: #2d2640;
   font-weight: 900;
   border: 3px solid #9b87c4;
-  box-shadow: 3px 3px 0px rgba(90, 125, 140, 0.4);
+  box-shadow: 3px 3px 0px rgba(122, 106, 152, 0.3);
 }
 
 .stories-grid {
@@ -580,15 +582,15 @@
 }
 
 .story-card {
-  background: rgba(58, 63, 82, 0.3);
-  border: 4px solid #5a7d8c;
+  background: rgba(255, 255, 255, 0.95);
+  border: 4px solid #7a6a98;
   border-radius: 16px;
   padding: 0;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+  box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   backdrop-filter: blur(15px);
 }
 
@@ -600,7 +602,7 @@
   border-radius: 12px 12px 0 0;
   overflow: hidden;
   position: relative;
-  border-bottom: 4px solid #5a7d8c;
+  border-bottom: 4px solid #7a6a98;
 }
 
 .story-card-image img {
@@ -640,8 +642,9 @@
 
 .story-card:hover {
   border-color: #9b87c4;
-  box-shadow: 6px 6px 0px rgba(155, 135, 196, 0.5);
+  box-shadow: 6px 6px 0px rgba(201, 167, 106, 0.6);
   transform: translateY(-5px) rotate(0.5deg);
+  background: rgba(255, 255, 255, 1);
 }
 
 .story-number {
@@ -649,14 +652,14 @@
   top: 0.5rem;
   right: 0.5rem;
   background: linear-gradient(135deg, #9b87c4 0%, #7a6a98 100%);
-  color: #e8dcc4;
+  color: #FFFFFF;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   display: flex;
   z-index: 10;
-  border: 3px solid #5a7d8c;
-  box-shadow: 3px 3px 0px rgba(155, 135, 196, 0.4);
+  border: 3px solid #7a6a98;
+  box-shadow: 3px 3px 0px rgba(201, 167, 106, 0.4);
   align-items: center;
   justify-content: center;
   font-weight: 900;
@@ -665,14 +668,14 @@
 
 .story-title {
   font-size: 1.15rem;
-  color: #e8dcc4;
+  color: #2d2640;
   margin-bottom: 1rem;
   padding: 0 1.5rem;
   margin-top: 1rem;
   padding-right: 3.5rem;
   font-weight: 800;
   line-height: 1.3;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: none;
 }
 
 .story-vocabulary {
@@ -682,11 +685,11 @@
 
 .vocab-label {
   font-size: 0.85rem;
-  color: #c9b8a0;
+  color: #5a4d72;
   font-weight: 800;
   display: block;
   margin-bottom: 0.5rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
 }
 
 .vocab-tags {
@@ -696,8 +699,8 @@
 }
 
 .vocab-tag {
-  background: rgba(201, 184, 160, 0.9);
-  color: #2a2f42;
+  background: rgba(245, 240, 232, 0.9);
+  color: #2d2640;
   padding: 0.25rem 0.6rem;
   border-radius: 10px;
   font-size: 0.75rem;
@@ -712,33 +715,33 @@
   padding: 0 1.5rem 1.5rem 1.5rem;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 2px dashed rgba(90, 125, 140, 0.4);
+  border-top: 2px dashed rgba(122, 106, 152, 0.3);
 }
 
 .story-duration {
   font-size: 0.9rem;
-  color: #c9b8a0;
+  color: #5a4d72;
   font-weight: 800;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
 }
 
 .play-button {
-  background: rgba(201, 184, 160, 0.95);
-  color: #2a2f42;
-  border: 3px solid #5a7d8c;
+  background: rgba(201, 167, 106, 0.95);
+  color: #2d2640;
+  border: 3px solid #7a6a98;
   padding: 0.6rem 1.3rem;
   border-radius: 25px;
   font-weight: 900;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.4);
+  box-shadow: 4px 4px 0px rgba(122, 106, 152, 0.3);
   text-transform: uppercase;
 }
 
 .play-button:hover {
   transform: scale(1.05) rotate(-1deg);
-  box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.6);
+  box-shadow: 5px 5px 0px rgba(122, 106, 152, 0.5);
   background: rgba(212, 165, 116, 0.95);
   border-color: #9b87c4;
 }
@@ -939,7 +942,7 @@
 
   .learn-english-title {
     font-size: 2rem;
-    text-shadow: 3px 3px 0px rgba(155, 135, 196, 0.3);
+    text-shadow: 3px 3px 0px rgba(201, 167, 106, 0.3);
     filter: drop-shadow(0 0 15px rgba(232, 220, 196, 0.15));
   }
 
@@ -981,7 +984,7 @@
     width: 120px;
     padding: 0.8rem 0.8rem 0.6rem 0.8rem;
     border-width: 4px;
-    box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   }
 
   .hero-avatar {
@@ -998,7 +1001,7 @@
 
   .month-title {
     font-size: 1.8rem;
-    text-shadow: 2px 2px 0px rgba(155, 135, 196, 0.3);
+    text-shadow: 2px 2px 0px rgba(201, 167, 106, 0.3);
   }
 
   .month-info {
@@ -1008,8 +1011,7 @@
   .info-card {
     padding: 1rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
-    background: rgba(58, 63, 82, 0.5);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.4);
   }
 
   .info-card h3 {
@@ -1023,7 +1025,7 @@
   .week-card {
     padding: 1.2rem;
     border-width: 4px;
-    box-shadow: 5px 5px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 5px 5px 0px rgba(201, 167, 106, 0.4);
   }
 
   .week-card::before {
@@ -1039,12 +1041,11 @@
 
   .week-title {
     font-size: 1.4rem;
-    text-shadow: 2px 2px 0px rgba(155, 135, 196, 0.3);
   }
 
   .story-card {
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.4);
   }
 
   .story-modal {
@@ -1059,14 +1060,14 @@
 @media (max-width: 480px) {
   .learn-english-title {
     font-size: 1.5rem;
-    text-shadow: 2px 2px 0px rgba(155, 135, 196, 0.3);
+    text-shadow: 2px 2px 0px rgba(201, 167, 106, 0.3);
     filter: drop-shadow(0 0 10px rgba(232, 220, 196, 0.15));
   }
 
   .plan-badge {
     font-size: 1rem;
     padding: 0.8rem 1.8rem;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.4);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.4);
     border-width: 3px;
   }
 
@@ -1081,7 +1082,7 @@
   .methodology-card {
     padding: 1.2rem 0.8rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.3);
   }
 
   .methodology-icon {
@@ -1102,7 +1103,7 @@
 
   .five-heroes-title {
     font-size: 1.6rem;
-    text-shadow: 3px 3px 0px rgba(155, 135, 196, 0.3);
+    text-shadow: 3px 3px 0px rgba(201, 167, 106, 0.3);
   }
 
   .five-heroes-container {
@@ -1113,7 +1114,7 @@
     width: 120px;
     padding: 0.75rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.3);
   }
 
   .hero-avatar {
@@ -1142,7 +1143,7 @@
   .week-card {
     padding: 1rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.3);
   }
 
   .week-card::before {
@@ -1153,13 +1154,12 @@
 
   .week-title {
     font-size: 1.2rem;
-    text-shadow: 2px 2px 0px rgba(155, 135, 196, 0.3);
   }
 
   .story-card {
     padding: 1rem;
     border-width: 3px;
-    box-shadow: 4px 4px 0px rgba(155, 135, 196, 0.3);
+    box-shadow: 4px 4px 0px rgba(201, 167, 106, 0.3);
   }
 
   .story-number {
@@ -1174,7 +1174,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
     border-width: 3px;
-    box-shadow: 3px 3px 0px rgba(155, 135, 196, 0.4);
+    box-shadow: 3px 3px 0px rgba(201, 167, 106, 0.3);
   }
 }
 

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema';
-import './LearnEnglishPage.css';
 
 // AudioPlayer component integrado
 const AudioPlayer = ({ audioUrl, title }) => {
@@ -293,11 +293,40 @@ const AudioPlayerSequence = ({ introUrl, vocabUrl, storyUrl, title }) => {
 
 function LearnEnglishPage() {
   const { t, i18n } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [selectedStory, setSelectedStory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [imageUrls, setImageUrls] = useState({});
+
+  // Detectar tema desde URL (?theme=option2 o ?theme=option3)
+  const theme = searchParams.get('theme') || 'option2';
+
+  // Cargar CSS dinámicamente basado en el tema
+  useEffect(() => {
+    // Importar el CSS correspondiente dinámicamente
+    const loadThemeCSS = async () => {
+      try {
+        if (theme === 'original') {
+          await import('./LearnEnglishPage-original.css');
+        } else if (theme === 'option3') {
+          await import('./LearnEnglishPage-option3.css');
+        } else if (theme === 'option4') {
+          await import('./LearnEnglishPage-option4.css');
+        } else {
+          // Por defecto option2
+          await import('./LearnEnglishPage-option2.css');
+        }
+      } catch (error) {
+        console.error('Error loading theme CSS:', error);
+        // Fallback a CSS por defecto
+        await import('./LearnEnglishPage.css');
+      }
+    };
+
+    loadThemeCSS();
+  }, [theme]);
 
   // Configuración de backend
   const BACKEND_URL = process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
