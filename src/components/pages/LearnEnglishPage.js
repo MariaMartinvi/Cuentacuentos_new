@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema';
+import './LearnEnglishPage.css'; // CSS principal por defecto (lilas claros)
 
 // AudioPlayer component integrado
 const AudioPlayer = ({ audioUrl, title }) => {
@@ -300,28 +301,32 @@ function LearnEnglishPage() {
   const [error, setError] = useState(null);
   const [imageUrls, setImageUrls] = useState({});
 
-  // Detectar tema desde URL (?theme=option2 o ?theme=option3)
-  const theme = searchParams.get('theme') || 'option2';
+  // Detectar tema desde URL (?theme=original, option2, option3, option4, header1)
+  const theme = searchParams.get('theme');
 
-  // Cargar CSS dinámicamente basado en el tema
+  // Cargar CSS dinámicamente SOLO si hay un tema específico en la URL
   useEffect(() => {
-    // Importar el CSS correspondiente dinámicamente
+    // Si NO hay parámetro theme, usar el CSS principal (lilas claros)
+    if (!theme) {
+      return; // Ya está importado en la línea 6
+    }
+
+    // Importar el CSS correspondiente dinámicamente SOLO si hay parámetro
     const loadThemeCSS = async () => {
       try {
         if (theme === 'original') {
           await import('./LearnEnglishPage-original.css');
+        } else if (theme === 'option2') {
+          await import('./LearnEnglishPage-option2.css');
         } else if (theme === 'option3') {
           await import('./LearnEnglishPage-option3.css');
         } else if (theme === 'option4') {
           await import('./LearnEnglishPage-option4.css');
-        } else {
-          // Por defecto option2
-          await import('./LearnEnglishPage-option2.css');
+        } else if (theme === 'header1') {
+          await import('./LearnEnglishPage-header1.css');
         }
       } catch (error) {
         console.error('Error loading theme CSS:', error);
-        // Fallback a CSS por defecto
-        await import('./LearnEnglishPage.css');
       }
     };
 

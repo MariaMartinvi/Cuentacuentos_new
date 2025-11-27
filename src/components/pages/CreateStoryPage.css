@@ -1,72 +1,189 @@
-/* CreateStoryPage.css */
+/* CreateStoryPage.css - Diseño Lila Pastel 💜 */
+/* Crear Cuento con estilo Memphis coherente */
 
 .create-story-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  background: linear-gradient(180deg, #e8e0fa 0%, #f0e8ff 50%, #ffffff 100%);
 }
 
+/* Hero Section - Lila Pastel */
 .create-story-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 3rem 1rem;
-  margin-bottom: 3rem;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 50%, #e8d8ff 100%);
+  padding: 3rem 1rem 2rem 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 6px solid #d4a574;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Decoración: Varita mágica */
+.create-story-hero::before {
+  content: '✨';
+  position: absolute;
+  top: 12%;
+  right: 8%;
+  font-size: 5rem;
+  opacity: 0.3;
+  animation: magicGlow 8s ease-in-out infinite;
+}
+
+/* Decoración: Lápiz flotante */
+.create-story-hero::after {
+  content: '✏️';
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  font-size: 3rem;
+  opacity: 0.4;
+  animation: pencilFloat 6s ease-in-out infinite;
+}
+
+@keyframes magicGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1) rotate(15deg);
+  }
+}
+
+@keyframes pencilFloat {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(0) rotate(-15deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-15px) rotate(-10deg);
+  }
 }
 
 .create-story-hero-container {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estrellas decorativas */
+.create-story-hero-container::before {
+  content: '⭐';
+  position: absolute;
+  top: -10px;
+  right: 15%;
+  font-size: 2.5rem;
+  opacity: 0.6;
+  animation: starFloat1 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+.create-story-hero-container::after {
+  content: '🌟';
+  position: absolute;
+  bottom: 10px;
+  left: 12%;
+  font-size: 2rem;
+  opacity: 0.5;
+  animation: starFloat2 7s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes starFloat1 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-12px) rotate(15deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes starFloat2 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-10px) rotate(-15deg);
+    opacity: 0.7;
+  }
 }
 
 .create-story-title {
-  color: white;
+  color: #4a3a6a;
   font-size: 2.5rem;
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   line-height: 1.2;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 
 .create-story-subtitle {
-  color: rgba(255, 255, 255, 0.95);
+  color: #6a5a8a;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .create-story-content {
   padding: 0 1rem 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .create-story-hero {
-    padding: 2rem 1rem;
-    margin-bottom: 2rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .create-story-hero::before {
+    font-size: 3.5rem;
+    right: 5%;
+  }
+
+  .create-story-hero::after {
+    font-size: 2rem;
+    left: 5%;
   }
 
   .create-story-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+  }
+
+  .create-story-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-story-hero {
+    padding: 1.5rem 0.8rem;
+  }
+
+  .create-story-hero::before {
+    font-size: 2.5rem;
+  }
+
+  .create-story-hero::after {
+    font-size: 1.5rem;
+  }
+
+  .create-story-title {
+    font-size: 1.6rem;
   }
 
   .create-story-subtitle {
     font-size: 1rem;
   }
 }
-
-@media (max-width: 480px) {
-  .create-story-hero {
-    padding: 1.5rem 1rem;
-  }
-
-  .create-story-title {
-    font-size: 1.5rem;
-  }
-
-  .create-story-subtitle {
-    font-size: 0.9rem;
-  }
-}
-

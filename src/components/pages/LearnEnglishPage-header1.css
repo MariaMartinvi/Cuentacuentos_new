@@ -1,6 +1,7 @@
-/* LearnEnglishPage.css - OPTION 4: ORIGINAL + CAJAS SELECTIVAS BLANCAS */
-/* Base: Colores originales brillantes */
+/* LearnEnglishPage.css - VERSIÓN HEADER1: LILAS CLAROS + HEADER MODIFICADO */
+/* Perfecta para niños - Colores suaves, relajantes y legibles */
 /* Cajas blancas SOLO en: methodology-card, hero-card, family-intro */
+/* + Header con fondo lila suave y textos morados oscuros */
 
 .learn-english-page {
   min-height: 100vh;
@@ -10,8 +11,8 @@
 /* Hero Section - Memphis Espacial Nocturno */
 .learn-english-hero {
   background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 50%, #e8d8ff 100%);
-  padding: 3rem 1rem 0.5rem 1rem;
-  margin-bottom: 0;
+  padding: 3rem 1rem 2rem 1rem;
+  margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
   border-bottom: 6px solid #d4a574;
@@ -1183,5 +1184,122 @@
     border-width: 3px;
     box-shadow: 3px 3px 0px rgba(255, 183, 77, 0.6);
   }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* 🌙 HEADER MODIFICADO - VERSIÓN HEADER1                         */
+/* Fondo BLANCO + textos morados oscuros para buen contraste      */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Fondo del header - BLANCO con sombra suave */
+header,
+.header,
+.navbar,
+nav[class*="navbar"],
+nav[class*="Navbar"],
+[class*="Header"],
+[class*="header-"],
+[role="banner"],
+body > div:first-child > header,
+body > div:first-child > nav {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 2px solid rgba(184, 168, 216, 0.3) !important;
+  box-shadow: 0 2px 12px rgba(200, 184, 232, 0.15) !important;
+}
+
+/* Logo texto "AudioGretel" - morado oscuro bien visible */
+header h1,
+header a.logo,
+header a[class*="logo"],
+header a[class*="brand"],
+.navbar-brand,
+.logo,
+.brand,
+[class*="logo"] h1,
+[class*="brand"] h1,
+[class*="logo-text"],
+header svg + span,
+header > div > a,
+nav > div > a {
+  color: #4a3a6a !important;
+  text-shadow: none !important;
+  font-weight: 800 !important;
+}
+
+/* Links del menú principal - morado oscuro visible sobre blanco */
+header nav a,
+header nav button,
+.navbar a,
+.navbar button,
+header ul a,
+header ul button,
+nav[class*="navbar"] a,
+nav[class*="navbar"] button,
+[class*="nav-link"],
+[class*="menu-item"] a {
+  color: #5a5175 !important;
+  font-weight: 700 !important;
+}
+
+/* Hover en links del menú */
+header nav a:hover,
+.navbar a:hover,
+header ul a:hover,
+[class*="nav-link"]:hover {
+  color: #7a6a9a !important;
+  text-decoration: none !important;
+}
+
+/* Botones principales del header (Iniciar Sesión, etc.) */
+header button[class*="btn"],
+header a[class*="btn"],
+.navbar button[class*="btn"],
+.navbar a[class*="btn"],
+header button.primary,
+header a.primary {
+  background: linear-gradient(135deg, #b8a8d8 0%, #c8b8e8 100%) !important;
+  color: #FFFFFF !important;
+  border: 2px solid #b8a8d8 !important;
+  box-shadow: 0 3px 8px rgba(184, 168, 216, 0.3) !important;
+  font-weight: 800 !important;
+}
+
+/* Hover en botones del header */
+header button[class*="btn"]:hover,
+header a[class*="btn"]:hover,
+.navbar button[class*="btn"]:hover {
+  background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 100%) !important;
+  box-shadow: 0 5px 12px rgba(200, 184, 232, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Iconos del header - morados oscuros */
+header svg,
+.navbar svg,
+header i,
+.navbar i {
+  color: #5a5175 !important;
+  fill: #5a5175 !important;
+}
+
+/* Dropdown menus si existen */
+header .dropdown-menu,
+.navbar .dropdown-menu {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 2px solid rgba(184, 168, 216, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(184, 168, 216, 0.2) !important;
+}
+
+header .dropdown-menu a,
+.navbar .dropdown-menu a {
+  color: #5a5175 !important;
+}
+
+header .dropdown-menu a:hover,
+.navbar .dropdown-menu a:hover {
+  background: rgba(232, 224, 250, 0.5) !important;
+  color: #4a3a6a !important;
 }
 

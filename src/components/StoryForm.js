@@ -1048,10 +1048,7 @@ function StoryForm({ onStoryGenerated }) {
 
   return (
     <div className="story-form-container">
-      <h2>
-        <img src="/logo192.png" alt="AudioGretel Logo" className="icon-title-logo" />
-        {t('storyForm.title')}
-      </h2>
+      {/* Título eliminado para diseño más limpio */}
 
       {/* Warning banner when generating story - COMENTADO PARA PRUEBAS */}
       {false && isLoading && (

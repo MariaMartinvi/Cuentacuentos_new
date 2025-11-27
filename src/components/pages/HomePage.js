@@ -141,8 +141,8 @@ function HomePage() {
       </div>
 
       <div className="main-content">
-        {/* 2️⃣ CTA para crear cuento */}
-        <div className="cta-section">
+        {/* 2️⃣ SECCIÓN CTA - ELIMINADA (no aporta valor por ahora) */}
+        {/* <div className="cta-section">
           <div className="cta-container">
             <div className="cta-content">
               <h2 className="cta-title">
@@ -161,7 +161,7 @@ function HomePage() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
         
         {/* 3️⃣ TERCERO: Características */}
         <div className="features-section">
@@ -192,8 +192,8 @@ function HomePage() {
         {/* 4️⃣ CUARTO: Testimonios */}
         <TestimonialsSection />
         
-        {/* 5️⃣ QUINTO: Herramientas IA */}
-        <div className="ai-tools-section">
+        {/* 5️⃣ SECCIÓN HERRAMIENTAS IA - ELIMINADA (no aporta valor por ahora) */}
+        {/* <div className="ai-tools-section">
           <div className="ai-tools-container">
             <h2 className="ai-tools-title">
               {t('aiTools.title')}
@@ -239,7 +239,7 @@ function HomePage() {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

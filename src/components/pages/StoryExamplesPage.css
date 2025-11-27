@@ -1,39 +1,134 @@
+/* StoryExamplesPage.css - Diseño Lila Pastel 💜 */
+/* Biblioteca de Cuentos con estilo Memphis coherente */
+
 .story-examples-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e8e0fa 0%, #f0e8ff 50%, #ffffff 100%);
+  padding: 0;
 }
 
+/* Hero Section - Lila Pastel */
 .page-header {
-  text-align: center;
-  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 50%, #e8d8ff 100%);
+  padding: 3rem 1rem 2rem 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 6px solid #b8a8d8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Decoración: Libro flotante */
+.page-header::before {
+  content: '📚';
+  position: absolute;
+  top: 15%;
+  right: 8%;
+  font-size: 5rem;
+  opacity: 0.3;
+  animation: bookGlow 8s ease-in-out infinite;
+}
+
+/* Decoración: Estrella flotante */
+.page-header::after {
+  content: '✨';
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  font-size: 2.5rem;
+  opacity: 0.4;
+  animation: starFloat 6s ease-in-out infinite;
+}
+
+@keyframes bookGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes starFloat {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-15px);
+  }
 }
 
 .page-header h1 {
+  color: #4a3a6a;
   font-size: 2.5rem;
+  font-weight: 900;
   margin-bottom: 1rem;
-  color: #4361ee;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  text-align: center;
 }
 
 .page-header p {
+  color: #6a5a8a;
   font-size: 1.2rem;
-  color: #555;
+  font-weight: 600;
   max-width: 800px;
   margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  line-height: 1.6;
 }
 
+/* Content Container */
+.story-examples-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem 1rem;
+}
+
+/* Filters Section - Lila Pastel */
 .filters-container {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  margin-bottom: 2.5rem;
+  border: 4px solid #b8a8d8;
+  box-shadow: 6px 6px 0px rgba(200, 184, 232, 0.4);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.filters-container::before {
+  content: '🔍';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 2rem;
+  opacity: 0.7;
+  animation: searchPulse 3s ease-in-out infinite;
+}
+
+@keyframes searchPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 .filters-container h2 {
   font-size: 1.4rem;
-  margin-bottom: 1rem;
-  color: #333;
+  margin-bottom: 1.2rem;
+  color: #4a3a6a;
+  font-weight: 800;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 .filters {
@@ -50,124 +145,197 @@
 .filter-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #555;
+  font-weight: 700;
+  color: #5a5175;
 }
 
 .filter-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 3px solid #c8b8e8;
+  border-radius: 10px;
   background-color: white;
   font-size: 1rem;
   color: #333;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
+.filter-group select:hover {
+  border-color: #b8a8d8;
+  background: rgba(232, 224, 250, 0.2);
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: #a898c8;
+  box-shadow: 0 0 0 3px rgba(184, 168, 216, 0.2);
+}
+
+/* Stories Grid */
 .stories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
 }
 
+/* Story Cards - Estilo Memphis Lila */
 .story-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 0;
+  border: 4px solid #c8b8e8;
+  box-shadow: 6px 6px 0px rgba(216, 200, 248, 0.4);
+  transition: all 0.4s ease;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(10px);
+}
+
+.story-card::before {
+  content: '⭐';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  opacity: 0.7;
+  z-index: 10;
+  animation: starRotate 8s linear infinite;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes starRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .story-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) rotate(1deg);
+  box-shadow: 8px 8px 0px rgba(216, 200, 248, 0.6);
+  border-color: #d8c8f8;
+  background: rgba(255, 255, 255, 1);
 }
 
 .story-image-container {
-  margin-bottom: 15px;
-  border-radius: 8px;
+  margin: 0;
+  border-radius: 16px 16px 0 0;
   overflow: hidden;
-  max-height: 200px;
+  height: 200px;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  border-bottom: 4px solid #c8b8e8;
+  background: rgba(232, 224, 250, 0.3);
 }
 
 .story-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  object-position: top;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
+  object-position: center;
+  transition: transform 0.4s ease;
 }
 
-.story-image:hover {
-  transform: scale(1.03);
+.story-card:hover .story-image {
+  transform: scale(1.05);
+}
+
+.story-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e8d8ff 0%, #f0e8ff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story-image-placeholder span {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #b8a8d8;
 }
 
 .story-card h3 {
-  color: #333;
-  margin-bottom: 15px;
-  font-weight: 600;
-  font-size: 1.5rem;
+  color: #4a3a6a;
+  margin: 1.5rem 1.5rem 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.4rem;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 .story-details {
-  margin-bottom: 1.5rem;
+  margin: 0 1.5rem 1.5rem 1.5rem;
   flex-grow: 1;
 }
 
 .story-details p {
   margin-bottom: 0.5rem;
-  color: #555;
+  color: #4a5568;
+  font-weight: 500;
 }
 
 .story-details strong {
-  color: #333;
+  color: #4a3a6a;
+  font-weight: 800;
 }
 
 .story-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: auto;
+  gap: 0.8rem;
+  margin: 0 1.5rem 1.5rem 1.5rem;
 }
 
 .story-link {
   flex: 1;
   display: inline-block;
-  padding: 0.75rem 1rem;
-  background-color: #4361ee;
-  color: white;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, #b8a8d8 0%, #c8b8e8 100%);
+  color: #4a3a6a;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 50px;
   text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  font-weight: 800;
+  transition: all 0.4s ease;
+  border: 3px solid #a898c8;
+  box-shadow: 4px 4px 0px rgba(184, 168, 216, 0.5);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 .story-link:hover {
-  background-color: #3a56d4;
+  background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 100%);
+  box-shadow: 5px 5px 0px rgba(200, 184, 232, 0.6);
+  transform: translateY(-2px);
+  border-color: #b8a8d8;
 }
 
 .audio-link {
-  background-color: #6c757d;
+  background: linear-gradient(135deg, #a898c8 0%, #b8a8d8 100%);
+  border-color: #9888b8;
+  box-shadow: 4px 4px 0px rgba(168, 152, 200, 0.5);
 }
 
 .audio-link:hover {
-  background-color: #5a6268;
+  background: linear-gradient(135deg, #b8a8d8 0%, #c8b8e8 100%);
+  box-shadow: 5px 5px 0px rgba(184, 168, 216, 0.6);
 }
 
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 3rem 0;
-  color: #6c757d;
+  padding: 4rem 2rem;
+  color: #6a5a8a;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .loading-container {
@@ -179,13 +347,18 @@
 
 .error-container {
   text-align: center;
-  padding: 3rem 0;
+  padding: 3rem 2rem;
+  background: rgba(255, 240, 240, 0.8);
+  border-radius: 20px;
+  border: 4px solid #ffb8c8;
+  box-shadow: 6px 6px 0px rgba(255, 184, 200, 0.4);
 }
 
 .story-card.loading {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 300px;
 }
 
 .spinner-container {
@@ -196,12 +369,13 @@
 }
 
 .story-card.error {
-  background-color: #fff8f8;
-  border: 1px solid #ffcdd2;
+  background: rgba(255, 248, 248, 0.95);
+  border-color: #ffcdd2;
 }
 
 .text-danger {
-  color: #dc3545;
+  color: #d32f2f;
+  font-weight: 700;
 }
 
 .visually-hidden {
@@ -216,7 +390,7 @@
   border: 0;
 }
 
-/* New styles for story reading experience */
+/* Story Modal - Lila Pastel */
 .story-modal-overlay {
   position: fixed;
   top: 0;
@@ -230,114 +404,108 @@
   z-index: 1050;
   padding: 20px;
   overflow-y: auto;
+  backdrop-filter: blur(5px);
 }
 
 .story-modal {
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  padding: 2.5rem;
   max-width: 800px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 5px solid #b8a8d8;
 }
 
 .story-modal-close {
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: #f44336;
+  background: linear-gradient(135deg, #ff6b8a 0%, #ff8fa3 100%);
   color: white;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  font-weight: 900;
+  box-shadow: 3px 3px 0px rgba(255, 107, 138, 0.4);
 }
 
 .story-modal-close:hover {
-  background-color: #d32f2f;
+  background: linear-gradient(135deg, #ff8fa3 0%, #ffa5b8 100%);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 4px 4px 0px rgba(255, 107, 138, 0.6);
 }
 
 .story-content {
   margin-top: 1.5rem;
   font-size: 1.1rem;
-  line-height: 1.6;
+  line-height: 1.8;
   color: #333;
 }
 
 .story-content h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #4361ee;
+  color: #4a3a6a;
   text-align: center;
+  font-weight: 900;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
 }
 
 .story-content p {
   margin-bottom: 1.5rem;
   text-align: justify;
+  color: #4a5568;
+  font-weight: 500;
 }
 
-@media (max-width: 768px) {
-  .filters {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .filter-group {
-    width: 100%;
-  }
-  
-  .stories-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-  
-  .story-modal {
-    padding: 1.5rem;
-    margin: 10px;
-  }
-  
-  .story-content {
-    font-size: 1rem;
-  }
-}
-
-/* Indicador de contenido mock */
+/* Mock Content Indicator */
 .mock-content-indicator {
   margin-top: 10px;
+  padding: 0.5rem 1rem;
   font-style: italic;
-  color: #666;
+  color: #6a5a8a;
   display: flex;
   align-items: center;
   gap: 8px;
+  background: rgba(232, 224, 250, 0.5);
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .mock-badge {
-  background-color: #ffe082;
+  background: linear-gradient(135deg, #ffd54f 0%, #ffe082 100%);
   color: #795548;
   font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 900;
   font-style: normal;
+  border: 2px solid #ffca28;
+  box-shadow: 2px 2px 0px rgba(255, 202, 40, 0.4);
 }
 
-/* Story Modal Styles */
+/* Story Modal Image */
 .story-modal-image-container {
-  margin: 15px 0;
-  border-radius: 8px;
+  margin: 1.5rem 0;
+  border-radius: 16px;
   overflow: hidden;
   max-height: 300px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  border: 4px solid #c8b8e8;
+  box-shadow: 4px 4px 0px rgba(200, 184, 232, 0.4);
 }
 
 .story-modal-image {
@@ -345,33 +513,17 @@
   height: auto;
   object-fit: cover;
   object-position: top;
-  border-radius: 8px;
-}
-
-.story-image-placeholder {
-  width: 100%;
-  height: 150px;
-  background-color: #e9ecef;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-}
-
-.story-image-placeholder span {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #6c757d;
-  text-transform: uppercase;
 }
 
 .audio-not-available {
   margin-top: 20px;
-  padding: 10px;
-  background-color: #f8d7da;
-  color: #721c24;
-  border-radius: 4px;
+  padding: 1rem;
+  background: rgba(255, 240, 240, 0.9);
+  color: #d32f2f;
+  border-radius: 12px;
   text-align: center;
+  font-weight: 700;
+  border: 3px solid #ffb8c8;
 }
 
 .audio-mode-container {
@@ -384,12 +536,100 @@
 
 .audio-mode-container h1 {
   margin-bottom: 20px;
-  color: #333;
+  color: #4a3a6a;
+  font-weight: 900;
 }
 
 .audio-mode-container .story-modal-image-container {
   margin-bottom: 30px;
   max-width: 300px;
   width: 100%;
-  align-items: flex-start;
-} 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 2rem 1rem 1.5rem 1rem;
+  }
+
+  .page-header::before {
+    font-size: 3.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+  }
+
+  .filters-container {
+    padding: 1.5rem;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .filter-group {
+    width: 100%;
+  }
+  
+  .stories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .story-card {
+    border-width: 3px;
+  }
+  
+  .story-modal {
+    padding: 1.5rem;
+    margin: 10px;
+  }
+  
+  .story-content {
+    font-size: 1rem;
+  }
+
+  .story-content h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 1.5rem 0.8rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+  }
+
+  .filters-container {
+    padding: 1rem;
+    border-width: 3px;
+  }
+
+  .story-card {
+    border-width: 3px;
+    box-shadow: 4px 4px 0px rgba(216, 200, 248, 0.4);
+  }
+
+  .story-card h3 {
+    font-size: 1.2rem;
+    margin: 1rem 1rem 0.8rem 1rem;
+  }
+
+  .story-link {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem;
+  }
+}

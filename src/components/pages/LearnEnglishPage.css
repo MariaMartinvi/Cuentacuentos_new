@@ -10,8 +10,8 @@
 /* Hero Section - Memphis Espacial Nocturno */
 .learn-english-hero {
   background: linear-gradient(135deg, #c8b8e8 0%, #d8c8f8 50%, #e8d8ff 100%);
-  padding: 3rem 1rem 2rem 1rem;
-  margin-bottom: 1rem;
+  padding: 3rem 1rem 0.5rem 1rem;
+  margin-bottom: 0;
   position: relative;
   overflow: hidden;
   border-bottom: 6px solid #d4a574;
@@ -941,7 +941,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .learn-english-hero {
-    padding: 2.5rem 1rem;
+    padding: 2.5rem 1rem 0.5rem 1rem;
   }
 
   .learn-english-title {
