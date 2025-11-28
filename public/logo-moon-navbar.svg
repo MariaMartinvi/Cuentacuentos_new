@@ -1,0 +1,89 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo sutil -->
+  <circle cx="100" cy="100" r="95" fill="#2d3a5f" opacity="0.15"/>
+  
+  <!-- MEDIA LUNA GORDITA - Forma más redondeada -->
+  <defs>
+    <mask id="crescentMask">
+      <circle cx="100" cy="100" r="78" fill="white"/>
+      <circle cx="115" cy="98" r="70" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- Media Luna con máscara -->
+  <g mask="url(#crescentMask)">
+    <!-- Cuerpo de la luna gordita -->
+    <circle cx="100" cy="100" r="78" fill="#e8d8ff" stroke="#4a3a6a" stroke-width="6"/>
+    
+    <!-- Cráteres sutiles y redonditos -->
+    <circle cx="75" cy="70" r="10" fill="#d8c8f8" opacity="0.5"/>
+    <circle cx="95" cy="125" r="8" fill="#c8b8e8" opacity="0.4"/>
+    <circle cx="85" cy="95" r="6" fill="#d8c8f8" opacity="0.5"/>
+    
+    <!-- CARA INFANTIL -->
+    
+    <!-- Ojo izquierdo - más grande y tierno -->
+    <ellipse cx="75" cy="88" rx="11" ry="15" fill="#4a3a6a"/>
+    <circle cx="75" cy="85" r="5" fill="#ffffff">
+      <animate attributeName="cy" values="85;87;85" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="77" cy="83" r="2.5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- Ojo derecho - más grande y tierno -->
+    <ellipse cx="105" cy="88" rx="11" ry="15" fill="#4a3a6a"/>
+    <circle cx="105" cy="85" r="5" fill="#ffffff">
+      <animate attributeName="cy" values="85;87;85" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="107" cy="83" r="2.5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- Mejillas rosadas gorditas -->
+    <ellipse cx="58" cy="102" rx="14" ry="9" fill="#ff8fab" opacity="0.6"/>
+    <ellipse cx="122" cy="102" rx="14" ry="9" fill="#ff8fab" opacity="0.6"/>
+    
+    <!-- Sonrisita infantil más grande -->
+    <path d="M 68 108 Q 90 125 112 108" 
+          fill="none" stroke="#4a3a6a" stroke-width="6" 
+          stroke-linecap="round"/>
+    
+    <!-- Pequeña lengüita opcional (adorable) -->
+    <ellipse cx="90" cy="120" rx="5" ry="3" fill="#ff8fab" opacity="0.8"/>
+  </g>
+  
+  <!-- Borde exterior de la media luna -->
+  <g mask="url(#crescentMask)">
+    <circle cx="100" cy="100" r="78" fill="none" stroke="#4a3a6a" stroke-width="6"/>
+  </g>
+  
+  <!-- ESTRELLA GRANDE Y TIERNA -->
+  <g transform="translate(148, 52)">
+    <polygon points="0,-20 5,-7 19,-7 8,2 13,15 0,7 -13,15 -8,2 -19,-7 -5,-7" 
+             fill="#ffd54f" stroke="#d4a574" stroke-width="2.5">
+      <animateTransform attributeName="transform" type="rotate" 
+                        from="0 0 0" to="360 0 0" dur="10s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Destellos en la estrella -->
+    <circle cx="0" cy="-20" r="3" fill="#ffffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Estrellitas pequeñas tiernas -->
+  <circle cx="42" cy="48" r="4" fill="#80deea">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="168" cy="135" r="4" fill="#ff8fab">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Líneas decorativas Memphis sutiles y redondeadas -->
+  <line x1="32" y1="62" x2="22" y2="52" stroke="#ffd54f" stroke-width="5" 
+        stroke-linecap="round" opacity="0.6"/>
+  <line x1="40" y1="70" x2="32" y2="62" stroke="#ffd54f" stroke-width="4" 
+        stroke-linecap="round" opacity="0.4"/>
+  
+  <line x1="165" y1="148" x2="175" y2="158" stroke="#ff8fab" stroke-width="5" 
+        stroke-linecap="round" opacity="0.6"/>
+  <line x1="157" y1="140" x2="165" y2="148" stroke="#ff8fab" stroke-width="4" 
+        stroke-linecap="round" opacity="0.4"/>
+</svg>

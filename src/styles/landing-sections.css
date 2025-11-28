@@ -184,27 +184,6 @@
   background: rgba(255, 255, 255, 1);
 }
 
-.library-card::before {
-  content: '📚';
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  font-size: 2.5rem;
-  opacity: 0.7;
-  animation: bookFloat 4s ease-in-out infinite;
-}
-
-@keyframes bookFloat {
-  0%, 100% {
-    transform: rotate(0deg) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: rotate(15deg) scale(1.1);
-    opacity: 1;
-  }
-}
-
 /* Crear Cuentos - Lila pastel más claro con acento dorado */
 .create-card {
   border: 5px solid #c8b8e8;
@@ -216,27 +195,6 @@
   box-shadow: 8px 8px 0px rgba(212, 165, 116, 0.7);
   border-color: #d8c8f8;
   background: rgba(255, 255, 255, 1);
-}
-
-.create-card::before {
-  content: '✨';
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  font-size: 2.5rem;
-  opacity: 0.7;
-  animation: magicFloat 5s ease-in-out infinite;
-}
-
-@keyframes magicFloat {
-  0%, 100% {
-    transform: rotate(0deg) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: rotate(-20deg) scale(1.15);
-    opacity: 1;
-  }
 }
 
 /* Aprender Inglés - Lila más saturado con acento dorado */
@@ -252,32 +210,20 @@
   background: rgba(255, 255, 255, 1);
 }
 
-.learn-card::before {
-  content: '🎓';
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  font-size: 2.5rem;
-  opacity: 0.7;
-  animation: capFloat 4.5s ease-in-out infinite;
-}
-
-@keyframes capFloat {
-  0%, 100% {
-    transform: rotate(0deg) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: rotate(12deg) scale(1.1);
-    opacity: 1;
-  }
-}
-
 .section-icon {
-  font-size: 4rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 0.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: gentleBounce 4s ease-in-out infinite;
+}
+
+.section-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 @keyframes gentleBounce {
@@ -304,6 +250,7 @@
   text-align: center;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  margin-top: 0;
 }
 
 .section-description {
@@ -312,6 +259,7 @@
   line-height: 1.7;
   text-align: center;
   font-weight: 500;
+  margin-top: 0;
 }
 
 .section-methodology {
@@ -324,6 +272,7 @@
   border-radius: 12px;
   border: 2px dashed rgba(184, 168, 216, 0.3);
   font-style: italic;
+  margin-top: 0;
 }
 
 /* ==============================================
@@ -339,7 +288,7 @@
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.4s ease;
-  margin-top: auto;
+  margin: 0 auto 2rem auto;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -403,6 +352,7 @@
   padding: 1.5rem;
   border-radius: 16px;
   border: 3px solid rgba(200, 184, 232, 0.4);
+  margin-top: 0;
 }
 
 .mode-item {
@@ -478,18 +428,13 @@
     padding: 2rem 1.5rem;
   }
 
-  .section-card::before {
-    font-size: 2rem;
-    top: -10px;
-    right: -10px;
-  }
-
   .section-title {
     font-size: 1.5rem;
   }
 
   .section-icon {
-    font-size: 3rem;
+    width: 80px;
+    height: 80px;
   }
 
   .section-button {
@@ -539,7 +484,8 @@
   }
 
   .section-icon {
-    font-size: 2.5rem;
+    width: 70px;
+    height: 70px;
   }
 
   .section-title {

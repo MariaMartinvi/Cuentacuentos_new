@@ -133,7 +133,7 @@ function Navbar() {
         <div className="navbar-left">
           <div className="logo">
             <Link to="/" onClick={scrollToTop}>
-              <img src="/logo192.png" alt="AudioGretel Logo" className="logo-image" />
+              <img src="/logo-moon-navbar.svg?v=2" alt="AudioGretel Logo" className="logo-image" />
               <span className="logo-text">AudioGretel</span>
             </Link>
           </div>
@@ -141,13 +141,13 @@ function Navbar() {
           {/* Desktop navigation links */}
           <div className="nav-links-center desktop-only">
             <Link to="/ejemplos" onClick={handleLibraryClick} className="nav-link-library">
-              📚 {t('navbar.library')}
+              {t('navbar.library')}
             </Link>
             <Link to="/crear-cuento" onClick={handleCreateStoryClick} className="nav-link-create">
-              ✍️ {t('navbar.createStory')}
+              {t('navbar.createStory')}
             </Link>
             <Link to="/aprender-ingles" onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} className="nav-link-learn">
-              🎓 {t('navbar.learnEnglish')}
+              {t('navbar.learnEnglish')}
             </Link>
           </div>
 
@@ -171,7 +171,7 @@ function Navbar() {
                   onClick={handleLibraryClick} 
                   className="mobile-menu-item mobile-library"
                 >
-                  📚 {t('navbar.library')}
+                  {t('navbar.library')}
                 </Link>
                 
                 {/* Create Story Link - always visible */}
@@ -180,7 +180,7 @@ function Navbar() {
                   onClick={handleCreateStoryClick} 
                   className="mobile-menu-item mobile-create-story"
                 >
-                  ✍️ {t('navbar.createStory')}
+                  {t('navbar.createStory')}
                 </Link>
                 
                 {/* Learn English Link - always visible */}
@@ -189,7 +189,7 @@ function Navbar() {
                   onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} 
                   className="mobile-menu-item mobile-learn-english"
                 >
-                  🎓 {t('navbar.learnEnglish')}
+                  {t('navbar.learnEnglish')}
                 </Link>
                 
                 {user ? (

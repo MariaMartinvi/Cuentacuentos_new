@@ -1,11 +1,16 @@
 {
   "short_name": "AudioGretel",
-  "name": "AudioGretel",
+  "name": "AudioGretel - Audiocuentos para Niños",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logo-moon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
     },
     {
       "src": "logo192.png",
@@ -20,6 +25,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2d3a5f",
+  "background_color": "#e8d8ff"
 }

@@ -1,0 +1,113 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo sutil -->
+  <circle cx="256" cy="256" r="240" fill="#2d3a5f" opacity="0.2"/>
+  
+  <!-- Estrellas decorativas de fondo -->
+  <circle cx="120" cy="100" r="8" fill="#ffd54f" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="400" cy="140" r="6" fill="#80deea" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="90" cy="380" r="5" fill="#ff8fab" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Círculos Memphis flotantes -->
+  <circle cx="150" cy="200" r="18" fill="#80deea" opacity="0.5"/>
+  <circle cx="370" cy="280" r="22" fill="#ff8fab" opacity="0.4"/>
+  <circle cx="110" cy="320" r="15" fill="#c8b8e8" opacity="0.6"/>
+  
+  <!-- Triángulos Memphis redondeados -->
+  <polygon points="420,220 440,250 400,250" fill="#a898c8" opacity="0.5"/>
+  
+  <!-- MEDIA LUNA GORDITA Y TIERNA -->
+  <defs>
+    <mask id="crescentMask">
+      <circle cx="256" cy="256" r="165" fill="white"/>
+      <circle cx="280" cy="250" r="150" fill="black"/>
+    </mask>
+  </defs>
+  
+  <g mask="url(#crescentMask)">
+    <!-- Cuerpo de la luna gordita -->
+    <circle cx="256" cy="256" r="165" fill="#e8d8ff" stroke="#4a3a6a" stroke-width="8"/>
+    
+    <!-- Cráteres redonditos -->
+    <circle cx="200" cy="195" r="22" fill="#d8c8f8" opacity="0.6"/>
+    <circle cx="235" cy="295" r="18" fill="#c8b8e8" opacity="0.5"/>
+    <circle cx="215" cy="240" r="16" fill="#d8c8f8" opacity="0.6"/>
+    <circle cx="185" cy="270" r="14" fill="#c8b8e8" opacity="0.5"/>
+    
+    <!-- CARA INFANTIL ADORABLE -->
+    
+    <!-- Ojo izquierdo - grande y tierno -->
+    <ellipse cx="205" cy="235" rx="22" ry="30" fill="#4a3a6a"/>
+    <circle cx="205" cy="230" r="10" fill="#ffffff">
+      <animate attributeName="cy" values="230;232;230" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="210" cy="227" r="5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- Ojo derecho - grande y tierno -->
+    <ellipse cx="275" cy="235" rx="22" ry="30" fill="#4a3a6a"/>
+    <circle cx="275" cy="230" r="10" fill="#ffffff">
+      <animate attributeName="cy" values="230;232;230" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="280" cy="227" r="5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- Mejillas rosadas gorditas -->
+    <ellipse cx="165" cy="265" rx="30" ry="18" fill="#ff8fab" opacity="0.6"/>
+    <ellipse cx="315" cy="265" rx="30" ry="18" fill="#ff8fab" opacity="0.6"/>
+    
+    <!-- Sonrisa infantil grande -->
+    <path d="M 200 275 Q 240 305 280 275" 
+          fill="none" stroke="#4a3a6a" stroke-width="9" 
+          stroke-linecap="round"/>
+    
+    <!-- Lengüita adorable -->
+    <ellipse cx="240" cy="298" rx="10" ry="6" fill="#ff8fab" opacity="0.8"/>
+  </g>
+  
+  <!-- Borde exterior de la media luna -->
+  <g mask="url(#crescentMask)">
+    <circle cx="256" cy="256" r="165" fill="none" stroke="#4a3a6a" stroke-width="8"/>
+  </g>
+  
+  <!-- ESTRELLA GRANDE Y TIERNA -->
+  <g transform="translate(385, 115)">
+    <polygon points="0,-38 9,-13 35,-13 14,4 23,29 0,13 -23,29 -14,4 -35,-13 -9,-13" 
+             fill="#ffd54f" stroke="#d4a574" stroke-width="3.5">
+      <animateTransform attributeName="transform" type="rotate" 
+                        from="0 0 0" to="360 0 0" dur="10s" repeatCount="indefinite"/>
+    </polygon>
+    <circle cx="0" cy="-38" r="6" fill="#ffffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Líneas decorativas Memphis redondeadas -->
+  <line x1="128" y1="148" x2="108" y2="128" stroke="#ffd54f" stroke-width="7" 
+        stroke-linecap="round" opacity="0.7"/>
+  <line x1="138" y1="158" x2="123" y2="143" stroke="#ffd54f" stroke-width="6" 
+        stroke-linecap="round" opacity="0.5"/>
+  
+  <line x1="360" y1="352" x2="385" y2="377" stroke="#ff8fab" stroke-width="7" 
+        stroke-linecap="round" opacity="0.7"/>
+  <line x1="370" y1="342" x2="390" y2="362" stroke="#ff8fab" stroke-width="6" 
+        stroke-linecap="round" opacity="0.5"/>
+  
+  <line x1="128" y1="338" x2="108" y2="363" stroke="#c8b8e8" stroke-width="7" 
+        stroke-linecap="round" opacity="0.7"/>
+  <line x1="138" y1="348" x2="123" y2="368" stroke="#c8b8e8" stroke-width="6" 
+        stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- Puntos decorativos redondeados -->
+  <circle cx="158" cy="118" r="6" fill="#ff4081"/>
+  <circle cx="348" cy="108" r="7" fill="#4fc3f7"/>
+  <circle cx="128" cy="408" r="6" fill="#ffd54f"/>
+  <circle cx="378" cy="398" r="7" fill="#a898c8"/>
+  
+  <!-- Zigzag decorativo suave -->
+  <path d="M 200 420 L 215 410 L 230 420 L 245 410 L 260 420 L 275 410 L 290 420 L 305 410 L 320 420" 
+        fill="none" stroke="#9575cd" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+</svg>
