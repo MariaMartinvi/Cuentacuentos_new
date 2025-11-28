@@ -269,6 +269,22 @@ function Navbar() {
                     </Link>
                   </div>
                 )}
+                
+                {/* Language selector - mobile version inside hamburger */}
+                <div className="mobile-language-section">
+                  <div className="mobile-language-label">{t('navbar.language')}</div>
+                  <div className="mobile-language-grid">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => { changeLanguage(lang.code); setIsMobileMenuOpen(false); }}
+                        className={`mobile-language-option ${getShortLanguageCode(i18n.language) === lang.code ? 'active' : ''}`}
+                      >
+                        {lang.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
