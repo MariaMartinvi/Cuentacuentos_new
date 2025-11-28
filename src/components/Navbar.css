@@ -1,12 +1,14 @@
 /* Navbar.css */
 .navbar {
-    background-color: white !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    background: linear-gradient(135deg, #f5f0ff 0%, #e8e0fa 50%, #f0e8ff 100%) !important;
+    box-shadow: 0 2px 12px rgba(200, 184, 232, 0.25) !important;
+    border-bottom: 2px solid rgba(200, 184, 232, 0.2) !important;
     position: sticky;
     top: 0;
     z-index: 1000;
     padding: 0.8rem 0 !important;
     width: 100%;
+    backdrop-filter: blur(10px) !important;
   }
   
   .navbar-container {
