@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema';
-import './LearnEnglishPage.css'; // CSS principal por defecto (lilas claros)
+import './LearnEnglishPage-option4.css'; // CSS Memphis Nocturno por defecto
 
 // AudioPlayer component integrado
 const AudioPlayer = ({ audioUrl, title }) => {
@@ -306,9 +306,9 @@ function LearnEnglishPage() {
 
   // Cargar CSS dinámicamente SOLO si hay un tema específico en la URL
   useEffect(() => {
-    // Si NO hay parámetro theme, usar el CSS principal (lilas claros)
+    // Si NO hay parámetro theme, usar el CSS Memphis Nocturno (option4) por defecto
     if (!theme) {
-      return; // Ya está importado en la línea 6
+      return; // Ya está importado option4 en la línea 6
     }
 
     // Importar el CSS correspondiente dinámicamente SOLO si hay parámetro

@@ -1,0 +1,96 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo sutil -->
+  <circle cx="100" cy="100" r="95" fill="#2d3a5f" opacity="0.15"/>
+  
+  <!-- MEDIA LUNA MUY GORDITA -->
+  <defs>
+    <mask id="crescentMask">
+      <circle cx="100" cy="100" r="80" fill="white"/>
+      <!-- Círculo de corte MUY MUY lejos = SUPER GORDITA -->
+      <circle cx="155" cy="100" r="70" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- Media Luna con máscara -->
+  <g mask="url(#crescentMask)">
+    <!-- Cuerpo de la luna gordita -->
+    <circle cx="100" cy="100" r="80" fill="#e8d8ff" stroke="#4a3a6a" stroke-width="6"/>
+    
+    <!-- Cráteres sutiles -->
+    <circle cx="65" cy="65" r="12" fill="#d8c8f8" opacity="0.5"/>
+    <circle cx="75" cy="135" r="10" fill="#c8b8e8" opacity="0.4"/>
+    <circle cx="85" cy="85" r="8" fill="#d8c8f8" opacity="0.5"/>
+    
+    <!-- CARA INFANTIL MÁS GRANDE -->
+    
+    <!-- Ojo izquierdo - MÁS GRANDE -->
+    <ellipse cx="65" cy="75" rx="14" ry="18" fill="#4a3a6a"/>
+    <circle cx="65" cy="71" r="7" fill="#ffffff">
+      <animate attributeName="cy" values="71;73;71" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="68" cy="69" r="3.5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- Ojo derecho - MÁS GRANDE -->
+    <ellipse cx="105" cy="75" rx="14" ry="18" fill="#4a3a6a"/>
+    <circle cx="105" cy="71" r="7" fill="#ffffff">
+      <animate attributeName="cy" values="71;73;71" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="108" cy="69" r="3.5" fill="#80deea" opacity="0.9"/>
+    
+    <!-- NARIZ INTEGRADA DENTRO DE LA LUNA -->
+    <ellipse cx="112" cy="93" rx="9" ry="13" fill="#f0e8ff" stroke="#4a3a6a" stroke-width="2.5"/>
+    
+    <!-- Orificios de la nariz -->
+    <ellipse cx="110" cy="97" rx="2" ry="3" fill="#d8c8f8" opacity="0.6"/>
+    <ellipse cx="114" cy="98" rx="2" ry="3" fill="#d8c8f8" opacity="0.6"/>
+    
+    <!-- Highlight en la nariz -->
+    <circle cx="113" cy="89" r="3" fill="#ffffff" opacity="0.5"/>
+    
+    <!-- Mejillas rosadas GORDITAS -->
+    <ellipse cx="45" cy="92" rx="18" ry="12" fill="#ff8fab" opacity="0.6"/>
+    <ellipse cx="125" cy="92" rx="18" ry="12" fill="#ff8fab" opacity="0.6"/>
+    
+    <!-- BOCA MÁS GRANDE -->
+    <path d="M 55 108 Q 85 136 115 108" 
+          fill="none" stroke="#4a3a6a" stroke-width="8" 
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- Borde exterior de la media luna -->
+  <g mask="url(#crescentMask)">
+    <circle cx="100" cy="100" r="80" fill="none" stroke="#4a3a6a" stroke-width="6"/>
+  </g>
+  
+  <!-- ESTRELLA GRANDE -->
+  <g transform="translate(155, 48)">
+    <polygon points="0,-24 7,-9 23,-9 10,2 17,17 0,9 -17,17 -10,2 -23,-9 -7,-9" 
+             fill="#ffd54f" stroke="#d4a574" stroke-width="3">
+      <animateTransform attributeName="transform" type="rotate" 
+                        from="0 0 0" to="360 0 0" dur="10s" repeatCount="indefinite"/>
+    </polygon>
+    <circle cx="0" cy="-24" r="4" fill="#ffffff" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Estrellitas decorativas -->
+  <circle cx="35" cy="42" r="5" fill="#80deea">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="172" cy="138" r="5" fill="#ff8fab">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Líneas decorativas Memphis -->
+  <line x1="28" y1="58" x2="18" y2="48" stroke="#ffd54f" stroke-width="6" 
+        stroke-linecap="round" opacity="0.6"/>
+  <line x1="36" y1="66" x2="28" y2="58" stroke="#ffd54f" stroke-width="5" 
+        stroke-linecap="round" opacity="0.4"/>
+  
+  <line x1="170" y1="152" x2="180" y2="162" stroke="#ff8fab" stroke-width="6" 
+        stroke-linecap="round" opacity="0.6"/>
+  <line x1="162" y1="144" x2="170" y2="152" stroke="#ff8fab" stroke-width="5" 
+        stroke-linecap="round" opacity="0.4"/>
+</svg>

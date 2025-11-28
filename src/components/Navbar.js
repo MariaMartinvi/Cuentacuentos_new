@@ -133,7 +133,7 @@ function Navbar() {
         <div className="navbar-left">
           <div className="logo">
             <Link to="/" onClick={scrollToTop}>
-              <img src="/logo-moon-navbar.svg?v=2" alt="AudioGretel Logo" className="logo-image" />
+              <img src="/luna-gordita.svg" alt="AudioGretel Logo" className="logo-image" />
               <span className="logo-text">AudioGretel</span>
             </Link>
           </div>
