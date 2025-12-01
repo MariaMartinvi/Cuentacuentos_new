@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import LazyImage from './LazyImage';
 import './TestimonialsSection.css';
 
 function TestimonialsSection() {
@@ -19,7 +20,11 @@ function TestimonialsSection() {
             </div>
             <div className="testimonial-author">
               <div className="author-image">
-                <img src="/images/testimonials/testimonial1.jpg" alt={t('testimonials.testimonial1.name')} />
+                <LazyImage 
+                  src="/images/testimonials/testimonial1.jpg" 
+                  alt={t('testimonials.testimonial1.name')}
+                  size="small"
+                />
               </div>
               <div className="author-info">
                 <h4>{t('testimonials.testimonial1.name')}</h4>
@@ -35,7 +40,11 @@ function TestimonialsSection() {
             </div>
             <div className="testimonial-author">
               <div className="author-image">
-                <img src="/images/testimonials/testimonial2.jpg" alt={t('testimonials.testimonial2.name')} />
+                <LazyImage 
+                  src="/images/testimonials/testimonial2.jpg" 
+                  alt={t('testimonials.testimonial2.name')}
+                  size="small"
+                />
               </div>
               <div className="author-info">
                 <h4>{t('testimonials.testimonial2.name')}</h4>
@@ -51,7 +60,11 @@ function TestimonialsSection() {
             </div>
             <div className="testimonial-author">
               <div className="author-image">
-                <img src="/images/testimonials/testimonial3.jpg" alt={t('testimonials.testimonial3.name')} />
+                <LazyImage 
+                  src="/images/testimonials/testimonial3.jpg" 
+                  alt={t('testimonials.testimonial3.name')}
+                  size="small"
+                />
               </div>
               <div className="author-info">
                 <h4>{t('testimonials.testimonial3.name')}</h4>

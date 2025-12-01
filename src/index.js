@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // Temporary hardcoded Google Client ID from Firebase configuration
 // This should match the Web application client ID from Firebase Console
@@ -31,3 +32,14 @@ root.render(
     )}
   </React.StrictMode>
 );
+
+// Register service worker for better caching and performance
+serviceWorkerRegistration.register({
+  onSuccess: () => {
+    console.log('[ServiceWorker] Content cached for offline use');
+  },
+  onUpdate: (registration) => {
+    console.log('[ServiceWorker] New content available, reload to update');
+    // Optionally show a notification to the user
+  }
+});

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import SEO from '../SEO';
 import BreadcrumbSchema from '../BreadcrumbSchema';
+import LazyImage from '../LazyImage';
 import './LearnEnglishPage-option4.css'; // CSS Memphis Nocturno por defecto
 
 // AudioPlayer component integrado
@@ -340,11 +341,39 @@ function LearnEnglishPage() {
   useEffect(() => {
     const loadImageUrls = async () => {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/learn-english/image-urls`);
+        // Añadimos solo un parámetro de tiempo para evitar caché agresiva del JSON,
+        // pero sin enviar headers extra que puedan romper CORS en producción.
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(`${BACKEND_URL}/api/learn-english/image-urls${cacheBuster}`);
         const data = await response.json();
         if (data.success && data.imageUrls) {
           setImageUrls(data.imageUrls);
-          console.log('🖼️ Image URLs loaded:', Object.keys(data.imageUrls).length, 'images');
+
+          // Logs ligeros para comprobar formatos
+          const urls = Object.values(data.imageUrls).filter(Boolean);
+          const webpCount = urls.filter((url) => url.includes('.webp')).length;
+          const pngCount = urls.filter((url) => url.includes('.png')).length;
+          console.log('🖼️ Image URLs loaded:', urls.length, 'images');
+          console.log(`🖼️ Format breakdown: ${webpCount} WebP, ${pngCount} PNG`);
+
+          // Preload primeras 3 imágenes de la primera semana (como antes)
+          const firstWeekStories = courseData[1]?.weeks[0]?.stories || [];
+          const preloadPromises = firstWeekStories.slice(0, 3).map((story) => {
+            const url = data.imageUrls[story.id];
+            if (url) {
+              return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+                img.src = url;
+              });
+            }
+            return Promise.resolve();
+          });
+
+          Promise.all(preloadPromises).then(() => {
+            console.log('🖼️ [Preload] First 3 images preloaded');
+          });
         }
       } catch (error) {
         console.warn('⚠️ Could not load image URLs, continuing without images:', error.message);
@@ -697,17 +726,30 @@ function LearnEnglishPage() {
                     <div key={story.id} className="story-card" onClick={() => handleStoryClick(story)}>
                       <div className="story-number">{index + 1}</div>
                       
-                      {/* Imagen Memphis de la historia */}
-                      {imageUrls[story.id] && (
+                      {/* Imagen Memphis de la historia con lazy loading */}
+                      {imageUrls[story.id] ? (
                         <div className="story-card-image">
-                          <img 
+                          {(() => {
+                            const imgUrl = imageUrls[story.id];
+                            const isWebP = imgUrl && imgUrl.includes('.webp');
+                            const isPNG = imgUrl && imgUrl.includes('.png');
+                            if (index === 0) { // Solo log la primera para no saturar
+                              console.log(`🖼️ [Render] ${story.id} URL format:`, isWebP ? '✅ WebP' : isPNG ? '❌ PNG' : '❓ Unknown', imgUrl.substring(0, 80) + '...');
+                            }
+                            return null;
+                          })()}
+                          <LazyImage 
                             src={imageUrls[story.id]}
                             alt={story.title}
+                            className="story-image"
                             onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.parentElement.style.display = 'none';
+                              console.warn('Image failed to load:', story.id, imageUrls[story.id]);
                             }}
                           />
+                        </div>
+                      ) : (
+                        <div className="story-card-image-placeholder">
+                          <div className="placeholder-shimmer"></div>
                         </div>
                       )}
                       
@@ -752,10 +794,10 @@ function LearnEnglishPage() {
               <>
                 <h2>{typeof selectedStory.title === 'object' ? selectedStory.title[i18n.language] : selectedStory.title}</h2>
                 
-                {/* Imagen Memphis Espacial Nocturno */}
+                {/* Imagen Memphis Espacial Nocturno con lazy loading */}
                 {selectedStory.imageUrl && (
                   <div className="story-image-container">
-                    <img 
+                    <LazyImage 
                       src={selectedStory.imageUrl} 
                       alt={typeof selectedStory.title === 'object' ? selectedStory.title.en : selectedStory.title}
                       className="story-memphis-image"

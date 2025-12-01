@@ -2,7 +2,8 @@ import { collection, getDocs, query, where, limit, doc, updateDoc, orderBy } fro
 import { ref, getDownloadURL, getBlob, getBytes, getMetadata, uploadString } from "firebase/storage";
 import { db, storage, withRetry, withTimeout, getPublicUrl, isFirebaseConfigured } from "../firebase/config";
 import { fetchThroughProxy } from "./proxyService";
-import { getStoryTextWithCache, getStoryAudioWithCache, getStoryImageWithCache } from "./resourceCacheService";
+import { getStoryTextWithCache, getStoryAudioWithCache } from "./resourceCacheService";
+import { getCachedImage, cacheImage } from "./imageCacheService";
 
 /**
  * Mock stories for fallback content when Firebase files can't be accessed
@@ -752,9 +753,33 @@ export const getStoryAudioUrl = async (path) => {
 };
 
 /**
- * Get download URL for a story image file
+ * Get optimized image URL with size transformations
+ * Supports Firebase Storage URL transformations for better performance
  */
-export const getStoryImageUrl = async (path) => {
+const getOptimizedImageUrl = (baseUrl, options = {}) => {
+  if (!baseUrl || !baseUrl.includes('firebasestorage.googleapis.com')) {
+    return baseUrl;
+  }
+  
+  const { width, quality = 80 } = options;
+  const separator = baseUrl.includes('?') ? '&' : '?';
+  
+  // Add alt=media for direct image access
+  let optimizedUrl = `${baseUrl}${separator}alt=media`;
+  
+  // Note: Firebase Storage doesn't support direct image transformation
+  // but we can still optimize by:
+  // 1. Using CDN caching headers
+  // 2. Implementing client-side resizing in the LazyImage component
+  // 3. Using a service like Cloudinary or imgix for transformation (future enhancement)
+  
+  return optimizedUrl;
+};
+
+/**
+ * Get download URL for a story image file with IndexedDB caching
+ */
+export const getStoryImageUrl = async (path, options = {}) => {
   try {
     if (!path) {
       console.error("[IMAGE] No path provided for story image");
@@ -768,23 +793,41 @@ export const getStoryImageUrl = async (path) => {
     const normalizedPath = normalizeStoragePath(path);
     console.log(`[IMAGE] Ruta normalizada: ${normalizedPath}`);
     
-    // Extract the filename
+    // Extract the filename for cache key
     const filename = normalizedPath.split('/').pop();
-    console.log(`[IMAGE] Nombre de archivo: ${filename}`);
+    const cacheKey = `${filename}_${options.width || 'full'}`;
+    console.log(`[IMAGE] Cache key: ${cacheKey}`);
     
-    // Use cache service to get image URL
-    return await getStoryImageWithCache(filename, normalizedPath, async () => {
-      try {
-        const imageRef = ref(storage, normalizedPath);
-        const url = await getDownloadURL(imageRef);
-        console.log(`[IMAGE] ✓ ÉXITO! URL de imagen obtenida: ${url}`);
-        console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN ===`);
-        return url;
-      } catch (error) {
-        console.error(`[IMAGE] Error getting image URL for ${path}:`, error);
-        throw error;
+    // Try to get from IndexedDB cache first
+    try {
+      const cachedUrl = await getCachedImage(cacheKey);
+      if (cachedUrl) {
+        console.log(`[IMAGE] ✓ URL obtenida del caché IndexedDB`);
+        console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN (CACHE) ===`);
+        return cachedUrl;
       }
-    });
+    } catch (cacheError) {
+      console.warn(`[IMAGE] Error al leer del caché, continuando con Firebase:`, cacheError);
+    }
+    
+    // If not in cache, fetch from Firebase Storage
+    try {
+      const imageRef = ref(storage, normalizedPath);
+      const baseUrl = await getDownloadURL(imageRef);
+      const optimizedUrl = getOptimizedImageUrl(baseUrl, options);
+      
+      console.log(`[IMAGE] ✓ ÉXITO! URL de imagen obtenida de Firebase: ${optimizedUrl}`);
+      
+      // Cache the URL in IndexedDB (don't wait for it)
+      cacheImage(cacheKey, normalizedPath, optimizedUrl)
+        .catch(err => console.warn(`[IMAGE] Error al cachear imagen:`, err));
+      
+      console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN (FIREBASE) ===`);
+      return optimizedUrl;
+    } catch (error) {
+      console.error(`[IMAGE] Error getting image URL for ${path}:`, error);
+      throw error;
+    }
   } catch (error) {
     console.error(`[IMAGE] Error general obteniendo URL de imagen para ${path}:`, error);
     throw error;

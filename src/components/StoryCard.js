@@ -4,9 +4,10 @@ import { useAuth } from '../contexts/AuthContext';
 import FirebaseStarRating from './FirebaseStarRating';
 import LazyImage from './LazyImage';
 import { getStoryImageUrl } from '../services/storyExamplesService';
+import { getCachedImage, cacheImage } from '../services/imageCacheService';
 import './StoryCard.css';
 
-const StoryCard = ({ story, onStoryClick }) => {
+const StoryCard = ({ story, onStoryClick, priority = false }) => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const [imageUrl, setImageUrl] = useState(null);
@@ -19,32 +20,68 @@ const StoryCard = ({ story, onStoryClick }) => {
     title: story.title,
     hasImage: !!story.imagePath,
     hasAudio: !!story.audioPath,
-    imagePath: story.imagePath
+    imagePath: story.imagePath,
+    priority
   });
 
-  // Cargar imagen desde Firebase Storage
+  // Cargar imagen desde cache primero, luego Firebase Storage
   useEffect(() => {
+    let mounted = true;
+    let objectURL = null;
+
     const loadImageUrl = async () => {
-      if (story.imagePath) {
-        try {
-          setIsLoadingImage(true);
-          setImageError(false);
-          const url = await getStoryImageUrl(story.imagePath);
-          console.log('🖼️ [StoryCard] Image URL loaded:', url);
-          setImageUrl(url);
-        } catch (error) {
-          console.error('🖼️ [StoryCard] Error loading image:', error);
+      if (!story.imagePath || !mounted) return;
+
+      try {
+        setIsLoadingImage(true);
+        setImageError(false);
+        
+        // Generate a unique cache key for this image
+        const cacheKey = `story_${story.id}_${story.imagePath}`;
+        
+        console.log(`🖼️ [StoryCard] Checking cache for: ${cacheKey}`);
+        
+        // Try to get from IndexedDB cache first
+        const cachedUrl = await getCachedImage(cacheKey);
+        
+        if (cachedUrl && mounted) {
+          console.log('🖼️ [StoryCard] Using cached image');
+          setImageUrl(cachedUrl);
+          setIsLoadingImage(false);
+          return;
+        }
+        
+        // If not in cache, fetch from Firebase Storage
+        console.log('🖼️ [StoryCard] Fetching from Firebase Storage');
+        const url = await getStoryImageUrl(story.imagePath);
+        
+        if (!mounted) return;
+        
+        // Set the URL immediately
+        setImageUrl(url);
+        
+        // Cache the image for future use (async, don't wait)
+        cacheImage(cacheKey, story.imagePath, url).catch(error => {
+          console.warn('🖼️ [StoryCard] Failed to cache image:', error);
+        });
+      } catch (error) {
+        console.error('🖼️ [StoryCard] Error loading image:', error);
+        if (mounted) {
           setImageError(true);
-        } finally {
+        }
+      } finally {
+        if (mounted) {
           setIsLoadingImage(false);
         }
-      } else {
-        setIsLoadingImage(false);
       }
     };
 
     loadImageUrl();
-  }, [story.imagePath]);
+
+    return () => {
+      mounted = false;
+    };
+  }, [story.id, story.imagePath]);
 
   const handleImageLoad = () => {
     console.log('🖼️ [StoryCard] Image loaded successfully');
@@ -105,6 +142,8 @@ const StoryCard = ({ story, onStoryClick }) => {
             className="story-card-image"
             onLoad={handleImageLoad}
             onError={handleImageError}
+            size="medium"
+            priority={priority}
           />
         ) : (
           <div className="story-card-image-fallback">

@@ -40,7 +40,10 @@
     "seo-check": "npm run performance && npm run sitemap",
     "lighthouse": "lighthouse http://localhost:3000 --output=json --output=html --output-path=./lighthouse-report",
     "bundle-analyzer": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
-    "postinstall": "cd netlify/functions && npm install"
+    "postinstall": "cd netlify/functions && npm install",
+    "optimize-images": "node scripts/optimize-images.js",
+    "cache-stats": "node -e \"import('./src/services/imageCacheService.js').then(m => m.getCacheStats().then(console.log))\"",
+    "verify-optimization": "node scripts/verify-optimization.js"
   },
   "eslintConfig": {
     "extends": [

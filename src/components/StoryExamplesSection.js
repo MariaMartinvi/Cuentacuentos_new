@@ -744,11 +744,12 @@ const StoryExamplesSection = ({ autoOpenStoryId, autoPlayMode }) => {
             console.log('🔍 [StoryExamplesSection] First story keys:', Object.keys(filteredStories[0]));
             console.log('🔍 [StoryExamplesSection] First story id:', filteredStories[0].id);
           }
-          return filteredStories.map(story => (
+          return filteredStories.map((story, index) => (
             <StoryCard
               key={story.id}
               story={story}
               onStoryClick={handleStoryClick}
+              priority={index < 3} // Load first 3 images with priority
             />
           ));
         })()}
