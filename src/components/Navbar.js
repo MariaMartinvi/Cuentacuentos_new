@@ -140,14 +140,14 @@ function Navbar() {
 
           {/* Desktop navigation links */}
           <div className="nav-links-center desktop-only">
+            <Link to="/aprender-ingles" onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} className="nav-link-learn">
+              {t('navbar.learnEnglish')}
+            </Link>
             <Link to="/ejemplos" onClick={handleLibraryClick} className="nav-link-library">
               {t('navbar.library')}
             </Link>
             <Link to="/crear-cuento" onClick={handleCreateStoryClick} className="nav-link-create">
               {t('navbar.createStory')}
-            </Link>
-            <Link to="/aprender-ingles" onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} className="nav-link-learn">
-              {t('navbar.learnEnglish')}
             </Link>
           </div>
 
@@ -165,6 +165,15 @@ function Navbar() {
             {/* Mobile dropdown menu */}
             {isMobileMenuOpen && (
               <div className="mobile-dropdown">
+                {/* Learn English Link - always visible */}
+                <Link 
+                  to="/aprender-ingles" 
+                  onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} 
+                  className="mobile-menu-item mobile-learn-english"
+                >
+                  {t('navbar.learnEnglish')}
+                </Link>
+                
                 {/* Library Link - always visible */}
                 <Link 
                   to="/ejemplos" 
@@ -181,15 +190,6 @@ function Navbar() {
                   className="mobile-menu-item mobile-create-story"
                 >
                   {t('navbar.createStory')}
-                </Link>
-                
-                {/* Learn English Link - always visible */}
-                <Link 
-                  to="/aprender-ingles" 
-                  onClick={() => { setIsMobileMenuOpen(false); scrollToTop(); }} 
-                  className="mobile-menu-item mobile-learn-english"
-                >
-                  {t('navbar.learnEnglish')}
                 </Link>
                 
                 {user ? (

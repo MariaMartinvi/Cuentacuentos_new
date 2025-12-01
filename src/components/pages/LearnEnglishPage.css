@@ -122,8 +122,8 @@
   margin-bottom: 1rem;
   line-height: 1.2;
   letter-spacing: 0px;
-  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+  filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
 }
 
 .learn-english-subtitle {
@@ -251,9 +251,9 @@
   font-size: 2.5rem;
   font-weight: 900;
   color: #4a3a6a;
-  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
   margin-bottom: 2rem;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
 }
 
 .five-heroes-container {
@@ -413,8 +413,8 @@
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: 900;
-  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+  filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
 }
 
 /* ⭐ FAMILY INTRO - CAJA BLANCA */
@@ -946,8 +946,8 @@
 
   .learn-english-title {
     font-size: 2rem;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+    filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
   }
 
   .learn-english-subtitle {
@@ -1005,7 +1005,7 @@
 
   .month-title {
     font-size: 1.8rem;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+    text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
   }
 
   .month-info {
@@ -1066,8 +1066,8 @@
 @media (max-width: 480px) {
   .learn-english-title {
     font-size: 1.5rem;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+    filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
   }
 
   .plan-badge {
@@ -1109,7 +1109,7 @@
 
   .five-heroes-title {
     font-size: 1.6rem;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+    text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
   }
 
   .five-heroes-container {

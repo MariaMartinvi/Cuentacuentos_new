@@ -120,8 +120,8 @@
   font-weight: 900;
   margin-bottom: 1rem;
   line-height: 1.2;
-  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+  filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
 }
 
 .create-story-subtitle {

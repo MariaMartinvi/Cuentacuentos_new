@@ -38,7 +38,16 @@ body {
 }
 
 /* Typography improvements */
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  color: #4a3a6a;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 0px rgba(200, 184, 232, 0.6);
+  filter: drop-shadow(0 0 10px rgba(200, 184, 232, 0.3));
+}
+
+h2, h3, h4, h5, h6 {
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 1rem;
