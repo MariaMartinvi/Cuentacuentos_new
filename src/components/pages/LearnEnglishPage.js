@@ -344,7 +344,24 @@ function LearnEnglishPage() {
         // Añadimos solo un parámetro de tiempo para evitar caché agresiva del JSON,
         // pero sin enviar headers extra que puedan romper CORS en producción.
         const cacheBuster = `?t=${Date.now()}`;
-        const response = await fetch(`${BACKEND_URL}/api/learn-english/image-urls${cacheBuster}`);
+        const url = `${BACKEND_URL}/api/learn-english/image-urls${cacheBuster}`;
+        console.log('🖼️ [LearnEnglish] Fetching image URLs from:', url);
+        
+        const response = await fetch(url);
+        
+        // Verificar que la respuesta es JSON antes de parsear
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          console.error('❌ [LearnEnglish] Response is not JSON:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType,
+            preview: text.substring(0, 200)
+          });
+          throw new Error(`Backend returned ${response.status} ${response.statusText} (expected JSON, got ${contentType})`);
+        }
+        
         const data = await response.json();
         if (data.success && data.imageUrls) {
           setImageUrls(data.imageUrls);

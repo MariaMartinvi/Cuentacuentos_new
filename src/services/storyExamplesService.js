@@ -810,20 +810,30 @@ export const getStoryImageUrl = async (path, options = {}) => {
       console.warn(`[IMAGE] Error al leer del caché, continuando con Firebase:`, cacheError);
     }
     
-    // If not in cache, fetch from Firebase Storage
+    // If not in cache, fetch from backend (which returns signed URLs, prioritizing WebP)
     try {
-      const imageRef = ref(storage, normalizedPath);
-      const baseUrl = await getDownloadURL(imageRef);
-      const optimizedUrl = getOptimizedImageUrl(baseUrl, options);
+      const BACKEND_URL = process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
+      const response = await fetch(`${BACKEND_URL}/api/stories/image-url?path=${encodeURIComponent(normalizedPath)}`);
       
-      console.log(`[IMAGE] ✓ ÉXITO! URL de imagen obtenida de Firebase: ${optimizedUrl}`);
+      if (!response.ok) {
+        throw new Error(`Backend returned ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      if (!data.success || !data.url) {
+        throw new Error(data.error || 'Backend did not return image URL');
+      }
+      
+      const imageUrl = data.url;
+      console.log(`[IMAGE] ✓ ÉXITO! URL de imagen obtenida del backend (${data.format}): ${imageUrl.substring(0, 80)}...`);
       
       // Cache the URL in IndexedDB (don't wait for it)
-      cacheImage(cacheKey, normalizedPath, optimizedUrl)
+      cacheImage(cacheKey, normalizedPath, imageUrl)
         .catch(err => console.warn(`[IMAGE] Error al cachear imagen:`, err));
       
-      console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN (FIREBASE) ===`);
-      return optimizedUrl;
+      console.log(`[IMAGE] === FIN DE CARGA DE IMAGEN (BACKEND) ===`);
+      return imageUrl;
     } catch (error) {
       console.error(`[IMAGE] Error getting image URL for ${path}:`, error);
       throw error;
