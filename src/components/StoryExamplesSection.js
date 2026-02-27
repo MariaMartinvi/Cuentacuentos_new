@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
 import { fetchStoryExamples, checkStoragePermissions, getStoryTextUrl, getStoryAudioUrl, getStoryTextContent, getStoryImageUrl, fetchStoryMetadata, addProtagonistaToStory, updateStoriesWithCreationDate, diagnoseDateIssues } from '../services/storyExamplesService';
 import { getStoriesWithCache } from '../services/cacheService';
 import { getStoryById } from '../services/storyService';
